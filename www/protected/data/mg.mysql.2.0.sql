@@ -748,6 +748,26 @@ CREATE TABLE IF NOT EXISTS `cron_jobs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB CHARACTER SET = utf8;
 
+-- -----------------------------------------------------
+-- Table `institution`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `institution` ;
+
+CREATE TABLE IF NOT EXISTS `institution` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `url` varchar(128) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
