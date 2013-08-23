@@ -17,6 +17,8 @@
  * @property integer $last_access_interval
  * @property string $created
  * @property string $modified
+ * @property integer $institution_id
+ * @property integer $remote_id
  *
  * @property Game[] $games
  * @property Licence $licence
@@ -49,6 +51,12 @@ abstract class BaseCollection extends GxActiveRecord {
 			array('more_information', 'safe'),
 			array('locked, more_information, licence_id, last_access_interval', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('id, name, locked, more_information, licence_id, last_access_interval, created, modified', 'safe', 'on'=>'search'),
+            array('remote_id', 'unique', 'criteria' => array(
+                'condition' => '`institution_id`=:secondKey',
+                'params' => array(
+                    ':secondKey' => $this->institution_id
+                )
+            ))
 		);
 	}
 

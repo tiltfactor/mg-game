@@ -4,17 +4,16 @@
  * @package
  * @author     Nikolay Kondikov<nikolay.kondikov@sirma.bg>
  */
-class RegisterResult
+class AssignMediaDTO
 {
     /**
-     * @var string
+     * @var integer
      * @soap
      */
-    public $token="";
+    public $id;
     /**
-     * @var Status
+     * @var integer[]
      * @soap
      */
-    public  $status=null;
-
+    public $collections;
 }

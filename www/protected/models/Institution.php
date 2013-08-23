@@ -17,6 +17,10 @@
  */
 class Institution extends CActiveRecord
 {
+    const STATUS_NOACTIVE=0;
+    const STATUS_ACTIVE=1;
+    const STATUS_BANNED=-1;
+
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
@@ -36,10 +40,8 @@ class Institution extends CActiveRecord
             array('name, email, password, url', 'required'),
             array('name, email, url', 'unique'),
             array('status', 'numerical', 'integerOnly' => true),
-            array('name', 'length', 'max' => 100),
+            array('name', 'length', 'max' => 128),
             array('email', 'email'),
-            array('password', 'required', 'on' => 'insert'),
-            array('action', 'length', 'max' => 255),
             array('id, name, email, password, url, token, status, created', 'safe', 'on' => 'search')
         );
     }

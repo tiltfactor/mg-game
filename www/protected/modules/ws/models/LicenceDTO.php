@@ -4,17 +4,22 @@
  * @package
  * @author     Nikolay Kondikov<nikolay.kondikov@sirma.bg>
  */
-class RegisterResult
+class LicenceDTO
 {
+    /**
+     * @var integer
+     * @soap
+     */
+    public $id;
     /**
      * @var string
      * @soap
      */
-    public $token="";
+    public $name;
     /**
-     * @var Status
+     * @var string
      * @soap
      */
-    public  $status=null;
+    public $description;
 
 }

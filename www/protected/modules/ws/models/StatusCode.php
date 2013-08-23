@@ -10,52 +10,52 @@ class StatusCode
      * @var string
      * @soap
      */
-    public static $_SUCCESS = "SUCCESS";
+    public $_SUCCESS = "SUCCESS";
     /**
      * @var string
      * @soap
      */
-    public static $_LOGON_ERROR = "LOGON_ERROR";
+    public $_LOGON_ERROR = "LOGON_ERROR";
     /**
      * @var string
      * @soap
      */
-    public static $_FATAL_ERROR = "FATAL_ERROR";
+    public $_FATAL_ERROR = "FATAL_ERROR";
     /**
      * @var string
      * @soap
      */
-    public static $_NOT_FOUND = "NOT_FOUND";
+    public $_NOT_FOUND = "NOT_FOUND";
     /**
      * @var string
      * @soap
      */
-    public static $_SUCCESS_WITH_WARNINGS = "SUCCESS_WITH_WARNINGS";
+    public $_SUCCESS_WITH_WARNINGS = "SUCCESS_WITH_WARNINGS";
     /**
      * @var string
      * @soap
      */
-    public static $_DUPLICATE_RECORD = "DUPLICATE_RECORD";
+    public $_DUPLICATE_RECORD = "DUPLICATE_RECORD";
     /**
      * @var string
      * @soap
      */
-    public static $_CANNOT_DELETE = "CANNOT_DELETE";
+    public $_CANNOT_DELETE = "CANNOT_DELETE";
     /**
      * @var string
      * @soap
      */
-    public static $_NO_PERMISSIONS = "NO_PERMISSIONS";
+    public $_NO_PERMISSIONS = "NO_PERMISSIONS";
     /**
      * @var string
      * @soap
      */
-    public static $_ILLEGAL_STATE = "ILLEGAL_STATE";
+    public $_ILLEGAL_STATE = "ILLEGAL_STATE";
     /**
      * @var string
      * @soap
      */
-    public static $_ILLEGAL_ARGUMENT = "ILLEGAL_ARGUMENT";
+    public $_ILLEGAL_ARGUMENT = "ILLEGAL_ARGUMENT";
 
     /**
      * @var string

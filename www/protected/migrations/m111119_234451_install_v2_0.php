@@ -18,6 +18,19 @@ class m111119_234451_install_v2_0 extends CDbMigration
               UNIQUE KEY `email` (`email`),
               UNIQUE KEY `url` (`url`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+        ALTER TABLE `collection` ADD `institution_id` INT DEFAULT NULL,
+            ADD `remote_id` INT DEFAULT NULL ,
+            ADD UNIQUE (`institution_id`,`remote_id`),
+            ADD CONSTRAINT `fk_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+        ALTER TABLE `licence` ADD `institution_id` INT DEFAULT NULL,
+            ADD `remote_id` INT DEFAULT NULL ,
+            ADD UNIQUE (`institution_id`,`remote_id`),
+            ADD CONSTRAINT `fk_licence_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+        ALTER TABLE `media` ADD `institution_id` INT DEFAULT NULL,
+            ADD `remote_id` INT DEFAULT NULL ,
+            ADD UNIQUE (`institution_id`,`remote_id`),
+            ADD CONSTRAINT `fk_media_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 	  ";
 
         if (trim($script) != "") {

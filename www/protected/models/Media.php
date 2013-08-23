@@ -19,6 +19,12 @@ class Media extends BaseMedia
       array('last_access', 'safe'),
       array('batch_id, last_access, locked', 'default', 'setOnEmpty' => true, 'value' => null),
       array('id, name, size, mime_type, batch_id, last_access, locked, created, modified, tag_count', 'safe', 'on'=>'search'),
+      array('remote_id', 'unique', 'criteria' => array(
+            'condition' => '`institution_id`=:secondKey',
+            'params' => array(
+                ':secondKey' => $this->institution_id
+            )
+        ))
     );
   }
   
