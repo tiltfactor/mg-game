@@ -2,7 +2,6 @@
 /**
  *
  * @package
- * @author     Nikolay Kondikov<nikolay.kondikov@sirma.bg>
  */
 class Pyramid extends MGGameModel implements MGGameModelInterface
 {

@@ -2,8 +2,7 @@
 /**
  *
  * @package
- * @author     Nikolay Kondikov<nikolay.kondikov@sirma.bg>
- */
+  */
 class WsModule extends CWebModule
 {
     public function init()

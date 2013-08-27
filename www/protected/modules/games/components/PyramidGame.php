@@ -4,7 +4,6 @@
 /**
  *
  * @package    MG
- * @author Nikolay Kondikov <nikolay.kondikov@sirma.bg>
  */
 class PyramidGame extends NexTagGame
 {

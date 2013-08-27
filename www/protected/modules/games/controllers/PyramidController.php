@@ -4,7 +4,6 @@
  *
  *
  * @package
- * @author     Nikolay Kondikov<nikolay.kondikov@sirma.bg>
  */
 class PyramidController extends GxController
 {
