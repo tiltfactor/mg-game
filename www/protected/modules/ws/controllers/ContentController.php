@@ -39,7 +39,7 @@ class ContentController extends CController
             $institution->email = $email;
             $institution->password = md5($password);
             $institution->url = $url;
-            $institution->status = Institution::STATUS_ACTIVE;
+            $institution->status = Institution::STATUS_NOACTIVE;
 
             if ($institution->validate()) {
                 $token = md5($name . "_" . $email . "_" . $url);

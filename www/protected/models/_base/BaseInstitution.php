@@ -24,10 +24,6 @@
  */
 abstract class BaseInstitution extends GxActiveRecord {
 
-    const STATUS_NOACTIVE=0;
-    const STATUS_ACTIVE=1;
-    const STATUS_BANNED=-1;
-
 	public static function model($className=__CLASS__) {
 		return parent::model($className);
 	}

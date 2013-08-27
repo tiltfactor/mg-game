@@ -6,7 +6,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-		array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
+		array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create'),'visible' => $model->canCreate()),
 	);
 
 Yii::app()->clientScript->registerScript('search', "
@@ -61,8 +61,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
 		*/
     array (
   'class' => 'CButtonColumn',
-  'buttons' => 
+  'buttons' =>
   array (
+      'delete' =>
+      array (
+          'visible' => '$data->canDelete()',
+      ),
   ),
 )  ),
 )); 
@@ -73,7 +77,7 @@ $this->widget('ext.gridbatchaction.GridBatchAction', array(
       'checkBoxId'=>'institution-ids',
       'ajaxGridId'=>'institution-grid', 
       'items'=>array(
-          array('label'=>Yii::t('ui','Delete selected items'),'url'=>array('batch', 'op' => 'delete'))
+          array('label'=>Yii::t('ui','Ban selected institution'),'url'=>array('batch', 'op' => 'ban'))
       ),
       'htmlOptions'=>array('class'=>'batchActions'),
   ));

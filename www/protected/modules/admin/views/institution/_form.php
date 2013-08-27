@@ -40,9 +40,9 @@
     <?php echo $form->error($model,'token'); ?>
     </div><!-- row -->
     <div class="row">
-    <?php echo $form->labelEx($model,'status'); ?>
-    <?php echo $form->textField($model, 'status'); ?>
-    <?php echo $form->error($model,'status'); ?>
+        <?php echo $form->labelEx($model,'status'); ?>
+        <?php echo $form->dropDownList($model,'status',Institution::itemAlias('Status')); ?>
+        <?php echo $form->error($model,'status'); ?>
     </div><!-- row -->
     <div class="row">
     <?php if($model->created != 0) : ?>
