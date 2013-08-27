@@ -171,6 +171,9 @@ class User extends BaseUser
       'admin'=>array(
           'condition'=>'role=\'admin\'',
       ),
+      'institution'=>array(
+            'condition'=>'role=\'institution\'',
+        ),
       'notsafe'=>array(
         'select' => 'id, username, password, email, activekey, edited_count, created, modified, lastvisit, role, status',
       ),

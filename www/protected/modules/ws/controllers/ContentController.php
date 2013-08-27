@@ -24,43 +24,66 @@ class ContentController extends CController
 
 
     /**
-     * @param string $name
+     * @param string $username
      * @param string $email
      * @param string $password
+     * @param string $name
      * @param string $url
      * @return RegisterResult
      * @soap
      */
-    public function register($name, $email, $password, $url)
+    public function register($username, $email, $password, $name, $url)
     {
+        $user = new InstallConfigurationForm();
+        $transaction = $user->dbConnection->beginTransaction();
+        $message = "";
         try {
-            $institution = new Institution();
-            $institution->name = $name;
-            $institution->email = $email;
-            $institution->password = md5($password);
-            $institution->url = $url;
-            $institution->status = Institution::STATUS_NOACTIVE;
+            $user->username = $username;
+            $user->email = $email;
+            $user->password = $password;
+            $user->activekey = UserModule::encrypting(microtime() . $user->password);
+            $user->verifyPassword = $user->password = UserModule::encrypting($user->password);
+            $user->created = date('Y-m-d H:i:s');
+            $user->modified = date('Y-m-d H:i:s');
+            $user->lastvisit = NULL;
+            $user->role = 'institution';
+            $user->status = User::STATUS_NOACTIVE;
 
-            if ($institution->validate()) {
-                $token = md5($name . "_" . $email . "_" . $url);
+            if ($user->save()) {
+                $institution = new Institution();
+                $institution->name = $name;
+                $institution->url = $url;
+                $institution->status = Institution::STATUS_NOACTIVE;
+                $institution->user_id = $user->id;
+                $token = md5($name . "_" . $url);
                 $institution->token = $token;
                 $institution->created = date('Y-m-d H:i:s');
+
                 if ($institution->save()) {
+                    $transaction->commit();
                     $res = new RegisterResult();
                     $res->token = $token;
                     $res->status = Status::getStatus(StatusCode::SUCCESS(), "");
                     return $res;
                 }
+
+                $errors = $institution->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
+            } else {
+                $errors = $user->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
             }
-            $errors = $institution->getErrors();
-            $message = "";
-            foreach ($errors as $field => $error) {
-                $message .= $error[0] . ";";
-            }
+
+            $transaction->rollback();
             $rr = new RegisterResult();
             $rr->status = Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), $message);
             return $rr;
         } catch (Exception $ex) {
+            $transaction->rollback();
             $res = new RegisterResult();
             $res->status = Status::getStatus(StatusCode::FATAL_ERROR(), $ex->getMessage());
             return $res;

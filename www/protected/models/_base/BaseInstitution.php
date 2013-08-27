@@ -11,12 +11,12 @@
  *
  * @property integer $id
  * @property string $name
- * @property string $email
- * @property string $password
  * @property string $url
  * @property string $token
  * @property integer $status
  * @property string $created
+ * @property integer $user_id
+ * @property User $user
  *
  * @property Collection[] $collections
  * @property Licence[] $licences
@@ -42,13 +42,12 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('name, email, password, url, token, created', 'required'),
-            array('name, email, url', 'unique'),
-            array('email', 'email'),
+			array('name, url, token, created', 'required'),
+            array('name, url, user_id', 'unique'),
 			array('status', 'numerical', 'integerOnly'=>true),
-			array('name, email, password, url, token', 'length', 'max'=>128),
+			array('name, url, token', 'length', 'max'=>128),
 			array('status', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, email, password, url, token, status, created', 'safe', 'on'=>'search'),
+			array('id, name,url, token, status, created', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,6 +56,7 @@ abstract class BaseInstitution extends GxActiveRecord {
 			'collections' => array(self::HAS_MANY, 'Collection', 'institution_id'),
 			'licences' => array(self::HAS_MANY, 'Licence', 'institution_id'),
 			'medias' => array(self::HAS_MANY, 'Media', 'institution_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
 	}
 
@@ -69,8 +69,6 @@ abstract class BaseInstitution extends GxActiveRecord {
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'name' => Yii::t('app', 'Name'),
-			'email' => Yii::t('app', 'Email'),
-			'password' => Yii::t('app', 'Password'),
 			'url' => Yii::t('app', 'Url'),
 			'token' => Yii::t('app', 'Token'),
 			'status' => Yii::t('app', 'Status'),
@@ -78,6 +76,8 @@ abstract class BaseInstitution extends GxActiveRecord {
 			'collections' => null,
 			'licences' => null,
 			'medias' => null,
+            'user_id' => null,
+            'user' => null
 		);
 	}
 
@@ -86,12 +86,11 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('name', $this->name, true);
-		$criteria->compare('email', $this->email, true);
-		$criteria->compare('password', $this->password, true);
 		$criteria->compare('url', $this->url, true);
 		$criteria->compare('token', $this->token, true);
 		$criteria->compare('status', $this->status);
 		$criteria->compare('created', $this->created, true);
+        $criteria->compare('user_id', $this->user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
