@@ -51,8 +51,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
       'id'=>'institution-ids',
     ),
 		'name',
-		'email',
-		'password',
 		'url',
 		'token',
 		/*
@@ -69,13 +67,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
       ),
   ),
 )  ),
-)); 
+));
 echo CHtml::endForm();
 
 $this->widget('ext.gridbatchaction.GridBatchAction', array(
       'formId'=>'institution-form',
       'checkBoxId'=>'institution-ids',
-      'ajaxGridId'=>'institution-grid', 
+      'ajaxGridId'=>'institution-grid',
       'items'=>array(
           array('label'=>Yii::t('ui','Ban selected institution'),'url'=>array('batch', 'op' => 'ban'))
       ),
