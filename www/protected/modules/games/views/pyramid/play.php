@@ -16,6 +16,7 @@
     </header>
 
     <div id="gamearea" class="group">
+        <div id="pass" class="level_1">Pass!</div>
         <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your
             browser.
         </div>
@@ -37,29 +38,15 @@
     </div>
 </footer>
 <div style="height: 0px; padding: 0; margin: 0; overflow:scroll;">
-    <audio id="next_level" >
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/nextlevel.ogg'?>" type="audio/ogg">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/nextlevel.mp3'?>" type="audio/mpeg">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/nextlevel.wav'?>" type="audio/wav">
-    </audio>
-    <audio id='try_again' style="height: 0px;">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/tryagain.ogg'?>" type="audio/ogg">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/tryagain.mp3'?>" type="audio/mpeg">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/tryagain.wav'?>" type="audio/wav">
-    </audio>
-    <audio id='key_up' style="height: 0px;">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/tryagain.ogg'?>" type="audio/ogg">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/tryagain.mp3'?>" type="audio/mpeg">
-        <source src="<?php echo GamesModule::getAssetsUrl() . '/pyramid/audio/tryagain.wav'?>" type="audio/wav">
-    </audio>
+
     <script id="template-licence" type="text/x-jquery-tmpl">
         <h4>${name}</h4>
 
         <p>${description}</p>
     </script>
 
-    <script id="template-turn-ping" type="text/x-jquery-tmpl">
-        <audio id='turn_ping' style="height: 0px;">
+    <script id="template-make-sound" type="text/x-jquery-tmpl">
+        <audio id='make_sound' style="height: 0px;">
             <source src="${ogg_path}" type="audio/ogg">
             <source src="${mp3_path}" type="audio/mpeg">
         </audio>
@@ -81,7 +68,7 @@
         <a href="${url}">Click here to learn more about ${name}</a>
     </script>
     <script id="template-final-info" type="text/x-jquery-tmpl">
-        <div class="final">${finalMsg}</div>
+        <div class="final">${finalMsg}<br />${finalMsg_2ndline}</div>
         <div class="level_9 pyramid">&nbsp;</div>
         <div class="level_8 pyramid">&nbsp;</div>
         <div class="level_7 pyramid">&nbsp;</div>

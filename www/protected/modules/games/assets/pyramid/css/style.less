@@ -3,9 +3,14 @@
   background-repeat: @repeat;
   @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
 
-  @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+  @media all and  (-webkit-min-device-pixel-ratio : 1.5) and (max-height: 550px),
+  only screen and (    min--moz-device-pixel-ratio: 1.5) and (max-height: 550px),
+  only screen and (      -o-max-device-pixel-ratio: 2/1) and (max-height: 550px),
+  only screen and (         min-device-pixel-ratio: 1.5) and (max-height: 550px),
+  only screen and (              min-resolution: 192dpi) and (max-height: 550px),
+  only screen and (               min-resolution: 2dppx) and (max-height: 550px) {
     background-image: url(@at2x_path);
-    background-size: @w @h;
+    //background-size: @w @h;
     background-repeat: @repeat;
   }
 }
@@ -34,6 +39,48 @@ body {
 
 body {
   height: 100%;
+
+  #pass {
+    width: 50px;
+    background: #ffce13;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 20px;
+    right: 0;
+    z-index: 999;
+    position: absolute;
+
+    &.level_1 {
+      background: #ffce13;
+    }
+    &.level_2 {
+      background: #ffc113;
+    }
+    &.level_3 {
+      background: #ffb513;
+    }
+    &.level_4 {
+      background: #ffa813;
+    }
+    &.level_5 {
+      background: #ff9b13;
+    }
+    &.level_6 {
+      background: #ff8e13;
+    }
+    &.level_7 {
+      background: #ff8113;
+    }
+    &.level_8 {
+      background: #ff7413;
+    }
+    &.level_9 {
+      background: #ff6813;
+    }
+
+  }
 
   p, div, li, input {
     font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
@@ -400,10 +447,11 @@ input#word {
 /* Style the Text Field inside the fieldholder DIV */
 #input_area input {
   max-width: 350px;  /* 550 - 20px margin */
-  height: 42px; /* Should be 40px, but seems to be taller than the form? */
+  height: 48px; /* Should be 40px, but seems to be taller than the form? */
   border: none;
   background: transparent;
   margin: 3px 0px 0px 20px;
+  padding: 0px !important;
 }
 
 .spacial_font {
@@ -520,12 +568,13 @@ input#word {
 }
 
 #fieldholder .final {
-  font-size: 16px;
+  font-size: 35px;
   color: #464a4d;
   line-height: 46px;
   background-color: #ebebeb;
   margin: 0px;
-  padding: 0 0 0 295px;
+  border: 1px solid #EBEBEB;
+  width: 99.9%;
 }
 
 .new_game {
@@ -560,6 +609,7 @@ input#word {
     font-size: 25px !important;
     //background-color: white;
     color: white;
+    margin-left: 10px !important;
   }
 }
 
@@ -664,12 +714,12 @@ body.touch_device {
 
 // For retina display
 @media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-max-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (           min-resolution: 192dpi),
-only screen and (            min-resolution: 2dppx) {
+       all and  (-webkit-min-device-pixel-ratio : 1.5) and (max-height: 550px),
+only screen and (    min--moz-device-pixel-ratio: 1.5) and (max-height: 550px),
+only screen and (      -o-max-device-pixel-ratio: 2/1) and (max-height: 550px),
+only screen and (         min-device-pixel-ratio: 1.5) and (max-height: 550px),
+only screen and (              min-resolution: 192dpi) and (max-height: 550px),
+only screen and (               min-resolution: 2dppx) and (max-height: 550px) {
 
   body {
     header {
@@ -788,9 +838,18 @@ only screen and (            min-resolution: 2dppx) {
     display: none;
   }
 
+  #button-play-again {
+    line-height: 67px;
+    span {
+      line-height: 67px;
+      height: 67px;
+    }
+  }
+
+
   #input_area input {
     margin: 3px 0px 0 0px;
-    max-width: 240px !important;
+    min-width: 220px !important;
     height: 30px;
     font-size: 25px;
     letter-spacing: 5px;
@@ -824,6 +883,27 @@ only screen and (            min-resolution: 2dppx) {
         }
     */
   }
+
+  ::-webkit-input-placeholder {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  :-ms-input-placeholder {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
 
   .hasCountdown {
     width: 70px !important;
@@ -865,20 +945,9 @@ only screen and (            min-resolution: 2dppx) {
   }
 
   #fieldholder .final {
-    font-size: 16px;
-    line-height: 46px;
-    padding: 0 0 0 15px;
+    font-size: 20px !important;
+    line-height: 25px;
   }
-}
-
-//
-@media
-only screen and (-webkit-max-device-pixel-ratio: 2)      and (max-height: 550px),
-only screen and (   max--moz-device-pixel-ratio: 2)      and (max-height: 550px),
-only screen and (     -o-max-device-pixel-ratio: 2/1)    and (max-height: 550px),
-only screen and (        max-device-pixel-ratio: 2)      and (max-height: 550px),
-only screen and (           max-resolution: 192dpi)      and (max-height: 550px),
-only screen and (            max-resolution: 2dppx)      and (max-height: 550px) {
 
   .spacial_font {
     &.size_20 {
@@ -917,7 +986,7 @@ only screen and (            max-resolution: 2dppx)      and (max-height: 550px)
   }
 
   #fieldholder .final {
-    padding: 0 !important;
+    font-size: 20px !important;
   }
 }
 
@@ -938,3 +1007,13 @@ only screen and (            max-resolution: 2dppx)      and (max-height: 550px)
 .text_left {
   text-align: left;
 }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  /* Safari only override */
+  :i-block-chrome, input {
+    &.level_1 {
+      background: url('../images/underscore_1@2x.png') !important;
+    }
+  }
+}
+
