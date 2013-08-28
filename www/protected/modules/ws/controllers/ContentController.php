@@ -104,6 +104,10 @@ class ContentController extends CController
                 return Status::getStatus(StatusCode::LOGON_ERROR(), "Invalid token!");
             }
 
+            if(!($collection->id>0)){
+                return Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), "Please set collection id!");
+            }
+
             $lModel = Licence::model()->find('id = 1');
 
             if ($collection->licenceID > 0) {

@@ -24,8 +24,6 @@ $this->menu = array(
     'attributes' => array(
         'id',
         'name',
-        'email',
-        'password',
         'url',
         'token',
         array(
