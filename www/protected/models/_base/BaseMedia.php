@@ -18,6 +18,8 @@
  * @property integer $locked
  * @property string $created
  * @property string $modified
+ * @property integer $institution_id
+ * @property integer $remote_id
  *
  * @property Collection[] $collections
  * @property TagUse[] $tagUses

@@ -29,7 +29,11 @@ CREATE  TABLE IF NOT EXISTS `licence` (
   `description` TEXT NULL ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) )
+  `institution_id` INT(11) NULL ,
+  `remote_id` INT(11) NULL ,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `institution_id` (`institution_id`,`remote_id`),
+  CONSTRAINT `fk_licence_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`))
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
 
@@ -47,13 +51,13 @@ CREATE  TABLE IF NOT EXISTS `collection` (
   `last_access_interval` INT NOT NULL DEFAULT 0 ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
+  `institution_id` INT(11) NULL ,
+  `remote_id` INT(11) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_collections_licences1` (`licence_id` ASC) ,
-  CONSTRAINT `fk_collections_licences1`
-    FOREIGN KEY (`licence_id` )
-    REFERENCES `licence` (`id` )
-    ON DELETE SET NULL
-    ON UPDATE NO ACTION)
+  UNIQUE KEY `institution_id` (`institution_id`,`remote_id`),
+  CONSTRAINT `fk_collections_licences1` FOREIGN KEY (`licence_id` ) REFERENCES `licence` (`id` ) ON DELETE SET NULL ON UPDATE NO ACTION,
+  CONSTRAINT `fk_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`))
 ENGINE = InnoDB DEFAULT CHARSET=UTF8 DEFAULT CHARSET=UTF8;
 
 
@@ -194,7 +198,11 @@ CREATE  TABLE IF NOT EXISTS `media` (
   `locked` INT(1) NOT NULL DEFAULT 0 ,
   `created` DATETIME NOT NULL ,
   `modified` DATETIME NOT NULL ,
-  PRIMARY KEY (`id`) )
+  `institution_id` INT(11) NULL ,
+  `remote_id` INT(11) NULL ,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `institution_id` (`institution_id`,`remote_id`),
+  CONSTRAINT `fk_licence_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`))
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
 
@@ -756,16 +764,16 @@ DROP TABLE IF EXISTS `institution` ;
 CREATE TABLE IF NOT EXISTS `institution` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `password` varchar(128) NOT NULL,
   `url` varchar(128) NOT NULL,
   `token` varchar(128) NOT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,
+  `user_id` INT(11) NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `url` (`url`)
+  UNIQUE KEY `url` (`url`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `fk_institution_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

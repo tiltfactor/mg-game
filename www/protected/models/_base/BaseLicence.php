@@ -14,73 +14,93 @@
  * @property string $description
  * @property string $created
  * @property string $modified
+ * @property integer $institution_id
+ * @property integer $remote_id
  *
  * @property Collection[] $collections
  */
-abstract class BaseLicence extends GxActiveRecord {
+abstract class BaseLicence extends GxActiveRecord
+{
 
-	public static function model($className=__CLASS__) {
-		return parent::model($className);
-	}
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 
-	public function tableName() {
-		return 'licence';
-	}
+    public function tableName()
+    {
+        return 'licence';
+    }
 
-	public static function label($n = 1) {
-		return Yii::t('app', 'Licence|Licences', $n);
-	}
+    public static function label($n = 1)
+    {
+        return Yii::t('app', 'Licence|Licences', $n);
+    }
 
-	public static function representingColumn() {
-		return 'name';
-	}
+    public static function representingColumn()
+    {
+        return 'name';
+    }
 
-	public function rules() {
+    public function rules()
+    {
 		return array(
-			array('name, created, modified', 'required'),
-			array('name', 'length', 'max'=>64),
-			array('description', 'safe'),
-			array('description', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, description, created, modified', 'safe', 'on'=>'search'),
+            array('name, created, modified', 'required'),
+            array('name', 'length', 'max' => 64),
+            array('description', 'safe'),
+            array('description', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, name, description, created, modified', 'safe', 'on' => 'search'),
+            array('remote_id', 'unique', 'criteria' => array(
+                'condition' => '`institution_id`=:secondKey',
+                'params' => array(
+                    ':secondKey' => $this->institution_id
+                )
+            ))
 		);
 	}
 
-	public function relations() {
-		return array(
-			'collections' => array(self::HAS_MANY, 'Collection', 'licence_id'),
-		);
-	}
+    public function relations()
+    {
+        return array(
+            'collections' => array(self::HAS_MANY, 'Collection', 'licence_id'),
+        );
+    }
 
-	public function pivotModels() {
-		return array(
-		);
-	}
+    public function pivotModels()
+    {
+        return array(
+        );
+    }
 
-	public function attributeLabels() {
-		return array(
-			'id' => Yii::t('app', 'ID'),
-			'name' => Yii::t('app', 'Name'),
-			'description' => Yii::t('app', 'Description'),
-			'created' => Yii::t('app', 'Created'),
-			'modified' => Yii::t('app', 'Modified'),
-			'collections' => null,
-		);
-	}
+    public function attributeLabels()
+    {
+        return array(
+            'id' => Yii::t('app', 'ID'),
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
+            'created' => Yii::t('app', 'Created'),
+            'modified' => Yii::t('app', 'Modified'),
+            'collections' => null,
+        );
+    }
 
-	public function search() {
-		$criteria = new CDbCriteria;
+    public function search()
+    {
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
-		$criteria->compare('name', $this->name, true);
-		$criteria->compare('description', $this->description, true);
-		$criteria->compare('created', $this->created, true);
-		$criteria->compare('modified', $this->modified, true);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('name', $this->name, true);
+        $criteria->compare('description', $this->description, true);
+        $criteria->compare('created', $this->created, true);
+        $criteria->compare('modified', $this->modified, true);
+        $criteria->compare('institution_id', $this->institution_id, true);
+        $criteria->compare('remote_id', $this->remote_id, true);
 
-		return new CActiveDataProvider($this, array(
-			'criteria' => $criteria,
-			'pagination'=>array(
-        'pageSize'=>Yii::app()->fbvStorage->get("settings.pagination_size"),
-      ),
-		));
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->fbvStorage->get("settings.pagination_size"),
+            ),
+        ));
+    }
 }

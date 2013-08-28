@@ -26,6 +26,7 @@
  * @property Session[] $sessions
  * @property Game[] $games
  * @property SubjectMatter[] $subjectMatters
+ * @property Institution $institution
  */
 abstract class BaseUser extends GxActiveRecord {
 
@@ -65,6 +66,7 @@ abstract class BaseUser extends GxActiveRecord {
 			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
 			'games' => array(self::MANY_MANY, 'Game', 'user_to_game(user_id, game_id)'),
 			'subjectMatters' => array(self::MANY_MANY, 'SubjectMatter', 'user_to_subject_matter(user_id, subject_matter_id)'),
+            'institution' => array(self::HAS_ONE, 'Institution', 'user_id'),
 		);
 	}
 

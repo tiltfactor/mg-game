@@ -149,6 +149,14 @@ return array (
       'role' => 'admin',
       'group' => 'Other',
     ),
+	'tool-institution' =>
+      array (
+          'name' => 'Institution',
+          'description' => 'Manage MG Content Server register to MG Game Server',
+          'url' => '/admin/institution',
+          'role' => 'admin',
+          'group' => 'Other',
+      ),
   ),
   'games' => 
   array (
