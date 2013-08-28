@@ -15,8 +15,15 @@ class PyramidGame extends NexTagGame
         $data = array();
         $mediaId = 0;
         $currentTag = "";
+        $pass = false;
         // loop through all submissions for this turn and set ONLY THE FIRST TAG
         foreach ($game->request->submissions as $submission) {
+            $pass_value = $submission["pass"];
+            if ($pass_value == "true") {
+                $mediaId = $submission["media_id"];
+                $pass = true;
+                break;
+            }
             $mediaId = $submission["media_id"];
             $mediaTags = array();
             // Attempt to extract these
@@ -39,8 +46,20 @@ class PyramidGame extends NexTagGame
         if (is_null($level)) {
             $level = new PyramidDTO();
             $level->level = 1;
-            $level->isAccepted = false;
+            if ($pass) {
+                $level->isAccepted = true;
+            }
+            else {
+                $level->isAccepted = false;
+            }
         } else if ($level->isAccepted) {
+            //Move to next level
+            $level->level++;
+            $level->levelTurn = 0;
+            $level->isAccepted = false;
+            $level->countTags = 0;
+            $level->tag = "";
+        } else if ($pass) {
             //Move to next level
             $level->level++;
             $level->levelTurn = 0;
@@ -69,7 +88,7 @@ class PyramidGame extends NexTagGame
             $level->isAccepted = false;
             $level->tag = $currentTag;
 
-            if ($found && ($level->level + PyramidGame::$LETTERS_STEP) == strlen($currentTag)) {
+            if ($pass || ($found && ($level->level + PyramidGame::$LETTERS_STEP) == strlen($currentTag))) {
                 //the answer is marked as correct and the player moves on to the next length tag
                 $level->isAccepted = true;
             } else if (($level->level + PyramidGame::$LETTERS_STEP) == strlen($currentTag)) {
