@@ -24,6 +24,7 @@ return array(
     'ext.yii-flash.*',
     'application.helpers.*',
     'application.modules.games.*',
+	'application.modules.ws.*',
     'application.modules.plugins.*',
     'application.modules.plugins.components.*',
     'ext.yii-mail.YiiMailMessage',
@@ -35,6 +36,7 @@ return array(
     'plugins',
     'api',
     'games',
+	'ws',
   ),
 
   // application components
