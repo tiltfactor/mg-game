@@ -4,15 +4,11 @@
  */
 class OneUp extends MGGameModel implements MGGameModelInterface
 {
-    public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
     public $name = "OneUp";
     public $arcade_image = "zenpond_arcade.png";
     public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
-    public $more_info_url = "";
     public $turns = 3;
     public $submissions = 3;
-    public $image_width = 450;
-    public $image_height = 450;
 
     public function rules() {
         return array(
