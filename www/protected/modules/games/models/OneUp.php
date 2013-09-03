@@ -2,7 +2,7 @@
 
 /**
  */
-class OneUp extends MGGameModel implements MGGameModelInterface
+class OneUp extends MGGameModel
 {
     public $name = "OneUp";
     public $arcade_image = "zenpond_arcade.png";

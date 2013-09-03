@@ -2,14 +2,14 @@
 
 /**
  */
-class ZenTag extends MGGameModel implements MGGameModelInterface
+class ZenTag extends MGGameModel
 {
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
   public $name = "Zen Tag";
   public $arcade_image = "zentag_arcade.png";
   public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
   public $more_info_url = "";
-	public $play_once_and_move_on = 0;
+  public $play_once_and_move_on = 0;
   public $play_once_and_move_on_url = "";
   public $turns = 4;
   public $image_width = 450;

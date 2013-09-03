@@ -2,7 +2,7 @@
 
 /**
  */
-class ZenTagPlayOnceMoveOn extends ZenTag implements MGGameModelInterface
+class ZenTagPlayOnceMoveOn extends ZenTag
 {
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
   public $name = "Zen Tag (Play Once Move On)";

@@ -276,7 +276,7 @@ class GamesController extends ApiController {
         
         $call = (object)$_POST['call'];
         if (isset($call->method) && trim($call->method) != "") {
-          
+
           $game = GamesModule::loadGame($gid);
           if($game && $game->game_model) {
             
@@ -481,7 +481,7 @@ class GamesController extends ApiController {
       // lock the table for other players reads until the current user has done his game_partner search
       // this is needed to avoid freak conditions where two users read at the same time the game_partner table and
       // register themselves as second player for the same game partner request
-      Yii::app()->db->createCommand("LOCK TABLES {{game_partner}} WRITE, {{played_game}} WRITE, {{game_partner}} gp WRITE, {{session}} s READ, {{game}} WRITE")->execute(); 
+      Yii::app()->db->createCommand("LOCK TABLES {{game_partner}} WRITE, {{played_game}} WRITE, {{game_partner}} gp WRITE, {{session}} s READ, {{game}} WRITE")->execute();
       
       // does someone wait to play?
       $partner_session = Yii::app()->db->createCommand()
@@ -517,7 +517,7 @@ class GamesController extends ApiController {
         
         $game->game_partner_id = $game_partner->id;
       }
-      Yii::app()->db->createCommand("UNLOCK TABLES")->execute(); 
+      Yii::app()->db->createCommand("UNLOCK TABLES")->execute();
     } else {
       // the user waits for a partner. 
       

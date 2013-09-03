@@ -79,11 +79,11 @@ class StopWordPlugin extends MGDictionaryPlugin  {
    * is a stopword the tag's weight is set to 0 and the type as marked as 'stopword'. Each
    * stopped tag will increase the stop words counter.  
    * 
-   * @param object $game The game object
-   * @param object $game_model The game model
+   * @param MGGameModel $gameModel The game object
    * @param array $tags the tags to be looked up as a single dimension array array('tag1', 'tag2', ...)
+   * @return array
    */
-  function setWeights(&$game, &$game_model, $tags) {
+  function setWeights(&$gameModel, $tags) {
     $stop_words = StopWord::getStopWordList();
     
     if (count($stop_words)) {

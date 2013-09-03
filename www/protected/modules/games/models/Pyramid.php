@@ -3,7 +3,7 @@
  *
  * @package
  */
-class Pyramid extends MGGameModel implements MGGameModelInterface
+class Pyramid extends MGGameModel
 {
     public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
     public $name = "Pyramid";

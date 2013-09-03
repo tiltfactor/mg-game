@@ -2,7 +2,7 @@
 
 /**
  */
-class ZenPond extends MGGameModel implements MGGameModelInterface
+class ZenPond extends MGGameModel
 {
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
   public $name = "Zen Pond";

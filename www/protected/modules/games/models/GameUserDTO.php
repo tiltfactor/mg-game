@@ -6,6 +6,10 @@
 class GameUserDTO
 {
     /**
+     * @var int
+     */
+    public $id;
+    /**
      * @var string
      */
     public $username;

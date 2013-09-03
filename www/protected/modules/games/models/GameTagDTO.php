@@ -27,4 +27,85 @@ class GameTagDTO
      * @var integer
      */
     public $mediaId;
+
+    /**
+     * @var string
+     */
+    public $type;
+
+    /**
+     * @var int
+     */
+    public $tag_id;
+
+    /**
+     * array(1) {
+     *      [media_id]=>
+     *      array(1) {
+     *           ["tag"]=>
+     *              array(4) {
+     *                   ["tag"]=>""
+     *                   ["weight"]=>int(1)
+     *                   ["type"]=>string
+     *                   ["tag_id"]=>int(0)
+     *          }
+     *      }
+     * }
+     * @static
+     * @param array $tags
+     * @return GameTagDTO[]
+     */
+    public static function createFromArray($tags)
+    {
+        $tagsDto = array();
+        foreach ($tags as $mediaId => $tag) {
+            foreach ($tag as $key => $value) {
+                $t = new GameTagDTO();
+                $t->mediaId = $mediaId;
+                $t->tag = $value['tag'];
+                $t->weight = $value['weight'];
+                $t->type = $value['type'];
+                $t->tag_id = $value['tag_id'];
+                array_push($tagsDto, $t);
+                break;
+            }
+        }
+        return $tagsDto;
+    }
+
+    /**
+     * @static
+     * @param GameTagDTO[] $tags
+     * @return array
+     */
+    public static function convertToArray($tags)
+    {
+        $tagsArr = array();
+        foreach ($tags as $tag) {
+            $tagsArr[$tag->mediaId] = array();
+            $tagsArr[$tag->mediaId][$tag->tag] = array();
+            $tagsArr[$tag->mediaId][$tag->tag]["tag"] = $tag->tag;
+            $tagsArr[$tag->mediaId][$tag->tag]["weight"] = $tag->weight;
+            $tagsArr[$tag->mediaId][$tag->tag]["type"] = $tag->type;
+            $tagsArr[$tag->mediaId][$tag->tag]["tag_id"] = $tag->tag_id;
+        }
+        return $tagsArr;
+    }
+
+    /**
+     * @static
+     * @param string $json
+     * @return GameTagDTO
+     */
+    static public function createFromJson($json)
+    {
+        $json = json_decode($json);
+        if (is_object($json)) {
+            $object = new self();
+            foreach ($json as $key => $value) {
+                $object->{$key} = $value;
+            }
+        }
+        return $object;
+    }
 }

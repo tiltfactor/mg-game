@@ -317,7 +317,7 @@ class GuessWhatGame extends MGGame implements MGGameInterface {
       foreach ($plugins as $plugin) {
         if (method_exists($plugin->component, "setWeights")) {
           // influence the weight of the tags
-          $tags = $plugin->component->setWeights($game, $game_model, $tags);
+          $tags = $plugin->component->setWeights($game_model, $tags);
         }
       }
     }

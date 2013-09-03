@@ -613,10 +613,12 @@ ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 DROP TABLE IF EXISTS `game_player` ;
 
 CREATE  TABLE IF NOT EXISTS `game_player` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `session_id` INT(11) NOT NULL ,
   `game_id` INT(11) NOT NULL ,
   `status` int(1) NOT NULL DEFAULT '0',
   `created` DATETIME NOT NULL ,
+   PRIMARY KEY (`id`) ,
   INDEX `fk_game_player_session` (`session_id` ASC) ,
   INDEX `fk_game_player_game` (`game_id` ASC) ,
   CONSTRAINT `fk_game_player_session` FOREIGN KEY (`session_id` ) REFERENCES `session` (`id` ),

@@ -9,6 +9,7 @@
  * Columns in table "game_player" available as properties of the model,
  * followed by relations of table "game_player" available as properties of the model.
  *
+ * @property integer $id
  * @property integer $session_id
  * @property integer $game_id
  * @property integer $status
@@ -32,17 +33,15 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 	}
 
 	public static function representingColumn() {
-		return 'token';
+		return 'created';
 	}
 
 	public function rules() {
 		return array(
-			array('username, session_id, game_id, token, created', 'required'),
+			array('session_id, game_id, created', 'required'),
 			array('session_id, game_id, status', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>32),
-			array('token', 'length', 'max'=>128),
 			array('status', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('username, session_id, game_id, status, token, created', 'safe', 'on'=>'search'),
+			array('id, session_id, game_id, status, created', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,11 +59,10 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 
 	public function attributeLabels() {
 		return array(
-			'username' => Yii::t('app', 'Username'),
+			'id' => Yii::t('app', 'ID'),
 			'session_id' => null,
 			'game_id' => null,
 			'status' => Yii::t('app', 'Status'),
-			'token' => Yii::t('app', 'Token'),
 			'created' => Yii::t('app', 'Created'),
 			'session' => null,
 			'game' => null,
@@ -74,11 +72,10 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 	public function search() {
 		$criteria = new CDbCriteria;
 
-		$criteria->compare('username', $this->username, true);
+		$criteria->compare('id', $this->id);
 		$criteria->compare('session_id', $this->session_id);
 		$criteria->compare('game_id', $this->game_id);
 		$criteria->compare('status', $this->status);
-		$criteria->compare('token', $this->token, true);
 		$criteria->compare('created', $this->created, true);
 
 		return new CActiveDataProvider($this, array(

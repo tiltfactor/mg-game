@@ -6,6 +6,47 @@
 abstract class MGMultiPlayer extends CComponent
 {
     /**
+     * @var MGGameModel
+     */
+    protected $game;
+    /**
+     * @var GameDTO
+     */
+    public $gameDTO;
+    /**
+     * @var GameUserDTO
+     */
+    public $userDTO;
+
+    function __construct($unique_id, $active = true)
+    {
+        $this->game = GamesModule::loadGameFromDB($unique_id);
+        $this->game->fbvLoad();
+
+        $this->gameDTO = new GameDTO();
+        $this->gameDTO->baseUrl = Yii::app()->getRequest()->getHostInfo();
+        $this->gameDTO->gameBaseUrl = Yii::app()->createUrl('games/' . $unique_id);
+        $this->gameDTO->apiBaseUrl = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/api');
+        $this->gameDTO->gameImageUrl = GamesModule::getAssetsUrl() . '/' . strtolower($unique_id) . '/images/' . (isset($this->game->arcade_image) ? $this->game->arcade_image : '');
+
+        $this->userDTO = new GameUserDTO();
+        $this->userDTO->username = Yii::app()->user->name;
+        $this->userDTO->scores = 0;
+        $this->userDTO->numberPlayed = 0;
+        if (!Yii::app()->user->isGuest && (isset($this->game->id))) {
+            $game_info = GamesModule::loadUserToGameInfo(Yii::app()->user->id, $this->game->id);
+            if ($game_info) {
+                $this->userDTO->scores = $game_info->score;
+                $this->userDTO->numberPlayed = $game_info->number_played;
+            }
+        }
+    }
+
+    public function play()
+    {
+    }
+
+    /**
      * @param GameDTO $game
      * @param GameTurnDTO $turn
      * @return null|integer
@@ -199,17 +240,16 @@ abstract class MGMultiPlayer extends CComponent
     }
 
     /**
-     * @param MGGameModel $game
      * @return boolean
      */
-    public function registerGamePlayer($game)
+    public function registerGamePlayer()
     {
         $apiId = Yii::app()->fbvStorage->get("api_id", "MG_API");
         $sessionId = (int)Yii::app()->session[$apiId . '_SESSION_ID'];
 
         $gamePlayer = new GamePlayer();
         $gamePlayer->session_id = $sessionId;
-        $gamePlayer->game_id = $game->id;
+        $gamePlayer->game_id = $this->game->id;
         $gamePlayer->created = date('Y-m-d H:i:s');
         $gamePlayer->status = GamePlayer::STATUS_WAIT;
 
@@ -224,46 +264,155 @@ abstract class MGMultiPlayer extends CComponent
      * Attempts to pair the waiting player with a second one.
      *
      * @param string $username
-     * @param MGGameModel $game the game object
-     * @param object $game_model the model representing the game in the database
-     * @param object $game_engine the game engine of the game
-     * @return boolean false if no partner found true if a partner has been found and the played_game is entered into the database
+     * @return GameUserDTO
      */
-    protected function getPlayer($username, $game)
+    public function requestPair($username)
     {
-
         $apiId = Yii::app()->fbvStorage->get("api_id", "MG_API");
         $sessionId = (int)Yii::app()->session[$apiId . '_SESSION_ID'];
-        $found = false;
+        $opponent = null;
 
-        Yii::app()->db->createCommand("LOCK TABLES {{game_player}} READ")->execute();
+        //Yii::app()->db->createCommand("LOCK TABLES {{game_player}} WRITE,{{game_player}} gp WRITE")->execute();
 
         $player = null;
         $criteria = new CDbCriteria;
         $criteria->alias = 'gp';
-        $criteria->select = 'gp.*';
         if ($username && !empty($username)) {
             $criteria->join = "  LEFT JOIN {{session}} s ON s.id=gp.session_id";
-            $criteria->condition('gp.game_id = :gameID AND gp.session_id_1 <> :sessionID AND s.username=:username AND gp.status=:status');
-            $criteria->params = array(":gameID" => $game->id, ":sessionID" => $sessionId, ":username" => $username, ":status" => GamePlayer::STATUS_WAIT);
+            $criteria->condition = 'gp.game_id = :gameID AND gp.session_id <> :sessionID AND s.username=:username AND gp.status=:status';
+            $criteria->params = array(":gameID" => $this->game->id, ":sessionID" => $sessionId, ":username" => $username, ":status" => GamePlayer::STATUS_WAIT);
         } else {
-            $criteria->condition('gp.game_id = :gameID AND gp.session_id_1 <> :sessionID AND gp.status=:status');
-            $criteria->params = array(":gameID" => $game->id, ":sessionID" => $sessionId, ":username" => $username, ":status" => GamePlayer::STATUS_WAIT);
+            $criteria->condition = 'gp.game_id = :gameID AND gp.session_id <> :sessionID AND gp.status=:status';
+            $criteria->params = array(":gameID" => $this->game->id, ":sessionID" => $sessionId, ":username" => $username, ":status" => GamePlayer::STATUS_WAIT);
         }
-        $player = GamePlayer::model()->find($criteria);
-        $paired = false;
+        $player = GamePlayer::model()->with('session')->find($criteria);
         if ($player) {
             $player->status = GamePlayer::STATUS_PAIR;
-            if ($player->save()) {
+            if ($player->update()) {
                 //todo: send push notification
-                $currentPlayer = GamePlayer::model()->find('session_od =:sessionId AND remote_id=:remoteID', array(':sessionId' => $sessionId));
+                $currentPlayer = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
                 $currentPlayer->status = GamePlayer::STATUS_PAIR;
                 if ($currentPlayer->save()) {
-                    $paired = true;
+                    $opponent = new GameUserDTO();
+                    $opponent->id = $player->session_id;
+                    $opponent->username = $player->session->username;
                 }
             }
         }
         Yii::app()->db->createCommand("UNLOCK TABLES")->execute();
-        return $paired;
+        return $opponent;
+    }
+
+    public function pair($sessionId)
+    {
+        $oponent = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
+
+        $apiId = Yii::app()->fbvStorage->get("api_id", "MG_API");
+        $playerSessionId = (int)Yii::app()->session[$apiId . '_SESSION_ID'];
+        $player = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $playerSessionId));
+
+        $oponent->status = GamePlayer::STATUS_PLAY;
+        if (!$oponent->save()) {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
+
+        $player->status = GamePlayer::STATUS_PLAY;
+        if (!$player->save()) {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
+
+        $playedGameId = $this->createPlayedGame($playerSessionId, $sessionId, $this->game->id);
+        $this->game->saveCounters(array('number_played' => 1));
+
+        // todo: send push notification
+    }
+
+    /**
+     * @param int $sessionId
+     * @throws CHttpException
+     */
+    public function rejectPair($sessionId)
+    {
+        $oponent = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
+
+        $apiId = Yii::app()->fbvStorage->get("api_id", "MG_API");
+        $playerSessionId = (int)Yii::app()->session[$apiId . '_SESSION_ID'];
+        $player = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $playerSessionId));
+
+        $oponent->status = GamePlayer::STATUS_WAIT;
+        if (!$oponent->save()) {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
+
+        $player->status = GamePlayer::STATUS_WAIT;
+        if (!$player->save()) {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
+
+
+        // todo: send push notification
+    }
+
+    /**
+     * @param int $session_id_1
+     * @param int $session_id_2
+     * @param int $game_id
+     * @return int
+     * @throws CHttpException
+     */
+    private function createPlayedGame($session_id_1, $session_id_2, $game_id)
+    {
+        $played_game = new PlayedGame;
+        $played_game->session_id_1 = (int)$session_id_1;
+        $played_game->session_id_2 = (int)$session_id_2;
+        $played_game->game_id = $game_id;
+        $played_game->created = date('Y-m-d H:i:s');
+        $played_game->modified = date('Y-m-d H:i:s');
+
+        if ($played_game->validate()) {
+            $played_game->save();
+        } else {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
+
+        return $played_game->id;
+    }
+
+    /**
+     * Allows to implement weighting of the submitted tags. Here you should usually
+     * provide hooks to the setWeight methods of the dictionary and weighting plugins.
+     *
+     * @param MGGameModel $gameModel The game model
+     * @param GameTagDTO[] tags submitted by the player for each media
+     * @return GameTagDTO[] the tags (with additional weight information)
+     */
+    public function setWeights(&$gameModel, $tags)
+    {
+        // call the set setWeights method of all activated dictionary plugins
+        $plugins = PluginsModule::getActiveGamePlugins($gameModel->id, "dictionary");
+        if (count($plugins) > 0) {
+            foreach ($plugins as $plugin) {
+                if (method_exists($plugin->component, "setWeights")) {
+                    // influence the weight of the tags
+                    $result = $plugin->component->setWeights($gameModel, GameTagDTO::convertToArray($tags));
+                    $tags = GameTagDTO::createFromArray($result);
+                }
+            }
+        }
+        return $tags;
+    }
+
+    /**
+     * This method should hold the implementation that allows the scoring
+     * of the turn's submitted tags.
+     *
+     * @param MGGameModel $gameModel The game object
+     * @param GameTagDTO[] $tags The game model
+     * @return int the score for this turn
+     */
+    public function getScore(&$gameModel, $tags)
+    {
+        $score = 0;
+        return $score;
     }
 }

@@ -33,4 +33,21 @@ class GameTurnDTO
      * @var string[]
      */
     public $wordsToAvoid;
+
+    /**
+     * @static
+     * @param string $json
+     * @return GameTurnDTO
+     */
+    static public function createFromJson($json)
+    {
+        $json = json_decode($json);
+        if (is_object($json)) {
+            $object = new self();
+            foreach ($json as $key => $value) {
+                $object->{$key} = $value;
+            }
+        }
+        return $object;
+    }
 }
