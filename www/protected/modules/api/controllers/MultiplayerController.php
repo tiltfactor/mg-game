@@ -35,7 +35,7 @@ class MultiplayerController extends ApiController
 
     /**
      * Register a player to the game
-     * string JSON response with status message on success will be send
+     * string JSON response with game and user info message on success will be send
      *
      * @param $gid
      * @throws CHttpException
@@ -43,12 +43,13 @@ class MultiplayerController extends ApiController
     public function actionRegister($gid)
     {
         $data = array();
-        $data['status'] = "ok";
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
         if ($gameEngine->registerGamePlayer()) {
+            $data['game'] = $gameEngine->getGameInfo();
+            $data['user'] = $gameEngine->getUserInfo();
             $this->sendResponse($data);
         } else {
             throw new CHttpException(400, Yii::t('app', 'Invalid request.'));
@@ -105,5 +106,25 @@ class MultiplayerController extends ApiController
         }catch (CException $e) {
             throw new CHttpException(400,$e->getMessage());
         }
+    }
+
+    public function actionSubmit($gid){
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
+
+        $tags = array();
+        if (isset($_POST["tags"])) {
+            $tags = GameTagDTO::createTagsFromJson($_POST["tags"]);
+        }
+
+        if(empty($tags)){
+            throw new CHttpException(400, Yii::t('app', 'No tags sent'));
+        }
+
+        $gameEngine->submit($tags);
+
+        $this->sendResponse($tags);
     }
 }

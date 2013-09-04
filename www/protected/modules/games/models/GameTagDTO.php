@@ -108,4 +108,27 @@ class GameTagDTO
         }
         return $object;
     }
+
+    /**
+     * @static
+     * @param string $json
+     * @return GameTagDTO[]
+     */
+    static public function createTagsFromJson($json)
+    {
+        $result = array();
+        $tags = json_decode($json);
+        if (is_array($tags)) {
+            foreach($tags as $tag){
+                if (is_object($tag)) {
+                    $object = new self();
+                    foreach ($tag as $key => $value) {
+                        $object->{$key} = $value;
+                    }
+                    array_push($result,$object);
+                }
+            }
+        }
+        return $result;
+    }
 }

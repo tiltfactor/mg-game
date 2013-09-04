@@ -12,11 +12,13 @@
  * @property integer $id
  * @property integer $session_id
  * @property integer $game_id
+ * @property integer $played_game_id
  * @property integer $status
  * @property string $created
  *
  * @property Session $session
  * @property Game $game
+ * @property PlayedGame $playedGame
  */
 abstract class BaseGamePlayer extends GxActiveRecord {
 
@@ -39,9 +41,9 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('session_id, game_id, created', 'required'),
-			array('session_id, game_id, status', 'numerical', 'integerOnly'=>true),
-			array('status', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, session_id, game_id, status, created', 'safe', 'on'=>'search'),
+			array('session_id, game_id, played_game_id, status', 'numerical', 'integerOnly'=>true),
+			array('played_game_id, status', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, session_id, game_id, played_game_id, status, created', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,6 +51,7 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 		return array(
 			'session' => array(self::BELONGS_TO, 'Session', 'session_id'),
 			'game' => array(self::BELONGS_TO, 'Game', 'game_id'),
+			'playedGame' => array(self::BELONGS_TO, 'PlayedGame', 'played_game_id'),
 		);
 	}
 
@@ -62,10 +65,12 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 			'id' => Yii::t('app', 'ID'),
 			'session_id' => null,
 			'game_id' => null,
+			'played_game_id' => null,
 			'status' => Yii::t('app', 'Status'),
 			'created' => Yii::t('app', 'Created'),
 			'session' => null,
 			'game' => null,
+			'playedGame' => null,
 		);
 	}
 
@@ -75,6 +80,7 @@ abstract class BaseGamePlayer extends GxActiveRecord {
 		$criteria->compare('id', $this->id);
 		$criteria->compare('session_id', $this->session_id);
 		$criteria->compare('game_id', $this->game_id);
+		$criteria->compare('played_game_id', $this->played_game_id);
 		$criteria->compare('status', $this->status);
 		$criteria->compare('created', $this->created, true);
 

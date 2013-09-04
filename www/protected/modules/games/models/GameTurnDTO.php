@@ -25,11 +25,6 @@ class GameTurnDTO
      */
     public $media;
     /**
-     * turn licences
-     * @var GameLicenceDTO[]
-     */
-    public $licences;
-    /**
      * @var string[]
      */
     public $wordsToAvoid;

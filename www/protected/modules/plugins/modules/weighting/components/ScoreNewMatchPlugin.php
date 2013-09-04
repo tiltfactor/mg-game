@@ -16,13 +16,12 @@ class ScoreNewMatchPlugin extends MGWeightingPlugin  {
    * whether the tag is new or matched. All extra points can be set via the 
    * backend. 
    * 
-   * @param object $game The currently active game
-   * @param object $game_model The currently instance of the 
+   * @param MGGameModel $game_model The currently instance of the
    * @param array $tags The tags that will be used as base for scoring
    * @param int $score The score that might be increased decreased 
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game, &$game_model, &$tags, $score) {
+  function score(&$game_model, &$tags, $score) {
     $model = new ScoreNewMatch;
     $model->fbvLoad();
     

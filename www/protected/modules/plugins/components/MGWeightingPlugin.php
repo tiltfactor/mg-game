@@ -13,13 +13,12 @@ class MGWeightingPlugin extends MGPlugin {
    * The method will be called to generate the score for one turn. Several weighting 
    * plugins can be called to built up a compound score. 
    * 
-   * @param object $game The currently active game
-   * @param object $game_model The currently instance of the 
+   * @param MGGameModel $game_model The currently instance of the
    * @param array $tags The tags that will be used as base for scoring
    * @param int $score The score that might be increased decreased 
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game, &$game_model, &$tags, $score) {
+  function score(&$game_model, &$tags, $score) {
     return 0;
   }
   
@@ -28,12 +27,11 @@ class MGWeightingPlugin extends MGPlugin {
    * 
    * $tags is the result of the call of the game's parseTags method implementation
    * 
-   * @param object $game The currently active game
-   * @param object $game_model The currently instance of the 
+   * @param MGGameModel $game_model The currently instance of the
    * @param array $tags The tags that have to be rewighted
    * @return array The weightened tags
    */
-  function setWeights(&$game, &$game_model, $tags) {
+  function setWeights(&$game_model, $tags) {
     return $tags;
   }
   

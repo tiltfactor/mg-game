@@ -10,10 +10,6 @@ class GameDTO
      */
     public $uniqueId;
     /**
-     * @var integer
-     */
-    public $playedGameId;
-    /**
      * @var string
      */
     public $name;

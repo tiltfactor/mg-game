@@ -12,12 +12,12 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
    * Give each tag that has been submitted by both users a bit more weight
    * by adding a small value that can be set on the plugin's settings page
    * 
-   * @param object $game The currently active game
-   * @param object $game_model The currently instance of the 
+   * @param MGGameModel $game_model The currently instance of the
    * @param array $tags The tags that have to be rewighted
+   * @param object $game The currently active game
    * @return array The weightened tags
    */
-  function setWeights(&$game, &$game_model, $tags) {
+  function setWeights(&$game, &$game_model, $tags,$game) {
     $model = new GuessWhatScoring;
     $model->fbvLoad();
     
@@ -44,13 +44,13 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
    * 
    * All point values can be set on the plugin's setting page 
    *  
-   * @param object $game The currently active game
-   * @param object $game_model The currently instance of the 
+   * @param object $game_model The currently instance of the
    * @param array $tags The tags that will be used as base for scoring
-   * @param int $score The score that might be increased decreased 
+   * @param int $score The score that might be increased decreased
+   * @param object $game The currently active game
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game, &$game_model, &$tags, $score) {
+  function score(&$game_model, &$tags, $score,&$game) {
     $model = new GuessWhatScoring;
     $model->fbvLoad();
     

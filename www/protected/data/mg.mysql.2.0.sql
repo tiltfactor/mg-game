@@ -616,15 +616,18 @@ CREATE  TABLE IF NOT EXISTS `game_player` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `session_id` INT(11) NOT NULL ,
   `game_id` INT(11) NOT NULL ,
+  `played_game_id` INT(11) NULL ,
   `status` int(1) NOT NULL DEFAULT '0',
   `created` DATETIME NOT NULL ,
    PRIMARY KEY (`id`) ,
+   UNIQUE KEY `session_id` (`session_id`,`game_id`),
   INDEX `fk_game_player_session` (`session_id` ASC) ,
   INDEX `fk_game_player_game` (`game_id` ASC) ,
+  INDEX `fk_game_player_played_game` (`played_game_id` ASC) ,
   CONSTRAINT `fk_game_player_session` FOREIGN KEY (`session_id` ) REFERENCES `session` (`id` ),
-  CONSTRAINT `fk_game_player_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ))
+  CONSTRAINT `fk_game_player_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ),
+  CONSTRAINT `fk_game_player_played_game` FOREIGN KEY (`played_game_id` ) REFERENCES `played_game` (`id` ))
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
-
 
 -- -----------------------------------------------------
 -- Table `AuthItem`

@@ -21,66 +21,68 @@
  * <http://www.gnu.org/licenses/>.
  *
  * @END_LICENSE
- * 
+ *
  */
 
-class WordCheckPlugin extends MGWeightingPlugin{
-  public $enableOnInstall = true;
-  public $hasAdmin = true;
-  
-  function score(&$game, &$game_model, &$tags, $score) {
-    $TrueWordScore = 2;
-    $FalseWordScore = 0;
-    // what should this point to?
-    $python_file = Yii::getPathOfAlias('ext.nlp.python') . DIRECTORY_SEPARATOR .
-      "DictCheck.py";
-    $is_word = "";
-    
-    foreach ($game->request->submissions as $submission) {
-      foreach ($tags as $image_id => $image_tags) {
-        foreach ($image_tags as $tag => $tag_info) {
-          
-          // We love our users, but don't trust them to not not try to
-          // do naughty things, so we escape any special characters,
-          // quotes, etc.. before we pass this information along to be
-          // run on the command-line.
-          //
-          // THIS IS REALLY IMPORTANT! DO NOT TRY TO CIRCUMVENT OR
-          // REMOVE THIS MARKUP UNLESS YOU FULLY UNDERSTAND HOW AND
-          // WHY IT WORKS, AND ARE 100% SURE THAT THE INPUT IS
-          // SANITIZED ELSEWHERE!
-          $escaped_tag = escapeshellarg($tag);
+class WordCheckPlugin extends MGWeightingPlugin
+{
+    public $enableOnInstall = true;
+    public $hasAdmin = true;
 
-          // The path of the python file and the string.
-          $command = "python $python_file $escaped_tag 2>&1";
-          // opens the connection between the python and php files
-          
-          // reads from the buffer
-          $pid = popen( $command, "r");
-          $is_word = substr(fread($pid, 256), 0, -1);				
-          pclose($pid);
+    function score(&$game_model, &$tags, $score)
+    {
+        $TrueWordScore = 2;
+        $FalseWordScore = 0;
+        // what should this point to?
+        $python_file = Yii::getPathOfAlias('ext.nlp.python') . DIRECTORY_SEPARATOR .
+            "DictCheck.py";
+        $is_word = "";
 
-          // add some error message
-          // will display true or false if the tag is an actual word based 
-          // on going through pyenchant library
-          // trigger_error($tag . $is_word);
-          
-          //change the scores based on the outcome
-          switch($is_word){
-          case "True":
-            $this->addScore($tags[$image_id][$tag], $TrueWordScore);
-            $score = $score + $TrueWordScore;
-            break;
-            
-          case "False":
-            $this->addScore($tags[$image_id][$tag], $FalseWordScore);
-            $score = $score + $FalseWordScore;
-            break;
-          }
+
+        foreach ($tags as $image_id => $image_tags) {
+            foreach ($image_tags as $tag => $tag_info) {
+
+                // We love our users, but don't trust them to not not try to
+                // do naughty things, so we escape any special characters,
+                // quotes, etc.. before we pass this information along to be
+                // run on the command-line.
+                //
+                // THIS IS REALLY IMPORTANT! DO NOT TRY TO CIRCUMVENT OR
+                // REMOVE THIS MARKUP UNLESS YOU FULLY UNDERSTAND HOW AND
+                // WHY IT WORKS, AND ARE 100% SURE THAT THE INPUT IS
+                // SANITIZED ELSEWHERE!
+                $escaped_tag = escapeshellarg($tag);
+
+                // The path of the python file and the string.
+                $command = "python $python_file $escaped_tag 2>&1";
+                // opens the connection between the python and php files
+
+                // reads from the buffer
+                $pid = popen($command, "r");
+                $is_word = substr(fread($pid, 256), 0, -1);
+                pclose($pid);
+
+                // add some error message
+                // will display true or false if the tag is an actual word based
+                // on going through pyenchant library
+                // trigger_error($tag . $is_word);
+
+                //change the scores based on the outcome
+                switch ($is_word) {
+                    case "True":
+                        $this->addScore($tags[$image_id][$tag], $TrueWordScore);
+                        $score = $score + $TrueWordScore;
+                        break;
+
+                    case "False":
+                        $this->addScore($tags[$image_id][$tag], $FalseWordScore);
+                        $score = $score + $FalseWordScore;
+                        break;
+                }
+            }
         }
-      }
-      break; // we expect only one submission.
+
+
+        return $score;
     }
-    return $score;
-  }
 }

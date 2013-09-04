@@ -213,7 +213,7 @@ class NexTagGame extends MGGame implements MGGameInterface {
       foreach ($plugins as $plugin) {
         if (method_exists($plugin->component, "setWeights")) {
           // influence the weight of the tags
-          $tags = $plugin->component->setWeights($game, $game_model, $tags);
+          $tags = $plugin->component->setWeights($game_model, $tags,$game);
         }
       }
     }
@@ -255,7 +255,7 @@ class NexTagGame extends MGGame implements MGGameInterface {
         if (method_exists($plugin->component, "score")) {
           // let each scoring plugin add to the score based on the $tags or even
           // further submission information extracted from $game->request->submissions
-          $score = $plugin->component->score($game, $game_model, $tags, $score);
+          $score = $plugin->component->score($game_model, $tags, $score,$game);
         }
       }
     }
