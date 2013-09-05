@@ -56,6 +56,12 @@ abstract class MGMultiPlayer extends CComponent
     }
 
     /**
+     *   //setWeight
+     *   //getScore
+     *   //update played game score
+     *   //set tag type
+     *   //save submission
+     *
      * @abstract
      * @param GameTagDTO[] $tags
      */
@@ -87,7 +93,8 @@ abstract class MGMultiPlayer extends CComponent
             foreach ($plugins as $plugin) {
                 if (method_exists($plugin->component, "setWeights")) {
                     // influence the weight of the tags
-                    $tags = $plugin->component->setWeights($this->game, GameTagDTO::convertToArray($tags));
+                    $result = $plugin->component->setWeights($this->game, GameTagDTO::convertToArray($tags));
+                    $tags = GameTagDTO::createFromArray($result);
                 }
             }
         }
@@ -101,7 +108,7 @@ abstract class MGMultiPlayer extends CComponent
      * @param GameTagDTO[] $tags
      * @return int the score for this turn
      */
-    protected function getScore($tags)
+    protected function getScore(&$tags)
     {
         $score = 0;
 
@@ -232,9 +239,6 @@ abstract class MGMultiPlayer extends CComponent
         }
 
         $this->createGameTurn();
-
-
-        // todo: send push notification
     }
 
     /**
@@ -289,7 +293,6 @@ abstract class MGMultiPlayer extends CComponent
     }
 
     /**
-     * @return bool
      * @throws CHttpException
      */
     protected function createGameTurn()
@@ -324,10 +327,13 @@ abstract class MGMultiPlayer extends CComponent
 
             if ($turnToDb->save()) {
                 $this->gameTurn = $turn;
-                return true;
+                // todo: send push notification
+            }else{
+                // todo: send push notification
             }
+        }else{
+            // todo: send push notification
         }
-        return false;
     }
 
     /**

@@ -372,4 +372,24 @@ class MGTags
         }
         return $tags;
     }
+
+    public static function isExisting($mediaId, $tag)
+    {
+        $tags = array();
+        $used_tags = array();
+        $usedTag = Yii::app()->db->createCommand()
+            ->select('t.tag')
+            ->from('{{tag_use}} tu')
+            ->leftJoin('{{tag}} t', 't.id = tu.tag_id')
+            ->where('tu.media_id=:id and t.tag=:tag', array(':id' => $mediaId, ':tag' => strtolower($tag)))
+            ->group('tag_id')
+            ->limit(1)
+            ->queryAll();
+
+        if($usedTag){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -24,7 +24,7 @@ class MultiplayerController extends ApiController
     {
         return array(
             array('allow',
-                'actions' => array('register', 'findOpponent','pair','rejectPair'),
+                'actions' => array('register', 'findOpponent', 'pair', 'rejectPair'),
                 'users' => array('*'),
             ),
             array('deny',
@@ -75,14 +75,15 @@ class MultiplayerController extends ApiController
         $this->sendResponse($player);
     }
 
-     public function actionPair($gid,$id){
-         $gameEngine = GamesModule::getMultiplayerEngine($gid);
-         if (is_null($gameEngine)) {
-             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
-         }
+    public function actionPair($gid, $id)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+        }
 
-         $gameEngine->pair($id);
-     }
+        $gameEngine->pair($id);
+    }
 
     /**
      * Opponent reject pair request
@@ -92,7 +93,8 @@ class MultiplayerController extends ApiController
      * @param int $id
      * @throws CHttpException
      */
-    public function actionRejectPair($gid,$id){
+    public function actionRejectPair($gid, $id)
+    {
         $data = array();
         $data['status'] = "ok";
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
@@ -100,15 +102,25 @@ class MultiplayerController extends ApiController
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-        try{
+        try {
             $gameEngine->rejectPair($id);
             $this->sendResponse($data);
-        }catch (CException $e) {
-            throw new CHttpException(400,$e->getMessage());
+        } catch (CException $e) {
+            throw new CHttpException(400, $e->getMessage());
         }
     }
 
-    public function actionSubmit($gid){
+    /**
+     * submit game tags
+     * Tags should be send as POST parameter tags
+     * Sent tags should be json encode of GameTagDTO[]
+     * Response sent is json encode of GameTagDTO[]
+     *
+     * @param $gid
+     * @throws CHttpException
+     */
+    public function actionSubmit($gid)
+    {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
@@ -119,7 +131,7 @@ class MultiplayerController extends ApiController
             $tags = GameTagDTO::createTagsFromJson($_POST["tags"]);
         }
 
-        if(empty($tags)){
+        if (empty($tags)) {
             throw new CHttpException(400, Yii::t('app', 'No tags sent'));
         }
 
