@@ -9,11 +9,11 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - messages, abort, abortpartnersearch, postmessage',
+            'throttle - validateSecret,disconnect',
             'IPBlock',
-            //'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
-            'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
-            //'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded
+            'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
+            'accessControl - validateSecret,disconnect',
+            'sharedSecret - validateSecret,disconnect', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 
@@ -24,7 +24,7 @@ class MultiplayerController extends ApiController
     {
         return array(
             array('allow',
-                'actions' => array('register', 'findOpponent', 'pair', 'rejectPair'),
+                'actions' => array('register', 'findOpponent', 'pair', 'rejectPair','submit','validateSecret'),
                 'users' => array('*'),
             ),
             array('deny',
@@ -45,7 +45,7 @@ class MultiplayerController extends ApiController
         $data = array();
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
         }
         if ($gameEngine->registerGamePlayer()) {
             $data['game'] = $gameEngine->getGameInfo();
@@ -68,7 +68,7 @@ class MultiplayerController extends ApiController
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
         }
 
         $player = $gameEngine->requestPair($username);
@@ -79,7 +79,7 @@ class MultiplayerController extends ApiController
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
         }
 
         $gameEngine->pair($id);
@@ -99,7 +99,7 @@ class MultiplayerController extends ApiController
         $data['status'] = "ok";
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
         }
 
         try {
@@ -123,7 +123,7 @@ class MultiplayerController extends ApiController
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
         }
 
         $tags = array();
@@ -138,5 +138,21 @@ class MultiplayerController extends ApiController
         $gameEngine->submit($tags);
 
         $this->sendResponse($tags);
+    }
+
+    public function actionValidateSecret($secret){
+        $session = Session::model()->find('user_id IS NOT NULL AND shared_secret=:ss', array(':ss' => $secret));
+        if($session){
+            $data = array();
+            $data['sid'] = $session->id;
+            $this->sendResponse($data);
+        }else{
+            $this->sendResponse($secret." not found",404);
+        }
+    }
+
+    public function actionDisconnect($sid){
+        $this->sendResponse($sid);
+        //todo implement on disconnect
     }
 }

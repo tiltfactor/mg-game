@@ -1,0 +1,11 @@
+ {
+    "name": "MG",
+    "version": "1.0.0",
+    "description": "MG PUSH NOTIFICATIONS",
+    "dependencies": {
+	"express":  "latest",
+	"socket.io": "latest",
+	"forever":  "latest"
+    },
+    "author": "panaton"
+}
