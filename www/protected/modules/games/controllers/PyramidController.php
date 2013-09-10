@@ -73,19 +73,7 @@ class PyramidController extends GxController
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
 
-            $js = <<<EOD
-    MG_GAME_PYRAMID.init({
-        gid : 'Pyramid',
-        app_id : 'MG_API',
-        asset_url : '$asset_url',
-        api_url : '{$game->api_base_url}',
-        arcade_url : '$arcade_url',
-        game_base_url : '{$game->game_base_url}',
-        play_once_and_move_on : {$game->play_once_and_move_on},
-        play_once_and_move_on_url : '{$game->play_once_and_move_on_url}',
-        throttleInterval : $throttleInterval
-      });
-EOD;
+            $js = "";
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
             if ($game->play_once_and_move_on == 1) {

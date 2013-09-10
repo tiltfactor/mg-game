@@ -1,4 +1,4 @@
-.toast-container{width:280px;z-index:9999;}
+.toast-container{width:320px;z-index:9999;}
 * html .toast-container{position:absolute;}
 .toast-item{height:auto;background:#333;opacity:.9;-moz-border-radius:10px;-webkit-border-radius:10px;color:#eee;padding-top:20px;padding-bottom:20px;padding-left:6px;padding-right:6px;font-family:lucida Grande;font-size:14px;border:2px solid #999;display:block;position:relative;margin:0 0 12px 0;}
 .toast-item p{text-align:left;margin-left:50px;}

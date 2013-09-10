@@ -3,14 +3,26 @@ $( document ).ready(function() {
     $("#footer").hide();
     $(".hover_btn").hover(
         function () {
-            this.src = this.src.replace("_off","_on");
+            var img_obj = $(this).find('img:eq(0)'),
+                src = img_obj.attr('src'),
+                new_src = src.replace("_off","_on");
+
+            img_obj.attr('src', new_src);
         }, function() {
-            this.src = this.src.replace("_on","_off");
+            var img_obj = $(this).find('img:eq(0)'),
+                src = img_obj.attr('src'),
+                new_src = src.replace("_off","_on");
+
+            img_obj.attr('src', new_src);
         }
     );
 
-    $(".hover_btn").click(function () {
-        this.src = this.src.replace("_off","_on");
+    $(".hover_btn").click(function (e) {
+        var that = $(this);
+        e.preventDefault();
+        that.find('img:eq(0)').hide();
+        that.find('img:eq(1)').closest('span').show();
+        window.location.href = that.prop('href');
     });
 });
 $(window).resize(function() {
