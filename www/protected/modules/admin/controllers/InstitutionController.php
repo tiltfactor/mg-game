@@ -16,7 +16,7 @@ class InstitutionController extends GxController {
   				),
   			array('allow', 
   				'actions'=>array('index','view', 'batch', 'create','update', 'admin', 'delete'),
-  				'roles'=>array('editor', 'dbmanager', 'admin'), // ammend after creation
+  				'roles'=>array(EDITOR, EDITOR), // ammend after creation
   				),
   			array('deny', 
   				'users'=>array('*'),

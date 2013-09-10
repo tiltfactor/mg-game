@@ -9,7 +9,7 @@
 class ScoreNewMatchPlugin extends MGWeightingPlugin  {
   public $enableOnInstall = true;
   public $hasAdmin = TRUE;
-  public $accessRole = "dbmanager";
+  public $accessRole = ADMIN;
   
   /**
    * Compares the submitted tags with the tags of the images and adds points 

@@ -842,9 +842,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('player', 2, 'A player can only record his or her games', NULL, NULL);
-INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('editor', 2, 'An editor has access to several tools in the system', NULL, NULL);
-INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('dbmanager', 2, 'A db manager has access to nearly all tools', NULL, NULL);
-INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('admin', 2, 'The admin can access everything', NULL, NULL);
+INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('researcher', 2, 'An researcher has access to several tools in the system', NULL, NULL);
+INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('institution', 2, 'A institution user has only server access', NULL, NULL);
+INSERT INTO `AuthItem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES ('gameadmin', 2, 'The gameadmin can access everything', NULL, NULL);
 
 COMMIT;
 
@@ -852,12 +852,10 @@ COMMIT;
 -- Data for table `AuthItemChild`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('editor', 'player');
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('dbmanager', 'player');
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('dbmanager', 'editor');
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('admin', 'player');
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('admin', 'editor');
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('admin', 'dbmanager');
+INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('researcher', 'player');
+INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('gameadmin', 'player');
+INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('gameadmin', 'researcher');
+INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('gameadmin', 'institution');
 
 COMMIT;
 

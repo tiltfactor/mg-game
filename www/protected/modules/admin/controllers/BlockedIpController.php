@@ -17,7 +17,7 @@ class BlockedIpController extends GxController {
   				),
   			array('allow', 
   				'actions'=>array('index','view', 'batch', 'create','update', 'admin', 'delete'),
-  				'roles'=>array('editor', 'dbmanager', 'admin'),
+  				'roles'=>array(EDITOR, ADMIN),
   				),
   			array('deny', 
   				'users'=>array('*'),

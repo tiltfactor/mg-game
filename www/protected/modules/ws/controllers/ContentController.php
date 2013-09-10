@@ -52,6 +52,11 @@ class ContentController extends CController
             if ($user->save()) {
                 $institution = new Institution();
                 $institution->name = $name;
+                $url = 'http' .(
+                        isset($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'] || '1' == $_SERVER['HTTPS']) ||
+                        isset($_SERVER['SERVER_PORT']) && '443' == $_SERVER['SERVER_PORT']
+                            ? 's' : ''
+                    ).'://' . $_SERVER['SERVER_NAME'] . $url;
                 $institution->url = $url;
                 $institution->status = Institution::STATUS_NOACTIVE;
                 $institution->user_id = $user->id;

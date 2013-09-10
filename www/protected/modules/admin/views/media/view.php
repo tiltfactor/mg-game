@@ -33,20 +33,20 @@ $media_type = substr($model->mime_type, 0, 5);
 
 if($media_type === 'image') {
     $media = CHtml::link(
-        CHtml::image(Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/thumbs/'. $model->name) . ' [' . Yii::t('app', 'zoom') . ']',
-        Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/images/'. $model->name,
+        CHtml::image($model->institution->url  . UPLOAD_PATH . '/thumbs/'. $model->name) . ' [' . Yii::t('app', 'zoom') . ']',
+        $model->institution->url  . UPLOAD_PATH . '/images/'. $model->name,
         array('rel'=>'zoom', 'media_type'=> $media_type, 'class'=>'zoom'));
 } else if($media_type === 'video') {
-    $url_webm = Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/videos/'. urlencode($model->name);
-    $url_mp4 = Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/videos/'. urlencode(substr($model->name, 0, -4)."mp4");
-    $url_poster = Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/videos/'. urlencode(substr($model->name, 0, -4)."jpeg");
+    $url_webm = $model->institution->url  . UPLOAD_PATH . '/videos/'. urlencode($model->name);
+    $url_mp4 = $model->institution->url  . UPLOAD_PATH . '/videos/'. urlencode(substr($model->name, 0, -4)."mp4");
+    $url_poster = $model->institution->url  . UPLOAD_PATH . '/videos/'. urlencode(substr($model->name, 0, -4)."jpeg");
     $media = '<video class="video" controls preload poster="'.$url_poster.'">
             <source src="'.$url_mp4.'"></source>
             <source src="'.$url_webm.'"></source>
         </video>';
 } else {
-    $url_mp3 = Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/audios/'. urlencode($model->name);
-    $url_ogg = Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . '/audios/'. urlencode(substr($model->name, 0, -3)."ogg");
+    $url_mp3 = $model->institution->url  . UPLOAD_PATH . '/audios/'. urlencode($model->name);
+    $url_ogg = $model->institution->url  . UPLOAD_PATH . '/audios/'. urlencode(substr($model->name, 0, -3)."ogg");
     $media = '<audio class="audio" controls preload>
             <source src="'.$url_mp3.'"></source>
             <source src="'.$url_ogg.'"></source>

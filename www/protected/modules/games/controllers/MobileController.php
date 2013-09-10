@@ -18,7 +18,7 @@ class MobileController extends GxController
           ),
         array('allow', 
           'actions'=>array('view', 'update'),
-          'roles'=>array('dbmanager', 'admin'),
+          'roles'=>array(ADMIN),
           ),
         array('deny', 
           'users'=>array('*'),

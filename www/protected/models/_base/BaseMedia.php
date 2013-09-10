@@ -22,6 +22,7 @@
  * @property integer $remote_id
  *
  * @property Collection[] $collections
+ * @property Institution $institution
  * @property TagUse[] $tagUses
  */
 abstract class BaseMedia extends GxActiveRecord {
@@ -45,18 +46,19 @@ abstract class BaseMedia extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('name, size, mime_type, created, modified', 'required'),
-			array('size, locked', 'numerical', 'integerOnly'=>true),
+			array('size, locked, institution_id, remote_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>254),
 			array('mime_type, batch_id', 'length', 'max'=>45),
 			array('last_access', 'safe'),
-			array('batch_id, last_access, locked', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, size, mime_type, batch_id, last_access, locked, created, modified', 'safe', 'on'=>'search'),
+			array('batch_id, last_access, locked, institution_id, remote_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, size, mime_type, batch_id, last_access, locked, created, modified, institution_id, remote_id', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
 		return array(
 			'collections' => array(self::MANY_MANY, 'Collection', 'collection_to_media(media_id, collection_id)'),
+			'institution' => array(self::BELONGS_TO, 'Institution', 'institution_id'),
 			'tagUses' => array(self::HAS_MANY, 'TagUse', 'media_id'),
 		);
 	}
@@ -78,7 +80,10 @@ abstract class BaseMedia extends GxActiveRecord {
 			'locked' => Yii::t('app', 'Locked'),
 			'created' => Yii::t('app', 'Created'),
 			'modified' => Yii::t('app', 'Modified'),
+			'institution_id' => null,
+			'remote_id' => Yii::t('app', 'Remote'),
 			'collections' => null,
+			'institution' => null,
 			'tagUses' => null,
 		);
 	}
@@ -95,6 +100,8 @@ abstract class BaseMedia extends GxActiveRecord {
 		$criteria->compare('locked', $this->locked);
 		$criteria->compare('created', $this->created, true);
 		$criteria->compare('modified', $this->modified, true);
+		$criteria->compare('institution_id', $this->institution_id);
+		$criteria->compare('remote_id', $this->remote_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

@@ -255,7 +255,7 @@ class InstallerController extends Controller
         $model->created = date('Y-m-d H:i:s');
         $model->modified = date('Y-m-d H:i:s');
         $model->lastvisit = NULL;
-        $model->role ='admin';
+        $model->role = ADMIN;
         $model->status = User::STATUS_ACTIVE;
         
         if ($model->save()) {
