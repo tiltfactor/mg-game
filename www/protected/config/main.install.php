@@ -24,6 +24,7 @@ return array(
     'ext.yii-flash.*',
     'application.helpers.*',
     'application.modules.games.*',
+	'application.modules.games.models.*',
 	'application.modules.ws.*',
     'application.modules.plugins.*',
     'application.modules.plugins.components.*',
