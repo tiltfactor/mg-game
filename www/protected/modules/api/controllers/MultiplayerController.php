@@ -151,8 +151,12 @@ class MultiplayerController extends ApiController
         }
     }
 
-    public function actionDisconnect($sid){
-        $this->sendResponse($sid);
-        //todo implement on disconnect
+    public function actionDisconnect($uid,$gid){
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
+        }
+
+        $gameEngine->disconnect($uid);
     }
 }

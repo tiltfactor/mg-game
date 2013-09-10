@@ -142,4 +142,19 @@ class OneUpGame extends MGMultiPlayer
             }
         }
     }
+
+    /**
+     * User is no more online so do some cleanups
+     *
+     * @param $userId
+     */
+    public function disconnect($userId)
+    {
+        // TODO: Implement disconnect() method.
+    }
+
+    public function gameEnd()
+    {
+        // TODO: Implement gameEnd() method.
+    }
 }
