@@ -5,6 +5,17 @@
  */
 abstract class MGMultiPlayer extends CComponent
 {
+    const PUSH_CHALLENGE = "challenge";
+    const PUSH_REJECT_CHALLENGE = "rejectChallenge";
+    const PUSH_REQUEST_PAIR = "requestPair";
+    const PUSH_REJECT_PAIR = "rejectPair";
+    const PUSH_NEW_TURN = "newTurn";
+    const PUSH_GAME_END = "gameEnd";
+    const PUSH_PENALTY = "penalty";
+    const PUSH_BONUS = "bonus";
+    const PUSH_OPPONENT_WAITING = "opponentWaiting";
+
+
     /**
      * @var MGGameModel
      */
@@ -242,12 +253,17 @@ abstract class MGMultiPlayer extends CComponent
         if ($player) {
             $player->status = UserOnline::STATUS_PAIR;
             if ($player->update()) {
-                //todo: send push notification
+
+                $userDTO = new GameUserDTO();
+                $userDTO->id = $this->userId;
+                $userDTO->username = $this->userOnline->session->username;;
+                $this->pushMessage($player->user_id,MGMultiPlayer::PUSH_REQUEST_PAIR,json_encode($userDTO));
+
                 $currentPlayer = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
                 $currentPlayer->status = UserOnline::STATUS_PAIR;
                 if ($currentPlayer->save()) {
                     $opponent = new GameUserDTO();
-                    $opponent->id = $player->session_id;
+                    $opponent->id = $player->user_id;
                     $opponent->username = $player->session->username;
                 }
             }
@@ -291,20 +307,20 @@ abstract class MGMultiPlayer extends CComponent
     {
         $oponent = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
 
-        $player = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
-
         $oponent->status = UserOnline::STATUS_WAIT;
         if (!$oponent->save()) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-        $player->status = UserOnline::STATUS_WAIT;
-        if (!$player->save()) {
+        $this->userOnline->status = UserOnline::STATUS_WAIT;
+        if (!$this->userOnline->save()) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-
-        // todo: send push notification
+        $userDTO = new GameUserDTO();
+        $userDTO->id = $this->userOnline->userId;
+        $userDTO->username = $this->userOnline->session->username;
+        $this->pushMessage($oponent->user_id,MGMultiPlayer::PUSH_REJECT_PAIR,json_encode($userDTO));
     }
 
     /**
@@ -372,7 +388,9 @@ abstract class MGMultiPlayer extends CComponent
 
             if ($turnToDb->save()) {
                 $this->gameTurn = $turn;
-                // todo: send push notification
+
+                $this->pushMessage($this->playedGame->sessionId1->user_id,MGMultiPlayer::PUSH_NEW_TURN,json_encode($turn));
+                $this->pushMessage($this->playedGame->sessionId2->user_id,MGMultiPlayer::PUSH_NEW_TURN,json_encode($turn));
             } else {
                 $message = "";
                 $errors = $turnToDb->getErrors();
@@ -382,7 +400,6 @@ abstract class MGMultiPlayer extends CComponent
                 throw new CHttpException(500, $message);
             }
         } else {
-            // todo: send push notification
             $this->gameEnd();
         }
     }
@@ -609,6 +626,8 @@ abstract class MGMultiPlayer extends CComponent
         } else {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
+
+        $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->find('id =:playedId', array(':playedId' => $played_game->id));
         return $played_game->id;
     }
 
@@ -665,7 +684,7 @@ abstract class MGMultiPlayer extends CComponent
             if ($msg->save()) {
                 $userOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $player->id));
                 if ($userOnline) {
-                    //todo: send push notification
+                    $this->pushMessage($this->playedGame->sessionId1->user_id,MGMultiPlayer::PUSH_CHALLENGE,json_encode($opponent));
                 }
 
                 return $opponent;
@@ -743,7 +762,10 @@ abstract class MGMultiPlayer extends CComponent
 
             $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
             if ($opponentOnline) {
-                //todo send push notification
+                $userDTO = new GameUserDTO();
+                $userDTO->id = $this->userOnline->userId;
+                $userDTO->username = $this->userOnline->session->username;
+                $this->pushMessage($opponentId,MGMultiPlayer::PUSH_REJECT_CHALLENGE,json_encode($userDTO));
             }
 
             if (!$msg->delete()) {
@@ -876,5 +898,31 @@ abstract class MGMultiPlayer extends CComponent
             }
             throw new CHttpException(500, $message);
         }
+    }
+
+    protected function pushMessage($userId,$action,$payload){
+        $url =  Yii::app()->fbvStorage->get("pushUrl");
+        $url .= $action."/".$this->game->unique_id."/".$userId."/";
+        $fields = array(
+            'payload' => urlencode($payload),
+        );
+        $fields_string="";
+        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        rtrim($fields_string, '&');
+
+        $ch = curl_init();
+
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, count($fields));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        curl_exec($ch);
+        if(!curl_errno($ch)){
+            Yii::log("Push send, action=".$action."userId=".$userId);
+        } else {
+            Yii::log("Push send error: ".curl_error($ch), "Error");
+        }
+
+        curl_close($ch);
     }
 }
