@@ -10,11 +10,13 @@
  * followed by relations of table "user_game" available as properties of the model.
  *
  * @property integer $id
- * @property integer $user_id
+ * @property integer $user_id_1
+ * @property integer $user_id_2
  * @property integer $game_id
  * @property integer $played_game_id
  *
- * @property User $user
+ * @property User $userId1
+ * @property User $userId2
  * @property Game $game
  * @property PlayedGame $playedGame
  */
@@ -38,16 +40,17 @@ abstract class BaseUserGame extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('user_id, game_id', 'required'),
-			array('user_id, game_id, played_game_id', 'numerical', 'integerOnly'=>true),
+			array('user_id_1, user_id_2, game_id', 'required'),
+			array('user_id_1, user_id_2, game_id, played_game_id', 'numerical', 'integerOnly'=>true),
 			array('played_game_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, user_id, game_id, played_game_id', 'safe', 'on'=>'search'),
+			array('id, user_id_1, user_id_2, game_id, played_game_id', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'userId1' => array(self::BELONGS_TO, 'User', 'user_id_1'),
+			'userId2' => array(self::BELONGS_TO, 'User', 'user_id_2'),
 			'game' => array(self::BELONGS_TO, 'Game', 'game_id'),
 			'playedGame' => array(self::BELONGS_TO, 'PlayedGame', 'played_game_id'),
 		);
@@ -61,10 +64,12 @@ abstract class BaseUserGame extends GxActiveRecord {
 	public function attributeLabels() {
 		return array(
 			'id' => Yii::t('app', 'ID'),
-			'user_id' => null,
+			'user_id_1' => null,
+			'user_id_2' => null,
 			'game_id' => null,
 			'played_game_id' => null,
-			'user' => null,
+			'userId1' => null,
+			'userId2' => null,
 			'game' => null,
 			'playedGame' => null,
 		);
@@ -74,7 +79,8 @@ abstract class BaseUserGame extends GxActiveRecord {
 		$criteria = new CDbCriteria;
 
 		$criteria->compare('id', $this->id);
-		$criteria->compare('user_id', $this->user_id);
+		$criteria->compare('user_id_1', $this->user_id_1);
+		$criteria->compare('user_id_2', $this->user_id_2);
 		$criteria->compare('game_id', $this->game_id);
 		$criteria->compare('played_game_id', $this->played_game_id);
 

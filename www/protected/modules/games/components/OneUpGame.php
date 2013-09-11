@@ -7,7 +7,11 @@ class OneUpGame extends MGMultiPlayer
 {
     function __construct()
     {
-        parent::__construct("OneUp", true);
+        $playedGameId = -1;
+        if(isset($_POST['playedGameId'])){
+            $playedGameId = $_POST['playedGameId'];
+        }
+        parent::__construct("OneUp", true,$playedGameId);
     }
 
 
@@ -150,11 +154,48 @@ class OneUpGame extends MGMultiPlayer
      */
     public function disconnect($userId)
     {
-        // TODO: Implement disconnect() method.
+        $userOnline = UserOnline::model()->find('user_id =:userId AND t.game_id=:gameId', array(':user_id' => $userId, ':gameId' => $this->game->id));
+        if($userOnline){
+            if(!$userOnline->delete()){
+                $message = "";
+                $errors = $userOnline->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
+                throw new CHttpException(500, $message);
+            }
+        }
+
     }
 
     public function gameEnd()
     {
-        // TODO: Implement gameEnd() method.
+        $this->playedGame->finished = date('Y-m-d H:i:s');
+        if($this->sessionId == $this->playedGame->session_id_1){
+            $score =  $this->playedGame->score_1;
+            $opponentScore = $this->playedGame->score_2;
+            $opponentId = $this->playedGame->sessionId2->user_id;
+        }else{
+            $score =  $this->playedGame->score_2;
+            $opponentScore = $this->playedGame->score_1;
+            $opponentId = $this->playedGame->sessionId1->user_id;
+        }
+        $this->saveUserToGame($score);
+
+        $userToGame = UserToGame::model()->findByPk(array(
+            "user_id" => $opponentId,
+            "game_id" => $this->game->id,
+        ));
+        if ($userToGame) {
+            $userToGame->saveCounters(array('number_played' => 1, 'score' => $opponentScore));
+        }
+
+        if(isset($this->userOnline) && $this->userOnline->session_id == $this->sessionId){
+            $this->userOnline->played_game_id = null;
+            $this->userOnline->status = UserOnline::STATUS_WAIT;
+            $this->userOnline->save();
+        }
+
+        //todo send push notificaions:)
     }
 }
