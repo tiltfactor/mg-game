@@ -5,7 +5,8 @@
     "dependencies": {
 	"express":  "latest",
 	"socket.io": "latest",
-	"forever":  "latest"
+	"forever":  "latest",
+	"request":  "latest"
     },
     "author": "panaton"
 }

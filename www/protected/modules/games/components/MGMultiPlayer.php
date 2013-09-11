@@ -19,21 +19,31 @@ abstract class MGMultiPlayer extends CComponent
     protected $sessionId;
 
     /**
+     * @var int
+     */
+    protected $userId;
+
+    /**
      * @var GameTurnDTO
      */
     protected $gameTurn;
 
     /**
-     * @var GamePlayer
+     * @var UserOnline
      */
-    protected $gamePlayer;
+    protected $userOnline;
+
+    /**
+     * @var PlayedGame
+     */
+    protected $playedGame;
 
     /**
      * @var array
      */
     protected $mediaTypes = array("image");
 
-    function __construct($unique_id, $active = true)
+    function __construct($unique_id, $active = true,$playedId = -1)
     {
         $this->apiId = Yii::app()->fbvStorage->get("api_id", "MG_API");
         $this->sessionId = (int)Yii::app()->session[$this->apiId . '_SESSION_ID'];
@@ -42,17 +52,27 @@ abstract class MGMultiPlayer extends CComponent
             throw new CHttpException(400, Yii::t('app', 'Authentication required.'));
         }
 
+        if (Yii::app()->user->isGuest) {
+            throw new CHttpException(400, Yii::t('app', 'Authentication required.'));
+        }
+
+        $this->userId = (int)Yii::app()->user->id;
         $this->game = GamesModule::loadGameFromDB($unique_id);
         $this->game->fbvLoad();
 
-        $this->gamePlayer = GamePlayer::model()->with(array('session', 'playedGame'))->find('session_id =:sessionId AND t.game_id=:gameId', array(':sessionId' => $this->sessionId, ':gameId' => $this->game->id));
-
-        if (isset($this->gamePlayer->playedGame)) {
-            $playedGameTurn = PlayedGameTurnInfo::model()->find('played_game_id=:playedId ORDER BY turn DESC LIMIT 1', array(':playedId' => $this->gamePlayer->playedGame->id));
-            if ($playedGameTurn) {
-                $this->gameTurn = unserialize($playedGameTurn->data);
+        if($playedId>0){
+            $this->playedGame = PlayedGame::model()->find('id =:playedId', array(':playedId' => $playedId));
+        }else{
+            $this->userOnline = UserOnline::model()->with(array('session', 'playedGame'))->find('session_id =:sessionId AND t.game_id=:gameId', array(':sessionId' => $this->sessionId, ':gameId' => $this->game->id));
+            if (isset($this->userOnline) && isset($this->userOnline->playedGame)) {
+                $this->playedGame = $this->userOnline->playedGame;
+                $playedGameTurn = PlayedGameTurnInfo::model()->find('played_game_id=:playedId ORDER BY turn DESC LIMIT 1', array(':playedId' => $this->userOnline->playedGame->id));
+                if ($playedGameTurn) {
+                    $this->gameTurn = unserialize($playedGameTurn->data);
+                }
             }
         }
+
     }
 
     /**
@@ -66,6 +86,17 @@ abstract class MGMultiPlayer extends CComponent
      * @param GameTagDTO[] $tags
      */
     abstract public function submit(&$tags);
+
+    /**
+     * User is no more online so do some cleanups
+     *
+     * @abstract
+     * @param $userId
+     */
+    abstract public function disconnect($userId);
+
+    abstract public function gameEnd();
+
 
     /**
      * Allows to implement weighting of the submitted tags. Here you should usually
@@ -163,15 +194,16 @@ abstract class MGMultiPlayer extends CComponent
     /**
      * @return boolean
      */
-    public function registerGamePlayer()
+    public function registerUserOnline()
     {
-        $gamePlayer = new GamePlayer();
-        $gamePlayer->session_id = $this->sessionId;
-        $gamePlayer->game_id = $this->game->id;
-        $gamePlayer->created = date('Y-m-d H:i:s');
-        $gamePlayer->status = GamePlayer::STATUS_WAIT;
+        $online = new UserOnline();
+        $online->user_id = $this->userId;
+        $online->session_id = $this->sessionId;
+        $online->game_id = $this->game->id;
+        $online->created = date('Y-m-d H:i:s');
+        $online->status = UserOnline::STATUS_WAIT;
 
-        if ($gamePlayer->save()) {
+        if ($online->save()) {
             return true;
         }
         return false;
@@ -195,18 +227,18 @@ abstract class MGMultiPlayer extends CComponent
         if ($username && !empty($username)) {
             $criteria->join = "  LEFT JOIN {{session}} s ON s.id=gp.session_id";
             $criteria->condition = 'gp.game_id = :gameID AND gp.session_id <> :sessionID AND s.username=:username AND gp.status=:status';
-            $criteria->params = array(":gameID" => $this->game->id, ":sessionID" => $this->sessionId, ":username" => $username, ":status" => GamePlayer::STATUS_WAIT);
+            $criteria->params = array(":gameID" => $this->game->id, ":sessionID" => $this->sessionId, ":username" => $username, ":status" => UserOnline::STATUS_WAIT);
         } else {
             $criteria->condition = 'gp.game_id = :gameID AND gp.session_id <> :sessionID AND gp.status=:status';
-            $criteria->params = array(":gameID" => $this->game->id, ":sessionID" => $this->sessionId, ":username" => $username, ":status" => GamePlayer::STATUS_WAIT);
+            $criteria->params = array(":gameID" => $this->game->id, ":sessionID" => $this->sessionId, ":username" => $username, ":status" => UserOnline::STATUS_WAIT);
         }
-        $player = GamePlayer::model()->with('session')->find($criteria);
+        $player = UserOnline::model()->with('session')->find($criteria);
         if ($player) {
-            $player->status = GamePlayer::STATUS_PAIR;
+            $player->status = UserOnline::STATUS_PAIR;
             if ($player->update()) {
                 //todo: send push notification
-                $currentPlayer = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
-                $currentPlayer->status = GamePlayer::STATUS_PAIR;
+                $currentPlayer = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
+                $currentPlayer->status = UserOnline::STATUS_PAIR;
                 if ($currentPlayer->save()) {
                     $opponent = new GameUserDTO();
                     $opponent->id = $player->session_id;
@@ -223,16 +255,16 @@ abstract class MGMultiPlayer extends CComponent
         $playedGameId = $this->createPlayedGame($this->sessionId, $sessionId, $this->game->id);
         $this->game->saveCounters(array('number_played' => 1));
 
-        $oponent = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
-        $player = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
+        $oponent = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
+        $player = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
 
-        $oponent->status = GamePlayer::STATUS_PLAY;
+        $oponent->status = UserOnline::STATUS_PLAY;
         $oponent->played_game_id = $playedGameId;
         if (!$oponent->save()) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-        $player->status = GamePlayer::STATUS_PLAY;
+        $player->status = UserOnline::STATUS_PLAY;
         $player->played_game_id = $playedGameId;
         if (!$player->save()) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
@@ -247,16 +279,16 @@ abstract class MGMultiPlayer extends CComponent
      */
     public function rejectPair($sessionId)
     {
-        $oponent = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
+        $oponent = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $sessionId));
 
-        $player = GamePlayer::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
+        $player = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
 
-        $oponent->status = GamePlayer::STATUS_WAIT;
+        $oponent->status = UserOnline::STATUS_WAIT;
         if (!$oponent->save()) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-        $player->status = GamePlayer::STATUS_WAIT;
+        $player->status = UserOnline::STATUS_WAIT;
         if (!$player->save()) {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
@@ -272,13 +304,13 @@ abstract class MGMultiPlayer extends CComponent
      */
     protected function saveSubmission($tags)
     {
-        if (isset($tags) && is_array($tags) && count($tags) > 0) {
+        if (isset($tags) && is_array($tags) && count($tags) > 0 && isset($this->playedGame)) {
             $tagsArr = GameTagDTO::convertToArray($tags);
             $submit = new GameSubmission;
             $submit->submission = json_encode($tagsArr);
             $submit->turn = $this->gameTurn->turn;
             $submit->session_id = $this->sessionId;
-            $submit->played_game_id = $this->gamePlayer->played_game_id;
+            $submit->played_game_id = $this->playedGame->id;
             $submit->created = date('Y-m-d H:i:s');
 
             if ($submit->validate()) {
@@ -293,6 +325,9 @@ abstract class MGMultiPlayer extends CComponent
     }
 
     /**
+     * Get new media file and create game turn
+     * Send push notification to online users
+     *
      * @throws CHttpException
      */
     protected function createGameTurn()
@@ -320,7 +355,7 @@ abstract class MGMultiPlayer extends CComponent
             $turn->wordsToAvoid = $this->game->wordsToAvoid;
 
             $turnToDb = new PlayedGameTurnInfo();
-            $turnToDb->played_game_id = $this->gamePlayer->played_game_id;
+            $turnToDb->played_game_id = $this->playedGame->id;
             $turnToDb->turn = $turn->turn;
             $turnToDb->data = serialize($turn);
             $turnToDb->created_by_session_id = $this->sessionId;
@@ -329,10 +364,16 @@ abstract class MGMultiPlayer extends CComponent
                 $this->gameTurn = $turn;
                 // todo: send push notification
             }else{
-                // todo: send push notification
+                $message ="";
+                $errors = $turnToDb->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
+                throw new CHttpException(500, $message);
             }
         }else{
             // todo: send push notification
+            $this->gameEnd();
         }
     }
 
@@ -522,4 +563,28 @@ abstract class MGMultiPlayer extends CComponent
         }
         return $played_game->id;
     }
+
+
+    /* ************************************************************
+     * Offline game flow public methods
+     * challenge
+     * acceptChallenge
+     * rejectChallenge
+     * getChallenges
+     * getOfflineGames
+     * getOfflineGameState
+     *
+     * */
+
+    public function challenge(){}
+
+    public function acceptChallenge(){}
+
+    public function rejectChallenge(){}
+
+    public function getChallenges(){}
+
+    public function getOfflineGames(){}
+
+    public function getOfflineGameState(){}
 }
