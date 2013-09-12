@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/message/:action/:gid/:uid', function (req, res) {
-    player = getPlayer(req.params.uid,req.params.gid);
+    var player = getPlayer(req.params.uid,req.params.gid);
     if (player) {
         player.socket.emit(req.params.action, req.body);
         res.send(200);
@@ -41,7 +41,7 @@ io.sockets.on('connection', function (socket) {
     });
     socket.on('disconnect', function () {
         removePlayer(player);
-        if (player.sid != null) {
+        if (player.uid != null) {
             var uri = settings.mgapi + 'multiplayer/disconnect/uid/' + player.uid + '/gid/' + player.gid + '/';
             request({
                 uri:uri,
@@ -62,7 +62,7 @@ function checkSecret(player) {
         switch (response.statusCode) {
             case 200:
                 var res = JSON.parse(body);
-                player.sid = res.sid;
+                player.uid = res.uid;
                 break;
             case 404:
                 player.socket.emit("registerFailure", body);
