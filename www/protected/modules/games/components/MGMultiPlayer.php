@@ -133,7 +133,7 @@ abstract class MGMultiPlayer extends CComponent
             }
         }
 
-        $plugins = PluginsModule::getActiveGamePlugins($this->game->game_id, "weighting");
+        $plugins = PluginsModule::getActiveGamePlugins($this->game->id, "weighting");
         if (count($plugins) > 0) {
             foreach ($plugins as $plugin) {
                 if (method_exists($plugin->component, "setWeights")) {
@@ -158,7 +158,7 @@ abstract class MGMultiPlayer extends CComponent
         $score = 0;
 
         // call the set score method of all activated weighting plugins
-        $plugins = PluginsModule::getActiveGamePlugins($this->game->game_id, "weighting");
+        $plugins = PluginsModule::getActiveGamePlugins($this->game->id, "weighting");
         if (count($plugins) > 0) {
             foreach ($plugins as $plugin) {
                 if (method_exists($plugin->component, "score")) {

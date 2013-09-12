@@ -129,7 +129,7 @@ class MultiplayerController extends ApiController
      * Response sent is json encode of GameTagDTO[]
      *
      * @param string $gid
-     * @param int $gid
+     * @param int $playedGameId
      * @throws CHttpException
      */
     public function actionSubmit($gid, $playedGameId)
@@ -143,6 +143,7 @@ class MultiplayerController extends ApiController
         }
 
         $tags = array();
+        $_POST["tags"] = '[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
         if (isset($_POST["tags"])) {
             $tags = GameTagDTO::createTagsFromJson($_POST["tags"]);
         }

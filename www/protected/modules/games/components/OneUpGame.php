@@ -24,7 +24,7 @@ class OneUpGame extends MGMultiPlayer
         /**
          * @var GameSubmission[] $submits
          */
-        $submits = GameSubmission::model()->findAll('played_game_id=:playedGameId', array(':playedGameId' => $this->gamePlayer->played_game_id));
+        $submits = GameSubmission::model()->findAll('played_game_id=:playedGameId', array(':playedGameId' => $this->playedGame->id));
         /**
          * @var string[] $submits
          */
@@ -78,14 +78,14 @@ class OneUpGame extends MGMultiPlayer
 
                             //Player notified of penalty
                             //Opponent receives OneUp bonus and notification
-                            if ($this->gamePlayer->playedGame->session_id_1 == $this->sessionId) {
-                                $this->gamePlayer->playedGame->score_2 += 1;
+                            if ($this->playedGame->session_id_1 == $this->sessionId) {
+                                $this->playedGame->score_2 += 1;
                             } else {
-                                $this->gamePlayer->playedGame->score_1 += 1;
+                                $this->playedGame->score_1 += 1;
                             }
-                            if (!$this->gamePlayer->playedGame->update()) {
+                            if (!$this->playedGame->update()) {
                                 $message = "";
-                                $errors = $this->gamePlayer->playedGame->getErrors();
+                                $errors = $this->playedGame->getErrors();
                                 foreach ($errors as $field => $error) {
                                     $message .= $error[0] . ";";
                                 }
@@ -131,14 +131,14 @@ class OneUpGame extends MGMultiPlayer
         }
 
         //update played game score
-        if ($this->gamePlayer->playedGame->session_id_1 == $this->sessionId) {
-            $this->gamePlayer->playedGame->score_1 += $scores;
+        if ($this->playedGame->session_id_1 == $this->sessionId) {
+            $this->playedGame->score_1 += $scores;
         } else {
-            $this->gamePlayer->playedGame->score_2 += $scores;
+            $this->playedGame->score_2 += $scores;
         }
-        if (!$this->gamePlayer->playedGame->update()) {
+        if (!$this->playedGame->update()) {
             $message = "";
-            $errors = $this->gamePlayer->playedGame->getErrors();
+            $errors = $this->playedGame->getErrors();
             foreach ($errors as $field => $error) {
                 $message .= $error[0] . ";";
             }
