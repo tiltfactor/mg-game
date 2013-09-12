@@ -86,6 +86,7 @@ CREATE  TABLE IF NOT EXISTS `user` (
   `username` VARCHAR(32) NOT NULL ,
   `password` VARCHAR(128) NOT NULL ,
   `email` VARCHAR(128) NOT NULL ,
+  `open_id` VARCHAR(255) NULL,
   `activekey` VARCHAR(128) NOT NULL DEFAULT '' ,
   `lastvisit` DATETIME NULL ,
   `role` VARCHAR(45) NOT NULL DEFAULT 'player' ,

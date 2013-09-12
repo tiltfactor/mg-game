@@ -86,6 +86,24 @@ class m111119_234451_install_v2_0 extends CDbMigration
           CONSTRAINT `fk_user_message_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ),
           CONSTRAINT `fk_user_message_played_game` FOREIGN KEY (`played_game_id` ) REFERENCES `played_game` (`id` ))
         ENGINE = InnoDB DEFAULT CHARSET=UTF8;
+
+        ALTER TABLE `user` ADD `open_id` VARCHAR( 255 ) NOT NULL AFTER `email`;
+
+        DELETE FROM AuthItem;
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('player', 2, 'A player can only record his or her games', NULL, NULL);
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('researcher', 2, 'An researcher has access to several tools in the system', NULL, NULL);
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('institution', 2, 'A institution user has only server access', NULL, NULL);
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('gameadmin', 2, 'The gameadmin can access everything', NULL, NULL);
+        UPDATE user SET role='researcher' WHERE role LIKE 'editor';
+        UPDATE user SET role='gameadmin' WHERE role LIKE 'admin';
+        UPDATE user SET role='gameadmin' WHERE role LIKE 'dbmanager';
+
+
+        DELETE FROM AuthItemChild;
+        INSERT INTO AuthItemChild (parent, child) VALUES ('researcher', 'player');
+        INSERT INTO AuthItemChild (parent, child) VALUES ('gameadmin', 'player');
+        INSERT INTO AuthItemChild (parent, child) VALUES ('gameadmin', 'researcher');
+        INSERT INTO AuthItemChild (parent, child) VALUES ('gameadmin', 'institution');
 	  ";
 
         if (trim($script) != "") {
