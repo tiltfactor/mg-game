@@ -33,8 +33,9 @@ io.sockets.on('connection', function (socket) {
         player.gid = gid;
         checkSecret(player);
     });
-    socket.on('reconnect', function (secret) {
+    socket.on('reconnect', function (secret,gid) {
         player.secret = secret;
+        player.gid = gid;
         checkSecret(player);
         console.log("MG Reconnect: " + secret);
     });
@@ -64,6 +65,7 @@ function checkSecret(player) {
                 player.sid = res.sid;
                 break;
             case 404:
+                player.socket.emit("registerFailure", body);
                 player.socket.disconnect();
                 console.log(body);
                 break;

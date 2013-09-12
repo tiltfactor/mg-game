@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "description": "MG PUSH NOTIFICATIONS",
     "dependencies": {
-	"express":  "latest",
-	"socket.io": "latest",
-	"forever":  "latest",
-	"request":  "latest"
+	"express":  "3.3.8",
+	"socket.io": "0.9.16",
+	"forever":  "1.2.2",
+	"request":  "2.25.0"
     },
     "author": "panaton"
 }
