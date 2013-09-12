@@ -3,6 +3,7 @@ return array (
   'api_id' => 'MG_API',
   'installed' => false,
   'frontend_theme' => 'metadatagames',
+  'pushUrl' => 'http://localhost:8000/message/',
   'arcade' => 
   array (
     'description' => 'This is a short description of the project',
