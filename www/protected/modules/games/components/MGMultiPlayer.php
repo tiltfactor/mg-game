@@ -71,18 +71,18 @@ abstract class MGMultiPlayer extends CComponent
         }
 
         if ($playedId > 0) {
-            $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->find('id =:playedId', array(':playedId' => $playedId));
+            $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->findByPk($playedId);
             if ($this->playedGame->sessionId1->user_id == $this->userId) {
                 $this->sessionId = $this->playedGame->session_id_1;
             } else {
                 $this->sessionId = $this->playedGame->session_id_2;
             }
-        }else if(isset($this->userOnline)){
-            $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->find('id =:playedId', array(':playedId' => $this->userOnline->played_game_id));
+        } else if (isset($this->userOnline) && $this->userOnline->played_game_id) {
+            $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->findByPk($this->userOnline->played_game_id);
         }
 
         if ($this->playedGame) {
-            $playedGameTurn = PlayedGameTurnInfo::model()->find('played_game_id=:playedId ORDER BY turn DESC LIMIT 1', array(':playedId' => $this->playedGame->id));
+            $playedGameTurn = PlayedGameTurnInfo::model()->find('played_game_id=:playedId ORDER BY turn DESC', array(':playedId' => $this->playedGame->id));
             if ($playedGameTurn) {
                 $this->gameTurn = unserialize($playedGameTurn->data);
             }
@@ -192,6 +192,7 @@ abstract class MGMultiPlayer extends CComponent
     public function getUserInfo()
     {
         $userDTO = new GameUserDTO();
+        $userDTO->id = $this->userId;
         $userDTO->username = Yii::app()->user->name;
         $userDTO->scores = 0;
         $userDTO->numberPlayed = 0;
@@ -256,8 +257,9 @@ abstract class MGMultiPlayer extends CComponent
 
                 $userDTO = new GameUserDTO();
                 $userDTO->id = $this->userId;
-                $userDTO->username = $this->userOnline->session->username;;
-                $this->pushMessage($player->user_id,MGMultiPlayer::PUSH_REQUEST_PAIR,json_encode($userDTO));
+                $userDTO->username = $this->userOnline->session->username;
+                ;
+                $this->pushMessage($player->user_id, MGMultiPlayer::PUSH_REQUEST_PAIR, json_encode($userDTO));
 
                 $currentPlayer = UserOnline::model()->find('session_id =:sessionId', array(':sessionId' => $this->sessionId));
                 $currentPlayer->status = UserOnline::STATUS_PAIR;
@@ -320,7 +322,7 @@ abstract class MGMultiPlayer extends CComponent
         $userDTO = new GameUserDTO();
         $userDTO->id = $this->userOnline->userId;
         $userDTO->username = $this->userOnline->session->username;
-        $this->pushMessage($oponent->user_id,MGMultiPlayer::PUSH_REJECT_PAIR,json_encode($userDTO));
+        $this->pushMessage($oponent->user_id, MGMultiPlayer::PUSH_REJECT_PAIR, json_encode($userDTO));
     }
 
     /**
@@ -389,8 +391,8 @@ abstract class MGMultiPlayer extends CComponent
             if ($turnToDb->save()) {
                 $this->gameTurn = $turn;
 
-                $this->pushMessage($this->playedGame->sessionId1->user_id,MGMultiPlayer::PUSH_NEW_TURN,json_encode($turn));
-                $this->pushMessage($this->playedGame->sessionId2->user_id,MGMultiPlayer::PUSH_NEW_TURN,json_encode($turn));
+                $this->pushMessage($this->playedGame->sessionId1->user_id, MGMultiPlayer::PUSH_NEW_TURN, json_encode($turn));
+                $this->pushMessage($this->playedGame->sessionId2->user_id, MGMultiPlayer::PUSH_NEW_TURN, json_encode($turn));
             } else {
                 $message = "";
                 $errors = $turnToDb->getErrors();
@@ -429,7 +431,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where_add .= ')';
                 $where[] = $where_add;
             }
-            $media = Yii::app()->db->createCommand()
+            $result = Yii::app()->db->createCommand()
                 ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
@@ -457,7 +459,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where_add .= ')';
                 $where[] = $where_add;
             }
-            $media = Yii::app()->db->createCommand()
+            $result = Yii::app()->db->createCommand()
                 ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
@@ -472,7 +474,8 @@ abstract class MGMultiPlayer extends CComponent
                 ->queryAll();
         }
 
-        if ($media) {
+        if ($result) {
+            $media = $result[0];
             $mediaDTO = new GameMediaDTO();
             if ($media['url']) {
                 $path = $media['url'] . Yii::app()->fbvStorage->get('settings.app_upload_url');
@@ -627,7 +630,7 @@ abstract class MGMultiPlayer extends CComponent
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-        $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->find('id =:playedId', array(':playedId' => $played_game->id));
+        $this->playedGame = PlayedGame::model()->with('sessionId1', 'sessionId2')->findByPk($played_game->id);
         return $played_game->id;
     }
 
@@ -660,6 +663,7 @@ abstract class MGMultiPlayer extends CComponent
             $criteria->condition = 'utg.game_id = :gameID AND u.username=:username  AND u.id <> :userID';
             $criteria->params = array(":gameID" => $this->game->id, ":username" => $username, ":userID" => $this->userId);
         } else {
+            $criteria->join = "  LEFT JOIN {{user_to_game}} utg ON utg.user_id=u.id";
             $criteria->condition = 'utg.game_id = :gameID AND u.id <> :userID';
             $criteria->params = array(":gameID" => $this->game->id, ":userID" => $this->userId);
             $criteria->order = 'RAND()';
@@ -667,7 +671,11 @@ abstract class MGMultiPlayer extends CComponent
         }
         $player = User::model()->find($criteria);
         if ($player) {
-            $msg = UserMessage::model()->find('from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=gameId AND type=:type', array(':fromUserId' => $this->userId, ':toUserId' => $player->id, ':gameId' => $this->game->id, ':type' => UserMessage::TYPE_CHALLENGE));
+            $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=:gameId AND type=:type';
+            $msg = UserMessage::model()->find($query, array(':fromUserId' => $this->userId,
+                ':toUserId' => $player->id,
+                ':gameId' => $this->game->id,
+                ':type' => UserMessage::TYPE_CHALLENGE));
             if ($msg) {
                 return $opponent;
             }
@@ -677,14 +685,19 @@ abstract class MGMultiPlayer extends CComponent
             $msg->game_id = $this->game->id;
             $msg->type = UserMessage::TYPE_CHALLENGE;
             $opponent = new GameUserDTO();
-            $opponent->id = $this->userId;
-            $opponent->username = $this->userOnline->session->username;
-            $msg->message = serialize($opponent);
+            $opponent->id = $player->id;
+            $opponent->username = $player->username;
+
+            $challenger = new GameUserDTO();
+            $challenger->id = $this->userId;
+            $challenger->username = $this->userOnline->session->username;
+
+            $msg->message = serialize($challenger);
 
             if ($msg->save()) {
                 $userOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $player->id));
                 if ($userOnline) {
-                    $this->pushMessage($this->playedGame->sessionId1->user_id,MGMultiPlayer::PUSH_CHALLENGE,json_encode($opponent));
+                    $this->pushMessage($player->id, MGMultiPlayer::PUSH_CHALLENGE, json_encode($challenger));
                 }
 
                 return $opponent;
@@ -707,7 +720,7 @@ abstract class MGMultiPlayer extends CComponent
      */
     public function acceptChallenge($opponentId)
     {
-        $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=gameId AND type=:type';
+        $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=:gameId AND type=:type';
         $msg = UserMessage::model()->find($query, array(':fromUserId' => $opponentId,
             ':toUserId' => $this->userId,
             ':gameId' => $this->game->id,
@@ -747,7 +760,7 @@ abstract class MGMultiPlayer extends CComponent
      */
     public function rejectChallenge($fromUserId, $toUserId)
     {
-        $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=gameId AND type=:type';
+        $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=:gameId AND type=:type';
         $msg = UserMessage::model()->find($query, array(':fromUserId' => $fromUserId,
             ':toUserId' => $toUserId,
             ':gameId' => $this->game->id,
@@ -765,7 +778,7 @@ abstract class MGMultiPlayer extends CComponent
                 $userDTO = new GameUserDTO();
                 $userDTO->id = $this->userOnline->userId;
                 $userDTO->username = $this->userOnline->session->username;
-                $this->pushMessage($opponentId,MGMultiPlayer::PUSH_REJECT_CHALLENGE,json_encode($userDTO));
+                $this->pushMessage($opponentId, MGMultiPlayer::PUSH_REJECT_CHALLENGE, json_encode($userDTO));
             }
 
             if (!$msg->delete()) {
@@ -788,7 +801,7 @@ abstract class MGMultiPlayer extends CComponent
         $result->sent = array();
         $result->received = array();
 
-        $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=gameId AND type=:type';
+        $query = 'to_user_id=:toUserId AND game_id=:gameId AND type=:type';
         $challenges = UserMessage::model()->findAll($query, array(':toUserId' => $this->userId,
             ':gameId' => $this->game->id,
             ':type' => UserMessage::TYPE_CHALLENGE));
@@ -801,7 +814,7 @@ abstract class MGMultiPlayer extends CComponent
             }
         }
 
-        $query = 'from_user_id =:fromUserId AND to_user_id=:toUserId AND game_id=gameId AND type=:type';
+        $query = 'from_user_id =:fromUserId AND game_id=:gameId AND type=:type';
         $challenges = UserMessage::model()->with('toUser')->findAll($query, array(':fromUserId' => $this->userId,
             ':gameId' => $this->game->id,
             ':type' => UserMessage::TYPE_CHALLENGE));
@@ -864,7 +877,7 @@ abstract class MGMultiPlayer extends CComponent
         /**
          * @var GameSubmission[] $submits
          */
-        $submits = GameSubmission::model()->findAll('played_game_id=:playedGameId AND turn=:turn', array(':playedGameId' => $this->gamePlayer->played_game_id, ':turn' => $this->gameTurn->turn));
+        $submits = GameSubmission::model()->findAll('played_game_id=:playedGameId AND turn=:turn', array(':playedGameId' => $this->playedGame->id, ':turn' => $this->gameTurn->turn));
 
         foreach ($submits as $submit) {
             if ($submit->session_id == $this->sessionId) {
@@ -900,27 +913,30 @@ abstract class MGMultiPlayer extends CComponent
         }
     }
 
-    protected function pushMessage($userId,$action,$payload){
-        $url =  Yii::app()->fbvStorage->get("pushUrl");
-        $url .= $action."/".$this->game->unique_id."/".$userId."/";
+    protected function pushMessage($userId, $action, $payload)
+    {
+        $url = Yii::app()->fbvStorage->get("pushUrl");
+        $url .= $action . "/" . $this->game->unique_id . "/" . $userId . "/";
         $fields = array(
             'payload' => urlencode($payload),
         );
-        $fields_string="";
-        foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
+        $fields_string = "";
+        foreach ($fields as $key => $value) {
+            $fields_string .= $key . '=' . $value . '&';
+        }
         rtrim($fields_string, '&');
 
         $ch = curl_init();
 
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, count($fields));
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, count($fields));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
 
         curl_exec($ch);
-        if(!curl_errno($ch)){
-            Yii::log("Push send, action=".$action."userId=".$userId);
+        if (!curl_errno($ch)) {
+            Yii::log("Push send, action=" . $action . "userId=" . $userId);
         } else {
-            Yii::log("Push send error: ".curl_error($ch), "Error");
+            Yii::log("Push send error: " . curl_error($ch), "Error");
         }
 
         curl_close($ch);

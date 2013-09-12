@@ -170,7 +170,7 @@ class OneUpGame extends MGMultiPlayer
      */
     public function disconnect($userId)
     {
-        $userOnline = UserOnline::model()->find('user_id =:userId AND t.game_id=:gameId', array(':user_id' => $userId, ':gameId' => $this->game->id));
+        $userOnline = UserOnline::model()->find('user_id =:userId AND t.game_id=:gameId', array(':userId' => $userId, ':gameId' => $this->game->id));
         if($userOnline){
             if(!$userOnline->delete()){
                 $message = "";
