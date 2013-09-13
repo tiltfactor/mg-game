@@ -24,23 +24,19 @@ class ContentController extends CController
 
 
     /**
-     * @param string $username
-     * @param string $email
-     * @param string $password
-     * @param string $name
-     * @param string $url
+     * @param InstitutionDTO $institutionDto
      * @return RegisterResult
      * @soap
      */
-    public function register($username, $email, $password, $name, $url)
+    public function register($institutionDto)
     {
         $user = new InstallConfigurationForm();
         $transaction = $user->dbConnection->beginTransaction();
         $message = "";
         try {
-            $user->username = $username;
-            $user->email = $email;
-            $user->password = $password;
+            $user->username = $institutionDto->username;
+            $user->email = $institutionDto->email;
+            $user->password = $institutionDto->password;
             $user->activekey = UserModule::encrypting(microtime() . $user->password);
             $user->verifyPassword = $user->password = UserModule::encrypting($user->password);
             $user->created = date('Y-m-d H:i:s');
@@ -51,23 +47,19 @@ class ContentController extends CController
 
             if ($user->save()) {
                 $institution = new Institution();
-                $institution->name = $name;
-                $url = 'http' .(
-                        isset($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'] || '1' == $_SERVER['HTTPS']) ||
-                        isset($_SERVER['SERVER_PORT']) && '443' == $_SERVER['SERVER_PORT']
-                            ? 's' : ''
-                    ).'://' . $_SERVER['SERVER_NAME'] . $url;
-                $institution->url = $url;
+                $institution->name = $institutionDto->name;
+                $institution->url = $institutionDto->url;
+                $institution->logo_url = $institutionDto->logoUrl;
+                $institution->description = $institutionDto->description;
                 $institution->status = Institution::STATUS_NOACTIVE;
                 $institution->user_id = $user->id;
-                $token = md5($name . "_" . $url);
-                $institution->token = $token;
+                $institution->token = md5($institution->name . "_" . $institution->url);
                 $institution->created = date('Y-m-d H:i:s');
 
                 if ($institution->save()) {
                     $transaction->commit();
                     $res = new RegisterResult();
-                    $res->token = $token;
+                    $res->token = $institution->token;
                     $res->status = Status::getStatus(StatusCode::SUCCESS(), "");
                     return $res;
                 }
