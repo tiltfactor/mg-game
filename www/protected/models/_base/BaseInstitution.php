@@ -11,8 +11,8 @@
  *
  * @property integer $id
  * @property string $name
- * @property string $url
  * @property string $description
+ * @property string $url
  * @property string $logo_url
  * @property string $token
  * @property integer $status
@@ -44,12 +44,12 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('name, url, token, created', 'required'),
+			array('name, description, url, logo_url, token, created', 'required'),
 			array('status, user_id', 'numerical', 'integerOnly'=>true),
 			array('name, url, logo_url, token', 'length', 'max'=>128),
-			array('description', 'safe'),
-			array('description, logo_url, status, user_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, url, description, logo_url, token, status, created, user_id', 'safe', 'on'=>'search'),
+			array('description', 'length', 'max'=>255),
+			array('status, user_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, description, url, logo_url, token, status, created, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,8 +71,8 @@ abstract class BaseInstitution extends GxActiveRecord {
 		return array(
 			'id' => Yii::t('app', 'ID'),
 			'name' => Yii::t('app', 'Name'),
-			'url' => Yii::t('app', 'Url'),
 			'description' => Yii::t('app', 'Description'),
+			'url' => Yii::t('app', 'Url'),
 			'logo_url' => Yii::t('app', 'Logo Url'),
 			'token' => Yii::t('app', 'Token'),
 			'status' => Yii::t('app', 'Status'),
@@ -90,8 +90,8 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 		$criteria->compare('id', $this->id);
 		$criteria->compare('name', $this->name, true);
-		$criteria->compare('url', $this->url, true);
 		$criteria->compare('description', $this->description, true);
+		$criteria->compare('url', $this->url, true);
 		$criteria->compare('logo_url', $this->logo_url, true);
 		$criteria->compare('token', $this->token, true);
 		$criteria->compare('status', $this->status);
@@ -100,6 +100,9 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
+			'pagination'=>array(
+        'pageSize'=>Yii::app()->fbvStorage->get("settings.pagination_size"),
+      ),
 		));
 	}
 }

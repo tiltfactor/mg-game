@@ -38,4 +38,10 @@ class InstitutionDTO {
      * @soap
      */
     public $description;
+
+    /**
+     * @var string
+     * @soap
+     */
+    public $token;
 }

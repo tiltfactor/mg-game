@@ -835,7 +835,9 @@ DROP TABLE IF EXISTS `institution` ;
 CREATE TABLE IF NOT EXISTS `institution` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(128) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `url` varchar(128) NOT NULL,
+  `logo_url` varchar(128) NOT NULL,
   `token` varchar(128) NOT NULL,
   `status` int(1) NOT NULL DEFAULT '0',
   `created` datetime NOT NULL,

@@ -5,19 +5,21 @@ class m111119_234451_install_v2_0 extends CDbMigration
     {
         $script = "
         CREATE TABLE IF NOT EXISTS `institution` (
-              `id` int(11) NOT NULL AUTO_INCREMENT,
-              `name` varchar(128) NOT NULL,
-              `url` varchar(128) NOT NULL,
-              `token` varchar(128) NOT NULL,
-              `status` int(1) NOT NULL DEFAULT '0',
-              `created` datetime NOT NULL,
-              `user_id` INT(11) NULL,
-              PRIMARY KEY (`id`),
-              UNIQUE KEY `name` (`name`),
-              UNIQUE KEY `url` (`url`),
-              UNIQUE KEY `user_id` (`user_id`),
-              CONSTRAINT `fk_institution_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+          `id` int(11) NOT NULL AUTO_INCREMENT,
+          `name` varchar(128) NOT NULL,
+          `description` varchar(255) NOT NULL,
+          `url` varchar(128) NOT NULL,
+          `logo_url` varchar(128) NOT NULL,
+          `token` varchar(128) NOT NULL,
+          `status` int(1) NOT NULL DEFAULT '0',
+          `created` datetime NOT NULL,
+          `user_id` INT(11) NULL,
+          PRIMARY KEY (`id`),
+          UNIQUE KEY `name` (`name`),
+          UNIQUE KEY `url` (`url`),
+          UNIQUE KEY `user_id` (`user_id`),
+          CONSTRAINT `fk_institution_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         CREATE  TABLE IF NOT EXISTS `user_online` (
           `id` INT NOT NULL AUTO_INCREMENT ,
           `user_id` INT(11) NOT NULL ,

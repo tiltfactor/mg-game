@@ -88,6 +88,50 @@ class ContentController extends CController
     }
 
     /**
+     * @param InstitutionDTO $institutionDto
+     * @return RegisterResult
+     * @soap
+     */
+    public function updateProfile($institutionDto)
+    {
+        $message = "";
+        try {
+            $institution = Institution::model()->find('token=:token',array(':token'=>$institutionDto->token));
+            if($institution){
+                $institution->name = $institutionDto->name;
+                $institution->url = $institutionDto->url;
+                $institution->logo_url = $institutionDto->logoUrl;
+                $institution->description = $institutionDto->description;
+                $institution->token = md5($institution->name . "_" . $institution->url);
+                if ($institution->save()) {
+                    $res = new RegisterResult();
+                    $res->token = $institution->token;
+                    $res->status = Status::getStatus(StatusCode::SUCCESS(), "");
+                    return $res;
+                }
+
+                $errors = $institution->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
+
+                $rr = new RegisterResult();
+                $rr->status = Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), $message);
+                return $rr;
+            }else{
+                $res = new RegisterResult();
+                $res->status = Status::getStatus(StatusCode::FATAL_ERROR(), "Invalid token!");
+                return $res;
+            }
+        } catch (Exception $ex) {
+            $res = new RegisterResult();
+            $res->status = Status::getStatus(StatusCode::FATAL_ERROR(), $ex->getMessage());
+            return $res;
+        }
+    }
+
+
+    /**
      * @param string $token
      * @param CollectionDTO $collection
      * @return Status
@@ -101,7 +145,7 @@ class ContentController extends CController
                 return Status::getStatus(StatusCode::LOGON_ERROR(), "Invalid token!");
             }
 
-            if(!($collection->id>0)){
+            if (!($collection->id > 0)) {
                 return Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), "Please set collection id!");
             }
 
