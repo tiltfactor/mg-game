@@ -21,4 +21,10 @@ class GameUserDTO
      * @var integer
      */
     public $numberPlayed;
+
+    /**
+     * @var integer
+     */
+    public $playedGameId;
+
 }

@@ -10,10 +10,15 @@ class GameTurnDTO
      */
     public $turn;
     /**
-     * Total score of game turn
+     * Total score
      * @var integer
      */
     public $score;
+    /**
+     * Total score of opponent
+     * @var integer
+     */
+    public $opponentScore;
     /**
      * turn tags
      * @var GameTagDTO[]

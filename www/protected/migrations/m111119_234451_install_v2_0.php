@@ -53,14 +53,17 @@ class m111119_234451_install_v2_0 extends CDbMigration
 
         CREATE  TABLE IF NOT EXISTS `user_game` (
           `id` INT NOT NULL AUTO_INCREMENT ,
-          `user_id` INT(11) NOT NULL ,
+          `user_id_1` INT(11) NOT NULL ,
+          `user_id_2` INT(11) NOT NULL ,
           `game_id` INT(11) NOT NULL ,
           `played_game_id` INT(11) NULL ,
            PRIMARY KEY (`id`) ,
-          INDEX `fk_user_game_user` (`user_id` ASC) ,
+          INDEX `fk_user_game_user1` (`user_id_1` ASC) ,
+          INDEX `fk_user_game_user2` (`user_id_2` ASC) ,
           INDEX `fk_user_game_game` (`game_id` ASC) ,
           INDEX `fk_user_game_played_game` (`played_game_id` ASC) ,
-          CONSTRAINT `fk_user_game_user` FOREIGN KEY (`user_id` ) REFERENCES `user` (`id` ),
+          CONSTRAINT `fk_user_game_user1` FOREIGN KEY (`user_id_1` ) REFERENCES `user` (`id` ),
+          CONSTRAINT `fk_user_game_user2` FOREIGN KEY (`user_id_2` ) REFERENCES `user` (`id` ),
           CONSTRAINT `fk_user_game_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ),
           CONSTRAINT `fk_user_game_played_game` FOREIGN KEY (`played_game_id` ) REFERENCES `played_game` (`id` ))
         ENGINE = InnoDB DEFAULT CHARSET=UTF8;
@@ -83,6 +86,24 @@ class m111119_234451_install_v2_0 extends CDbMigration
           CONSTRAINT `fk_user_message_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ),
           CONSTRAINT `fk_user_message_played_game` FOREIGN KEY (`played_game_id` ) REFERENCES `played_game` (`id` ))
         ENGINE = InnoDB DEFAULT CHARSET=UTF8;
+
+        ALTER TABLE `user` ADD `open_id` VARCHAR( 255 ) NOT NULL AFTER `email`;
+
+        DELETE FROM AuthItem;
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('player', 2, 'A player can only record his or her games', NULL, NULL);
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('researcher', 2, 'An researcher has access to several tools in the system', NULL, NULL);
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('institution', 2, 'A institution user has only server access', NULL, NULL);
+        INSERT INTO AuthItem (name, type, description, bizrule, data) VALUES ('gameadmin', 2, 'The gameadmin can access everything', NULL, NULL);
+        UPDATE user SET role='researcher' WHERE role LIKE 'editor';
+        UPDATE user SET role='gameadmin' WHERE role LIKE 'admin';
+        UPDATE user SET role='gameadmin' WHERE role LIKE 'dbmanager';
+
+
+        DELETE FROM AuthItemChild;
+        INSERT INTO AuthItemChild (parent, child) VALUES ('researcher', 'player');
+        INSERT INTO AuthItemChild (parent, child) VALUES ('gameadmin', 'player');
+        INSERT INTO AuthItemChild (parent, child) VALUES ('gameadmin', 'researcher');
+        INSERT INTO AuthItemChild (parent, child) VALUES ('gameadmin', 'institution');
 	  ";
 
         if (trim($script) != "") {
