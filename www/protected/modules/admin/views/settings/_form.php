@@ -39,16 +39,6 @@
   <?php echo $form->textField($model, 'pagination_size'); ?>
   <?php echo $form->error($model,'pagination_size'); ?>
   </div><!-- row -->
-  <div class="row">
-  <?php echo $form->labelEx($model,'app_upload_path'); ?>
-  <?php echo $form->textField($model, 'app_upload_path'); ?>
-  <?php echo $form->error($model,'app_upload_path'); ?>
-  </div><!-- row -->
-  <div class="row">
-  <?php echo $form->labelEx($model,'app_upload_url'); ?>
-  <?php echo $form->textField($model, 'app_upload_url'); ?>
-  <?php echo $form->error($model,'app_upload_url'); ?>
-  </div><!-- row -->
 <?php
 echo GxHtml::submitButton($buttons);
 $this->endWidget();
