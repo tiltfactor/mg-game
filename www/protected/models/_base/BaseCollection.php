@@ -109,6 +109,9 @@ abstract class BaseCollection extends GxActiveRecord {
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
+			'pagination'=>array(
+        'pageSize'=>Yii::app()->fbvStorage->get("settings.pagination_size"),
+      ),
 		));
 	}
 }
