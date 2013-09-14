@@ -44,10 +44,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'baseScriptUrl' => Yii::app()->request->baseUrl . "/css/yii/gridview",
     'selectableRows' => 2,
     'columns' => array(
-        array(
-            'class' => 'CCheckBoxColumn',
-            'id' => 'collection-ids',
-        ),
         'name',
         array(
             'name' => 'locked',
@@ -86,15 +82,4 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ))
 ));
 echo CHtml::endForm();
-
-$this->widget('ext.gridbatchaction.GridBatchAction', array(
-    'formId' => 'collection-form',
-    'checkBoxId' => 'collection-ids',
-    'ajaxGridId' => 'collection-grid',
-    'items' => array(
-        array('label' => Yii::t('ui', 'Delete selected items'), 'url' => array('batch', 'op' => 'delete'))
-    ),
-    'htmlOptions' => array('class' => 'batchActions'),
-));
-
 ?>

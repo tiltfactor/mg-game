@@ -64,10 +64,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'selectableRows' => 2,
     'columns' => array(
         array(
-            'class' => 'CCheckBoxColumn',
-            'id' => 'media-ids',
-        ),
-        array(
             'name' => 'name',
             'cssClassExpression' => '"media"',
             'type' => 'html',
@@ -101,36 +97,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'class' => 'CButtonColumn',
             'buttons' =>
             array(
-                'delete' =>
-                array(
-                    'visible' => '$data->locked == 0',
-                ),
+                'delete' => array('visible' => 'false'),
                 'update' => array('visible' => 'false'),
             ),
         )),
 ));
 echo CHtml::endForm();
-
-$batch_actions = array();
-$collections = GxHtml::listDataEx(Collection::model()->findAllAttributes(null, true));
-
-if (count($collections)) {
-    foreach ($collections as $id => $name) {
-        if ($id != 1)
-            $batch_actions[] = array('label' => Yii::t('ui', 'Assign to collection: ' . $name), 'url' => array('batch', 'op' => 'collection-add', 'isid' => $id));
-    }
-    foreach ($collections as $id => $name) {
-        if ($id != 1)
-            $batch_actions[] = array('label' => Yii::t('ui', 'Remove from collection: ' . $name), 'url' => array('batch', 'op' => 'collection-remove', 'isid' => $id));
-    }
-}
-
-$this->widget('ext.gridbatchaction.GridBatchAction', array(
-    'formId' => 'media-form',
-    'checkBoxId' => 'media-ids',
-    'ajaxGridId' => 'media-grid',
-    'items' => $batch_actions,
-    'htmlOptions' => array('class' => 'batchActions'),
-));
 
 ?>
