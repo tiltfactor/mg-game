@@ -20,10 +20,11 @@
  * @property integer $institution_id
  * @property integer $remote_id
  *
- * @property Game[] $games
  * @property Licence $licence
+ * @property Institution $institution
  * @property Media[] $medias
  * @property SubjectMatter[] $subjectMatters
+ * @property Game[] $games
  */
 abstract class BaseCollection extends GxActiveRecord {
 
@@ -46,34 +47,29 @@ abstract class BaseCollection extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('name, created, modified', 'required'),
-			array('locked, licence_id, last_access_interval', 'numerical', 'integerOnly'=>true),
+			array('locked, licence_id, last_access_interval, institution_id, remote_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('more_information', 'safe'),
-			array('locked, more_information, licence_id, last_access_interval', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, locked, more_information, licence_id, last_access_interval, created, modified', 'safe', 'on'=>'search'),
-            array('remote_id', 'unique', 'criteria' => array(
-                'condition' => '`institution_id`=:secondKey',
-                'params' => array(
-                    ':secondKey' => $this->institution_id
-                )
-            ))
+			array('locked, more_information, licence_id, last_access_interval, institution_id, remote_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, locked, more_information, licence_id, last_access_interval, created, modified, institution_id, remote_id', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
 		return array(
-			'games' => array(self::MANY_MANY, 'Game', 'game_to_collection(collection_id, game_id)'),
 			'licence' => array(self::BELONGS_TO, 'Licence', 'licence_id'),
+			'institution' => array(self::BELONGS_TO, 'Institution', 'institution_id'),
 			'medias' => array(self::MANY_MANY, 'Media', 'collection_to_media(collection_id, media_id)'),
 			'subjectMatters' => array(self::MANY_MANY, 'SubjectMatter', 'collection_to_subject_matter(collection_id, subject_matter_id)'),
+			'games' => array(self::MANY_MANY, 'Game', 'game_to_collection(collection_id, game_id)'),
 		);
 	}
 
 	public function pivotModels() {
 		return array(
-			'games' => 'GameToCollection',
 			'medias' => 'CollectionToMedia',
 			'subjectMatters' => 'CollectionToSubjectMatter',
+			'games' => 'GameToCollection',
 		);
 	}
 
@@ -87,10 +83,13 @@ abstract class BaseCollection extends GxActiveRecord {
 			'last_access_interval' => Yii::t('app', 'Last Access Interval'),
 			'created' => Yii::t('app', 'Created'),
 			'modified' => Yii::t('app', 'Modified'),
-			'games' => null,
+			'institution_id' => null,
+			'remote_id' => Yii::t('app', 'Remote'),
 			'licence' => null,
+			'institution' => null,
 			'medias' => null,
 			'subjectMatters' => null,
+			'games' => null,
 		);
 	}
 
@@ -105,12 +104,11 @@ abstract class BaseCollection extends GxActiveRecord {
 		$criteria->compare('last_access_interval', $this->last_access_interval);
 		$criteria->compare('created', $this->created, true);
 		$criteria->compare('modified', $this->modified, true);
+		$criteria->compare('institution_id', $this->institution_id);
+		$criteria->compare('remote_id', $this->remote_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
-			'pagination'=>array(
-        'pageSize'=>Yii::app()->fbvStorage->get("settings.pagination_size"),
-      ),
 		));
 	}
 }

@@ -444,7 +444,7 @@ class ContentController extends CController
             if ($model == null) {
                 return Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), "Can not find media for id " . $assign->id);
             }
-
+            //YiiBase::log(var_export($assign,true),CLogger::LEVEL_ERROR);
             $ids = implode(",", $assign->collections);
             $cModels = Collection::model()->findAll('institution_id =:instID AND remote_id IN(' . $ids . ')', array(':instID' => $institution->id));
 
