@@ -39,7 +39,43 @@ class OneUpController extends GxController
 
     public function actionIndex()
     {
-       //to do
+        PyramidGame::reset();
+        MGHelper::setFrontendTheme();
+
+        $game = GamesModule::loadGame("OneUp");
+
+        if ($game) {
+            $cs = Yii::app()->clientScript;
+            $cs->registerCoreScript('jquery');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/jquery.fancybox-1.3.4.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/normalize.css');
+            $cs->registerCssFile(GamesModule::getAssetsUrl() . '/oneup/css/main.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/modernizr.custom.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/retina.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
+            $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_HEAD);
+            $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
+            $asset_url = Yii::app()->baseUrl;
+            $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
+
+            $js = "";
+            Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
+
+            $this->layout = '//layouts/column1';
+
+            $this->render('index', array(
+                'game' => $game,
+                'asset_url' => GamesModule::getAssetsUrl()."/oneup",
+                'game_url' => $game->game_base_url
+            ));
+        } else {
+            throw new CHttpException(403, Yii::t('app', 'The game is not active.'));
+        }
     }
 
     /**
