@@ -8,6 +8,7 @@ try {
     die();
 }
 
+require_once(dirname(__FILE__).'/protected/config/consts.php');
 $yii=dirname(__FILE__).'/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/installer.php';
 

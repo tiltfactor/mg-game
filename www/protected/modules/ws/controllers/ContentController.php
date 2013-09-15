@@ -24,23 +24,19 @@ class ContentController extends CController
 
 
     /**
-     * @param string $username
-     * @param string $email
-     * @param string $password
-     * @param string $name
-     * @param string $url
+     * @param InstitutionDTO $institutionDto
      * @return RegisterResult
      * @soap
      */
-    public function register($username, $email, $password, $name, $url)
+    public function register($institutionDto)
     {
         $user = new InstallConfigurationForm();
         $transaction = $user->dbConnection->beginTransaction();
         $message = "";
         try {
-            $user->username = $username;
-            $user->email = $email;
-            $user->password = $password;
+            $user->username = $institutionDto->username;
+            $user->email = $institutionDto->email;
+            $user->password = $institutionDto->password;
             $user->activekey = UserModule::encrypting(microtime() . $user->password);
             $user->verifyPassword = $user->password = UserModule::encrypting($user->password);
             $user->created = date('Y-m-d H:i:s');
@@ -51,18 +47,19 @@ class ContentController extends CController
 
             if ($user->save()) {
                 $institution = new Institution();
-                $institution->name = $name;
-                $institution->url = $url;
+                $institution->name = $institutionDto->name;
+                $institution->url = $institutionDto->url;
+                $institution->logo_url = $institutionDto->logoUrl;
+                $institution->description = $institutionDto->description;
                 $institution->status = Institution::STATUS_NOACTIVE;
                 $institution->user_id = $user->id;
-                $token = md5($name . "_" . $url);
-                $institution->token = $token;
+                $institution->token = md5($institution->name . "_" . $institution->url);
                 $institution->created = date('Y-m-d H:i:s');
 
                 if ($institution->save()) {
                     $transaction->commit();
                     $res = new RegisterResult();
-                    $res->token = $token;
+                    $res->token = $institution->token;
                     $res->status = Status::getStatus(StatusCode::SUCCESS(), "");
                     return $res;
                 }
@@ -91,6 +88,50 @@ class ContentController extends CController
     }
 
     /**
+     * @param InstitutionDTO $institutionDto
+     * @return RegisterResult
+     * @soap
+     */
+    public function updateProfile($institutionDto)
+    {
+        $message = "";
+        try {
+            $institution = Institution::model()->find('token=:token',array(':token'=>$institutionDto->token));
+            if($institution){
+                $institution->name = $institutionDto->name;
+                $institution->url = $institutionDto->url;
+                $institution->logo_url = $institutionDto->logoUrl;
+                $institution->description = $institutionDto->description;
+                $institution->token = md5($institution->name . "_" . $institution->url);
+                if ($institution->save()) {
+                    $res = new RegisterResult();
+                    $res->token = $institution->token;
+                    $res->status = Status::getStatus(StatusCode::SUCCESS(), "");
+                    return $res;
+                }
+
+                $errors = $institution->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
+
+                $rr = new RegisterResult();
+                $rr->status = Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), $message);
+                return $rr;
+            }else{
+                $res = new RegisterResult();
+                $res->status = Status::getStatus(StatusCode::FATAL_ERROR(), "Invalid token!");
+                return $res;
+            }
+        } catch (Exception $ex) {
+            $res = new RegisterResult();
+            $res->status = Status::getStatus(StatusCode::FATAL_ERROR(), $ex->getMessage());
+            return $res;
+        }
+    }
+
+
+    /**
      * @param string $token
      * @param CollectionDTO $collection
      * @return Status
@@ -104,7 +145,7 @@ class ContentController extends CController
                 return Status::getStatus(StatusCode::LOGON_ERROR(), "Invalid token!");
             }
 
-            if(!($collection->id>0)){
+            if (!($collection->id > 0)) {
                 return Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), "Please set collection id!");
             }
 
@@ -447,7 +488,7 @@ class ContentController extends CController
             if ($model == null) {
                 return Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), "Can not find media for id " . $assign->id);
             }
-
+            //YiiBase::log(var_export($assign,true),CLogger::LEVEL_ERROR);
             $ids = implode(",", $assign->collections);
             $cModels = Collection::model()->findAll('institution_id =:instID AND remote_id IN(' . $ids . ')', array(':instID' => $institution->id));
 

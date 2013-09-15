@@ -8,7 +8,7 @@
 class ScoreBySubjectMatterPlugin extends MGWeightingPlugin  {
   public $enableOnInstall = true;
   public $hasAdmin = TRUE;
-  public $accessRole = "dbmanager";
+  public $accessRole = ADMIN;
   
   /**
    * Reads the players subject matter and the players interest, trust, and

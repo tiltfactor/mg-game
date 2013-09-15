@@ -6,7 +6,7 @@
 class GuessWhatScoringPlugin extends MGWeightingPlugin  {
   public $enableOnInstall = true;
   public $hasAdmin = TRUE;
-  public $accessRole = "dbmanager";
+  public $accessRole = ADMIN;
   
   /**
    * Give each tag that has been submitted by both users a bit more weight

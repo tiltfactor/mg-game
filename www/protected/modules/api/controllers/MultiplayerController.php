@@ -9,11 +9,11 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - validateSecret,disconnect',
+            //'throttle - validateSecret,disconnect',
             'IPBlock',
-            'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
+            //'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - validateSecret,disconnect',
-            'sharedSecret - validateSecret,disconnect', // the API is protected by a shared secret this filter ensures that it is regarded
+            //'sharedSecret - validateSecret,disconnect', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 
@@ -24,7 +24,19 @@ class MultiplayerController extends ApiController
     {
         return array(
             array('allow',
-                'actions' => array('register', 'findOpponent', 'pair', 'rejectPair','submit','validateSecret'),
+                'actions' => array('register',
+                    'findOpponent',
+                    'pair',
+                    'rejectPair',
+                    'submit',
+                    'validateSecret',
+                    'challenge',
+                    'acceptChallenge',
+                    'rejectChallenge',
+                    'getChallenges',
+                    'getOfflineGames',
+                    'getOfflineGameState'
+                ),
                 'users' => array('*'),
             ),
             array('deny',
@@ -45,9 +57,9 @@ class MultiplayerController extends ApiController
         $data = array();
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
-        if ($gameEngine->registerGamePlayer()) {
+        if ($gameEngine->registerUserOnline()) {
             $data['game'] = $gameEngine->getGameInfo();
             $data['user'] = $gameEngine->getUserInfo();
             $this->sendResponse($data);
@@ -68,7 +80,7 @@ class MultiplayerController extends ApiController
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
 
         $player = $gameEngine->requestPair($username);
@@ -79,7 +91,7 @@ class MultiplayerController extends ApiController
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
 
         $gameEngine->pair($id);
@@ -99,7 +111,7 @@ class MultiplayerController extends ApiController
         $data['status'] = "ok";
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
 
         try {
@@ -116,17 +128,22 @@ class MultiplayerController extends ApiController
      * Sent tags should be json encode of GameTagDTO[]
      * Response sent is json encode of GameTagDTO[]
      *
-     * @param $gid
+     * @param string $gid
+     * @param int $playedGameId
      * @throws CHttpException
      */
-    public function actionSubmit($gid)
+    public function actionSubmit($gid, $playedGameId)
     {
+        if ($playedGameId > 0) {
+            $_POST['playedGameId'] = $playedGameId;
+        }
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
         if (is_null($gameEngine)) {
-            $this->sendResponse(Yii::t('app', 'Internal Server Error.'),500);
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
 
         $tags = array();
+        $_POST["tags"] = '[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
         if (isset($_POST["tags"])) {
             $tags = GameTagDTO::createTagsFromJson($_POST["tags"]);
         }
@@ -140,19 +157,134 @@ class MultiplayerController extends ApiController
         $this->sendResponse($tags);
     }
 
-    public function actionValidateSecret($secret){
+    public function actionValidateSecret($secret)
+    {
         $session = Session::model()->find('user_id IS NOT NULL AND shared_secret=:ss', array(':ss' => $secret));
-        if($session){
+        if ($session) {
             $data = array();
-            $data['sid'] = $session->id;
+            $data['uid'] = $session->user_id;
             $this->sendResponse($data);
-        }else{
-            $this->sendResponse($secret." not found",404);
+        } else {
+            $this->sendResponse($secret . " not found", 404);
         }
     }
 
-    public function actionDisconnect($sid){
-        $this->sendResponse($sid);
-        //todo implement on disconnect
+    public function actionDisconnect($uid, $gid)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $gameEngine->disconnect($uid);
+    }
+
+    /**
+     * challenge game player by username or select one random
+     * Response sent is json encode of GameUserDTO
+     *
+     * @param string $gid
+     * @param string $username
+     * @throws CHttpException
+     */
+    public function actionChallenge($gid, $username)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $result = $gameEngine->challenge($username);
+        $this->sendResponse($result);
+    }
+
+    /**
+     * string JSON response with status message on success will be send
+     *
+     * @param string $gid
+     * @param int $opponentId
+     */
+    public function actionAcceptChallenge($gid, $opponentId)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $gameEngine->acceptChallenge($opponentId);
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    /**
+     * string JSON response with status message on success will be send
+     *
+     * @param string $gid
+     * @param int $fromUserId is the user id who sent the challenge
+     * @param int $toUserId is the user id who has been challenged
+     */
+    public function actionRejectChallenge($gid, $fromUserId, $toUserId)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $gameEngine->rejectChallenge($fromUserId, $toUserId);
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    /**
+     * get my requested challenges
+     * Response sent is json encode of GameChallengesDTO
+     *
+     * @param string $gid
+     */
+    public function actionGetChallenges($gid)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $result = $gameEngine->getChallenges();
+        $this->sendResponse($result);
+    }
+
+    /**
+     * get all not finished offline games
+     * Response sent is json encode of GameOfflineDTO[]
+     *
+     * @param string $gid
+     */
+    public function actionGetOfflineGames($gid)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $result = $gameEngine->getOfflineGames();
+        $this->sendResponse($result);
+    }
+
+    /**
+     * Get current game state
+     * Response sent is json encode of GameTurnDTO
+     *
+     * @param $gid
+     * @param $playedGameId
+     */
+    public function actionGetOfflineGameState($gid, $playedGameId)
+    {
+        $_POST['playedGameId'] = $playedGameId;
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+        $result = $gameEngine->getOfflineGameState($playedGameId);
+        $this->sendResponse($result);
     }
 }

@@ -17,7 +17,7 @@ class StopWordController extends GxController {
   				),
   			array('allow', 
   				'actions'=>array('index','view', 'batch', 'create','update', 'admin', 'delete'),
-  				'roles'=>array('editor', 'dbmanager', 'admin'),
+  				'roles'=>array(EDITOR, EDITOR),
   				),
   			array('deny', 
   				'users'=>array('*'),

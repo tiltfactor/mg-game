@@ -34,7 +34,7 @@ class ImportController extends GxController
             ),
             array('allow',
                 'actions' => array('index', 'uploadfromlocal', 'queueprocess', 'uploadzip', 'uploadftp', 'transcodingprocess', 'uploadprocess', 'xuploadmedia', 'batch', 'delete'),
-                'roles' => array('editor', 'dbmanager', 'admin'),
+                'roles' => array(EDITOR, EDITOR),
             ),
             array('deny',
                 'users' => array('*'),
@@ -46,7 +46,7 @@ class ImportController extends GxController
     {
         $this->layout = '//layouts/column1';
 
-        if (Yii::app()->user->checkAccess('editor')) {
+        if (Yii::app()->user->checkAccess(EDITOR)) {
             $tools = array();
 
             $tools["import-local"] = array(
@@ -585,7 +585,7 @@ class ImportController extends GxController
                         $isMedia = false;
                     else {
                         $this->createMedia($model->name, $model->size, $_POST["batch_id"], $model->mime_type);
-                        $thumbUrl = Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get('settings.app_upload_url') . "/thumbs/" . $model->name;
+                        $thumbUrl = Yii::app()->getBaseUrl() . UPLOAD_PATH . "/thumbs/" . $model->name;
                         $isMedia = true;
                     }
                 } elseif ($media_type == "video" || $media_type == "audio") {

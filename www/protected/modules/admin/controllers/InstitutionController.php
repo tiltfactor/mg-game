@@ -16,7 +16,7 @@ class InstitutionController extends GxController {
   				),
   			array('allow', 
   				'actions'=>array('index','view', 'batch', 'create','update', 'admin', 'delete'),
-  				'roles'=>array('editor', 'dbmanager', 'admin'), // ammend after creation
+  				'roles'=>array(EDITOR, EDITOR), // ammend after creation
   				),
   			array('deny', 
   				'users'=>array('*'),
@@ -90,14 +90,14 @@ class InstitutionController extends GxController {
 
 	public function actionIndex() {
 		$model = new Institution('search');
-    $model->unsetAttributes();
+        $model->unsetAttributes();
 
-    if (isset($_GET['Institution']))
-      $model->setAttributes($_GET['Institution']);
+        if (isset($_GET['Institution']))
+            $model->setAttributes($_GET['Institution']);
 
-    $this->render('admin', array(
-      'model' => $model,
-    ));
+        $this->render('admin', array(
+            'model' => $model,
+        ));
 	}
 
 	public function actionAdmin() {

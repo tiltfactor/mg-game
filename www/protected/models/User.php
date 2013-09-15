@@ -159,20 +159,17 @@ class User extends BaseUser
       'banned'=>array(
           'condition'=>'status='.self::STATUS_BANNED,
       ),
-      'player'=>array(
-          'condition'=>'role=\'player\'',
+      PLAYER => array(
+          'condition'=>'role=\'' . PLAYER . '\'',
       ),
-      'editor'=>array(
-          'condition'=>'role=\'editor\'',
+      EDITOR => array(
+          'condition'=>'role=\'' . EDITOR . '\'',
       ),
-      'dbmanager'=>array(
-          'condition'=>'role=\'dbmanager\'',
+      ADMIN => array(
+          'condition'=>'role=\'' . ADMIN . '\'',
       ),
-      'admin'=>array(
-          'condition'=>'role=\'admin\'',
-      ),
-      'institution'=>array(
-            'condition'=>'role=\'institution\'',
+      INSTITUTION => array(
+            'condition'=>'role=\'' . INSTITUTION . '\'',
         ),
       'notsafe'=>array(
         'select' => 'id, username, password, email, activekey, edited_count, created, modified, lastvisit, role, status',

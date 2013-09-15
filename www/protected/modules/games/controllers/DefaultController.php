@@ -15,7 +15,7 @@ class DefaultController extends Controller
     return array(
         array('allow', 
           'actions'=>array('admin'),
-          'roles'=>array('dbmanager', 'admin'),
+          'roles'=>array(ADMIN),
           ),
         array('deny', 
           'users'=>array('*'),

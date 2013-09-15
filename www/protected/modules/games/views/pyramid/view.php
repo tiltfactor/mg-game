@@ -83,7 +83,7 @@ if (count($model->plugins) == 0) {
 
 foreach($model->plugins as $relatedModel) {
     echo GxHtml::openTag('li');
-    if (Yii::app()->user->checkAccess('admin')) {
+    if (Yii::app()->user->checkAccess(ADMIN)) {
         echo GxHtml::link(GxHtml::encode(GxHtml::valueEx($relatedModel)), array('/plugins/default/view', 'id' => GxActiveRecord::extractPkValue($relatedModel, true)));
     } else {
         echo GxHtml::encode(GxHtml::valueEx($relatedModel));

@@ -7,7 +7,7 @@
 
 class StopWordPlugin extends MGDictionaryPlugin  {
   public $hasAdmin = TRUE;
-  public $accessRole = "editor";
+  public $accessRole = EDITOR;
   public $enableOnInstall = true;
   
   /**

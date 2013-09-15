@@ -15,8 +15,8 @@ app.get('/', function (req, res) {
     res.send(404);
 });
 
-app.post('/message/:action/:sid', function (req, res) {
-    player = getPlayer(req.params.sid);
+app.post('/message/:action/:gid/:uid', function (req, res) {
+    var player = getPlayer(req.params.uid,req.params.gid);
     if (player) {
         player.socket.emit(req.params.action, req.body);
         res.send(200);
@@ -28,19 +28,21 @@ app.post('/message/:action/:sid', function (req, res) {
 io.sockets.on('connection', function (socket) {
     var player = addPlayer(null, null, socket);
     console.log("MG add player with socket id: " + socket.id);
-    socket.on('secret', function (secret) {
+    socket.on('register', function (secret,gid) {
         player.secret = secret;
+        player.gid = gid;
         checkSecret(player);
     });
-    socket.on('reconnect', function (secret) {
+    socket.on('reconnect', function (secret,gid) {
         player.secret = secret;
+        player.gid = gid;
         checkSecret(player);
         console.log("MG Reconnect: " + secret);
     });
     socket.on('disconnect', function () {
         removePlayer(player);
-        if (player.sid != null) {
-            var uri = settings.mgapi + 'multiplayer/disconnect/sid/' + player.sid + '/';
+        if (player.uid != null) {
+            var uri = settings.mgapi + 'multiplayer/disconnect/uid/' + player.uid + '/gid/' + player.gid + '/';
             request({
                 uri:uri,
                 method:"GET"
@@ -60,9 +62,10 @@ function checkSecret(player) {
         switch (response.statusCode) {
             case 200:
                 var res = JSON.parse(body);
-                player.sid = res.sid;
+                player.uid = res.uid;
                 break;
             case 404:
+                player.socket.emit("registerFailure", body);
                 player.socket.disconnect();
                 console.log(body);
                 break;
@@ -70,9 +73,10 @@ function checkSecret(player) {
     });
 }
 
-function addPlayer(sid, secret, socket) {
+function addPlayer(uid, secret, socket,gid) {
     var player = {
-        sid:sid,
+        uid:uid,
+        gid:gid,
         secret:secret,
         socket:socket
     };
@@ -89,9 +93,9 @@ function removePlayer(player) {
     }
 }
 
-function getPlayer(sid) {
+function getPlayer(uid,gid) {
     for (var i = 0; i < players.length; i++) {
-        if (sid == players[i].sid) {
+        if (uid == players[i].uid && gid == players[i].gid) {
             return players[i];
         }
     }
