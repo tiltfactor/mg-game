@@ -24,6 +24,10 @@ $this->menu = array(
     'attributes' => array(
         'id',
         'name',
+        array(
+            'name' => 'status',
+            'value' => Institution::itemAlias("UserStatus",$model->status),
+        ),
         'url',
         'token',
         array(
