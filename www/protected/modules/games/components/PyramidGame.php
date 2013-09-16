@@ -152,8 +152,8 @@ class PyramidGame extends NexTagGame
                 "media_id" => $media["id"],
                 "full_size" => $path . "/images/" . $media["name"],
                 "thumbnail" => $path . "/thumbs/" . $media["name"],
-                "final_screen" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($media["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
-                "scaled" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($media["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                "final_screen" => MGHelper::getScaledMediaUrl($media["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                "scaled" => MGHelper::getScaledMediaUrl($media["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
                 "licences" => $media["licences"],
                 "level" => $lastLevel->level,
                 "tag_accepted" => $lastLevel->isAccepted

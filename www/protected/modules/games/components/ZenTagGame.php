@@ -118,8 +118,8 @@ class ZenTagGame extends MGGame implements MGGameInterface
                     "media_id" => $medias[$i]["id"],
                     "full_size" => $path . "/images/" . $medias[$i]["name"],
                     "thumbnail" => $path . "/thumbs/" . $medias[$i]["name"],
-                    "final_screen" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($medias[$i]["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
-                    "scaled" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                    "final_screen" => MGHelper::getScaledMediaUrl($medias[$i]["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                    "scaled" => MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
                     "licences" => $medias[$i]["licences"],
                 );
 

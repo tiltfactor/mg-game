@@ -241,8 +241,8 @@ class GuessWhatGame extends MGGame implements MGGameInterface
                         "media_id" => $medias[$i]["id"],
                         "full_size" => $path . "/images/" . $medias[$i]["name"],
                         "thumbnail" => $path . "/thumbs/" . $medias[$i]["name"],
-                        "guess" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_grid_width, $game->image_grid_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
-                        "scaled" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                        "guess" => MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_grid_width, $game->image_grid_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                        "scaled" => MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
                         "licences" => $medias[$i]["licences"],
                     );
 
