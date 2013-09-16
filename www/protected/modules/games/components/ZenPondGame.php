@@ -154,13 +154,15 @@ class ZenPondGame extends MGGame implements MGGameInterface
                 // the needed information for the media.
                 // make sure the media is present in all versions. rescale media if not
                 // by calling MGHelper::createScaledMedia(...)
-                $path = Yii::app()->getBaseUrl(true) . Yii::app()->fbvStorage->get('settings.app_upload_url');
+                $path = $medias[$i]["institutionUrl"];
+                $path = rtrim($path, "/");
+                $path .= UPLOAD_PATH;
                 $data["medias"][] = array(
                     "media_id" => $medias[$i]["id"],
                     "full_size" => $path . "/images/" . $medias[$i]["name"],
                     "thumbnail" => $path . "/thumbs/" . $medias[$i]["name"],
-                    "final_screen" => $path . "/scaled/" . MGHelper::createScaledMedia($medias[$i]["name"], "", "scaled", 212, 171, 80, 10),
-                    "scaled" => $path . "/scaled/" . MGHelper::createScaledMedia($medias[$i]["name"], "", "scaled", $game->image_width, $game->image_height, 80, 10),
+                    "final_screen" => MGHelper::getScaledMediaUrl($medias[$i]["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                    "scaled" => MGHelper::getScaledMediaUrl($medias[$i]["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
                     "licences" => $medias[$i]["licences"],
                 );
 
@@ -225,7 +227,7 @@ class ZenPondGame extends MGGame implements MGGameInterface
             foreach ($plugins as $plugin) {
                 if (method_exists($plugin->component, "setWeights")) {
                     // influence the weight of the tags
-                    $tags = $plugin->component->setWeights($game_model, $tags,$game);
+                    $tags = $plugin->component->setWeights($game_model, $tags, $game);
                 }
             }
         }
@@ -254,7 +256,7 @@ class ZenPondGame extends MGGame implements MGGameInterface
 
                     // let each scoring plugin add to the score based on the $tags or even
                     // further submission information extracted from $game->request->submissions
-                    $score = $plugin->component->score($game_model, $tags, $score,$game);
+                    $score = $plugin->component->score($game_model, $tags, $score, $game);
                 }
             }
         }

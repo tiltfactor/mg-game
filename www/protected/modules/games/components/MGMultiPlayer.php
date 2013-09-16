@@ -432,7 +432,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where[] = $where_add;
             }
             $result = Yii::app()->db->createCommand()
-                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url')
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
                 ->join('{{collection}} is', 'is.id=is2i.collection_id')
@@ -460,7 +460,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where[] = $where_add;
             }
             $result = Yii::app()->db->createCommand()
-                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url')
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
                 ->join('{{collection}} is', 'is.id=is2i.collection_id')

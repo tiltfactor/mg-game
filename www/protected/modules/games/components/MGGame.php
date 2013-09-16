@@ -71,7 +71,7 @@ class MGGame extends CComponent {
    * @return array Array of Array: array(array("id", "name"), ...)
    */
   protected function getMedias($collections, $game, &$game_model, $num_medias=1, $second_attempt=false, $accept_types=array("image")) {
-    
+
     $used_medias = $this->getUsedMedias($game, $game_model);
     
     $limit = $num_medias * 5;
@@ -95,9 +95,10 @@ class MGGame extends CComponent {
             $where[] = $where_add;
         }
       $medias = Yii::app()->db->createCommand()
-                  ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok')
+                  ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
                   ->from('{{collection_to_media}} is2i')
                   ->join('{{media}} i', 'i.id=is2i.media_id')
+                   ->join('{{institution}} inst', 'i.institution_id=inst.id')
                   ->join('{{collection}} is', 'is.id=is2i.collection_id')
                   ->where($where)
                   ->order('i.last_access ASC')
@@ -122,9 +123,10 @@ class MGGame extends CComponent {
             $where[] = $where_add;
         }
       $medias = Yii::app()->db->createCommand()
-                  ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok')
+                  ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
                   ->from('{{collection_to_media}} is2i')
                   ->join('{{media}} i', 'i.id=is2i.media_id')
+                  ->join('{{institution}} inst', 'i.institution_id=inst.id')
                   ->join('{{collection}} is', 'is.id=is2i.collection_id')
                   ->leftJoin('{{collection_to_subject_matter}} is2sm', 'is2sm.collection_id=is2i.collection_id')
                   ->leftJoin('{{user_to_subject_matter}} usm', 'usm.subject_matter_id=is2sm.subject_matter_id')
@@ -146,7 +148,9 @@ class MGGame extends CComponent {
               "id" => $media["id"],
               "name" => $media["name"],
               "mime_type" => $media["mime_type"],
-              "licences" => array((int)$media["licence_id"])
+              "licences" => array((int)$media["licence_id"]),
+              "institutionUrl" => $media["url"],
+              "institutionToken" => $media["token"],
             );
           } else {
             $arr_media[$media["id"]]["licences"][] = (int)$media["licence_id"];
