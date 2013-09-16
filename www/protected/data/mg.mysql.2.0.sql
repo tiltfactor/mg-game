@@ -811,23 +811,6 @@ ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `cron_jobs`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cron_jobs` ;
-
-CREATE TABLE IF NOT EXISTS `cron_jobs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `execute_after` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `executed_started` timestamp NULL DEFAULT NULL,
-  `executed_finished` timestamp NULL DEFAULT NULL,
-  `succeeded` tinyint(1) DEFAULT NULL,
-  `action` varchar(255) NOT NULL,
-  `parameters` text,
-  `execution_result` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB CHARACTER SET = utf8;
-
--- -----------------------------------------------------
 -- Table `institution`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `institution` ;
