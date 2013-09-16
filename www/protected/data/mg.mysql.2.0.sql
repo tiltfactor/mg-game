@@ -100,6 +100,27 @@ CREATE  TABLE IF NOT EXISTS `user` (
   INDEX `status` (`status` ASC) )
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
+-- -----------------------------------------------------
+-- Table `institution`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `institution` ;
+
+CREATE TABLE IF NOT EXISTS `institution` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `url` varchar(128) NOT NULL,
+  `logo_url` varchar(128) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `user_id` INT(11) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `url` (`url`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `fk_institution_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- -----------------------------------------------------
 -- Table `user_to_subject_matter`
@@ -203,7 +224,7 @@ CREATE  TABLE IF NOT EXISTS `media` (
   `remote_id` INT(11) NULL ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `institution_id` (`institution_id`,`remote_id`),
-  CONSTRAINT `fk_licence_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`))
+  CONSTRAINT `fk_media_institution` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`))
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
 
@@ -809,29 +830,6 @@ CREATE  TABLE IF NOT EXISTS `pcounter_save` (
   `save_value` INT(10) UNSIGNED NOT NULL )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8;
-
--- -----------------------------------------------------
--- Table `institution`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `institution` ;
-
-CREATE TABLE IF NOT EXISTS `institution` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(128) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `url` varchar(128) NOT NULL,
-  `logo_url` varchar(128) NOT NULL,
-  `token` varchar(128) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
-  `created` datetime NOT NULL,
-  `user_id` INT(11) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `url` (`url`),
-  UNIQUE KEY `user_id` (`user_id`),
-  CONSTRAINT `fk_institution_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
