@@ -49,8 +49,7 @@ class PyramidGame extends NexTagGame
             $level->level = 1;
             if ($pass) {
                 $level->isAccepted = true;
-            }
-            else {
+            } else {
                 $level->isAccepted = false;
             }
         } else if ($level->isAccepted) {
@@ -145,13 +144,16 @@ class PyramidGame extends NexTagGame
                 $lastLevel->isAccepted = false;
             }
 
-            $path = Yii::app()->getBaseUrl(true) . Yii::app()->fbvStorage->get('settings.app_upload_url');
+            $path = $media["institutionUrl"];
+            $path = rtrim($path, "/");
+            $path .= UPLOAD_PATH;
+
             $data["medias"][] = array(
                 "media_id" => $media["id"],
                 "full_size" => $path . "/images/" . $media["name"],
                 "thumbnail" => $path . "/thumbs/" . $media["name"],
-                "final_screen" => $path . "/scaled/" . MGHelper::createScaledMedia($media["name"], "", "scaled", 212, 171, 80, 10),
-                "scaled" => $path . "/scaled/" . MGHelper::createScaledMedia($media["name"], "", "scaled", $game->image_width, $game->image_height, 80, 10),
+                "final_screen" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($media["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                "scaled" => $path . "/scaled/" . MGHelper::getScaledMediaUrl($media["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
                 "licences" => $media["licences"],
                 "level" => $lastLevel->level,
                 "tag_accepted" => $lastLevel->isAccepted
@@ -291,8 +293,8 @@ class PyramidGame extends NexTagGame
             return $mediaTags;
         } else {
             $mediaTags = MGTags::getTagsByLength($mediaId, ($level->level + PyramidGame::$LETTERS_STEP));
-            if(empty($mediaTags)){
-                $tag = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0,$level->level + PyramidGame::$LETTERS_STEP);
+            if (empty($mediaTags)) {
+                $tag = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $level->level + PyramidGame::$LETTERS_STEP);
                 $mediaTags[0]["tag"] = $tag;
                 $mediaTags[0]["tag_id"] = -1;
             }
