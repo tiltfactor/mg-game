@@ -58,7 +58,8 @@
     <?php echo $model->modified; ?>
   </div><!-- row -->
 <?php endif; ?>
-<?php 
+<?php
+    if(isset($profile)){
 		$profileFields=$profile->getFields();
 		if ($profileFields) {
 			foreach($profileFields as $field) {
@@ -81,6 +82,7 @@
 			<?php
 			}
 		}
+    }
 ?>
 
 <?php if ($model->id) : ?>

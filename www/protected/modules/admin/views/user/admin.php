@@ -79,7 +79,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
       'name' => 'status',
       'type' => 'raw',
       'value' => "User::itemAlias('UserStatus', \$data->status)",
-      'filter'=> User::itemAlias('UserStatus'),
+      'filter'=> User::itemAlias('Status'),
     ),
     'edited_count',
     'created',

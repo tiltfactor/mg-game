@@ -8,7 +8,7 @@ return array (
   array (
     'description' => 'This is a short description of the project',
   ),
-  'media' =>
+  'media' => 
   array (
     'formats' => 
     array (
@@ -30,7 +30,7 @@ return array (
   ),
   'admin-tools' => 
   array (
-    'tool-media' =>
+    'tool-media' => 
     array (
       'name' => 'Media',
       'description' => 'Manage media that have been imported and processed.',
@@ -46,15 +46,7 @@ return array (
       'role' => EDITOR,
       'group' => 'Media & Tags',
     ),
-    'tool-import' => 
-    array (
-      'name' => 'Import',
-      'description' => 'Import and process media into the system.',
-      'url' => '/admin/import',
-      'role' => EDITOR,
-      'group' => 'Media & Tags',
-    ),
-    'tool-collection' =>
+    'tool-collection' => 
     array (
       'name' => 'Collections',
       'description' => 'Group media and apply applicable licences.',
@@ -150,14 +142,14 @@ return array (
       'role' => ADMIN,
       'group' => 'Other',
     ),
-	'tool-institution' =>
-      array (
-          'name' => 'Institution',
-          'description' => 'Manage MG Content Server register to MG Game Server',
-          'url' => '/admin/institution',
+    'tool-institution' => 
+    array (
+      'name' => 'Institution',
+      'description' => 'Manage MG Content Server register to MG Game Server',
+      'url' => '/admin/institution',
       'role' => ADMIN,
-          'group' => 'Other',
-      ),
+      'group' => 'Other',
+    ),
   ),
   'games' => 
   array (

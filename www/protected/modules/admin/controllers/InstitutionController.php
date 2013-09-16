@@ -59,8 +59,8 @@ class InstitutionController extends GxController {
 			$model->setAttributes($_POST['Institution']);
 
 			if ($model->save()) {
-        MGHelper::log('update', 'Updated Institution with ID(' . $id . ')');
-        Flash::add('success', Yii::t('app', "Institution updated"));
+                MGHelper::log('update', 'Updated Institution with ID(' . $id . ')');
+                Flash::add('success', Yii::t('app', "Institution updated"));
 				$this->redirect(array('view', 'id' => $model->id));
 			}
 		}

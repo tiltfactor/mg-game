@@ -3,6 +3,7 @@ class m111119_234451_install_v2_0 extends CDbMigration
 {
     public function up()
     {
+        return;
         $script = "
         CREATE TABLE IF NOT EXISTS `institution` (
           `id` int(11) NOT NULL AUTO_INCREMENT,
