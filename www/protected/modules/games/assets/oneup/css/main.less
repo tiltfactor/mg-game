@@ -1,0 +1,43 @@
+.at2x(@path, @w: auto, @h: auto, @repeat: repeat) {
+  background-image: url(@path);
+  background-repeat: @repeat;
+  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
+
+  @media all and  (-webkit-min-device-pixel-ratio : 1.5) and (max-height: 620px),
+  only screen and (    min--moz-device-pixel-ratio: 1.5) and (max-height: 620px),
+  only screen and (      -o-max-device-pixel-ratio: 2/1) and (max-height: 620px),
+  only screen and (         min-device-pixel-ratio: 1.5) and (max-height: 620px),
+  only screen and (              min-resolution: 192dpi) and (max-height: 620px),
+  only screen and (               min-resolution: 2dppx) and (max-height: 620px),
+  only screen and (         min-device-pixel-ratio: 1.5) and (pointer:coarse),
+  only screen and (              min-resolution: 1.5dppx) and (orientation: portrait) {
+    background-image: url(@at2x_path);
+    //background-size: @w @h;
+    background-repeat: @repeat;
+  }
+}
+
+@font-face {
+  font-family: Museo;
+  font-weight: normal;
+  src: url("../fonts/Museo100.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Museo;
+  font-weight: bold;
+  src: url("../fonts/Museo700.otf") format("opentype");
+}
+
+.hidden {
+  display: none;
+}
+
+.right {
+  left: auto;
+  float: right;
+}
+
+#header {
+  padding: 0 10px;
+}

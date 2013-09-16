@@ -1,0 +1,20 @@
+@font-face {
+  font-family: Museo;
+  font-weight: normal;
+  src: url("../fonts/Museo100.otf") format("opentype");
+}
+@font-face {
+  font-family: Museo;
+  font-weight: bold;
+  src: url("../fonts/Museo700.otf") format("opentype");
+}
+.hidden {
+  display: none;
+}
+.right {
+  left: auto;
+  float: right;
+}
+#header {
+  padding: 0 10px;
+}

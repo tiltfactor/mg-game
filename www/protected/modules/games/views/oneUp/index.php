@@ -2,20 +2,109 @@
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
   <div id="stage">
-    <div id="game_description">
-    	<h2>How To Play</h2>
-    	<ul>
-    		<li>Describe the image as accurately as you can.</li> 
-    		<li>Use commas to separate phrases or individual words.</li>
-    		<li>Hit enter or click Ohm when done.</li>
-    		<li>Match your partner's tags for bonus points!</li>
-    	</ul>
-    	<p>Click on the image to see a full-screen version.</p>
-    </div>
-    <div id="zenpond">
-      <img src="<?php echo GamesModule::getAssetsUrl(); ?>/zenpond/images/zenpond.gif" alt="Zen Pond" width="222" height="46" /> 
-    </div> 
-    
+      <div id="header">
+          <a href="#menu-left" class="hidden">left</a>
+          <a href="#menu-right" class="right">Settings</a>
+      </div>
+      <div id="content">
+          <div id="main_screen">
+              WELCOME <span class="username"></span>
+              <a href="#" location="new_game" class="button new_game">NEW GAME</a>
+          </div>
+
+          <div id="new_game" class="hidden">
+              <h2>NEW GAME</h2>
+              <div><a href="#" location="find_opponent">Opponent by User Name</a></div>
+              <div><a href="#" location="make_challenge">Random Opponent</a></div>
+              <div><a href="#" location="find_opponent">Facebook Friend</a></div>
+          </div>
+
+          <div id="find_opponent" class="hidden">
+              <h2>ENTER A USER NAME</h2>
+              <input type="text" name="opponent_name" class="opponent_name" />
+              <a href="#" location="make_challenge" class="button play">PLAY</a>
+          </div>
+
+          <div id="game_settings" class="hidden">
+              <h2>Game settings</h2>
+              <div>Tell us what interests you and we will show you more images from those subjects when you play</div>
+              <div>I'm interested in...</div>
+              <div id="favorite_institutions">
+                  When you add an archive to your favorites, you will see more images from that archive when you play.
+              </div>
+              <h3>Featured Archives</h3>
+              <select>
+                  <option>Browse All Archives</option>
+              </select>
+          </div>
+
+          <div id="learn_more" class="hidden">
+              <h2>Learn More</h2>
+              <div>One Up is part of a suite of games from the
+                  Metadata Games project. Metadata Games is a
+                  Free and Open Source (FOSS) online game
+                  system for gathering useful data on photo,
+                  audio, and moving image artifacts. By playing,
+                  you have a direct impact on the preservation
+                  and accessibility of vital cultural heritage
+                  collections for future generations.</div>
+              <div>
+                  Metadata Games is created by the Tiltfactor
+                  Laboratory at Dartmouth College, with support
+                  from the National Endowment for the
+                  Humanities (NEH) and the American Council of
+                  Learned Societies (ACLS).
+              </div>
+              <h3>METADATAGAMES</h3>
+              <div>
+                  <span class="tiltfactor_logo" />
+                  <span class="dartmouth_logo" />
+                  <span class="neh_logo" />
+              </div>
+
+          </div>
+
+          <div id="institution_info" class="hidden">
+              need to load template here
+          </div>
+
+          <div id="how_to" class="hidden">
+              <h2>How to Play</h2>
+              <div>Add image slide left right</div>
+          </div>
+
+          <div id="account" class="hidden">
+              <h2>Account</h2>
+              <div>Update Account Settings</div>
+              <div id="bookmarked_images">
+                  <div>You do not have bookmarked Images.</div>
+                  <div>Your Bookmarked Images</div>
+              </div>
+              <div>
+                  <h3>Your Interests</h3>
+                  TODO
+              </div>
+              <div>
+                  <h3>Your Playlist</h3>
+                  TODO
+              </div>
+          </div>
+      </div>
+      <nav id="menu-left">
+
+      </nav>
+      <nav id="menu-right">
+          <ul>
+              <li><a href="#" location="main_screen">PLAY</a></li>
+              <li><a href="#" location="game_customize">CUSTOMIZE</a></li>
+              <li><a href="#" location="how_to">HOW TO PLAY</a></li>
+              <li><a href="#" location="learn_more">LEARN MORE</a></li>
+              <li><a href="#" location="account">ACCOUNT</a></li>
+          </ul>
+      </nav>
+
+
+
     <div id="holder">
       <div id="image_container" class="clearfix"></div>
     </div>
@@ -23,95 +112,52 @@
     <div id="fieldholder" class="clearfix">   
       <form action="#"><textarea name="words" cols="50" rows="8" id="words"></textarea></form> 
     </div>  
-    <div id="box1"> 
-      <div id="box2"> 
-        <div id="box3"> 
-          <a href="#" id="button-play" class="ir"> 
-            play
-          </a> 
-        </div> 
-      </div> 
-    </div>
     <div id="scores"></div>
     <div id="licences"></div>
     <div id="more_info"></div>
     <div id="words_to_avoid"></div>
     <div id="partner-waiting"></div>
   </div>
-  <div id="partner-waiting-modal"></div>
 </div>
-<script id="template-scores" type="text/x-jquery-tmpl">
-  <h2>Welcome ${user_name}</h2>
-  <div class="game_partner">You're playing with 
-  	<br /><span>${game_partner_name}!</span></div>
-  <div class="total_score">You played <span>${user_num_played}</span> times and scored <span>${user_score}</span> Points</div>
-  <div class="current_score">This game's score <span>${current_score}</span> Points</div>
-  <div class="total_turns">Turn <span>${current_turn}</span>/<span>${turns}</span></div>
+<script id="template-challenges" type="text/x-jquery-tmpl">
+    <div id="challenges">
+        <div id="challenges_sent" class="list_challenges">
+            <h3>YOUR TURN</h3>
+            <div class="no_value hidden">You didn't challenge anyone!</div>
+            {{each sent}}
+            <div opponent_id="${opponent_id}">
+                <div>${opponent_name}</div>
+                <div class="delete">X</div>
+            </div>
+            {{/each}}
+        </div>
+        <div id="challenges_received" class="list_challenges">
+            <h3>WAITING</h3>
+            <div class="no_value hidden">Noone challenged you!</div>
+            {{each received}}
+            <div opponent_id="${opponent_id}">
+                <div>${opponent_name}</div>
+                <div class="delete">X</div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
 </script>
-<script id="template-licence" type="text/x-jquery-tmpl">
-  <h4>${name}</h4>
-  <p>${description}</p>
-</script> 
-<script id="template-turn" type="text/x-jquery-tmpl">
-  <div style="text-align:center" class="clearfix">
-    <a href="${url_full_size}" rel="zoom" title="${licence_info}"><img src="${url}" alt="game image" /></a>
-  </div>
+<script id="template-favorite_institutions" type="text/x-jquery-tmpl">
+    <div id="list_institutions">
+        {{each institution}}
+        <div institution_id="${id}">
+            ${name}
+            <a href=""><img src="${logo}" width="25" height="25" /></a>
+        </div>
+        {{/each}}
+    </div>
 </script>
 <script id="template-final-summary" type="text/x-jquery-tmpl">
-  <div id="smallholder0"> 
-    <a href="${url_full_size_1}" rel="zoom" title="${licence_info_1}"><img class="scoreimages" src="${url_1}" alt="game image" /></a>
-  </div> 
-  <div id="smallholder1"> 
-    <a href="${url_full_size_2}" rel="zoom" title="${licence_info_2}"><img class="scoreimages" src="${url_2}" alt="game image" /></a>
-  </div> 
-  <div id="smallholder2"> 
-    <a href="${url_full_size_3}" rel="zoom" title="${licence_info_3}"><img class="scoreimages" src="${url_3}" alt="game image" /></a>
-  </div> 
-  <div id="smallholder3"> 
-    <a href="${url_full_size_4}" rel="zoom" title="${licence_info_4}"><img class="scoreimages" src="${url_4}" alt="game image" /></a>
-  </div> 
 </script>
-<script id="template-final-summary-play-once" type="text/x-jquery-tmpl">
-  <div style="text-align:center" class="clearfix">
-    <a href="${url_full_size}" rel="zoom" title="${licence_info}"><img src="${url}" alt="game image" /></a>
-  </div>
-</script>
-<script id="template-more-info" type="text/x-jquery-tmpl">
-  <a href="${url}">Click here to learn more about ${name}</a>
-</script>
-<script id="template-words-to-avoid-heading" type="text/x-jquery-tmpl">
-  <h2>Words To Avoid</h2>
-</script>
-<script id="template-words-to-avoid" type="text/x-jquery-tmpl">
-  <span>${tag}</span>
-</script>
-<script id="template-final-info" type="text/x-jquery-tmpl">
-  <p class="final">Congratulations <b>${user_name}</b>, you scored <b>${current_score}</b> points in this game.</p>
-</script>
-<script id="template-final-tags-new" type="text/x-jquery-tmpl">
-  <p class="tag-info">New tag(s): <b>'${tags_new}'</b> scoring <b>${tags_new_score}</b> point(s)</p>
-</script>
-<script id="template-final-tags-matched" type="text/x-jquery-tmpl">
-  <p class="tag-info">Matched tag(s): <b>'${tags_matched}'</b> scoring <b>${tags_matched_score}</b> point(s).</p>
-</script>
-<script id="template-final-tags-same_as" type="text/x-jquery-tmpl">
-  <p class="tag-info">Same as ${game_partner_name}: <b>'${tags_same_as}'</b>.</p>
-</script>
-<script id="template-partner-waiting-modal" type="text/x-jquery-tmpl">
-  <p>Waiting for partner; timeout in <b>'${seconds}'</b> seconds.</p>{{if play_against_computer == 1}}<p><a href="#" id="playAgainstComputerNow">Play with the computer right now</a></p>{{/if}}<a href="${arcade_url}">Abort</a> game.
-</script>
-<script id="template-partner-waiting-modal-turn" type="text/x-jquery-tmpl">
-  Waiting for partner to submit turn.
-</script>
-<script id="template-partner-waiting-time-out" type="text/x-jquery-tmpl">
-  No game partner found. <a href="${game_base_url}/ZenPond">Retry</a>. You could also play a round of <a href="${game_base_url}/ZenTag">Zen Tag</a>, or go to back to the <a href="${arcade_url}">arcade</a> instead.
-</script>
-<script id="template-partner-waiting-for-submit" type="text/x-jquery-tmpl">
-  <b>${game_partner_name}</b> <br />waits for your submission!
-</script>
-<script id="template-partner-aborted" type="text/x-jquery-tmpl">
-  <b>${game_partner_name}</b> has left the game. <a href="${game_base_url}/ZenPond">Retry</a>. You could also play a round  of <a href="${game_base_url}/ZenTag">Zen Tag</a>, or go to back to the <a href="${arcade_url}">arcade</a> instead.
-</script>
-<script id="template-info-modal-critical-error" type="text/x-jquery-tmpl">
-  ${error} <p>Return to the <a href="${arcade_url}">arcade</a>.</p>
+<script id="template-make-sound" type="text/x-jquery-tmpl">
+    <audio id='make_sound' style="height: 0px;">
+        <source src="${ogg_path}" type="audio/ogg">
+        <source src="${mp3_path}" type="audio/mpeg">
+    </audio>
 </script>

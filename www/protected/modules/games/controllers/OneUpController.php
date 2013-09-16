@@ -39,34 +39,41 @@ class OneUpController extends GxController
 
     public function actionIndex()
     {
-        PyramidGame::reset();
-        MGHelper::setFrontendTheme();
-
         $game = GamesModule::loadGame("OneUp");
-
         if ($game) {
             $cs = Yii::app()->clientScript;
             $cs->registerCoreScript('jquery');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/css/jquery.fancybox-1.3.4.css');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/css/normalize.css');
-            $cs->registerCssFile(GamesModule::getAssetsUrl() . '/oneup/css/main.css');
+
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
+            $cs->registerCssFile(GamesModule::getAssetsUrl() . '/oneup/css/main.css');
+
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/modernizr.custom.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/retina.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
-            $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_HEAD);
-            $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
+            $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_END);
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
 
-            $js = "";
+            $js = <<<EOD
+    MG_GAME_ONEUP.init({
+        gid : 'OneUp',
+        app_id : 'MG_API',
+        asset_url : '$asset_url',
+        api_url : '{$game->api_base_url}',
+        arcade_url : '$arcade_url',
+        game_base_url : '{$game->game_base_url}',
+        throttleInterval : ''
+    });
+EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
-            $this->layout = '//layouts/column1';
+            $this->layout = '//layouts/mobile';
 
             $this->render('index', array(
                 'game' => $game,
@@ -92,7 +99,7 @@ class OneUpController extends GxController
         ));
     }
 
-    /**
+     /**
      * edit the game's settings
      */
     public function actionUpdate()
@@ -123,4 +130,5 @@ class OneUpController extends GxController
             'model' => $model,
         ));
     }
+
 }

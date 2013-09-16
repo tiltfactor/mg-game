@@ -14,4 +14,8 @@ class GameOfflineDTO
      * @var string
      */
     public $opponentName;
+    /**
+     * @var int
+     */
+    public $turnUserId;
 }
