@@ -125,4 +125,3 @@ MG_GAME_API = function ($) {
   });
 }(jQuery);
 
-

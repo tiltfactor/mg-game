@@ -2,14 +2,16 @@
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
   <div id="stage">
-      <div id="header">
+      <div id="header" class="group">
           <a href="#menu-left" class="hidden">left</a>
-          <a href="#menu-right" class="right">Settings</a>
+          <a href="#menu-right" class="right setting"></a>
       </div>
-      <div id="content">
+      <div id="content" class="group">
           <div id="main_screen">
-              WELCOME <span class="username"></span>
-              <a href="#" location="new_game" class="button new_game">NEW GAME</a>
+              <div class="back_black header">
+                  WELCOME <span class="username"></span>
+                  <a href="#" location="new_game" class="button new_game"><span>NEW GAME</span></a>
+              </div>
           </div>
 
           <div id="new_game" class="hidden">
@@ -22,7 +24,7 @@
           <div id="find_opponent" class="hidden">
               <h2>ENTER A USER NAME</h2>
               <input type="text" name="opponent_name" class="opponent_name" />
-              <a href="#" location="make_challenge" class="button play">PLAY</a>
+              <a href="#" location="make_challenge" class="button play"><span>PLAY</span></a>
           </div>
 
           <div id="game_settings" class="hidden">
@@ -125,9 +127,9 @@
             <h3>YOUR TURN</h3>
             <div class="no_value hidden">You didn't challenge anyone!</div>
             {{each sent}}
-            <div opponent_id="${opponent_id}">
+            <div opponent_id="${opponent_id}" class="back_yellow row">
                 <div>${opponent_name}</div>
-                <div class="delete">X</div>
+                <div class="delete right"></div>
             </div>
             {{/each}}
         </div>
@@ -135,9 +137,9 @@
             <h3>WAITING</h3>
             <div class="no_value hidden">Noone challenged you!</div>
             {{each received}}
-            <div opponent_id="${opponent_id}">
+            <div opponent_id="${opponent_id}" class="back_gray row">
                 <div>${opponent_name}</div>
-                <div class="delete">X</div>
+                <div class="delete right"></div>
             </div>
             {{/each}}
         </div>

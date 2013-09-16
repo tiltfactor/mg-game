@@ -1,12 +1,19 @@
 @font-face {
   font-family: Museo;
   font-weight: normal;
-  src: url("../fonts/Museo100.otf") format("opentype");
+  src: url("../fonts/Museo100-Regular.otf") format("opentype");
 }
 @font-face {
   font-family: Museo;
   font-weight: bold;
-  src: url("../fonts/Museo700.otf") format("opentype");
+  src: url("../fonts/Museo700-Regular.otf") format("opentype");
+}
+p,
+div,
+h1,
+h2,
+h3 {
+  font-family: Museo;
 }
 .hidden {
   display: none;
@@ -16,5 +23,150 @@
   float: right;
 }
 #header {
-  padding: 0 10px;
+  padding: 5px;
+  background-color: #030104;
+  height: auto;
+}
+#header .setting {
+  display: block;
+  background-image: url('../images/settings.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  width: 35px;
+  height: 22px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #header .setting {
+    background-image: url('../images/settings@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+#content {
+  padding: 0;
+}
+#content .button {
+  display: block;
+  left: 50%;
+  right: 50%;
+  text-align: center;
+  text-decoration: none;
+  font-size: 22px;
+}
+#content .button span {
+  border: 1px solid #877c80;
+  padding: 10px;
+  color: #46a5c4;
+  border-radius: 7px;
+}
+#content .header {
+  height: 129px !important;
+}
+#content h3 {
+  background-color: #403b3d;
+  color: #959291;
+  height: 17px;
+  line-height: 17px;
+  font-size: 9px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+#content .row {
+  height: 42px;
+  line-height: 42px;
+  font-size: 13px;
+  color: #341d33;
+  padding-left: 22px;
+  padding-right: 22px;
+}
+#content .delete {
+  background-image: url('../images/delete.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  width: 31px;
+  height: 22px;
+  margin-top: -32px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #content .delete {
+    background-image: url('../images/delete@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+#content .back_yellow {
+  background-image: url('../images/back_yellow.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #content .back_yellow {
+    background-image: url('../images/back_yellow@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+#content .back_gray {
+  background-image: url('../images/back_gray.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #content .back_gray {
+    background-image: url('../images/back_gray@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+#content .back_black {
+  background-image: url('../images/back_black.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  color: white;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #content .back_black {
+    background-image: url('../images/back_black@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+.retina #content .header {
+  height: 259px !important;
+}
+.retina #content .button {
+  font-size: 44px;
+}
+.retina #content h3 {
+  height: 34px;
+  line-height: 34px;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.retina #content .delete {
+  width: 62px;
+  height: 44px;
+  margin-top: -62px;
+}
+.retina #content .row {
+  padding-left: 44px;
+  padding-right: 44px;
+  height: 82px;
+  line-height: 82px;
+  font-size: 25px;
+}
+.retina #header .setting {
+  width: 68px;
+  height: 42px;
 }

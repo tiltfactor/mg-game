@@ -1,6 +1,8 @@
-.at2x(@path, @w: auto, @h: auto, @repeat: repeat) {
+.at2x(@path, @w: auto, @h: auto, @repeat: repeat, @w_retina: auto, @h_retina: auto) {
   background-image: url(@path);
   background-repeat: @repeat;
+  width: @w;
+  height: @h;
   @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
 
   @media all and  (-webkit-min-device-pixel-ratio : 1.5) and (max-height: 620px),
@@ -14,19 +16,25 @@
     background-image: url(@at2x_path);
     //background-size: @w @h;
     background-repeat: @repeat;
+    width: @w_retina;
+    height: @h_retina;
   }
 }
 
 @font-face {
   font-family: Museo;
   font-weight: normal;
-  src: url("../fonts/Museo100.otf") format("opentype");
+  src: url("../fonts/Museo100-Regular.otf") format("opentype");
 }
 
 @font-face {
   font-family: Museo;
   font-weight: bold;
-  src: url("../fonts/Museo700.otf") format("opentype");
+  src: url("../fonts/Museo700-Regular.otf") format("opentype");
+}
+
+p, div, h1, h2, h3 {
+  font-family: Museo;
 }
 
 .hidden {
@@ -39,5 +47,117 @@
 }
 
 #header {
-  padding: 0 10px;
+  padding: 5px;
+  background-color: #030104;
+  height: auto;
+
+  .setting {
+    display: block;
+    .at2x('../images/settings.png');
+    width: 35px;
+    height: 22px;
+  }
+}
+
+#content {
+  padding: 0;
+
+  .button {
+    display: block;
+    left: 50%;
+    right: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 22px;
+
+    span {
+      border: 1px solid #877c80;
+      padding: 10px;
+      color: #46a5c4;
+      border-radius: 7px;
+    }
+  }
+
+  .header {
+    height: 129px !important;
+  }
+
+  h3 {
+    background-color: #403b3d;
+    color: #959291;
+    height: 17px;
+    line-height: 17px;
+    font-size: 9px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .row {
+    height: 42px;
+    line-height: 42px;
+    font-size: 13px;
+    color: #341d33;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .delete {
+    .at2x('../images/delete.png');
+    width: 31px;
+    height: 22px;
+    margin-top: -32px;
+  }
+
+  .back_yellow {
+    .at2x('../images/back_yellow.png');
+  }
+
+  .back_gray {
+    .at2x('../images/back_gray.png');
+  }
+
+  .back_black {
+    .at2x('../images/back_black.png');
+    color: white;
+  }
+}
+
+.retina {
+  #content {
+    .header {
+      height: 259px !important;
+    }
+
+    .button {
+      font-size: 44px;
+    }
+
+    h3 {
+      height: 34px;
+      line-height: 34px;
+      font-size: 16px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .delete {
+      width: 62px;
+      height: 44px;
+      margin-top: -62px;
+    }
+
+    .row {
+      padding-left: 44px;
+      padding-right: 44px;
+      height: 82px;
+      line-height: 82px;
+      font-size: 25px;
+    }
+  }
+
+
+  #header .setting {
+      width: 68px;
+      height: 42px;
+  }
 }

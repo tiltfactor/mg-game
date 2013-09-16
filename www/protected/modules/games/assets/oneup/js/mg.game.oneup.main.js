@@ -104,12 +104,15 @@ MG_GAME_ONEUP = function ($) {
                     }
 
                     MG_API.ajaxCall('/multiplayer/challenge/gid/' + MG_GAME_API.settings.gid + '/username' + opponent_name , function(challenges_response) {
-                        // TODO case player not valid - might switch action
-                        // TODO warning in case player is not valid
-
-                        // player is challenged
-                        $("a[location='main_screen']").click();
-
+                        if (challenges_response === NULL) {
+                            // TODO case player not valid - might switch action
+                            // TODO warning in case player is not valid
+                            alertPretty('Player is not ');
+                            MG_GAME_ONEUP.actions(location, '');
+                        } else {
+                            // player is challenged
+                            $("a[location='main_screen']").click();
+                        }
                     });
                     break;
                 default:

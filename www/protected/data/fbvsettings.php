@@ -1,9 +1,8 @@
 <?php
 return array (
   'api_id' => 'MG_API',
-  'installed' => false,
+  'installed' => true,
   'frontend_theme' => 'metadatagames',
-  'pushUrl' => 'http://localhost:8000/message/',
   'arcade' => 
   array (
     'description' => 'This is a short description of the project',
@@ -35,7 +34,7 @@ return array (
       'name' => 'Media',
       'description' => 'Manage media that have been imported and processed.',
       'url' => '/admin/media',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Media & Tags',
     ),
     'tool-tag' => 
@@ -43,7 +42,15 @@ return array (
       'name' => 'Tags',
       'description' => 'Manage tags that have been created by players.',
       'url' => '/admin/tag',
-      'role' => EDITOR,
+      'role' => 'editor',
+      'group' => 'Media & Tags',
+    ),
+    'tool-import' => 
+    array (
+      'name' => 'Import',
+      'description' => 'Import and process media into the system.',
+      'url' => '/admin/import',
+      'role' => 'editor',
       'group' => 'Media & Tags',
     ),
     'tool-collection' => 
@@ -51,7 +58,7 @@ return array (
       'name' => 'Collections',
       'description' => 'Group media and apply applicable licences.',
       'url' => '/admin/collection',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Media & Tags',
     ),
     'tool-licence' => 
@@ -59,7 +66,7 @@ return array (
       'name' => 'Licences',
       'description' => 'Create licences under which media can be published in the system.',
       'url' => '/admin/licence',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Media & Tags',
     ),
     'tool-export' => 
@@ -67,7 +74,7 @@ return array (
       'name' => 'Export',
       'description' => 'Export tags, tag uses, and tagged media.',
       'url' => '/admin/export',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Media & Tags',
     ),
     'tool-user' => 
@@ -75,7 +82,7 @@ return array (
       'name' => 'Players',
       'description' => 'Manage registered players and the tags they have created.',
       'url' => '/admin/user',
-      'role' => ADMIN,
+      'role' => 'dbmanager',
       'group' => 'Players',
     ),
     'tool-subject-matter' => 
@@ -83,7 +90,7 @@ return array (
       'name' => 'Subject Matters',
       'description' => 'Manage subject matter categories in which players can express interest. These values are used to influence media selection and tag weights.',
       'url' => '/admin/subjectMatter',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Players',
     ),
     'tool-plugins' => 
@@ -91,7 +98,7 @@ return array (
       'name' => 'Plugins',
       'description' => 'Plugins allow the flexible extension of functionality and can be managed here.',
       'url' => '/plugins',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Games & Plugins',
     ),
     'tool-games' => 
@@ -99,7 +106,7 @@ return array (
       'name' => 'Games',
       'description' => 'Manage games.',
       'url' => '/games',
-      'role' => ADMIN,
+      'role' => 'dbmanager',
       'group' => 'Games & Plugins',
     ),
     'tool-bages' => 
@@ -107,7 +114,7 @@ return array (
       'name' => 'Badges',
       'description' => 'Manage badges that can be achieved by players.',
       'url' => '/admin/badge',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Games & Plugins',
     ),
     'tool-ip' => 
@@ -115,7 +122,7 @@ return array (
       'name' => 'IP Blacklist',
       'description' => 'Restrict access to Metadata Games by whitelisting or blacklisting IP addresses.',
       'url' => '/admin/blockedIp',
-      'role' => EDITOR,
+      'role' => 'editor',
       'group' => 'Other',
     ),
     'tool-settings' => 
@@ -123,7 +130,7 @@ return array (
       'name' => 'Global Settings',
       'description' => 'Configure settings that are used globally in the system.',
       'url' => '/admin/settings',
-      'role' => ADMIN,
+      'role' => 'dbmanager',
       'group' => 'Other',
     ),
     'tool-logs' => 
@@ -131,7 +138,7 @@ return array (
       'name' => 'Admin Log',
       'description' => 'Access records of changes made using admin tools.',
       'url' => '/admin/log',
-      'role' => ADMIN,
+      'role' => 'dbmanager',
       'group' => 'Other',
     ),
     'update-code' => 
@@ -139,7 +146,7 @@ return array (
       'name' => 'Update DB',
       'description' => 'Please visit this tool after an update of the code base to make sure the database structure is up-to date.',
       'url' => '/admin/update',
-      'role' => ADMIN,
+      'role' => 'admin',
       'group' => 'Other',
     ),
     'tool-institution' => 
@@ -147,7 +154,7 @@ return array (
       'name' => 'Institution',
       'description' => 'Manage MG Content Server register to MG Game Server',
       'url' => '/admin/institution',
-      'role' => ADMIN,
+      'role' => 'admin',
       'group' => 'Other',
     ),
   ),
@@ -205,13 +212,48 @@ return array (
       'partner_wait_threshold' => '30',
       'play_against_computer' => '1',
     ),
+    'Pyramid' => 
+    array (
+      'name' => 'Pyramid',
+      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'arcade_image' => 'pyramid_arcade.png',
+      'more_info_url' => '',
+      'play_once_and_move_on' => 0,
+      'play_once_and_move_on_url' => '',
+      'turns' => 4,
+      'image_width' => 450,
+      'image_height' => 450,
+    ),
+    'NexTag' => 
+    array (
+      'name' => 'NexTag',
+      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'arcade_image' => 'nextag_arcade.png',
+      'more_info_url' => '',
+      'play_once_and_move_on' => '0',
+      'play_once_and_move_on_url' => '',
+      'turns' => '1',
+      'image_width' => '450',
+      'image_height' => '450',
+    ),
+    'OneUp' => 
+    array (
+      'name' => 'OneUp',
+      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'arcade_image' => 'zenpond_arcade.png',
+      'more_info_url' => '',
+      'turns' => '3',
+      'submissions' => '3',
+      'image_width' => '450',
+      'image_height' => '450',
+    ),
   ),
   'settings' => 
   array (
     'app_name' => 'Metadata Games',
     'throttle_interval' => '500',
     'message_queue_interval' => '450',
-    'app_email' => 'admin@admin.com',
+    'app_email' => 'delchina@sirma.bg',
     'pagination_size' => '25',
     'app_upload_path' => '/../uploads',
     'app_upload_url' => '/uploads',
