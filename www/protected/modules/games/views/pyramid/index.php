@@ -1,7 +1,12 @@
 <div id="splash_home">
     <div class="splash_logo">
-        <div class="spacial_font with_borders logo_text">PYRAMID TAG</div>
-        <div class="spacial_font size_20 div_center logo_subtext text_left">We showed this media to 100 people on the street, and had them give one-word descriptions. How many words can you match with them in 2 minutes?</div>
+        <!-- Replace text with logo graphic -->
+        <!-- 
+        	<div class="spacial_font with_borders logo_text">PYRAMID TAG</div> 
+        -->
+        <div id="splash_title">
+        </div>
+        <div class="spacial_font size_20 div_center logo_subtext text_left">We showed this image to our panel of experts and had each of them describe it in one word.  How many of our experts' words can you match in 2 minutes?!</div>
     </div>
     <div class="text_left">
         <a href="<?php echo $game_url; ?>/Pyramid/play" class="hover_btn">
