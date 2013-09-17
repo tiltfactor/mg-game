@@ -21,6 +21,8 @@ $this->menu=array(
     'throttle_interval',
     'message_queue_interval',
     'pagination_size',
+    'app_upload_path',
+    'app_upload_url',
 	),
 )); ?>
 
