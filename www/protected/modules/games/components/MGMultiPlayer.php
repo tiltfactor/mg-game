@@ -58,6 +58,8 @@ abstract class MGMultiPlayer extends CComponent
     {
         $this->apiId = Yii::app()->fbvStorage->get("api_id", "MG_API");
         $this->sessionId = (int)Yii::app()->session[$this->apiId . '_SESSION_ID'];
+        $this->game = GamesModule::loadGameFromDB($unique_id);
+        $this->game->fbvLoad();
 
         if ($this->sessionId > 0) {
             if (Yii::app()->user->isGuest) {
@@ -65,8 +67,6 @@ abstract class MGMultiPlayer extends CComponent
             }
 
             $this->userId = (int)Yii::app()->user->id;
-            $this->game = GamesModule::loadGameFromDB($unique_id);
-            $this->game->fbvLoad();
             $this->userOnline = UserOnline::model()->with(array('session'))->find('session_id =:sessionId AND t.game_id=:gameId', array(':sessionId' => $this->sessionId, ':gameId' => $this->game->id));
         }
 

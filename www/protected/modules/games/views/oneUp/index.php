@@ -9,8 +9,10 @@
       <div id="content" class="group">
           <div id="main_screen">
               <div class="back_black header">
-                  WELCOME <span class="username"></span>
-                  <a href="#" location="new_game" class="button new_game"><span>NEW GAME</span></a>
+                  <div class="group title">WELCOME <span class="username"></span></div>
+                  <div>
+                      <a href="#" location="new_game" class="big_button new_game"><span>NEW GAME</span></a>
+                  </div>
               </div>
           </div>
 
@@ -23,21 +25,15 @@
 
           <div id="find_opponent" class="hidden">
               <h2>ENTER A USER NAME</h2>
-              <input type="text" name="opponent_name" class="opponent_name" />
-              <a href="#" location="make_challenge" class="button play"><span>PLAY</span></a>
+              <div><input type="text" name="opponent_name" class="opponent_name" /></div>
+              <a href="#" location="make_challenge" class="big_button play"><span>PLAY</span></a>
           </div>
 
-          <div id="game_settings" class="hidden">
-              <h2>Game settings</h2>
-              <div>Tell us what interests you and we will show you more images from those subjects when you play</div>
-              <div>I'm interested in...</div>
-              <div id="favorite_institutions">
-                  When you add an archive to your favorites, you will see more images from that archive when you play.
-              </div>
-              <h3>Featured Archives</h3>
-              <select>
-                  <option>Browse All Archives</option>
-              </select>
+          <div id="game_customize" class="hidden">
+              <h2 class="padding">CUSTOMIZE YOUR GAME</h2>
+              <div class="padding">Share your interests and you might see more images with those subjects!</div>
+              <div class="text-center"><input type="text" placeholder="I'm interested in..." /></div>
+              <hr />
           </div>
 
           <div id="learn_more" class="hidden">
@@ -97,11 +93,11 @@
       </nav>
       <nav id="menu-right">
           <ul>
-              <li><a href="#" location="main_screen">PLAY</a></li>
-              <li><a href="#" location="game_customize">CUSTOMIZE</a></li>
-              <li><a href="#" location="how_to">HOW TO PLAY</a></li>
-              <li><a href="#" location="learn_more">LEARN MORE</a></li>
-              <li><a href="#" location="account">ACCOUNT</a></li>
+              <li class="back_blue row"><a href="#" location="main_screen"><span>PLAY</span></a></li>
+              <li class="back_blue row"><a href="#" location="game_customize"><span>CUSTOMIZE</span></a></li>
+              <li class="back_blue row"><a href="#" location="how_to"><span>HOW TO PLAY</span></a></li>
+              <li class="back_blue row"><a href="#" location="learn_more"><span>LEARN MORE</span></a></li>
+              <li class="back_blue row"><a href="#" location="account"><span>ACCOUNT</span></a></li>
           </ul>
       </nav>
 
@@ -121,24 +117,40 @@
     <div id="partner-waiting"></div>
   </div>
 </div>
+
 <script id="template-challenges" type="text/x-jquery-tmpl">
     <div id="challenges">
         <div id="challenges_sent" class="list_challenges">
             <h3>YOUR TURN</h3>
-            <div class="no_value hidden">You didn't challenge anyone!</div>
-            {{each sent}}
+            <div class="no_value hidden">Challenge anyone. Start to play!</div>
+            {{each received}}
             <div opponent_id="${opponent_id}" class="back_yellow row">
-                <div>${opponent_name}</div>
+                ${opponent_name} CHALLENGED YOU
                 <div class="delete right"></div>
             </div>
             {{/each}}
+
+            {{each your_turn}}
+            <div opponent_id="${opponent_id}" class="back_yellow row">
+                GAME WITH ${opponent_name}
+                <div class="delete right"></div>
+            </div>
+            {{/each}}
+
         </div>
         <div id="challenges_received" class="list_challenges">
             <h3>WAITING</h3>
-            <div class="no_value hidden">Noone challenged you!</div>
-            {{each received}}
+            <div class="no_value hidden">Noone waits for you!</div>
+            {{each sent}}
             <div opponent_id="${opponent_id}" class="back_gray row">
-                <div>${opponent_name}</div>
+                GAME WITH ${opponent_name}
+                <div class="delete right"></div>
+            </div>
+            {{/each}}
+
+            {{each waiting_turn}}
+            <div opponent_id="${opponent_id}" class="back_gray row">
+                GAME WITH ${opponent_name}
                 <div class="delete right"></div>
             </div>
             {{/each}}
@@ -146,13 +158,28 @@
     </div>
 </script>
 <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
-    <div id="list_institutions">
-        {{each institution}}
-        <div institution_id="${id}">
-            ${name}
-            <a href=""><img src="${logo}" width="25" height="25" /></a>
+    <div id="listing">
+        <div id="favorite_institutions"  class="padding">
+            When you add an archive to your favorites, you will see more images from that archive when you play.
+            <center>
+                <div id="list_institutions" class="group">
+                    {{each fav_institution}}
+                    <div institution_id="${id}" class="left">
+                        <a href="" title="${name}"><img class="institution_logo" src="${logo}" width="70" height="70" /></a>
+                    </div>
+                    {{/each}}
+                </div>
+            </center>
         </div>
-        {{/each}}
+        <h3>Featured Archives</h3>
+        <div class="text-center">
+            <select>
+                <option>Browse All Archives</option>
+                {{each all_institution}}
+                <option value="${id}">${name}</option>
+                {{/each}}
+            </select>
+        </div>
     </div>
 </script>
 <script id="template-final-summary" type="text/x-jquery-tmpl">

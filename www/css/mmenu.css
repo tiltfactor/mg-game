@@ -334,7 +334,7 @@ html.mm-blocking #mm-blocker
 .mm-menu li.mm-selected > a,
 .mm-menu li.mm-selected > span
 {
-	background: rgba( 0, 0, 0, 0.2 );
+//	background: rgba( 0, 0, 0, 0.2 );
 }
 .mm-menu li.mm-selected > a.mm-subopen
 {

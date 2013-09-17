@@ -1397,6 +1397,11 @@
 		//	opening
 		$html.addClass( _c.opening );
 		$m.trigger( _e.opening );
+
+        $("#content").css('visibility', 'hidden');
+        $(".mm-menu.mm-right").width($wndw.width() + 10);
+        $(".mm-page").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
+        $("#mm-blocker").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
 	}
 	function closeMenu( $m, o, c )
 	{
@@ -1404,6 +1409,7 @@
 		transitionend( $page,
 			function()
 			{
+                $("#content").css('visibility', 'visible');
 				$m.removeClass( _c.opened );
 
 				$html

@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/mmenu.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/mmenu-positioning.css" />
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+  <script src="http://localhost:8000/socket.io/socket.io.js"></script>
 </head>
 
 <body>

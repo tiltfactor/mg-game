@@ -21,6 +21,10 @@
   }
 }
 
+body {
+  background-color: #150917;
+}
+
 @font-face {
   font-family: Museo;
   font-weight: normal;
@@ -33,8 +37,13 @@
   src: url("../fonts/Museo700-Regular.otf") format("opentype");
 }
 
-p, div, h1, h2, h3 {
+p, div, h1, h2, h3, .mm-is-menu * {
   font-family: Museo;
+  color: white;
+}
+
+.mm-is-menu li > a, .mm-is-menu li > span {
+  padding-left: 10px;
 }
 
 .hidden {
@@ -46,7 +55,16 @@ p, div, h1, h2, h3 {
   float: right;
 }
 
+.left {
+  float: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
 #header {
+
   padding: 5px;
   background-color: #030104;
   height: auto;
@@ -59,10 +77,23 @@ p, div, h1, h2, h3 {
   }
 }
 
+.mm-right.mm-opening .mm-page, html.mm-right.mm-opening #mm-blocker {
+  margin: 0 -48px 0 0 !important;
+}
+
 #content {
   padding: 0;
 
-  .button {
+  &.hide_content {
+    margin: 0 48px 0 0 !important;
+  }
+
+  .padding {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .big_button {
     display: block;
     left: 50%;
     right: 50%;
@@ -79,12 +110,23 @@ p, div, h1, h2, h3 {
   }
 
   .header {
-    height: 129px !important;
+    height: 130px !important;
+    text-align: center;
+
+    .title {
+      padding: 35px 0 17px 0;
+    }
+  }
+
+  h2 {
+    color: #a3a3a3;
+    line-height: 60px;
+    font-size: 12px;
   }
 
   h3 {
     background-color: #403b3d;
-    color: #959291;
+    color: #a3a3a3;
     height: 17px;
     line-height: 17px;
     font-size: 9px;
@@ -93,10 +135,6 @@ p, div, h1, h2, h3 {
   }
 
   .row {
-    height: 42px;
-    line-height: 42px;
-    font-size: 13px;
-    color: #341d33;
     padding-left: 22px;
     padding-right: 22px;
   }
@@ -105,31 +143,94 @@ p, div, h1, h2, h3 {
     .at2x('../images/delete.png');
     width: 31px;
     height: 22px;
-    margin-top: -32px;
+    margin-top: 10px;
+  }
+
+  #list_institutions {
+    width: 290px;
+  }
+
+  .institution_logo {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+body {
+  .row {
+    height: 42px !important;
+    line-height: 42px;
+    font-size: 13px !important;
+    color: #341d33;
   }
 
   .back_yellow {
     .at2x('../images/back_yellow.png');
+    color: #341d33 !important;
   }
 
   .back_gray {
     .at2x('../images/back_gray.png');
+    color: #341d33 !important;
+
   }
 
   .back_black {
     .at2x('../images/back_black.png');
-    color: white;
+    color: white !important;
+  }
+
+  .back_blue {
+    .at2x('../images/back_blue.png');
+    color: white !important;
+  }
+
+  .mm-is-menu {
+    .at2x('../images/all_blue.png');
+    height: 100%;
+    width: 100%;
+  }
+
+  .mm-right.mm-opening .mm-page, html.mm-right.mm-opening #mm-blocker {
+    margin: 0 -48px 0 0 !important;
+  }
+
+  .mm-menu.mm-right .mm-inner {
+    padding: 0 0 0 50px;
   }
 }
 
-.retina {
+body.retina {
+  .mm-menu.mm-right .mm-inner {
+    padding: 0 0 0 100px;
+  }
+
+  .row {
+    height: 82px !important;
+    line-height: 82px;
+    font-size: 25px !important;
+  }
+
   #content {
-    .header {
-      height: 259px !important;
+    .padding {
+      padding-left: 50px;
+      padding-right: 50px;
     }
 
-    .button {
+    .header {
+      height: 259px !important;
+      .title {
+        padding: 70px 0 35px 0;
+      }
+    }
+
+    .big_button {
       font-size: 44px;
+    }
+
+    h2 {
+      line-height: 80px;
+      font-size: 22px;
     }
 
     h3 {
@@ -143,15 +244,21 @@ p, div, h1, h2, h3 {
     .delete {
       width: 62px;
       height: 44px;
-      margin-top: -62px;
+      margin-top: 22px;
     }
 
     .row {
       padding-left: 44px;
       padding-right: 44px;
-      height: 82px;
-      line-height: 82px;
-      font-size: 25px;
+    }
+
+    #list_institutions {
+      width: 570px;
+    }
+
+    .institution_logo {
+      width: 280px;
+      height: 280px;
     }
   }
 

@@ -1,3 +1,6 @@
+body {
+  background-color: #150917;
+}
 @font-face {
   font-family: Museo;
   font-weight: normal;
@@ -12,8 +15,14 @@ p,
 div,
 h1,
 h2,
-h3 {
+h3,
+.mm-is-menu * {
   font-family: Museo;
+  color: white;
+}
+.mm-is-menu li > a,
+.mm-is-menu li > span {
+  padding-left: 10px;
 }
 .hidden {
   display: none;
@@ -21,6 +30,12 @@ h3 {
 .right {
   left: auto;
   float: right;
+}
+.left {
+  float: left;
+}
+.text-center {
+  text-align: center;
 }
 #header {
   padding: 5px;
@@ -44,10 +59,21 @@ h3 {
     height: auto;
   }
 }
+.mm-right.mm-opening .mm-page,
+html.mm-right.mm-opening #mm-blocker {
+  margin: 0 -48px 0 0 !important;
+}
 #content {
   padding: 0;
 }
-#content .button {
+#content.hide_content {
+  margin: 0 48px 0 0 !important;
+}
+#content .padding {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+#content .big_button {
   display: block;
   left: 50%;
   right: 50%;
@@ -55,18 +81,27 @@ h3 {
   text-decoration: none;
   font-size: 22px;
 }
-#content .button span {
+#content .big_button span {
   border: 1px solid #877c80;
   padding: 10px;
   color: #46a5c4;
   border-radius: 7px;
 }
 #content .header {
-  height: 129px !important;
+  height: 130px !important;
+  text-align: center;
+}
+#content .header .title {
+  padding: 35px 0 17px 0;
+}
+#content h2 {
+  color: #a3a3a3;
+  line-height: 60px;
+  font-size: 12px;
 }
 #content h3 {
   background-color: #403b3d;
-  color: #959291;
+  color: #a3a3a3;
   height: 17px;
   line-height: 17px;
   font-size: 9px;
@@ -74,10 +109,6 @@ h3 {
   padding-right: 15px;
 }
 #content .row {
-  height: 42px;
-  line-height: 42px;
-  font-size: 13px;
-  color: #341d33;
   padding-left: 22px;
   padding-right: 22px;
 }
@@ -88,7 +119,7 @@ h3 {
   height: auto;
   width: 31px;
   height: 22px;
-  margin-top: -32px;
+  margin-top: 10px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   #content .delete {
@@ -98,75 +129,151 @@ h3 {
     height: auto;
   }
 }
-#content .back_yellow {
+#content #list_institutions {
+  width: 290px;
+}
+#content .institution_logo {
+  width: 140px;
+  height: 140px;
+}
+body .row {
+  height: 42px !important;
+  line-height: 42px;
+  font-size: 13px !important;
+  color: #341d33;
+}
+body .back_yellow {
   background-image: url('../images/back_yellow.png');
   background-repeat: repeat;
   width: auto;
   height: auto;
+  color: #341d33 !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  #content .back_yellow {
+  body .back_yellow {
     background-image: url('../images/back_yellow@2x.png');
     background-repeat: repeat;
     width: auto;
     height: auto;
   }
 }
-#content .back_gray {
+body .back_gray {
   background-image: url('../images/back_gray.png');
   background-repeat: repeat;
   width: auto;
   height: auto;
+  color: #341d33 !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  #content .back_gray {
+  body .back_gray {
     background-image: url('../images/back_gray@2x.png');
     background-repeat: repeat;
     width: auto;
     height: auto;
   }
 }
-#content .back_black {
+body .back_black {
   background-image: url('../images/back_black.png');
   background-repeat: repeat;
   width: auto;
   height: auto;
-  color: white;
+  color: white !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  #content .back_black {
+  body .back_black {
     background-image: url('../images/back_black@2x.png');
     background-repeat: repeat;
     width: auto;
     height: auto;
   }
 }
-.retina #content .header {
+body .back_blue {
+  background-image: url('../images/back_blue.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  color: white !important;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .back_blue {
+    background-image: url('../images/back_blue@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+body .mm-is-menu {
+  background-image: url('../images/all_blue.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  height: 100%;
+  width: 100%;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .mm-is-menu {
+    background-image: url('../images/all_blue@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+body .mm-right.mm-opening .mm-page,
+body html.mm-right.mm-opening #mm-blocker {
+  margin: 0 -48px 0 0 !important;
+}
+body .mm-menu.mm-right .mm-inner {
+  padding: 0 0 0 50px;
+}
+body.retina .mm-menu.mm-right .mm-inner {
+  padding: 0 0 0 100px;
+}
+body.retina .row {
+  height: 82px !important;
+  line-height: 82px;
+  font-size: 25px !important;
+}
+body.retina #content .padding {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+body.retina #content .header {
   height: 259px !important;
 }
-.retina #content .button {
+body.retina #content .header .title {
+  padding: 70px 0 35px 0;
+}
+body.retina #content .big_button {
   font-size: 44px;
 }
-.retina #content h3 {
+body.retina #content h2 {
+  line-height: 80px;
+  font-size: 22px;
+}
+body.retina #content h3 {
   height: 34px;
   line-height: 34px;
   font-size: 16px;
   padding-left: 30px;
   padding-right: 30px;
 }
-.retina #content .delete {
+body.retina #content .delete {
   width: 62px;
   height: 44px;
-  margin-top: -62px;
+  margin-top: 22px;
 }
-.retina #content .row {
+body.retina #content .row {
   padding-left: 44px;
   padding-right: 44px;
-  height: 82px;
-  line-height: 82px;
-  font-size: 25px;
 }
-.retina #header .setting {
+body.retina #content #list_institutions {
+  width: 570px;
+}
+body.retina #content .institution_logo {
+  width: 280px;
+  height: 280px;
+}
+body.retina #header .setting {
   width: 68px;
   height: 42px;
 }

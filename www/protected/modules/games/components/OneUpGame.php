@@ -181,7 +181,6 @@ class OneUpGame extends MGMultiPlayer
                 throw new CHttpException(500, $message);
             }
         }
-
     }
 
     public function gameEnd()
