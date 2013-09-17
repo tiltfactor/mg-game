@@ -1,15 +1,15 @@
 @font-face {
-  font-family: Afbatterse;
+  font-family: Museo;
   font-weight: normal;
-  src: url("afbatterse.otf") format("opentype");
+  src: url("Museo100-Regular.otf") format("opentype");
 }
 @font-face {
-  font-family: Afbatterse;
+  font-family: Museo;
   font-weight: bold;
-  src: url("afbattersebold.otf") format("opentype");
+  src: url("Museo500-Regular.otf") format("opentype");
 }
 body {
-  font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
   color: black;
   text-align: center;
   list-style: none;
@@ -85,7 +85,7 @@ body p,
 body div,
 body li,
 body input {
-  font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
   color: #36454c;
   font-size: 14px;
 }
@@ -188,7 +188,7 @@ body #content footer {
   margin: 0 auto;
   height: 115px;
   background-repeat: repeat-x;
-  font-family: Afbatterse;
+  font-family: Museo;
 }
 body #content footer.footer_level_1 {
   background-image: url('../images/level_1.png');
@@ -285,7 +285,7 @@ body #content footer div {
   top: 40px;
   font-size: 40px;
   margin-top: 0;
-  font-family: Afbatterse;
+  font-family: Museo;
   text-shadow: 1px 1px 1px #fff, 3px 3px 5px #464a4d;
   color: #464a4d;
 }
@@ -500,6 +500,15 @@ body .pyramid.level_9 {
     background-repeat: repeat;
   }
 }
+
+#splash_title {
+  width: 615px;
+	height: 162px;
+  background-image: url('../images/splash_logo.png');
+  background-repeat: no-repeat;
+  margin: 0 auto 0 auto;  
+}
+
 #content,
 #header {
   padding: 0;
@@ -576,8 +585,10 @@ body .pyramid.level_9 {
 .countdown_amount {
   font-size: 30px;
   color: #000000;
+/* 
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: #ff5b13;
+ */
   text-shadow: 1px 0 0 #ff5b13, -1px 0 0 #ff5b13, 0 0px 0 #ff5b13, 0 -1px 0 #ff5b13, 0px 0px #ff5b13, -1px -1px 0 #ff5b13, 1px -1px 0 #ff5b13, -1px 1px 0 #ff5b13;
 }
 .hasCountdown {
@@ -700,10 +711,10 @@ input#word.level_9 {
   padding: 0px !important;
 }
 .spacial_font {
-  font-family: Afbatterse;
+  font-family: Museo;
 }
 .spacial_font.size_20 {
-  font-size: 20px;
+  font-size: 16px;
 }
 .spacial_font.with_borders {
   color: #000000;
@@ -937,7 +948,19 @@ input#word.level_9 {
 }
 /* iPhone 4 - 4S  in portrait & landscape */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  /* STYLES GO HERE */
+  #splash_title {
+		width: 315px;
+		height: 81px;
+		background-image: url('../images/splash_logo@2x.png')!important;
+		background-repeat: no-repeat;
+		margin: 0 auto 0 auto;  
+	}
+}
+/* iPhone 4 - 4s in landscape */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation:landscape) {
+	#splash_home {
+		top: 20px;
+	}
 }
 body.touch_device html {
   overflow: hidden;
@@ -1090,9 +1113,11 @@ body.touch_device #sidepanel {
     position: relative;
     height: 30px;
   }
+/* 
   .spacial_font.size_20 {
     font-size: 17px;
   }
+ */
   .spacial_font.logo_text {
     font-size: 62px;
     white-space: nowrap;
@@ -1114,7 +1139,7 @@ body.touch_device #sidepanel {
     line-height: 25px;
   }
   .spacial_font.size_20 {
-    font-size: 20px;
+    font-size: 16px;
   }
   .spacial_font.logo_text {
     font-size: 62px;
@@ -1141,6 +1166,13 @@ body.touch_device #sidepanel {
   #fieldholder .final {
     font-size: 20px !important;
   }
+  #splash_title {
+  width: 315px;
+	height: 81px;
+  background-image: url('../images/splash_logo.png');
+  background-repeat: no-repeat;
+  margin: 0 auto 0 auto;  
+	}
 }
 /*.touch_device {
   .touch_devices();
@@ -1164,5 +1196,5 @@ body.touch_device #sidepanel {
   :i-block-chrome.level_1,
   input.level_1 {
     background: url('../images/underscore_1@2x.png') !important;
-  }
+  } 
 }
