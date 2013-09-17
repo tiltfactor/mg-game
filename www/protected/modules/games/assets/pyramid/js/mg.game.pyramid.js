@@ -119,6 +119,9 @@ MG_GAME_PYRAMID = function ($) {
                         type:"notice",
                         background: "white"
                     });
+                    
+                    MG_GAME_PYRAMID.playSound('fail_sound');
+                    
                 }
             });
 
@@ -154,7 +157,9 @@ MG_GAME_PYRAMID = function ($) {
                 str = str.replace(/[^\w\s]|_/g, "");
 
                 if (event.keyCode != '13' && event.keyCode != '8' && event.keyCode != '46' && event.keyCode != '32') {
-                    num_sound = (input_length -1) % 8;
+                    //num_sound = (input_length -1) % 8;
+                    num_sound = (input_length -1) < 7 ? (input_length -1) : 7; //modified by Jack Guan 13/09/2013
+
 
                     if (input_length > MG_GAME_PYRAMID.level  + 3) {
                         MG_GAME_PYRAMID.playSound('fail_sound');
@@ -239,19 +244,20 @@ MG_GAME_PYRAMID = function ($) {
 
             //  text is "You matched # words with those surveyed!"
             var final_words = {};
-            final_words[0] = 'WHY YOU NO ENTER ENOUGH WORDS?';
-            final_words[1] = 'A good start';
-            final_words[2] = 'You\'re getting warmed up';
-            final_words[3] = 'Pretty Good';
+            final_words[0] = 'Better luck next time!';
+            final_words[1] = 'A good start!';
+            final_words[2] = 'You\'re getting warmed up!';
+            final_words[3] = 'Pretty Good!';
             final_words[4] = 'Amazing!';
             final_words[5] = 'That\'s awesome!';
-            final_words[6] = 'That\'s incredible!';
-            final_words[7] = 'You\'re on fire!';
-            final_words[8] = 'I bow to your greatness';
-
+            final_words[6] = 'You\'re an expert!';
+            final_words[7] = 'That\'s incredible!';
+            final_words[8] = 'You\'re on fire!';
+            final_words[9] = 'I bow to your greatness!';
+            
             //finalMsg:"You reached " + (MG_GAME_PYRAMID.level+MG_GAME_PYRAMID.level_step -1) + " letters! How far can you go?"
             var final_info = {
-                finalMsg: "You matched " + matched_words + " words with those surveyed!",
+                finalMsg: "You matched " + matched_words + " with our experts!",
                 finalMsg_2ndline: final_words[matched_words]
             };
 
@@ -370,14 +376,15 @@ MG_GAME_PYRAMID = function ($) {
                         MG_GAME_PYRAMID.levels.push(accepted);
                         MG_GAME_PYRAMID.nextlevel(false);
                     } else {
-                        var myArray = ['No match. Try again?', "That's not what our test sample said!", 'Close, but no match.'];
+                    		// no match -- feedback
+                        var myArray = ['No match. Try again?', "That's not what our experts said!", "Sorry, our experts don't agree!"];
                         $().toastmessage("showToast", {
                             text: myArray[Math.floor(Math.random() * myArray.length)],
                             position:"tops-center",
                             type:"notice",
-                            background: "white"
+                            background: "red"
                         });
-                        MG_GAME_PYRAMID.playSound('try_again');
+                        MG_GAME_PYRAMID.playSound('fail_sound');
                     }
                 }
             }
@@ -408,10 +415,10 @@ MG_GAME_PYRAMID = function ($) {
                 var tags = $.trim(MG_GAME_PYRAMID.wordField.val());
                 if (tags == "") {
                     $().toastmessage("showToast", {
-                        text:"<p>Ooops! Please enter at least one word</p>",
+                        text:"<p>Oops! Type something!</p>",
                         position:"tops-center",
                         type:"notice",
-                        background: "white"
+                        background: "#F1F1F1"
                     });
                     MG_GAME_PYRAMID.playSound('try_again');
 
@@ -420,7 +427,7 @@ MG_GAME_PYRAMID = function ($) {
                         text: "not enough letters!",//"That wasn't a " + (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step) + " letters word!",
                         position:"tops-center",
                         type:"notice",
-                        background: "white"
+                        background: "#F1F1F1"
                     });
                     MG_GAME_PYRAMID.playSound('try_again');
                 }
@@ -429,7 +436,7 @@ MG_GAME_PYRAMID = function ($) {
                         text:"too many letters!",
                         position:"tops-center",
                         type:"notice",
-                        background: "white"
+                        background: "#F1F1F1"
                     });
                     MG_GAME_PYRAMID.playSound('try_again');
                 }
@@ -438,7 +445,7 @@ MG_GAME_PYRAMID = function ($) {
                         text:"already tried that!",
                         position:"tops-center",
                         type:"notice",
-                        background: "white"
+                        background: "#F1F1F1"
                     });
                     MG_GAME_PYRAMID.playSound('try_again');
                 } else {
@@ -500,20 +507,21 @@ MG_GAME_PYRAMID = function ($) {
         nextlevel:function (skip) {
             MG_GAME_PYRAMID.level++;
             MG_GAME_PYRAMID.wordField.attr("placeholder", "Enter a " + (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step) + " letter word");
-            $("#content").find("footer").removeClass("footer_level_" + MG_GAME_PYRAMID.level -1).addClass("footer_level_" + MG_GAME_PYRAMID.level); //.find("div").html(MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step + " letters!");
+            $("#content").find("footer").removeClass("footer_level_" + MG_GAME_PYRAMID.level -1).addClass("footer_level_" + MG_GAME_PYRAMID.level); 		
             //$("#content").find("footer").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
             $("input#word").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
-            $("#pass").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
-            MG_GAME_PYRAMID.playSound('next_level');
+// Comment out. Pass button should be same color, regardless of level
+//             $("#pass").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
 
             if (skip !== true) {
-                var myArray = ['Awesome!', "Bet you can't get this one!", 'Nice!', 'Cool!'];
+                var myArray = ['Awesome!', "Great job! Bet you can't get this one!", 'Nice!', 'Cool!', "Our experts agree!"];
                 $().toastmessage("showToast", {
                     text: myArray[Math.floor(Math.random() * myArray.length)],
                     position:"tops-center",
                     type:"notice",
-                    background: "white"
+                    background: "#ffcc00"
                 });
+                MG_GAME_PYRAMID.playSound('next_level');                
             }
         }
     });
