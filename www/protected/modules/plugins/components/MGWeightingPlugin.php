@@ -12,7 +12,7 @@ class MGWeightingPlugin extends MGPlugin {
   /**
    * The method will be called to generate the score for one turn. Several weighting 
    * plugins can be called to built up a compound score. 
-   * 
+   *
    * @param MGGameModel $game_model The currently instance of the
    * @param array $tags The tags that will be used as base for scoring
    * @param int $score The score that might be increased decreased 
@@ -26,7 +26,7 @@ class MGWeightingPlugin extends MGPlugin {
    * The method called by games to reweight any passed tags. 
    * 
    * $tags is the result of the call of the game's parseTags method implementation
-   * 
+   *
    * @param MGGameModel $game_model The currently instance of the
    * @param array $tags The tags that have to be rewighted
    * @return array The weightened tags

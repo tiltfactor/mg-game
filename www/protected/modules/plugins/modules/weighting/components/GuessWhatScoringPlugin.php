@@ -17,11 +17,11 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
    * @param object $game The currently active game
    * @return array The weightened tags
    */
-  function setWeights(&$game, &$game_model, $tags,$game) {
+  function setWeights(&$game_model, $tags) {
     $model = new GuessWhatScoring;
     $model->fbvLoad();
-    
-    if (!$game->played_against_computer && (float)$model->additional_weight_first_guess > 0) {
+    $game = func_get_arg(2);
+    if ($game && !$game->played_against_computer && (float)$model->additional_weight_first_guess > 0) {
       // if an image has been guessed with one guess the tag should get an higher weight as it apparently describes 
       // the image very accurately
       foreach ($game->request->submissions as $submission) {
@@ -47,14 +47,13 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
    * @param object $game_model The currently instance of the
    * @param array $tags The tags that will be used as base for scoring
    * @param int $score The score that might be increased decreased
-   * @param object $game The currently active game
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game_model, &$tags, $score,&$game) {
+  function score(&$game_model, &$tags, $score) {
     $model = new GuessWhatScoring;
     $model->fbvLoad();
-    
-    foreach ($game->request->submissions as $submission) {
+    $game = func_get_arg(3);
+    foreach ($game && $game->request->submissions as $submission) {
       if (!$game->played_against_computer && $submission['mode'] == 'describe') { 
         // the user has described an image this turn and becomes thus poins for new tags
         foreach ($tags as $image_id => $image_tags) {

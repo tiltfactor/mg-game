@@ -11,14 +11,14 @@ class TwoPlayerBonusPlugin extends MGWeightingPlugin  {
   
   /**
    * Give each tag that has been submitted by both users a bit more weight
-   * 
+   *
    * @param object $game_model The currently instance of the
    * @param array $tags The tags that have to be rewighted
-   * @param object $game The currently active game
    * @return array The weightened tags
    */
-  function setWeights(&$game_model, $tags,&$game) {
-    if (!$game->played_against_computer) {
+  function setWeights(&$game_model, $tags) {
+      $game = func_get_arg(2);
+    if ($game && !$game->played_against_computer) {
       // go through last turns words to avoid and weight matching tags 0
       if (isset($game->opponents_submission) && isset($game->opponents_submission["parsed"]) && is_array($game->opponents_submission["parsed"])) { // make sure the game is really a two player game and the opponents_submission is set
         foreach ($game->opponents_submission["parsed"] as $submitted_image_id => $submitted_image_tags) {
@@ -46,11 +46,11 @@ class TwoPlayerBonusPlugin extends MGWeightingPlugin  {
    * @param object $game_model The currently instance of the
    * @param array $tags The tags that will be used as base for scoring
    * @param int $score The score that might be increased decreased
-   * @param object $game The currently active game
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game_model, &$tags, $score,&$game) {
-    if (!$game->played_against_computer) { // make sure there is a human opponent
+  function score(&$game_model, &$tags, $score) {
+      $game = func_get_arg(2);
+    if ($game && !$game->played_against_computer) { // make sure there is a human opponent
       $model = new TwoPlayerBonus;
       $model->fbvLoad();
       if (isset($game->opponents_submission) && isset($game->opponents_submission["parsed"]) && is_array($game->opponents_submission["parsed"])) { // make sure the game is really a two player game and the opponents_submission is set
