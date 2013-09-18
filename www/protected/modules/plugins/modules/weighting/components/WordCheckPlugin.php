@@ -29,7 +29,7 @@ class WordCheckPlugin extends MGWeightingPlugin
     public $enableOnInstall = true;
     public $hasAdmin = true;
 
-    function score(&$game_model, &$tags, $score, &$game)
+    function score(&$game_model, &$tags, $score)
     {
         $TrueWordScore = 2;
         $FalseWordScore = 0;

@@ -39,7 +39,7 @@ class WordsToAvoidPlugin extends MGDictionaryPlugin
      * @param array $tags the tags to be looked up as a single dimension array array('tag1', 'tag2', ...)
      * #
      */
-    function setWeights(&$gameModel, $tags)
+    function setWeights($gameModel, $tags)
     {
         // go through last turns words to avoid and weight matching tags 0
         if (isset($gameModel->wordstoavoid) && is_array($gameModel->wordstoavoid)) {

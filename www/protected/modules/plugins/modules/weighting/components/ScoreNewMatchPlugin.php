@@ -21,7 +21,7 @@ class ScoreNewMatchPlugin extends MGWeightingPlugin  {
    * @param int $score The score that might be increased decreased 
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game_model, &$tags, $score, &$game) {
+  function score(&$game_model, &$tags, $score) {
     $model = new ScoreNewMatch;
     $model->fbvLoad();
     
