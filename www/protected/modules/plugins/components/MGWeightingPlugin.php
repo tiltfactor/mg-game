@@ -18,7 +18,7 @@ class MGWeightingPlugin extends MGPlugin {
    * @param int $score The score that might be increased decreased 
    * @return int The new score after scroring through this plugin
    */
-  function score(&$game_model, &$tags, $score) {
+  function score(&$game_model, &$tags, $score, &$game) {
     return 0;
   }
   
@@ -31,7 +31,7 @@ class MGWeightingPlugin extends MGPlugin {
    * @param array $tags The tags that have to be rewighted
    * @return array The weightened tags
    */
-  function setWeights(&$game_model, $tags) {
+  function setWeights(&$game, &$game_model, $tags, $game) {
     return $tags;
   }
   

@@ -276,6 +276,7 @@ i.name
     debug_log(get_XMP_text($header_data));
     
     // Load the new metadata into the image.
+      YiiBase::log('$source_filepath:' . $source_filepath .' $output_filepath:' . $output_filepath, CLogger::LEVEL_ERROR);
     $result =
       $xmp->put_jpeg_header_data($source_filepath,
 				 $output_filepath,

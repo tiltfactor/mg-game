@@ -17,7 +17,7 @@ class TwoPlayerBonusPlugin extends MGWeightingPlugin  {
    * @param object $game The currently active game
    * @return array The weightened tags
    */
-  function setWeights(&$game_model, $tags,&$game) {
+  function setWeights(&$game, &$game_model, $tags, $game) {
     if (!$game->played_against_computer) {
       // go through last turns words to avoid and weight matching tags 0
       if (isset($game->opponents_submission) && isset($game->opponents_submission["parsed"]) && is_array($game->opponents_submission["parsed"])) { // make sure the game is really a two player game and the opponents_submission is set
