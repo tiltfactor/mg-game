@@ -141,7 +141,10 @@ class Tag extends BaseTag {
         if ($medias) {
             $out = "";
             foreach ($medias as $media) {
-                $html_media = CHtml::image($media['url'] . UPLOAD_PATH . '/thumbs/' . $media['name'], $media['name']) . " <span>x " . $media['counted'] . "</span>";
+                $path = $media['url'];
+                $path = rtrim($path, "/");
+                $path .= UPLOAD_PATH;
+                $html_media = CHtml::image($path . '/thumbs/' . $media['name'], $media['name']) . " <span>x " . $media['counted'] . "</span>";
                 $out .= CHtml::link($html_media, array("/admin/media/view", "id" => $media["id"]));
             }
             return $out;

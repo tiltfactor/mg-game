@@ -1,0 +1,270 @@
+.at2x(@path, @w: auto, @h: auto, @repeat: repeat, @w_retina: auto, @h_retina: auto) {
+  background-image: url(@path);
+  background-repeat: @repeat;
+  width: @w;
+  height: @h;
+  @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
+
+  @media all and  (-webkit-min-device-pixel-ratio : 1.5) and (max-height: 620px),
+  only screen and (    min--moz-device-pixel-ratio: 1.5) and (max-height: 620px),
+  only screen and (      -o-max-device-pixel-ratio: 2/1) and (max-height: 620px),
+  only screen and (         min-device-pixel-ratio: 1.5) and (max-height: 620px),
+  only screen and (              min-resolution: 192dpi) and (max-height: 620px),
+  only screen and (               min-resolution: 2dppx) and (max-height: 620px),
+  only screen and (         min-device-pixel-ratio: 1.5) and (pointer:coarse),
+  only screen and (              min-resolution: 1.5dppx) and (orientation: portrait) {
+    background-image: url(@at2x_path);
+    //background-size: @w @h;
+    background-repeat: @repeat;
+    width: @w_retina;
+    height: @h_retina;
+  }
+}
+
+body {
+  background-color: #150917;
+}
+
+@font-face {
+  font-family: Museo;
+  font-weight: normal;
+  src: url("../fonts/Museo100-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Museo;
+  font-weight: bold;
+  src: url("../fonts/Museo700-Regular.otf") format("opentype");
+}
+
+p, div, h1, h2, h3, .mm-is-menu * {
+  font-family: Museo;
+  color: white;
+}
+
+.mm-is-menu li > a, .mm-is-menu li > span {
+  padding-left: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.right {
+  left: auto;
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+#header {
+
+  padding: 5px;
+  background-color: #030104;
+  height: auto;
+
+  .setting {
+    display: block;
+    .at2x('../images/settings.png');
+    width: 35px;
+    height: 22px;
+  }
+}
+
+.mm-right.mm-opening .mm-page, html.mm-right.mm-opening #mm-blocker {
+  margin: 0 -48px 0 0 !important;
+}
+
+#content {
+  padding: 0;
+
+  &.hide_content {
+    margin: 0 48px 0 0 !important;
+  }
+
+  .padding {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .big_button {
+    display: block;
+    left: 50%;
+    right: 50%;
+    text-align: center;
+    text-decoration: none;
+    font-size: 22px;
+
+    span {
+      border: 1px solid #877c80;
+      padding: 10px;
+      color: #46a5c4;
+      border-radius: 7px;
+    }
+  }
+
+  .header {
+    height: 130px !important;
+    text-align: center;
+
+    .title {
+      padding: 35px 0 17px 0;
+    }
+  }
+
+  h2 {
+    color: #a3a3a3;
+    line-height: 60px;
+    font-size: 12px;
+  }
+
+  h3 {
+    background-color: #403b3d;
+    color: #a3a3a3;
+    height: 17px;
+    line-height: 17px;
+    font-size: 9px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .row {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .delete {
+    .at2x('../images/delete.png');
+    width: 31px;
+    height: 22px;
+    margin-top: 10px;
+  }
+
+  #list_institutions {
+    width: 290px;
+  }
+
+  .institution_logo {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+body {
+  .row {
+    height: 42px !important;
+    line-height: 42px;
+    font-size: 13px !important;
+    color: #341d33;
+  }
+
+  .back_yellow {
+    .at2x('../images/back_yellow.png');
+    color: #341d33 !important;
+  }
+
+  .back_gray {
+    .at2x('../images/back_gray.png');
+    color: #341d33 !important;
+
+  }
+
+  .back_black {
+    .at2x('../images/back_black.png');
+    color: white !important;
+  }
+
+  .back_blue {
+    .at2x('../images/back_blue.png');
+    color: white !important;
+  }
+
+  .mm-is-menu {
+    .at2x('../images/all_blue.png');
+    height: 100%;
+    width: 100%;
+  }
+
+  .mm-right.mm-opening .mm-page, html.mm-right.mm-opening #mm-blocker {
+    margin: 0 -48px 0 0 !important;
+  }
+
+  .mm-menu.mm-right .mm-inner {
+    padding: 0 0 0 50px;
+  }
+}
+
+body.retina {
+  .mm-menu.mm-right .mm-inner {
+    padding: 0 0 0 100px;
+  }
+
+  .row {
+    height: 82px !important;
+    line-height: 82px;
+    font-size: 25px !important;
+  }
+
+  #content {
+    .padding {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    .header {
+      height: 259px !important;
+      .title {
+        padding: 70px 0 35px 0;
+      }
+    }
+
+    .big_button {
+      font-size: 44px;
+    }
+
+    h2 {
+      line-height: 80px;
+      font-size: 22px;
+    }
+
+    h3 {
+      height: 34px;
+      line-height: 34px;
+      font-size: 16px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+
+    .delete {
+      width: 62px;
+      height: 44px;
+      margin-top: 22px;
+    }
+
+    .row {
+      padding-left: 44px;
+      padding-right: 44px;
+    }
+
+    #list_institutions {
+      width: 570px;
+    }
+
+    .institution_logo {
+      width: 280px;
+      height: 280px;
+    }
+  }
+
+
+  #header .setting {
+      width: 68px;
+      height: 42px;
+  }
+}
