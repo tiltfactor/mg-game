@@ -130,7 +130,7 @@ class ExportController extends GxController {
                         if (!is_dir($tmp_folder)) {
                             mkdir($tmp_folder);
                             chmod($tmp_folder, 0777);
-              
+
                             if (count($plugins) > 0) {
                                 try {
                                     foreach ($plugins as $plugin) {
@@ -177,7 +177,7 @@ class ExportController extends GxController {
             
                         if (file_exists($this->path . $model->filename . '.zip')) {
                             MGHelper::rrmdir($tmp_folder);
-                            if (is_dir($tmp_folder)) {
+                            if (file_exists($tmp_folder) && is_dir($tmp_folder)) {
                                 rmdir($tmp_folder);
                             }
                             $this->_finishExportQueue($model->filename . '.zip');
@@ -220,6 +220,7 @@ class ExportController extends GxController {
             ->join('{{media}} i', 'i.id=tu.media_id')
             ->join('{{game_submission}} gs', 'gs.id=tu.game_submission_id')
             ->join('{{session}} s', 's.id=gs.session_id')
+            ->join('{{institution}} inst', 'inst.id = i.institution_id')
             ->leftJoin('{{user}} u', 'u.id=s.user_id');
 
         if ($model->tags) {

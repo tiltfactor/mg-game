@@ -130,13 +130,14 @@ MAX(tu.weight) w_max,
 AVG(tu.weight) w_avg,
 SUM(tu.weight) as w_sum,
 t.tag,
-i.name
+i.name,
+inst.url
 ";
     
     $command->selectDistinct($sql);
 
-    $command->where(array('and', $command->where, 'tu.image_id = :imageID'),
-                    array(":imageID" => $image_id));
+    $command->where(array('and', $command->where, 'tu.image_id = :mediaID'),
+                    array(":mediaID" => $image_id, ':weight' => (int)$model->tag_weight_min, ':weightSum' => (int)$model->tag_weight_sum));
     $command->order('tu.image_id, t.tag');
     
     $info = $command->queryAll();

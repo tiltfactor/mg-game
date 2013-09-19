@@ -138,7 +138,8 @@ function read_xml_array_from_text( $xmltext )
         // of the XML data, where each tag has a level number attached.
         // This is very difficult to work with, so it needs to be
         // converted to a tree structure before being returned
-        return xml_get_children($newvals, $i=0);
+        $i=0;
+        return xml_get_children($newvals, $i);
 
 }
 

@@ -97,7 +97,7 @@ class CSVExportPlugin extends MGExportPlugin {
     }
 
     if ($model->option_list_user == 1) {
-      $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name, u.username');
+      $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name, u.username,inst.url');
       
       if (trim($command->group) != "") {
         $groups = array();
@@ -112,7 +112,7 @@ class CSVExportPlugin extends MGExportPlugin {
       }
       
     } else {
-      $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name');
+      $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,inst.url');
     }
     $command->where(array('and', $command->where, 'tu.media_id = :mediaID'), array(":mediaID" => $media_id));
     $command->order('tu.media_id, t.tag');

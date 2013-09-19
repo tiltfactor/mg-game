@@ -171,7 +171,8 @@ MAX(tu.weight) w_max,
 AVG(tu.weight) w_avg,
 SUM(tu.weight) as w_sum,
 t.tag,
-i.name
+i.name,
+inst.url
 ";
     
     $command->selectDistinct($sql);
@@ -183,10 +184,14 @@ i.name
     $info = $command->queryAll();
     $c = count($info);
     $tags = array();
-
+    $url = '';
     // Copy all of the matching tags out of the query result and into
     // an array.
     for($i=0;$i<$c;$i++) {
+        if ($i == 0) {
+            YiiBase::logProps($info[$i], CLogger::LEVEL_ERROR);
+            $url = $info[$i]['url'];
+        }
       $tags[] = $info[$i]['tag'];
     }
     
@@ -204,24 +209,30 @@ i.name
     
     // Note that the 'medias' portion of the path is not inside the
     // call to realpath() as that directory _does not exist yet_ !
-    $source_directory = realpath($base . $upload_path) . "/images";
+    $source_directory = preg_replace('/\/*$/','', $url) . UPLOAD_PATH . "/images";
     
     // XXX - for some reason we're getting $output_directory
     // overwritten or cleared on each pass through the loop, so we're
     // just hard-coding this here for now.
     $output_directory = $tmp_folder . "images";
-
+      if (!file_exists($output_directory)/* || !is_dir($output_directory)*/) {
+          mkdir($output_directory);
+      } else {
+          YiiBase::log('file/directory exists:' . $output_directory, CLogger::LEVEL_ERROR);
+      }
     $output_filepath = "$output_directory/$filename";
-    $source_filepath = realpath("$source_directory/$filename");
-    
+    $source_filepath = "$source_directory/$filename";
+
     // TODO: Add an assertion/check here to make sure that the file
     // copies-over correctly.
-    Yii::log("Consider assertion for copying-over file success.", "Error");
+    //Yii::log("Consider assertion for copying-over file success.", "Error");
 
     // Sanity-check.
-    file_exists($source_filepath) or
-      // TODO: This should probably be an exception or similar.
-      Yii::log("does not exist: $source_filepath", "Error");
+      if (($fp = @fopen($source_filepath, "r")) === false) {
+          Yii::log("source file path does not exist: $source_filepath", "Error");
+      } else {
+          fclose($fp);
+      }
 
     // NOTE: I'd like to make this copy up-front here, however that
     // might be the cause of some issues later when we try to call
