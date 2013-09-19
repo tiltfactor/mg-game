@@ -837,20 +837,23 @@ abstract class MGMultiPlayer extends CComponent
     public function getOfflineGames()
     {
         $games = array();
-        $userGames = UserGame::model()->with(array('userId1', 'userId2'))->findAll('(user_id_1 =:userId1 OR user_id_2=:userId2) AND game_id=:gameId', array(':userId1' => $this->userId, ':userId2' => $this->userId, ':gameId' => $this->game->id));
+        $userGames = UserGame::model()->with(array('playedGame','userId1', 'userId2'))->findAll('(user_id_1 =:userId1 OR user_id_2=:userId2) AND game_id=:gameId', array(':userId1' => $this->userId, ':userId2' => $this->userId, ':gameId' => $this->game->id));
         if ($userGames) {
             foreach ($userGames as $game) {
-                $opponent = null;
-                if ($game->userId1->id == $this->userId) {
-                    $opponent = $game->userId2;
-                } else {
-                    $opponent = $game->userId1;
+                if($game->playedGame && $game->playedGame->finished==null){
+                    $opponent = null;
+                    if ($game->userId1->id == $this->userId) {
+                        $opponent = $game->userId2;
+                    } else {
+                        $opponent = $game->userId1;
+                    }
+                    $gameDTO = new GameOfflineDTO();
+                    $gameDTO->opponentId = $opponent->id;
+                    $gameDTO->playedGameId = $game->played_game_id;
+                    $gameDTO->opponentName = $opponent->username;
+                    $gameDTO->turnUserId = $game->turn_user_id;
+                    array_push($games, $gameDTO);
                 }
-                $gameDTO = new GameOfflineDTO();
-                $gameDTO->opponentId = $opponent->id;
-                $gameDTO->playedGameId = $game->played_game_id;
-                $gameDTO->opponentName = $opponent->username;
-                array_push($games, $gameDTO);
             }
         }
         return $games;
@@ -938,7 +941,6 @@ abstract class MGMultiPlayer extends CComponent
         } else {
             Yii::log("Push send error: " . curl_error($ch), "Error");
         }
-
         curl_close($ch);
     }
 }

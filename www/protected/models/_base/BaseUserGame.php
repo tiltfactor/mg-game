@@ -14,11 +14,12 @@
  * @property integer $user_id_2
  * @property integer $game_id
  * @property integer $played_game_id
+ * @property integer $turn_user_id
  *
- * @property User $userId1
- * @property User $userId2
  * @property Game $game
  * @property PlayedGame $playedGame
+ * @property User $userId1
+ * @property User $userId2
  */
 abstract class BaseUserGame extends GxActiveRecord {
 
@@ -41,18 +42,18 @@ abstract class BaseUserGame extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('user_id_1, user_id_2, game_id', 'required'),
-			array('user_id_1, user_id_2, game_id, played_game_id', 'numerical', 'integerOnly'=>true),
-			array('played_game_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, user_id_1, user_id_2, game_id, played_game_id', 'safe', 'on'=>'search'),
+			array('user_id_1, user_id_2, game_id, played_game_id, turn_user_id', 'numerical', 'integerOnly'=>true),
+			array('played_game_id, turn_user_id', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, user_id_1, user_id_2, game_id, played_game_id, turn_user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
 	public function relations() {
 		return array(
-			'userId1' => array(self::BELONGS_TO, 'User', 'user_id_1'),
-			'userId2' => array(self::BELONGS_TO, 'User', 'user_id_2'),
 			'game' => array(self::BELONGS_TO, 'Game', 'game_id'),
 			'playedGame' => array(self::BELONGS_TO, 'PlayedGame', 'played_game_id'),
+			'userId1' => array(self::BELONGS_TO, 'User', 'user_id_1'),
+			'userId2' => array(self::BELONGS_TO, 'User', 'user_id_2'),
 		);
 	}
 
@@ -68,10 +69,11 @@ abstract class BaseUserGame extends GxActiveRecord {
 			'user_id_2' => null,
 			'game_id' => null,
 			'played_game_id' => null,
-			'userId1' => null,
-			'userId2' => null,
+			'turn_user_id' => Yii::t('app', 'Turn User'),
 			'game' => null,
 			'playedGame' => null,
+			'userId1' => null,
+			'userId2' => null,
 		);
 	}
 
@@ -83,6 +85,7 @@ abstract class BaseUserGame extends GxActiveRecord {
 		$criteria->compare('user_id_2', $this->user_id_2);
 		$criteria->compare('game_id', $this->game_id);
 		$criteria->compare('played_game_id', $this->played_game_id);
+		$criteria->compare('turn_user_id', $this->turn_user_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
