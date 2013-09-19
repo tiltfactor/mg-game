@@ -222,7 +222,20 @@ class ExportController extends GxController {
             ->join('{{session}} s', 's.id=gs.session_id')
             ->join('{{institution}} inst', 'inst.id = i.institution_id')
             ->leftJoin('{{user}} u', 'u.id=s.user_id');
-
+        if (Yii::app()->user->checkAccess(INSTITUTION)) {
+            $institutionId = 0;
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            if ($institutions) {
+                if (is_array($institutions)) {
+                    $institutionId = $institutions[0]->id;
+                } else {
+                    $institutionId = $institutions->id;
+                }
+            }
+            YiiBase::log('user_id:' . Yii::app()->user->Id . ' institutionId:' . $institutionId, CLogger::LEVEL_ERROR);
+            $where[] = array('and', 'inst.id = :instID');
+            $params[":instID"] = $institutionId;
+        }
         if ($model->tags) {
             $parsed_tags = MGTags::parseTags($model->tags);
             if (count($parsed_tags) > 0) {
@@ -255,7 +268,7 @@ class ExportController extends GxController {
                         ->having('counted = :counted', array(':counted' => count($parsed_tags)))
                         ->queryAll();
                 }
-        
+
                 if ($medias) {
                     $ids = array();
                     foreach ($medias as $media) {
@@ -300,7 +313,7 @@ class ExportController extends GxController {
                         ->having('counted = :counted', array(':counted' => count($parsed_tags)))
                         ->queryAll();
                 }
-        
+
                 if ($users) {
                     $ids = array();
                     foreach ($users as $user) {
@@ -308,7 +321,7 @@ class ExportController extends GxController {
                     }
                     $where[] = array('in', 'tu.media_id', array_values($ids));
                 } else {
-          $where[] = array('in', 'tu.media_id', array_values(0));
+                    $where[] = array('in', 'tu.media_id', array_values(0));
                 }
             }
         }
@@ -324,7 +337,7 @@ class ExportController extends GxController {
         } else {
             $where[] = 'tu.weight > 0';
         }
-    
+
         if ((int)$model->tag_weight_sum >= 0) {
             $group[] = 'tu.tag_id';
             $having[] = 'SUM(tu.weight) >= :weightSum';
@@ -342,7 +355,7 @@ class ExportController extends GxController {
         }
     
         $command->where($where, $params);
-    
+
         if (count($group)) {
             $command->group(implode(',', $group));
         }
@@ -397,9 +410,10 @@ class ExportController extends GxController {
                 'pageSize' => Yii::app()->fbvStorage->get("settings.pagination_size")
             ),
         ));
-    
+
         $this->render('exported', array(
-            'filelist_dataprovider' => $filelist_dataprovider
+            'filelist_dataprovider' => $filelist_dataprovider,
+            'institution' => Yii::app()->user->checkAccess(INSTITUTION),
         ));
     }
 

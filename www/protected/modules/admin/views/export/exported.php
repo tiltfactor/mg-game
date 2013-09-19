@@ -26,13 +26,7 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 </p>
 
 <?php echo CHtml::beginForm('','post',array('id'=>'export-form'));
-$this->widget('zii.widgets.grid.CGridView', array(
-  'id' => 'export-grid',
-  'dataProvider' => $filelist_dataprovider,
-  'cssFile' => Yii::app()->request->baseUrl . "/css/yii/gridview/styles.css",
-  'pager' => array('cssFile' => Yii::app()->request->baseUrl . "/css/yii/pager.css"),
-  'baseScriptUrl' => Yii::app()->request->baseUrl . "/css/yii/gridview",
-  'columns' => array(
+$columns = array(
     'name',
     'created',
     array(
@@ -40,19 +34,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
       'type' => 'html',
       'name' => 'link',
     ),
-    array (
-      'class' => 'CButtonColumn',
-      'template' => '{export_delete}',
-      'buttons' => array(
-        'export_delete' => array (
-          'label'=>Yii::t('app', 'remove'),     
-          'url'=>'Yii::app()->controller->createUrl("remove",array("id"=>$data["name"]))',
-          'imageUrl'=>Yii::app()->request->baseUrl . "/css/yii/gridview/delete.png",
-          'click' => 'function() {return confirm("' . Yii::t('app', 'Are you sure you want to delete this item?') . '")}' 
-        )
-      )
-    )  
- ),
+
+ );
+if (!$institution) {
+    $columns[] = array (
+          'class' => 'CButtonColumn',
+          'template' => '{export_delete}',
+          'buttons' => array(
+            'export_delete' => array (
+              'label'=>Yii::t('app', 'remove'),
+              'url'=>'Yii::app()->controller->createUrl("remove",array("id"=>$data["name"]))',
+              'imageUrl'=>Yii::app()->request->baseUrl . "/css/yii/gridview/delete.png",
+              'click' => 'function() {return confirm("' . Yii::t('app', 'Are you sure you want to delete this item?') . '")}'
+            )
+          )
+        );
+}
+$this->widget('zii.widgets.grid.CGridView', array(
+  'id' => 'export-grid',
+  'dataProvider' => $filelist_dataprovider,
+  'cssFile' => Yii::app()->request->baseUrl . "/css/yii/gridview/styles.css",
+  'pager' => array('cssFile' => Yii::app()->request->baseUrl . "/css/yii/pager.css"),
+  'baseScriptUrl' => Yii::app()->request->baseUrl . "/css/yii/gridview",
+  'columns' => $columns,
 )); 
 echo CHtml::endForm();
 
