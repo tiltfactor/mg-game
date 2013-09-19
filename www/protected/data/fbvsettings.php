@@ -67,7 +67,7 @@ return array (
       'name' => 'Export',
       'description' => 'Export tags, tag uses, and tagged media.',
       'url' => '/admin/export',
-      'role' => EDITOR,
+      'role' => INSTITUTION,
       'group' => 'Media & Tags',
     ),
     'tool-user' => 
@@ -204,6 +204,18 @@ return array (
       'number_hints' => '1',
       'partner_wait_threshold' => '30',
       'play_against_computer' => '1',
+    ),
+    'Pyramid' => 
+    array (
+      'name' => 'Pyramid',
+      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'arcade_image' => 'pyramid_arcade.png',
+      'more_info_url' => '',
+      'play_once_and_move_on' => 0,
+      'play_once_and_move_on_url' => '',
+      'turns' => 4,
+      'image_width' => 450,
+      'image_height' => 450,
     ),
   ),
   'settings' => 
