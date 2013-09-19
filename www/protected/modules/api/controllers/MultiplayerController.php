@@ -288,4 +288,66 @@ class MultiplayerController extends ApiController
         $result = $gameEngine->getOfflineGameState($playedGameId);
         $this->sendResponse($result);
     }
+
+
+    public function actionGetBookmarks($gid)
+    {
+        $bookmark = new MGBookmark($gid);
+        if (is_null($bookmark)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $medias = $bookmark->getAll();
+        $this->sendResponse($medias);
+    }
+
+    public function actionBookmark($gid, $mediaId, $playedId)
+    {
+        $bookmark = new MGBookmark($gid);
+        if (is_null($bookmark)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $bookmark->add($mediaId, $playedId);
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    public function actionGetInterests($gid)
+    {
+        $component = new MGInterest($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $result = $component->getAll();
+        $this->sendResponse($result);
+    }
+
+    public function actionAddInterest($gid, $interest)
+    {
+        $component = new MGInterest($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $component->add($interest);
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    public function actionRemoveInterest($gid, $id)
+    {
+        $component = new MGInterest($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $component->remove($id);
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
 }
