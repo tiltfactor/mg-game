@@ -221,6 +221,7 @@ class TagController extends GxController {
 
 		$this->render('admin', array(
 			'model' => $model,
+			'institution' => Yii::app()->user->checkAccess(INSTITUTION),
 		));
 	}
   

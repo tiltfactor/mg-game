@@ -71,10 +71,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
       'class' => 'CButtonColumn',
       'buttons' => 
       array (
-        'delete' => 
-        array (
-          'visible' => 'false',
-        ),
+          'delete' => array ( 'visible' => 'false', ),
+          'update' => array ( 'visible' => $institution ? 'false' : 'true' , ),
       ),
     )  
  ),
