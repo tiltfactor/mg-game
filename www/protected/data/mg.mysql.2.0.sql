@@ -665,6 +665,7 @@ CREATE  TABLE IF NOT EXISTS `user_game` (
   `user_id_2` INT(11) NOT NULL ,
   `game_id` INT(11) NOT NULL ,
   `played_game_id` INT(11) NULL ,
+  `turn_user_id` int(11) NOT NULL DEFAULT '0',
    PRIMARY KEY (`id`) ,
   INDEX `fk_user_game_user1` (`user_id_1` ASC) ,
   INDEX `fk_user_game_user2` (`user_id_2` ASC) ,

@@ -8,10 +8,10 @@ class OneUpGame extends MGMultiPlayer
     function __construct()
     {
         $playedGameId = -1;
-        if(isset($_POST['playedGameId'])){
+        if (isset($_POST['playedGameId'])) {
             $playedGameId = $_POST['playedGameId'];
         }
-        parent::__construct("OneUp", true,$playedGameId);
+        parent::__construct("OneUp", true, $playedGameId);
     }
 
 
@@ -50,9 +50,9 @@ class OneUpGame extends MGMultiPlayer
             }
         }
 
-        if($this->playedGame->session_id_1 == $this->sessionId){
+        if ($this->playedGame->session_id_1 == $this->sessionId) {
             $opponentId = $this->playedGame->sessionId2->user_id;
-        }else{
+        } else {
             $opponentId = $this->playedGame->sessionId1->user_id;
         }
         $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
@@ -71,9 +71,9 @@ class OneUpGame extends MGMultiPlayer
                         if ($row->tag == $tag->tag) {
                             $tag->score = -1;
 
-                            $this->pushMessage($this->userOnline->user_id,MGMultiPlayer::PUSH_PENALTY,json_encode(-1));
+                            $this->pushMessage($this->userOnline->user_id, MGMultiPlayer::PUSH_PENALTY, json_encode(-1));
                             if ($opponentOnline) {
-                                $this->pushMessage($opponentId,MGMultiPlayer::PUSH_BONUS,json_encode(1));
+                                $this->pushMessage($opponentId, MGMultiPlayer::PUSH_BONUS, json_encode(1));
                             }
 
                             //Player notified of penalty
@@ -148,14 +148,24 @@ class OneUpGame extends MGMultiPlayer
         $tags = $this->setWeights($tags);
         $this->saveSubmission($tags);
 
+        $userGame = UserGame::model()->find('played_game_id=:playedGameId', array(':playedGameId' => $this->playedGame->id));
+
         $submissions += 1;
         if ($submissions == $this->game->submissions) {
             $opponentSubmissions = count($playerTagDTOs[$this->gameTurn->turn]);
             if ($opponentSubmissions == $this->game->submissions) {
                 $this->createGameTurn();
+                if ($userGame) {
+                    $userGame->turn_user_id = 0;
+                    $userGame->save();
+                }
             } else {
+                if ($userGame) {
+                    $userGame->turn_user_id = $opponentId;
+                    $userGame->save();
+                }
                 if ($opponentOnline) {
-                    $this->pushMessage($opponentId,MGMultiPlayer::PUSH_OPPONENT_WAITING,json_encode($this->playedGame->id));
+                    $this->pushMessage($opponentId, MGMultiPlayer::PUSH_OPPONENT_WAITING, json_encode($this->playedGame->id));
                 }
             }
         }
@@ -171,8 +181,8 @@ class OneUpGame extends MGMultiPlayer
     public function disconnect($userId)
     {
         $userOnline = UserOnline::model()->find('user_id =:userId AND t.game_id=:gameId', array(':userId' => $userId, ':gameId' => $this->game->id));
-        if($userOnline){
-            if(!$userOnline->delete()){
+        if ($userOnline) {
+            if (!$userOnline->delete()) {
                 $message = "";
                 $errors = $userOnline->getErrors();
                 foreach ($errors as $field => $error) {
@@ -186,7 +196,7 @@ class OneUpGame extends MGMultiPlayer
     public function gameEnd()
     {
         $this->playedGame->finished = date('Y-m-d H:i:s');
-        if( !$this->playedGame->save()){
+        if (!$this->playedGame->save()) {
             $message = "";
             $errors = $this->playedGame->getErrors();
             foreach ($errors as $field => $error) {
@@ -195,12 +205,12 @@ class OneUpGame extends MGMultiPlayer
             throw new CHttpException(500, $message);
         }
 
-        if($this->sessionId == $this->playedGame->session_id_1){
-            $score =  $this->playedGame->score_1;
+        if ($this->sessionId == $this->playedGame->session_id_1) {
+            $score = $this->playedGame->score_1;
             $opponentScore = $this->playedGame->score_2;
             $opponentId = $this->playedGame->sessionId2->user_id;
-        }else{
-            $score =  $this->playedGame->score_2;
+        } else {
+            $score = $this->playedGame->score_2;
             $opponentScore = $this->playedGame->score_1;
             $opponentId = $this->playedGame->sessionId1->user_id;
         }
@@ -214,19 +224,19 @@ class OneUpGame extends MGMultiPlayer
             $userToGame->saveCounters(array('number_played' => 1, 'score' => $opponentScore));
         }
 
-        if(isset($this->userOnline) && $this->userOnline->session_id == $this->sessionId){
+        if (isset($this->userOnline) && $this->userOnline->session_id == $this->sessionId) {
             $this->userOnline->played_game_id = null;
             $this->userOnline->status = UserOnline::STATUS_WAIT;
             $this->userOnline->save();
         }
 
-        if(isset($this->userOnline)){
-            $this->pushMessage($this->userOnline->user_id,MGMultiPlayer::PUSH_GAME_END,json_encode($this->playedGame->id));
+        if (isset($this->userOnline)) {
+            $this->pushMessage($this->userOnline->user_id, MGMultiPlayer::PUSH_GAME_END, json_encode($this->playedGame->id));
         }
 
         $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
         if ($opponentOnline) {
-            $this->pushMessage($opponentId,MGMultiPlayer::PUSH_GAME_END,json_encode($this->playedGame->id));
+            $this->pushMessage($opponentId, MGMultiPlayer::PUSH_GAME_END, json_encode($this->playedGame->id));
         }
     }
 }
