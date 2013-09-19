@@ -625,7 +625,7 @@ abstract class MGMultiPlayer extends CComponent
         $played_game->modified = date('Y-m-d H:i:s');
 
         if ($played_game->validate()) {
-            $played_game->save();
+            $played_game->save(false);
         } else {
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }

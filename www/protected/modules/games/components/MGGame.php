@@ -10,12 +10,13 @@ class MGGame extends CComponent {
    * @var Array in two player games this value will be set to the opponents two player 
    */
   public $opponents_submission = null;
-  
+
   /**
    * Saves the user's submission to the database
-   * 
+   *
    * @param Object $game the current game object
    * @param Game $game_model The current game's model
+   * @throws CHttpException
    * @return null
    */
   public function saveSubmission($game, &$game_model) {
@@ -68,6 +69,7 @@ class MGGame extends CComponent {
    * @param object $game_model The game model
    * @param int $num_medias how many medias have to be found at least, if not enough medias are found the system clears the seen medias in the session and recalls this method
    * @param boolean $second_attempt used to indicate that the seen medias in the session have been cleared an the system tries a second time to load medias
+   * @param array $accept_types
    * @return array Array of Array: array(array("id", "name"), ...)
    */
   protected function getMedias($collections, $game, &$game_model, $num_medias=1, $second_attempt=false, $accept_types=array("image")) {

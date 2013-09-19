@@ -1,11 +1,4 @@
 <?php
-
-
-/**
- *
- * @package    MG
- * @author Nikolay Kondikov <nikolay.kondikov@sirma.bg>
- */
 class PyramidGame extends NexTagGame
 {
     private static $TIME_TO_PLAY = 120;
@@ -110,8 +103,9 @@ class PyramidGame extends NexTagGame
      *
      * @param object $game The game object
      * @param object $game_model The game model
-     * @param Array the tags submitted by the player for each media
-     * @return Array the turn information that will be sent to the players client
+     * @param array the tags submitted by the player for each media
+     * @throws CHttpException
+     * @return array the turn information that will be sent to the players client
      */
     public function getTurn(&$game, &$game_model, $tags = array())
     {
@@ -152,8 +146,8 @@ class PyramidGame extends NexTagGame
                 "media_id" => $media["id"],
                 "full_size" => $path . "/images/" . $media["name"],
                 "thumbnail" => $path . "/thumbs/" . $media["name"],
-                "final_screen" => MGHelper::getScaledMediaUrl($media["name"], 212, 171, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
-                "scaled" => MGHelper::getScaledMediaUrl($media["name"], $game->image_width, $game->image_height, $medias[$i]["institutionToken"], $medias[$i]["institutionUrl"]),
+                "final_screen" => MGHelper::getScaledMediaUrl($media["name"], 212, 171, $media["institutionToken"], $media["institutionUrl"]),
+                "scaled" => MGHelper::getScaledMediaUrl($media["name"], $game->image_width, $game->image_height, $media["institutionToken"], $media["institutionUrl"]),
                 "licences" => $media["licences"],
                 "level" => $lastLevel->level,
                 "tag_accepted" => $lastLevel->isAccepted
