@@ -217,30 +217,19 @@ class MGHelper
     public static function rrmdir($dir)
     {
         if (is_dir($dir)) {
-            /*$retries = 5;
-            while (($objects = scandir($dir)) && $retries--)  {*/
-                foreach (scandir($dir) as $object) {
-                    if ($object != "." && $object != "..") {
-                        $filePath = $dir . "/" . $object;
-                        if (filetype($filePath) == "dir") {
-                            self::rrmdir($filePath);
-                        } else {
-                            /*$retries = 5;
-                            while (file_exists($filePath) && $retries--) {
-                                sleep(1);*/
-                                unlink($filePath);
-                            //}
-                        }
+            foreach (scandir($dir) as $object) {
+                if ($object != "." && $object != "..") {
+                    $filePath = $dir . "/" . $object;
+                    if (filetype($filePath) == "dir") {
+                        self::rrmdir($filePath);
+                    } else {
+                            unlink($filePath);
                     }
                 }
-            /*}
-            $retries = 5;
-            while (file_exists($dir) && $retries--) {
-                sleep(1);*/
-                try {
-                    @rmdir(str_replace('\\','/',$dir));
-                } catch(Exception $e){}
-            //}
+            }
+            try {
+                @rmdir(str_replace('\\','/',$dir));
+            } catch(Exception $e){}
         }
     }
 }
