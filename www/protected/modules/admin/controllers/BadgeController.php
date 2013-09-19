@@ -33,6 +33,7 @@ class BadgeController extends GxController {
 	public function actionView($id) {
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Badge'),
+			'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
 
@@ -125,6 +126,7 @@ class BadgeController extends GxController {
 
     $this->render('admin', array(
       'model' => $model,
+        'admin' => Yii::app()->user->checkAccess(ADMIN),
     ));
 	}
 
@@ -137,6 +139,7 @@ class BadgeController extends GxController {
 
 		$this->render('admin', array(
 			'model' => $model,
+			'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
   

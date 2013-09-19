@@ -84,15 +84,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
   'buttons' => 
     
     array (
-    'delete' => 
-    array (
-      'visible' => 'false',
-    ),
-    'update' => array(),
+        'delete' => array('visible' => $admin ? 'true' : 'false'),
+        'update' => array('visible' => $admin ? 'true' : 'false'),
     'reweight' => array (
       'label'=>'re-weight', 
       'url'=> "Yii::app()->createUrl('admin/tagUse/weight', array('id' => \$data->id))",    
-      'imageUrl'=> Yii::app()->request->baseUrl . "/css/yii/gridview/scale.png", 
+      'imageUrl'=> Yii::app()->request->baseUrl . "/css/yii/gridview/scale.png",
+        'visible' => $admin ? 'true' : 'false',
     )
   ),
 )  ),

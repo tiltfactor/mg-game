@@ -9,9 +9,11 @@ $this->breadcrumbs = array(
 
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Manage') . ' ' . $model->label(2), 'url'=>array('admin')),
-	array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id)),
-	array('label'=>Yii::t('app', 'Re-Weight') . ' ' . $model->label(), 'url'=>array('weight', 'id' => $model->id)),
 );
+if ($admin) {
+    $this->menu[] = array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id));
+    $this->menu[] = array('label'=>Yii::t('app', 'Re-Weight') . ' ' . $model->label(), 'url'=>array('weight', 'id' => $model->id));
+}
 ?>
 
 <h1><?php echo Yii::t('app', 'View') . ' ' . GxHtml::encode($model->label()) . ' ' . GxHtml::encode(GxHtml::valueEx($model)); ?></h1>

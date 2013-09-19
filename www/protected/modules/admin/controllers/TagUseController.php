@@ -28,6 +28,7 @@ class TagUseController extends GxController {
 	public function actionView($id) {
         $this->render('view', array(
 			'model' => $this->loadModel($id, 'TagUse'),
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
 
@@ -149,6 +150,7 @@ class TagUseController extends GxController {
 
 		$this->render('admin', array(
 			'model' => $model,
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
 }

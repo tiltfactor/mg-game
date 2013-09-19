@@ -8,12 +8,15 @@ $this->breadcrumbs = array(
 
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Manage') . ' ' . $model->label(2), 'url'=>array('admin')),
-	array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
-	array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id)),
-	array('label'=>Yii::t('app', 'Delete') . ' ' . $model->label(), 
-    'url'=>'#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm'=>'Are you sure you want to delete this item?'),
-    'visible' => !($model->hasAttribute("locked") && $model->locked)),
 );
+if ($admin) {
+    $this->menu[] = array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create'));
+    $this->menu[] = array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id));
+    $this->menu[] = array('label'=>Yii::t('app', 'Delete') . ' ' . $model->label(),
+    'url'=>'#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm'=>'Are you sure you want to delete this item?'),
+    'visible' => !($model->hasAttribute("locked") && $model->locked));
+    ;
+}
 ?>
 
 <h1><?php echo Yii::t('app', 'View') . ' ' . GxHtml::encode($model->label()) . ' ' . GxHtml::encode(GxHtml::valueEx($model)); ?></h1>

@@ -72,7 +72,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
       'buttons' => 
       array (
           'delete' => array ( 'visible' => 'false', ),
-          'update' => array ( 'visible' => $institution ? 'false' : 'true' , ),
+          'update' => array('visible' => $admin ? 'true' : 'false'),
       ),
     )  
  ),

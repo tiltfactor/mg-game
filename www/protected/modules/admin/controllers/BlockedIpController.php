@@ -28,6 +28,7 @@ class BlockedIpController extends GxController {
 	public function actionView($id) {
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'BlockedIp'),
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
 
@@ -101,6 +102,7 @@ class BlockedIpController extends GxController {
 
     $this->render('admin', array(
       'model' => $model,
+        'admin' => Yii::app()->user->checkAccess(ADMIN),
     ));
 	}
 
@@ -113,6 +115,7 @@ class BlockedIpController extends GxController {
 
 		$this->render('admin', array(
 			'model' => $model,
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
   

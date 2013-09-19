@@ -28,6 +28,7 @@ class SubjectMatterController extends GxController {
 	public function actionView($id) {
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'SubjectMatter'),
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
 
@@ -107,7 +108,7 @@ class SubjectMatterController extends GxController {
 
     $this->render('admin', array(
       'model' => $model,
-        'institution' => Yii::app()->user->checkAccess(INSTITUTION),
+        'admin' => Yii::app()->user->checkAccess(ADMIN),
     ));
 	}
 
@@ -120,6 +121,7 @@ class SubjectMatterController extends GxController {
 
 		$this->render('admin', array(
 			'model' => $model,
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
   

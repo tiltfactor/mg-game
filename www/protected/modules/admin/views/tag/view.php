@@ -8,11 +8,13 @@ $this->breadcrumbs = array(
 
 $this->menu=array(
 	array('label'=>Yii::t('app', 'Manage') . ' ' . $model->label(2), 'url'=>array('admin')),
-	array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id)),
-	array('label'=>Yii::t('app', 'View Tag Uses for ') . ' "' . $model->tag . '"', 'url'=>array('/admin/tagUse', 'TagUse[tag_id]' => $model->id)),
-	array('label' => Yii::t('app', 'Re-Weight') . ' ' . $model->label() . ' "' . $model->tag. '"', 'url'=>array('weight', 'id' => GxActiveRecord::extractPkValue($model, true))),
-  array('label' => Yii::t('app', 'Ban') . ' ' . ' ' . $model->label() . ' "' . $model->tag. '"', 'url'=>array('ban', 'id' => GxActiveRecord::extractPkValue($model, true))),
 );
+if ($admin) {
+    $this->menu[] = array('label'=>Yii::t('app', 'Update') . ' ' . $model->label(), 'url'=>array('update', 'id' => $model->id));
+    $this->menu[] = array('label'=>Yii::t('app', 'View Tag Uses for ') . ' "' . $model->tag . '"', 'url'=>array('/admin/tagUse', 'TagUse[tag_id]' => $model->id));
+    $this->menu[] = array('label' => Yii::t('app', 'Re-Weight') . ' ' . $model->label() . ' "' . $model->tag. '"', 'url'=>array('weight', 'id' => GxActiveRecord::extractPkValue($model, true)));
+    $this->menu[] = array('label' => Yii::t('app', 'Ban') . ' ' . ' ' . $model->label() . ' "' . $model->tag. '"', 'url'=>array('ban', 'id' => GxActiveRecord::extractPkValue($model, true)));
+}
 ?>
 
 <h1><?php echo Yii::t('app', 'View') . ' ' . GxHtml::encode($model->label()) . ' "' . GxHtml::encode(GxHtml::valueEx($model)); ?>"</h1>

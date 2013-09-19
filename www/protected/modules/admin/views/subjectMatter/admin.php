@@ -4,7 +4,7 @@ $this->breadcrumbs = array(
 	Yii::t('app', 'Admin')=>array('/admin'),
 	$model->label(2),
 );
-if (!$institution) {
+if ($admin) {
     $this->menu =  array(
     		array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
     	);
@@ -65,7 +65,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
   'buttons' => 
   array (
     'delete' =>  array ( 'visible' => '$data->locked == 0',),
-      'update' => array ( 'visible' => $institution ? 'false' : 'true' , ),
+      'update' => array('visible' => $admin ? 'true' : 'false'),
   ),
 )  ),
 )); 

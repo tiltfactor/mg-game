@@ -25,15 +25,11 @@ class ExportController extends GxController {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('view'),
-                'roles' => array('*'),
-            ),
-            array('allow',
                 'actions' => array('admin', 'exported', 'queueprocess'),
-                'roles' => array(INSTITUTION),
+                'roles' => array(INSTITUTION, ADMIN),
             ),
             array('allow',
-                'actions' => array('admin', 'exported', 'queueprocess', 'remove'),
+                'actions' => array('remove'),
                 'roles' => array(ADMIN),
             ),
             array('deny',
@@ -85,7 +81,8 @@ class ExportController extends GxController {
     
         $this->render('admin', array(
             'model' => $model,
-            'count_affected_medias' => $count_affected_medias
+            'count_affected_medias' => $count_affected_medias,
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
         ));
     }
 
@@ -413,7 +410,7 @@ class ExportController extends GxController {
 
         $this->render('exported', array(
             'filelist_dataprovider' => $filelist_dataprovider,
-            'institution' => Yii::app()->user->checkAccess(INSTITUTION),
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
         ));
     }
 

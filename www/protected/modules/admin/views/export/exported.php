@@ -36,7 +36,7 @@ $columns = array(
     ),
 
  );
-if (!$institution) {
+if ($admin) {
     $columns[] = array (
           'class' => 'CButtonColumn',
           'template' => '{export_delete}',

@@ -29,6 +29,7 @@ class TagController extends GxController {
 	public function actionView($id) {
 		$this->render('view', array(
 			'model' => $this->loadModel($id, 'Tag'),
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
 
@@ -221,7 +222,7 @@ class TagController extends GxController {
 
 		$this->render('admin', array(
 			'model' => $model,
-			'institution' => Yii::app()->user->checkAccess(INSTITUTION),
+            'admin' => Yii::app()->user->checkAccess(ADMIN),
 		));
 	}
   
