@@ -4,10 +4,11 @@ $this->breadcrumbs = array(
 	Yii::t('app', 'Admin')=>array('/admin'),
 	$model->label(2),
 );
-
-$this->menu = array(
-		array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
-	);
+if (!$institution) {
+    $this->menu =  array(
+    		array('label'=>Yii::t('app', 'Create') . ' ' . $model->label(), 'url'=>array('create')),
+    	);
+}
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -63,10 +64,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
   'class' => 'CButtonColumn',
   'buttons' => 
   array (
-    'delete' => 
-    array (
-      'visible' => '$data->locked == 0',
-    ),
+    'delete' =>  array ( 'visible' => '$data->locked == 0',),
+      'update' => array ( 'visible' => $institution ? 'false' : 'true' , ),
   ),
 )  ),
 )); 
