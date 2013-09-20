@@ -127,13 +127,13 @@ class Controller extends CController
       $filterChain->run();  
     } else {
       $time = microtime(true);
-      $throttle_interval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);  
-      if (($time - Yii::app()->session[$api_id .'_LAST_ACCESS']) * 1000 > $throttle_interval) {
+      $throttle_interval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
+      if (($time - Yii::app()->session[$api_id .'_LAST_ACCESS']) * 1 > $throttle_interval) {
         Yii::app()->session[$api_id .'_LAST_ACCESS'] = $time;
         $filterChain->run();
       } else {
         Yii::app()->session[$api_id .'_LAST_ACCESS'] = $time;
-        throw new CHttpException(420, Yii::t('app', 'Enhance your calm.'));        
+        throw new CHttpException(420, Yii::t('app', 'Enhance your calm.' + $throttle_interval));
       }
     }
   }

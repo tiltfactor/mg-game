@@ -57,18 +57,18 @@ MG_GAME_ONEUP = function ($) {
                     //MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
                         challenges_response = {};
                         challenges_response.sent = [];
-                        challenges_response.sent[0] = {'opponent_id': 2, 'opponent_name': 'alabala'};
+                        challenges_response.sent[0] = {'opponent_id': 2, 'opponent_name': 'test'};
 
                         challenges_response.received = [];
-                        challenges_response.received[0] = {'opponent_id': 3, 'opponent_name': 'portokala'};
-                        challenges_response.received[1] = {'opponent_id': 4, 'opponent_name': 'portokala1'};
-                        challenges_response.received[2] = {'opponent_id': 5, 'opponent_name': 'portokala2'};
+                        challenges_response.received[0] = {'opponent_id': 3, 'opponent_name': 'test'};
+                        challenges_response.received[1] = {'opponent_id': 4, 'opponent_name': 'test1'};
+                        challenges_response.received[2] = {'opponent_id': 5, 'opponent_name': 'test2'};
 
                         challenges_response.your_turn = [];
-                        challenges_response.your_turn[0] = {'opponent_id': 7, 'opponent_name': 'your_turn_alabala'};
+                        challenges_response.your_turn[0] = {'opponent_id': 7, 'opponent_name': 'your_turn_test'};
 
                         challenges_response.waiting_turn = [];
-                        challenges_response.waiting_turn[0] = {'opponent_id': 6, 'opponent_name': 'waiting_alabala'};
+                        challenges_response.waiting_turn[0] = {'opponent_id': 6, 'opponent_name': 'waiting_test'};
 
                         $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
                             if ((challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
@@ -129,6 +129,49 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'how_to':
+                    var swipe_img = $( "#image_gallery"),
+                        my_iter = 1,
+                        next_iter,
+                        numb_img = $( "#image_gallery > div").length;
+
+                    Hammer(swipe_img).on('click', function() { // swiperight
+                        next_iter = my_iter + 1;
+                        if(next_iter === numb_img) {
+                            next_iter = 1;
+                        }
+                        swipe_images_next (my_iter, next_iter);
+                        my_iter = next_iter;
+                    });
+
+                    Hammer(swipe_img).on("swiperight", function() { // swiperight
+                        next_iter = my_iter + 1;
+                        if(next_iter === numb_img) {
+                            next_iter = 1;
+                        }
+                        swipe_images_next (my_iter, next_iter);
+                        my_iter = next_iter;
+                    });
+
+                    Hammer(swipe_img).on("swipeleft", function() { // swipeleft
+                        next_iter = my_iter - 1;
+                        if(next_iter === 0) {
+                            next_iter = numb_img;
+                        }
+                        swipe_images_prev (my_iter, next_iter);
+                        my_iter = next_iter;
+                    });
+
+                    function swipe_images_next (my_iter, next_iter) {
+                        swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'left', complete: function () {
+                            swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'right'}, 1000);
+                        }}, 1000);
+                    }
+
+                    function swipe_images_prev (my_iter, next_iter) {
+                        swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'right', complete: function () {
+                            swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'left'}, 1000);
+                        }}, 1000);
+                    }
                     break;
                 case 'learn_more':
                     break;

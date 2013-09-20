@@ -1398,7 +1398,8 @@
 		$html.addClass( _c.opening );
 		$m.trigger( _e.opening );
 
-        $("#content").css('visibility', 'hidden');
+        //$("#content").css('visibility', 'hidden');
+        $("#content").hide('slide', {direction: 'left'}, 200);
         $(".mm-menu.mm-right").width($wndw.width() + 10);
         $(".mm-page").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
         $("#mm-blocker").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
@@ -1410,6 +1411,7 @@
 			function()
 			{
                 $("#content").css('visibility', 'visible');
+                //$("#content").show('slide', {direction: 'left'}, 1000);
 				$m.removeClass( _c.opened );
 
 				$html

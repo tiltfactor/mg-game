@@ -68,7 +68,18 @@
 
           <div id="how_to" class="hidden">
               <h2>How to Play</h2>
-              <div>Add image slide left right</div>
+              <div id="image_gallery">
+                  <div number="1"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_1.jpg" /></div>
+                  <div number="2" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_2.jpg" width="320" height="502" /></div>
+                  <div number="3" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_3.jpg" width="320" height="502" /></div>
+                  <div number="4" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_4.jpg" width="320" height="502" /></div>
+                  <div number="5" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_5.jpg" width="320" height="502" /></div>
+                  <div number="6" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_6.jpg" width="320" height="502" /></div>
+                  <div number="7" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_7.jpg" width="320" height="502" /></div>
+                  <div number="8" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_8.jpg" width="320" height="502" /></div>
+                  <div number="9" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_9.jpg" width="320" height="502" /></div>
+                  <div number="10" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_10.jpg" width="320" height="502" /></div>
+              </div>
           </div>
 
           <div id="account" class="hidden">
@@ -100,12 +111,6 @@
               <li class="back_blue row"><a href="#" location="account"><span>ACCOUNT</span></a></li>
           </ul>
       </nav>
-
-
-
-    <div id="holder">
-      <div id="image_container" class="clearfix"></div>
-    </div>
     <!-- user text field -->
     <div id="fieldholder" class="clearfix">   
       <form action="#"><textarea name="words" cols="50" rows="8" id="words"></textarea></form> 
