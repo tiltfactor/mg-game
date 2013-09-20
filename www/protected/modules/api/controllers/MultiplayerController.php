@@ -310,6 +310,9 @@ class MultiplayerController extends ApiController
 
 
     /**
+     * Get bookmarked media files of the user
+     * Response sent is json encode of GameMediaDTO[]
+     *
      * @param string $gid
      */
     public function actionGetBookmarks($gid)
@@ -324,6 +327,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * Bookmark media file
+     * string JSON response with status message on success will be send
+     *
      * @param string $gid
      * @param int $mediaId
      * @param int $playedId
@@ -342,6 +348,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * Get user's interests
+     * Response sent is json encode of GameInterestDTO[]
+     *
      * @param string $gid
      */
     public function actionGetInterests($gid)
@@ -356,6 +365,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * Add user interests
+     * string JSON response with status message on success will be send
+     *
      * @param string $gid
      * @param string $interest
      */
@@ -373,6 +385,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * Remove user interests
+     * string JSON response with status message on success will be send
+     *
      * @param string $gid
      * @param int $id
      */
@@ -390,6 +405,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * Get all active institutions
+     * Response sent is json encode of GameUserInstitutionDTO[]
+     *
      * @param string $gid
      */
     public function actionGetInstitutions($gid)
@@ -403,6 +421,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * User ban an institution
+     * string JSON response with status message on success will be send
+     *
      * @param string $gid
      * @param int $id
      */
@@ -420,6 +441,9 @@ class MultiplayerController extends ApiController
     }
 
     /**
+     * User unban institution
+     * string JSON response with status message on success will be send
+     *
      * @param string $gid
      * @param int $id
      */
