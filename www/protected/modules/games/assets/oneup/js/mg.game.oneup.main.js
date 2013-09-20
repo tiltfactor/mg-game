@@ -54,7 +54,7 @@ MG_GAME_ONEUP = function ($) {
                     $("#challenges").remove();
                     // Response sent is json encode of GameChallengesDTO
                     // TODO - wrong api responce
-                    MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
+                    //MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
                         challenges_response = {};
                         challenges_response.sent = [];
                         challenges_response.sent[0] = {'opponent_id': 2, 'opponent_name': 'alabala'};
@@ -78,7 +78,7 @@ MG_GAME_ONEUP = function ($) {
                                 $("#challenges_received").find(".no_value").show();
                             }
                         });
-                    });
+                    //});
                     // user is REGISTER USER AS ONLINE TO GAME SERVER
                     /*
                      Return is JSON STRING

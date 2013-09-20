@@ -51,12 +51,14 @@ class OneUpController extends GxController
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/retina.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
+            //$cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.hammer.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_END);
+            $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
 
@@ -68,7 +70,7 @@ class OneUpController extends GxController
         api_url : '{$game->api_base_url}',
         arcade_url : '$arcade_url',
         game_base_url : '{$game->game_base_url}',
-        throttleInterval : ''
+        throttleInterval : $throttleInterval
     });
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
