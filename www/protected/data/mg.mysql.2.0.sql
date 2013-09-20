@@ -678,7 +678,7 @@ CREATE  TABLE IF NOT EXISTS `user_game` (
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
 -- -----------------------------------------------------
--- Table `user_bookmark`
+-- Table `user_game_bookmark`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `user_game_bookmark` ;
 
@@ -699,7 +699,7 @@ CREATE  TABLE IF NOT EXISTS `user_game_bookmark` (
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
 -- -----------------------------------------------------
--- Table `user_bookmark`
+-- Table `user_game_interest`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `user_game_interest` ;
 
@@ -714,6 +714,25 @@ CREATE  TABLE IF NOT EXISTS `user_game_interest` (
   INDEX `fk_user_interest_game` (`game_id` ASC) ,
   CONSTRAINT `fk_user_interest_user` FOREIGN KEY (`user_id` ) REFERENCES `user` (`id` ),
   CONSTRAINT `fk_user_interest_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ))
+ENGINE = InnoDB DEFAULT CHARSET=UTF8;
+
+-- -----------------------------------------------------
+-- Table `user_game_banned_institution`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `user_game_banned_institution` ;
+
+CREATE  TABLE IF NOT EXISTS `user_game_banned_institution` (
+  `user_id` INT(11) NOT NULL ,
+  `game_id` INT(11) NOT NULL ,
+  `institution_id` INT(11) NOT NULL ,
+  `created` DATETIME NOT NULL ,
+  PRIMARY KEY (`user_id`,`game_id`,`institution_id`) ,
+  INDEX `fk_user_banned_inst_user` (`user_id` ASC) ,
+  INDEX `fk_user_banned_inst_game` (`game_id` ASC) ,
+  INDEX `fk_user_banned_inst` (`institution_id` ASC) ,
+  CONSTRAINT `fk_user_banned_inst_user` FOREIGN KEY (`user_id` ) REFERENCES `user` (`id` ),
+  CONSTRAINT `fk_user_banned_inst_game` FOREIGN KEY (`game_id` ) REFERENCES `game` (`id` ),
+  CONSTRAINT `fk_user_banned_inst` FOREIGN KEY (`institution_id` ) REFERENCES `institution` (`id` ))
 ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
 -- -----------------------------------------------------

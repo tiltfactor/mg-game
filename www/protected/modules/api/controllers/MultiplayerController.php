@@ -37,6 +37,14 @@ class MultiplayerController extends ApiController
                     'getChallenges',
                     'getOfflineGames',
                     'getOfflineGameState',
+                    'getBookmarks',
+                    'bookmark',
+                    'getInterests',
+                    'addInterest',
+                    'removeInterest',
+                    'getInstitutions',
+                    'banInstitution',
+                    'unbanInstitution'
                 ),
                 'users' => array('*'),
             ),
@@ -88,6 +96,10 @@ class MultiplayerController extends ApiController
         $this->sendResponse($player);
     }
 
+    /**
+     * @param $gid
+     * @param $id
+     */
     public function actionPair($gid, $id)
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
@@ -158,6 +170,9 @@ class MultiplayerController extends ApiController
         $this->sendResponse($tags);
     }
 
+    /**
+     * @param $secret
+     */
     public function actionValidateSecret($secret)
     {
         $session = Session::model()->find('user_id IS NOT NULL AND shared_secret=:ss', array(':ss' => $secret));
@@ -170,6 +185,10 @@ class MultiplayerController extends ApiController
         }
     }
 
+    /**
+     * @param $uid
+     * @param $gid
+     */
     public function actionDisconnect($uid, $gid)
     {
         $gameEngine = GamesModule::getMultiplayerEngine($gid);
@@ -275,8 +294,8 @@ class MultiplayerController extends ApiController
      * Get current game state
      * Response sent is json encode of GameTurnDTO
      *
-     * @param $gid
-     * @param $playedGameId
+     * @param string $gid
+     * @param int $playedGameId
      */
     public function actionGetOfflineGameState($gid, $playedGameId)
     {
@@ -290,6 +309,9 @@ class MultiplayerController extends ApiController
     }
 
 
+    /**
+     * @param string $gid
+     */
     public function actionGetBookmarks($gid)
     {
         $bookmark = new MGBookmark($gid);
@@ -301,6 +323,11 @@ class MultiplayerController extends ApiController
         $this->sendResponse($medias);
     }
 
+    /**
+     * @param string $gid
+     * @param int $mediaId
+     * @param int $playedId
+     */
     public function actionBookmark($gid, $mediaId, $playedId)
     {
         $bookmark = new MGBookmark($gid);
@@ -314,6 +341,9 @@ class MultiplayerController extends ApiController
         $this->sendResponse($data);
     }
 
+    /**
+     * @param string $gid
+     */
     public function actionGetInterests($gid)
     {
         $component = new MGInterest($gid);
@@ -325,6 +355,10 @@ class MultiplayerController extends ApiController
         $this->sendResponse($result);
     }
 
+    /**
+     * @param string $gid
+     * @param string $interest
+     */
     public function actionAddInterest($gid, $interest)
     {
         $component = new MGInterest($gid);
@@ -338,6 +372,10 @@ class MultiplayerController extends ApiController
         $this->sendResponse($data);
     }
 
+    /**
+     * @param string $gid
+     * @param int $id
+     */
     public function actionRemoveInterest($gid, $id)
     {
         $component = new MGInterest($gid);
@@ -346,6 +384,53 @@ class MultiplayerController extends ApiController
         }
 
         $component->remove($id);
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    /**
+     * @param string $gid
+     */
+    public function actionGetInstitutions($gid)
+    {
+        $component = new MGUserInstitution($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $this->sendResponse($component->getAll());
+    }
+
+    /**
+     * @param string $gid
+     * @param int $id
+     */
+    public function actionBanInstitution($gid, $id)
+    {
+        $component = new MGUserInstitution($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $component->ban($id);
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    /**
+     * @param string $gid
+     * @param int $id
+     */
+    public function actionUnbanInstitution($gid, $id)
+    {
+        $component = new MGUserInstitution($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $component->unban($id);
         $data = array();
         $data['status'] = "ok";
         $this->sendResponse($data);
