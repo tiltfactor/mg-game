@@ -116,6 +116,12 @@ EOD;
 
 		if (isset($_GET['Media']))
 			$model->setAttributes($_GET['Media']);
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
+
         //YiiBase::log(var_export($model->institution, true) .' '. $model->institution_id, CLogger::LEVEL_ERROR);
 		$this->render('admin', array(
 			'model' => $model,
