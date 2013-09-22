@@ -219,7 +219,9 @@ class ExportController extends GxController {
             ->join('{{session}} s', 's.id=gs.session_id')
             ->join('{{institution}} inst', 'inst.id = i.institution_id')
             ->leftJoin('{{user}} u', 'u.id=s.user_id');
-        if (Yii::app()->user->checkAccess(INSTITUTION)) {
+
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
             $institutionId = 0;
             $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
             if ($institutions) {
@@ -229,9 +231,8 @@ class ExportController extends GxController {
                     $institutionId = $institutions->id;
                 }
             }
-            YiiBase::log('user_id:' . Yii::app()->user->Id . ' institutionId:' . $institutionId, CLogger::LEVEL_ERROR);
             $where[] = array('and', 'inst.id = :instID');
-            $params[":instID"] = $institutionId;
+            $params[':instID'] = $institutionId;
         }
         if ($model->tags) {
             $parsed_tags = MGTags::parseTags($model->tags);

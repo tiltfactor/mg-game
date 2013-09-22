@@ -109,7 +109,7 @@ class CollectionController extends GxController {
     if (isset($_GET['Collection']))
       $model->setAttributes($_GET['Collection']);
 
-        $user = User::model()->findByPk(Yii::app()->user->id);
+        $user = User::loadUser(Yii::app()->user->id);
         if ($user && $user->role == INSTITUTION) {
             $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
             $model->setAttribute('institution_id', $institutions->id);
@@ -127,7 +127,7 @@ class CollectionController extends GxController {
 		if (isset($_GET['Collection']))
 			$model->setAttributes($_GET['Collection']);
 
-        $user = User::model()->findByPk(Yii::app()->user->id);
+        $user = User::loadUser(Yii::app()->user->id);
         if ($user && $user->role == INSTITUTION) {
             $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
             $model->setAttribute('institution_id', $institutions->id);
