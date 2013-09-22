@@ -18,7 +18,7 @@
   
   <div class="row">
     <?php echo CHtml::label(Yii::t('app', "Collection(s)"), "Custom_collections") ?>
-    <?php echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"]))? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(collection::model()->findAllAttributes(null, true)), false, true), array(
+    <?php echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"]))? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Collection::model()->findAllAttributes(null, true)), false, true), array(
         'template' => '<div class="checkbox">{input} {label}</div>',
         'separator' => '',
         )); ?>
