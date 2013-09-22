@@ -18,7 +18,7 @@ class MediaController extends GxController {
   				),
   			array('allow', 
   				'actions'=>array('view', 'batch', 'create','update', 'admin', 'delete', 'searchUser'),
-                'roles' => array(EDITOR, EDITOR),
+                'roles' => array(EDITOR),
   				),
   			array('deny', 
   				'users'=>array('*'),

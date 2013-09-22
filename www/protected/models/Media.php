@@ -53,7 +53,12 @@ class Media extends BaseMedia
     $criteria->compare('locked', 1);
     $criteria->compare('created', $this->created, true);
     $criteria->compare('modified', $this->modified, true);
-    
+      $user = User::model()->findByPk(Yii::app()->user->id);
+      if ($user && $user->role == INSTITUTION) {
+          $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+          $criteria->compare('institution_id', $institutions->id);
+      }
+
     if (isset($_GET["Custom"])) {
       
       if (isset($_GET["Custom"]["tags"])) {
