@@ -317,6 +317,7 @@ class MultiplayerController extends ApiController
      */
     public function actionGetBookmarks($gid)
     {
+        Yii::import("games.components.*");
         $bookmark = new MGBookmark($gid);
         if (is_null($bookmark)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -336,6 +337,7 @@ class MultiplayerController extends ApiController
      */
     public function actionBookmark($gid, $mediaId, $playedId)
     {
+        Yii::import("games.components.*");
         $bookmark = new MGBookmark($gid);
         if (is_null($bookmark)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -355,6 +357,7 @@ class MultiplayerController extends ApiController
      */
     public function actionGetInterests($gid)
     {
+        Yii::import("games.components.*");
         $component = new MGInterest($gid);
         if (is_null($component)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -373,6 +376,7 @@ class MultiplayerController extends ApiController
      */
     public function actionAddInterest($gid, $interest)
     {
+        Yii::import("games.components.*");
         $component = new MGInterest($gid);
         if (is_null($component)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -393,6 +397,7 @@ class MultiplayerController extends ApiController
      */
     public function actionRemoveInterest($gid, $id)
     {
+        Yii::import("games.components.*");
         $component = new MGInterest($gid);
         if (is_null($component)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -412,6 +417,7 @@ class MultiplayerController extends ApiController
      */
     public function actionGetInstitutions($gid)
     {
+        Yii::import("games.components.*");
         $component = new MGUserInstitution($gid);
         if (is_null($component)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -429,6 +435,7 @@ class MultiplayerController extends ApiController
      */
     public function actionBanInstitution($gid, $id)
     {
+        Yii::import("games.components.*");
         $component = new MGUserInstitution($gid);
         if (is_null($component)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
@@ -449,6 +456,7 @@ class MultiplayerController extends ApiController
      */
     public function actionUnbanInstitution($gid, $id)
     {
+        Yii::import("games.components.*");
         $component = new MGUserInstitution($gid);
         if (is_null($component)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
