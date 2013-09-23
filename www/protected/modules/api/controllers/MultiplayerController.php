@@ -9,7 +9,7 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - validateSecret,disconnect, register,getBookmarks, getInterests',
+            'throttle - validateSecret,disconnect, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames',
             'IPBlock',
             'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - validateSecret,disconnect',
@@ -231,9 +231,10 @@ class MultiplayerController extends ApiController
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
 
-        $gameEngine->acceptChallenge($opponentId);
+        $playedGameId = $gameEngine->acceptChallenge($opponentId);
         $data = array();
         $data['status'] = "ok";
+        $data['playedGameID'] = $playedGameId;
         $this->sendResponse($data);
     }
 

@@ -717,6 +717,7 @@ abstract class MGMultiPlayer extends CComponent
     /**
      * @param $opponentId
      * @throws CHttpException
+     * @return int
      */
     public function acceptChallenge($opponentId)
     {
@@ -731,7 +732,7 @@ abstract class MGMultiPlayer extends CComponent
             if ($opponentOnline) {
                 $opponenSessId = $opponentOnline->session_id;
             } else {
-                $opponentSess = Session::model()->find('user_id =:userId ORDER BY id DESC LIMIT 1', array(':userId' => $opponentId));
+                $opponentSess = Session::model()->find('user_id =:userId ORDER BY id DESC', array(':userId' => $opponentId));
                 $opponenSessId = $opponentSess->id;
             }
 
@@ -750,6 +751,8 @@ abstract class MGMultiPlayer extends CComponent
                 }
                 throw new CHttpException(500, $message);
             }
+
+            return $playedGameId;
         }
     }
 
@@ -773,10 +776,10 @@ abstract class MGMultiPlayer extends CComponent
                 $opponentId = $fromUserId;
             }
 
-            $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
+            $opponentOnline = UserOnline::model()->find('user_id =:userId AND game_id=:gameID', array(':userId' => $opponentId, ':gameID' => $this->game->id));
             if ($opponentOnline) {
                 $userDTO = new GameUserDTO();
-                $userDTO->id = $this->userOnline->userId;
+                $userDTO->id = $this->userOnline->user_id;
                 $userDTO->username = $this->userOnline->session->username;
                 $this->pushMessage($opponentId, MGMultiPlayer::PUSH_REJECT_CHALLENGE, json_encode($userDTO));
             }
@@ -837,10 +840,10 @@ abstract class MGMultiPlayer extends CComponent
     public function getOfflineGames()
     {
         $games = array();
-        $userGames = UserGame::model()->with(array('playedGame','userId1', 'userId2'))->findAll('(user_id_1 =:userId1 OR user_id_2=:userId2) AND game_id=:gameId', array(':userId1' => $this->userId, ':userId2' => $this->userId, ':gameId' => $this->game->id));
+        $userGames = UserGame::model()->with(array('playedGame', 'userId1', 'userId2'))->findAll('(user_id_1 =:userId1 OR user_id_2=:userId2) AND t.game_id=:gameId', array(':userId1' => $this->userId, ':userId2' => $this->userId, ':gameId' => $this->game->id));
         if ($userGames) {
             foreach ($userGames as $game) {
-                if($game->playedGame && $game->playedGame->finished==null){
+                if ($game->playedGame && $game->playedGame->finished == null) {
                     $opponent = null;
                     if ($game->userId1->id == $this->userId) {
                         $opponent = $game->userId2;
@@ -934,6 +937,7 @@ abstract class MGMultiPlayer extends CComponent
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, count($fields));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         curl_exec($ch);
         if (!curl_errno($ch)) {

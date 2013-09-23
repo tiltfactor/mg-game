@@ -3,7 +3,10 @@
   <!-- Images from the database appear here --> 
   <div id="stage">
       <div id="header" class="group">
-          <a href="#menu-left" class="hidden">left</a>
+          <a href="#menu-left">
+              <span class="words hidden">Words</span>
+              <span class="back hidden">Back</span>
+          </a>
           <a href="#menu-right" class="right setting"></a>
       </div>
       <div id="content" class="group">
@@ -127,7 +130,7 @@
     <div id="play_lists">
         <h3>YOUR PLAYLIST</h3>
         {{each play_lists}}
-            {{if isBanned != 'false'}}
+            {{if isBanned != true}}
             <div opponent_id="${id}" class="back_yellow row">
                 ${name}
                 <div class="delete right"></div>
@@ -168,15 +171,15 @@
             <h3 class="no_margin">YOUR TURN</h3>
             <div class="no_value hidden">Challenge anyone. Start to play!</div>
             {{each received}}
-            <div opponent_id="${opponent_id}" class="back_yellow row start_game">
-                <span>${opponent_name}</span> CHALLENGED YOU
+            <div opponent_id="${id}" class="back_yellow row">
+                <span class="start_game" type="accept_challenge"><span class="username">${username}</span> CHALLENGED YOU</span>
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each your_turn}}
-            <div opponent_id="${opponent_id}" class="back_yellow row start_game">
-                GAME WITH <span>${opponent_name}</span>
+            <div opponent_id="${id}" class="back_yellow row">
+                <span class="start_game" type="game">GAME WITH <span class="username">${username}</span></span>
                 <div class="delete right"></div>
             </div>
             {{/each}}
@@ -186,15 +189,15 @@
             <h3>WAITING</h3>
             <div class="no_value hidden">Noone waits for you!</div>
             {{each sent}}
-            <div opponent_id="${opponent_id}" class="back_gray row">
-                GAME WITH ${opponent_name}
+            <div opponent_id="${id}" class="back_gray row">
+                GAME WITH ${username}
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each waiting_turn}}
-            <div opponent_id="${opponent_id}" class="back_gray row">
-                GAME WITH ${opponent_name}
+            <div opponent_id="${id}" class="back_gray row">
+                GAME WITH ${username}
                 <div class="delete right"></div>
             </div>
             {{/each}}

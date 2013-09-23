@@ -59,22 +59,16 @@ MG_GAME_ONEUP = function ($) {
                         this_clicked;
                     $("#challenges").remove();
                     // Response sent is json encode of GameChallengesDTO
-                    // TODO - wrong api responce
-                    //MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
-                        challenges_response = {};
-                        challenges_response.sent = [];
-                        challenges_response.sent[0] = {'opponent_id': 2, 'opponent_name': 'test'};
+                    //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGames/gid/OneUp/
+                    MG_API.ajaxCall('/multiplayer/getOfflineGames/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
 
-                        challenges_response.received = [];
-                        challenges_response.received[0] = {'opponent_id': 3, 'opponent_name': 'test'};
-                        challenges_response.received[1] = {'opponent_id': 4, 'opponent_name': 'test1'};
-                        challenges_response.received[2] = {'opponent_id': 5, 'opponent_name': 'test2'};
-
+                    })
+                    MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
                         challenges_response.your_turn = [];
-                        challenges_response.your_turn[0] = {'opponent_id': 7, 'opponent_name': 'your_turn_test'};
+                        challenges_response.your_turn[0] = {'id': 7, 'username': 'your_turn_test'};
 
                         challenges_response.waiting_turn = [];
-                        challenges_response.waiting_turn[0] = {'opponent_id': 6, 'opponent_name': 'waiting_test'};
+                        challenges_response.waiting_turn[0] = {'id': 6, 'username': 'waiting_test'};
 
                         $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
                             if ((challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
@@ -108,21 +102,33 @@ MG_GAME_ONEUP = function ($) {
                                     opponent_name = that.find('span').text();
                                     confirm_text = "Do you really want to reject the game with " + opponent_name;
                                     confirmPretty(confirm_text, function () {
-                                        //http://localhost/mggameserver/index.php/api/multiplayer/rejectChallenge/gid/OneUp/fromUserId/12/toUserId/14
-                                        MG_API.ajaxCall('/multiplayer/rejectChallenge/gid/' + MG_GAME_API.settings.gid + '/fromUserId/' + MG_GAME_ONEUP.user.id + '/toUserId/' + opponent_id , function(challenges_response) {
+                                        MG_API.ajaxCall('/multiplayer/rejectChallenge/gid/' + MG_GAME_API.settings.gid + '/fromUserId/' + opponent_id + '/toUserId/' + MG_GAME_ONEUP.user.id + '/', function(challenges_response) {
                                             $("a[location='main_screen']").click();
                                         });
                                     });
                                 });
                                 $("#challenges_received .start_game").off('click').on('click', function () {
                                     this_clicked = $(this);
-                                    MG_GAME_ONEUP.opponent_id = this_clicked.closest(".row").attr('opponent_id');
-                                    MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span').text();
-                                    MG_GAME_ONEUP.actions('game_screen', '');
+                                    var opponent_id = this_clicked.closest(".row").attr('opponent_id');
+                                    var start_game = false;
+
+                                    if (this_clicked.attr('type') === 'accept_challenge') {
+                                        //http://localhost/mggameserver/index.php/api/multiplayer/acceptChallenge/gid/OneUp/opponentId/123
+                                        MG_API.ajaxCall('/multiplayer/acceptChallenge/gid/' + MG_GAME_API.settings.gid + '/opponentId/' + opponent_id + '/', function(challenges_response) {
+                                            start_game = true;
+                                        });
+                                    } else {
+                                        start_game = true;
+                                    }
+                                    if (start_game) {
+                                        MG_GAME_ONEUP.opponent_id = opponent_id;
+                                        MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
+                                        MG_GAME_ONEUP.actions('game_screen', '');
+                                    }
                                 });
                             }
                         });
-                    //});
+                    });
                     // user is REGISTER USER AS ONLINE TO GAME SERVER
                     /*
                      Return is JSON STRING
@@ -201,12 +207,12 @@ MG_GAME_ONEUP = function ($) {
                     break;
                 case 'make_challenge':
                     var opponent_name = '';
-                    if ($("#find_opponent").is(':visible')) {
+                    if ($("#find_opponent")) {
                         opponent_name = $("#find_opponent").find('.opponent_name').val();
                     }
 
-                    MG_API.ajaxCall('/multiplayer/challenge/gid/' + MG_GAME_API.settings.gid + '/username' + opponent_name , function(challenges_response) {
-                        if (challenges_response === NULL) {
+                    MG_API.ajaxCall('/multiplayer/challenge/gid/' + MG_GAME_API.settings.gid + '/username/' + opponent_name , function(challenges_response) {
+                        if (challenges_response == 'null') {
                             // TODO case player not valid - might switch action
                             // TODO warning in case player is not valid
                             $().toastmessage("showToast", {
@@ -220,6 +226,7 @@ MG_GAME_ONEUP = function ($) {
                             // player is challenged
                             $("a[location='main_screen']").click();
                         }
+                        $("#find_opponent").find('.opponent_name').attr('value', '');
                     });
                     break;
                 case 'how_to':
@@ -272,7 +279,8 @@ MG_GAME_ONEUP = function ($) {
                 case 'account':
                     $("#account_info").empty();
                     //getBookmarks
-                    //MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
+                    MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
+/*
                         var account_bookmarks = {};
                         account_bookmarks.bookmarked = [];
                         account_bookmarks.bookmarked[0] = {'id': 0, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
@@ -291,6 +299,7 @@ MG_GAME_ONEUP = function ($) {
                         account_bookmarks.bookmarked[13] = {'id': 13, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
                         account_bookmarks.bookmarked[14] = {'id': 14, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
                         account_bookmarks.bookmarked[15] = {'id': 15, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+*/
                         /*
                          public $id;
                          public $mimeType;
@@ -298,30 +307,32 @@ MG_GAME_ONEUP = function ($) {
                          public $imageScaled;
                          public $thumbnail;
                          */
-                         $("#template-account_bookmark").tmpl(account_bookmarks).appendTo($("#account_info")).after(function () {
-                             // add zoom to scaled and move swipe_left::swipe_right
-
-                         });
-                    //});
+                        var json = {};
+                        json.bookmarked = account_bookmarks;
+                        $("#template-account_bookmark").tmpl(json).appendTo($("#account_info")).after(function () {
+                            // add zoom to scaled and move swipe_left::swipe_right
+                        });
+                    });
                     // Interests
-                    //MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_GAME_API.settings.gid , function(account_interest) {
+                    MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_GAME_API.settings.gid , function(account_interest) {
                         /**
                          public $id;
                          public $interest;
                          public $created;
                          */
-                        var account_interest = {};
+/*                        var account_interest = {};
                         account_interest.interests = [];
                         account_interest.interests[0] = {'id': 3, 'interest': 'My 1st choive'};
-                        account_interest.interests[1] = {'id': 4, 'interest': 'My 2nd choive'};
-                        $("#template-account_interest").tmpl(account_interest).appendTo($("#account_info")).after(function () {
+                        account_interest.interests[1] = {'id': 4, 'interest': 'My 2nd choive'};*/
+                        var json = {};
+                        json.interests = account_interest;
+                        $("#template-account_interest").tmpl(json).appendTo($("#account_info")).after(function () {
                             // add delete functionality
                         });
-                    //});
+                    });
 
-                    // Playlist
-                    //http://localhost/mggameserver/index.php/api/multiplayer/getInterests/gid/OneUp/
-                    //MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_GAME_API.settings.gid , function(account_playlist) {
+                    // List of all institutions that are not banned yet
+                    MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_GAME_API.settings.gid , function(account_playlist) {
                         /**
                         public $id;
                         public $name;
@@ -329,15 +340,12 @@ MG_GAME_ONEUP = function ($) {
                         public $logo;
                         public $isBanned;
                          */
-                        var account_playlist = {};
-                        account_playlist.play_lists = [];
-                        account_playlist.play_lists[0] = {'id': 0, 'name': 'Institution 1', 'isBanned': 'true'};
-                        account_playlist.play_lists[1] = {'id': 1, 'name': 'Institution 2', 'isBanned': 'true'};
-                        account_playlist.play_lists[2] = {'id': 2, 'name': 'Institution 3', 'isBanned': 'false'};
-                        $("#template-account_playlist").tmpl(account_playlist).appendTo($("#account_info")).after(function () {
+                        var json = {};
+                        json.play_lists = account_playlist;
+                        $("#template-account_playlist").tmpl(json).appendTo($("#account_info")).after(function () {
                             // add delete functionality
                         });
-                    //});
+                    });
                     break;
                 default:
                     console.log('action is unknown');
