@@ -717,6 +717,7 @@ abstract class MGMultiPlayer extends CComponent
     /**
      * @param $opponentId
      * @throws CHttpException
+     * @return int
      */
     public function acceptChallenge($opponentId)
     {
@@ -750,6 +751,8 @@ abstract class MGMultiPlayer extends CComponent
                 }
                 throw new CHttpException(500, $message);
             }
+
+            return $playedGameId;
         }
     }
 

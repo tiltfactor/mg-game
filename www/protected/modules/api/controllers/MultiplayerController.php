@@ -231,9 +231,10 @@ class MultiplayerController extends ApiController
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
 
-        $gameEngine->acceptChallenge($opponentId);
+        $playedGameId = $gameEngine->acceptChallenge($opponentId);
         $data = array();
         $data['status'] = "ok";
+        $data['playedGameID'] = $playedGameId;
         $this->sendResponse($data);
     }
 
