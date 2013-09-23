@@ -34,7 +34,7 @@
   
   <?php if(isset($this->breadcrumbs)):?>
     <?php $this->widget('zii.widgets.CBreadcrumbs', array(
-      'homeLink' =>CHtml::link(Yii::t('app', 'Arcade'), "/"),
+      'homeLink' =>CHtml::link(Yii::t('app', 'Arcade'), "/site/index"),
       'links'=>$this->breadcrumbs,
     )); ?><!-- breadcrumbs -->
   <?php endif?>

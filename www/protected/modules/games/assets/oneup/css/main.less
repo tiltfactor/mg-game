@@ -122,6 +122,8 @@ p, div, h1, h2, h3, .mm-is-menu * {
     color: #a3a3a3;
     line-height: 60px;
     font-size: 12px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
   h3 {
@@ -132,6 +134,7 @@ p, div, h1, h2, h3, .mm-is-menu * {
     font-size: 9px;
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 20px;
   }
 
   .row {
@@ -154,6 +157,13 @@ p, div, h1, h2, h3, .mm-is-menu * {
     width: 140px;
     height: 140px;
   }
+
+  #bookmarks {
+    .bookmark {
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
 }
 
 body {
@@ -167,22 +177,37 @@ body {
   .back_yellow {
     .at2x('../images/back_yellow.png');
     color: #341d33 !important;
+    a {
+      color: #341d33 !important;
+      text-decoration: none;
+    }
   }
 
   .back_gray {
     .at2x('../images/back_gray.png');
     color: #341d33 !important;
-
+    a {
+      color: #341d33 !important;
+      text-decoration: none;
+    }
   }
 
   .back_black {
     .at2x('../images/back_black.png');
     color: white !important;
+    a {
+      color: white !important;
+      text-decoration: none;
+    }
   }
 
   .back_blue {
     .at2x('../images/back_blue.png');
     color: white !important;
+    a {
+      color: white !important;
+      text-decoration: none;
+    }
   }
 
   .mm-is-menu {
@@ -231,6 +256,8 @@ body.retina {
     h2 {
       line-height: 80px;
       font-size: 22px;
+      padding-left: 50px;
+      padding-right: 50px;
     }
 
     h3 {
@@ -266,5 +293,24 @@ body.retina {
   #header .setting {
       width: 68px;
       height: 42px;
+  }
+}
+
+.no_margin {
+  margin-top: 0 !important;
+}
+
+.no-title {
+  .ui-dialog-titlebar {
+    display: none;
+  }
+
+  .ui-dialog-buttonpane {
+    border: 0px !important;
+  }
+
+  .ui-dialog-buttonset {
+    width: 100%;
+    text-align: center;
   }
 }
