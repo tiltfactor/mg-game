@@ -18,9 +18,9 @@
 
           <div id="new_game" class="hidden">
               <h2>NEW GAME</h2>
-              <div><a href="#" location="find_opponent">Opponent by User Name</a></div>
-              <div><a href="#" location="make_challenge">Random Opponent</a></div>
-              <div><a href="#" location="find_opponent">Facebook Friend</a></div>
+              <div class="back_blue row"><a href="#" location="find_opponent">Opponent by User Name</a></div>
+              <div class="back_blue row"><a href="#" location="make_challenge">Random Opponent</a></div>
+              <div class="back_blue row"><a href="#" location="find_opponent">Facebook Friend</a></div>
           </div>
 
           <div id="find_opponent" class="hidden">
@@ -29,8 +29,12 @@
               <a href="#" location="make_challenge" class="big_button play"><span>PLAY</span></a>
           </div>
 
+          <div id="game_screen" class="hidden">
+
+          </div>
+
           <div id="game_customize" class="hidden">
-              <h2 class="padding">CUSTOMIZE YOUR GAME</h2>
+              <h2>CUSTOMIZE YOUR GAME</h2>
               <div class="padding">Share your interests and you might see more images with those subjects!</div>
               <div class="text-center"><input type="text" placeholder="I'm interested in..." /></div>
               <hr />
@@ -38,7 +42,7 @@
 
           <div id="learn_more" class="hidden">
               <h2>Learn More</h2>
-              <div>One Up is part of a suite of games from the
+              <div class="padding">One Up is part of a suite of games from the
                   Metadata Games project. Metadata Games is a
                   Free and Open Source (FOSS) online game
                   system for gathering useful data on photo,
@@ -46,14 +50,14 @@
                   you have a direct impact on the preservation
                   and accessibility of vital cultural heritage
                   collections for future generations.</div>
-              <div>
+              <div class="padding">
                   Metadata Games is created by the Tiltfactor
                   Laboratory at Dartmouth College, with support
                   from the National Endowment for the
                   Humanities (NEH) and the American Council of
                   Learned Societies (ACLS).
               </div>
-              <h3>METADATAGAMES</h3>
+              <h3 class="padding">METADATAGAMES</h3>
               <div>
                   <span class="tiltfactor_logo" />
                   <span class="dartmouth_logo" />
@@ -84,18 +88,8 @@
 
           <div id="account" class="hidden">
               <h2>Account</h2>
-              <div>Update Account Settings</div>
-              <div id="bookmarked_images">
-                  <div>You do not have bookmarked Images.</div>
-                  <div>Your Bookmarked Images</div>
-              </div>
-              <div>
-                  <h3>Your Interests</h3>
-                  TODO
-              </div>
-              <div>
-                  <h3>Your Playlist</h3>
-                  TODO
+              <div class="back_blue row"><a href="#" location="account_settings">UPDATE ACCOUNT SETTINGS</a></div>
+              <div id="account_info">
               </div>
           </div>
       </div>
@@ -123,27 +117,72 @@
   </div>
 </div>
 
+
+<!--<div>
+    <h3 class="padding">Your Playlist</h3>
+    TODO
+</div>-->
+
+<script id="template-account_playlist" type="text/x-jquery-tmpl">
+    <div id="play_lists">
+        <h3>YOUR PLAYLIST</h3>
+        {{each play_lists}}
+            {{if isBanned != 'false'}}
+            <div opponent_id="${id}" class="back_yellow row">
+                ${name}
+                <div class="delete right"></div>
+            </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</script>
+
+<script id="template-account_interest" type="text/x-jquery-tmpl">
+    <div id="interests">
+        <h3>YOUR INTERESTS</h3>
+        {{each interests}}
+        <div opponent_id="${id}" class="back_yellow row">
+            ${interest}
+            <div class="delete right"></div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<script id="template-account_bookmark" type="text/x-jquery-tmpl">
+    <div id="bookmarks" >
+        <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
+        <div class="group" >
+            <div class="bookmark">
+            {{each bookmarked}}
+                <img src="${thumbnail}" class="show_big" scaled="${scaled}" />
+            {{/each}}
+            </div>
+        </div>
+    </div>
+</script>
+
 <script id="template-challenges" type="text/x-jquery-tmpl">
     <div id="challenges">
-        <div id="challenges_sent" class="list_challenges">
-            <h3>YOUR TURN</h3>
+        <div id="challenges_received" class="list_challenges">
+            <h3 class="no_margin">YOUR TURN</h3>
             <div class="no_value hidden">Challenge anyone. Start to play!</div>
             {{each received}}
-            <div opponent_id="${opponent_id}" class="back_yellow row">
-                ${opponent_name} CHALLENGED YOU
+            <div opponent_id="${opponent_id}" class="back_yellow row start_game">
+                <span>${opponent_name}</span> CHALLENGED YOU
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each your_turn}}
-            <div opponent_id="${opponent_id}" class="back_yellow row">
-                GAME WITH ${opponent_name}
+            <div opponent_id="${opponent_id}" class="back_yellow row start_game">
+                GAME WITH <span>${opponent_name}</span>
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
         </div>
-        <div id="challenges_received" class="list_challenges">
+        <div id="challenges_sent" class="list_challenges">
             <h3>WAITING</h3>
             <div class="no_value hidden">Noone waits for you!</div>
             {{each sent}}
@@ -162,28 +201,43 @@
         </div>
     </div>
 </script>
+
+<script id="template-game_screen" type="text/x-jquery-tmpl">
+    <div class="row back_yellow">
+        ROUND ${turn}
+        <div class="right">
+            <div>You ${score}</div>
+            <div>${opponent_name} ${opponentScore}</div>
+        </div>
+    </div>
+    <img src="${media.imageScaled}" />
+    <div class="words">
+        {{each(j, subItem) tags.word}}
+            <div class="back_gray row">
+                <span>${subItem.point}</span>
+                ${subItem.tag}
+                <div>$(subItem.comment)</div>
+            </div>
+        {{/each}}
+
+        {{for(i = tags.num_words; i < 3; i++)}}
+            <div class="row"><input type="text" placeholder="Add a word" /></div>
+        {{/for }}
+    </div>
+
+</script>
+
 <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
     <div id="listing">
-        <div id="favorite_institutions"  class="padding">
-            When you add an archive to your favorites, you will see more images from that archive when you play.
-            <center>
-                <div id="list_institutions" class="group">
-                    {{each fav_institution}}
-                    <div institution_id="${id}" class="left">
-                        <a href="" title="${name}"><img class="institution_logo" src="${logo}" width="70" height="70" /></a>
-                    </div>
-                    {{/each}}
-                </div>
-            </center>
-        </div>
-        <h3>Featured Archives</h3>
-        <div class="text-center">
-            <select>
-                <option>Browse All Archives</option>
+        <div class="padding">When you add an archive to your favorites, you will see more images from that archive when you play.</div>
+        <div id="favorite_institutions"  class="padding" align="center">
+            <div id="list_institutions" class="group">
                 {{each all_institution}}
-                <option value="${id}">${name}</option>
+                <div institution_id="${id}" class="left">
+                    <a href="" title="${name}"><img class="institution_logo" src="${logo}" width="70" height="70" /></a>
+                </div>
                 {{/each}}
-            </select>
+            </div>
         </div>
     </div>
 </script>

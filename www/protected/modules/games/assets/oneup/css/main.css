@@ -98,6 +98,8 @@ html.mm-right.mm-opening #mm-blocker {
   color: #a3a3a3;
   line-height: 60px;
   font-size: 12px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 #content h3 {
   background-color: #403b3d;
@@ -107,6 +109,7 @@ html.mm-right.mm-opening #mm-blocker {
   font-size: 9px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 20px;
 }
 #content .row {
   padding-left: 22px;
@@ -136,6 +139,10 @@ html.mm-right.mm-opening #mm-blocker {
   width: 140px;
   height: 140px;
 }
+#content #bookmarks .bookmark {
+  white-space: nowrap;
+  overflow: hidden;
+}
 body .row {
   height: 42px !important;
   line-height: 42px;
@@ -157,6 +164,10 @@ body .back_yellow {
     height: auto;
   }
 }
+body .back_yellow a {
+  color: #341d33 !important;
+  text-decoration: none;
+}
 body .back_gray {
   background-image: url('../images/back_gray.png');
   background-repeat: repeat;
@@ -171,6 +182,10 @@ body .back_gray {
     width: auto;
     height: auto;
   }
+}
+body .back_gray a {
+  color: #341d33 !important;
+  text-decoration: none;
 }
 body .back_black {
   background-image: url('../images/back_black.png');
@@ -187,6 +202,10 @@ body .back_black {
     height: auto;
   }
 }
+body .back_black a {
+  color: white !important;
+  text-decoration: none;
+}
 body .back_blue {
   background-image: url('../images/back_blue.png');
   background-repeat: repeat;
@@ -201,6 +220,10 @@ body .back_blue {
     width: auto;
     height: auto;
   }
+}
+body .back_blue a {
+  color: white !important;
+  text-decoration: none;
 }
 body .mm-is-menu {
   background-image: url('../images/all_blue.png');
@@ -249,6 +272,8 @@ body.retina #content .big_button {
 body.retina #content h2 {
   line-height: 80px;
   font-size: 22px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 body.retina #content h3 {
   height: 34px;
@@ -276,4 +301,17 @@ body.retina #content .institution_logo {
 body.retina #header .setting {
   width: 68px;
   height: 42px;
+}
+.no_margin {
+  margin-top: 0 !important;
+}
+.no-title .ui-dialog-titlebar {
+  display: none;
+}
+.no-title .ui-dialog-buttonpane {
+  border: 0px !important;
+}
+.no-title .ui-dialog-buttonset {
+  width: 100%;
+  text-align: center;
 }
