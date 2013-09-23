@@ -3,7 +3,10 @@
   <!-- Images from the database appear here --> 
   <div id="stage">
       <div id="header" class="group">
-          <a href="#menu-left" class="hidden">left</a>
+          <a href="#menu-left">
+              <span class="words hidden">Words</span>
+              <span class="back hidden">Back</span>
+          </a>
           <a href="#menu-right" class="right setting"></a>
       </div>
       <div id="content" class="group">
@@ -127,7 +130,7 @@
     <div id="play_lists">
         <h3>YOUR PLAYLIST</h3>
         {{each play_lists}}
-            {{if isBanned != 'false'}}
+            {{if isBanned != true}}
             <div opponent_id="${id}" class="back_yellow row">
                 ${name}
                 <div class="delete right"></div>
