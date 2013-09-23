@@ -61,20 +61,11 @@ MG_GAME_ONEUP = function ($) {
                     // Response sent is json encode of GameChallengesDTO
                     // TODO - wrong api responce
                     MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
-                        challenges_response = {};
-                        challenges_response.sent = [];
-                        challenges_response.sent[0] = {'opponent_id': 2, 'opponent_name': 'test'};
-
-                        challenges_response.received = [];
-                        challenges_response.received[0] = {'opponent_id': 3, 'opponent_name': 'test'};
-                        challenges_response.received[1] = {'opponent_id': 4, 'opponent_name': 'test1'};
-                        challenges_response.received[2] = {'opponent_id': 5, 'opponent_name': 'test2'};
-
                         challenges_response.your_turn = [];
-                        challenges_response.your_turn[0] = {'opponent_id': 7, 'opponent_name': 'your_turn_test'};
+                        challenges_response.your_turn[0] = {'id': 7, 'username': 'your_turn_test'};
 
                         challenges_response.waiting_turn = [];
-                        challenges_response.waiting_turn[0] = {'opponent_id': 6, 'opponent_name': 'waiting_test'};
+                        challenges_response.waiting_turn[0] = {'id': 6, 'username': 'waiting_test'};
 
                         $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
                             if ((challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
@@ -108,17 +99,29 @@ MG_GAME_ONEUP = function ($) {
                                     opponent_name = that.find('span').text();
                                     confirm_text = "Do you really want to reject the game with " + opponent_name;
                                     confirmPretty(confirm_text, function () {
-                                        //http://localhost/mggameserver/index.php/api/multiplayer/rejectChallenge/gid/OneUp/fromUserId/12/toUserId/14
-                                        //MG_API.ajaxCall('/multiplayer/rejectChallenge/gid/' + MG_GAME_API.settings.gid + '/fromUserId/' + MG_GAME_ONEUP.user.id + '/toUserId/' + opponent_id , function(challenges_response) {
+                                        MG_API.ajaxCall('/multiplayer/rejectChallenge/gid/' + MG_GAME_API.settings.gid + '/fromUserId/' + MG_GAME_ONEUP.user.id + '/toUserId/' + opponent_id + '/', function(challenges_response) {
                                             $("a[location='main_screen']").click();
-                                        //});
+                                        });
                                     });
                                 });
                                 $("#challenges_received .start_game").off('click').on('click', function () {
                                     this_clicked = $(this);
-                                    MG_GAME_ONEUP.opponent_id = this_clicked.closest(".row").attr('opponent_id');
-                                    MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span').text();
-                                    MG_GAME_ONEUP.actions('game_screen', '');
+                                    var opponent_id = this_clicked.closest(".row").attr('opponent_id');
+                                    var start_game = false;
+
+                                    if (this_clicked.attr('type') === 'accept_challenge') {
+                                        //http://localhost/mggameserver/index.php/api/multiplayer/acceptChallenge/gid/OneUp/opponentId/123
+                                        MG_API.ajaxCall('/multiplayer/acceptChallenge/gid/' + MG_GAME_API.settings.gid + '/opponentId/' + opponent_id , function(challenges_response) {
+                                            start_game = true;
+                                        });
+                                    } else {
+                                        start_game = true;
+                                    }
+                                    if (start_game) {
+                                        MG_GAME_ONEUP.opponent_id = opponent_id;
+                                        MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
+                                        MG_GAME_ONEUP.actions('game_screen', '');
+                                    }
                                 });
                             }
                         });
