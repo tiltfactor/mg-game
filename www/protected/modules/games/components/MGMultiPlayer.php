@@ -774,6 +774,7 @@ abstract class MGMultiPlayer extends CComponent
             }
 
             $opponentOnline = UserOnline::model()->find('user_id =:userId AND game_id=:gameID', array(':userId' => $opponentId, ':gameID' => $this->game->id));
+
             if ($opponentOnline) {
                 $userDTO = new GameUserDTO();
                 $userDTO->id = $this->userOnline->user_id;
@@ -837,7 +838,7 @@ abstract class MGMultiPlayer extends CComponent
     public function getOfflineGames()
     {
         $games = array();
-        $userGames = UserGame::model()->with(array('playedGame', 'userId1', 'userId2'))->findAll('(user_id_1 =:userId1 OR user_id_2=:userId2) AND game_id=:gameId', array(':userId1' => $this->userId, ':userId2' => $this->userId, ':gameId' => $this->game->id));
+        $userGames = UserGame::model()->with(array('playedGame', 'userId1', 'userId2'))->findAll('(user_id_1 =:userId1 OR user_id_2=:userId2) AND t.game_id=:gameId', array(':userId1' => $this->userId, ':userId2' => $this->userId, ':gameId' => $this->game->id));
         if ($userGames) {
             foreach ($userGames as $game) {
                 if ($game->playedGame && $game->playedGame->finished == null) {

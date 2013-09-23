@@ -59,7 +59,10 @@ MG_GAME_ONEUP = function ($) {
                         this_clicked;
                     $("#challenges").remove();
                     // Response sent is json encode of GameChallengesDTO
-                    // TODO - wrong api responce
+                    //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGames/gid/OneUp/
+                    MG_API.ajaxCall('/multiplayer/getOfflineGames/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
+
+                    })
                     MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
                         challenges_response.your_turn = [];
                         challenges_response.your_turn[0] = {'id': 7, 'username': 'your_turn_test'};
@@ -99,7 +102,7 @@ MG_GAME_ONEUP = function ($) {
                                     opponent_name = that.find('span').text();
                                     confirm_text = "Do you really want to reject the game with " + opponent_name;
                                     confirmPretty(confirm_text, function () {
-                                        MG_API.ajaxCall('/multiplayer/rejectChallenge/gid/' + MG_GAME_API.settings.gid + '/fromUserId/' + MG_GAME_ONEUP.user.id + '/toUserId/' + opponent_id + '/', function(challenges_response) {
+                                        MG_API.ajaxCall('/multiplayer/rejectChallenge/gid/' + MG_GAME_API.settings.gid + '/fromUserId/' + opponent_id + '/toUserId/' + MG_GAME_ONEUP.user.id + '/', function(challenges_response) {
                                             $("a[location='main_screen']").click();
                                         });
                                     });
@@ -111,7 +114,7 @@ MG_GAME_ONEUP = function ($) {
 
                                     if (this_clicked.attr('type') === 'accept_challenge') {
                                         //http://localhost/mggameserver/index.php/api/multiplayer/acceptChallenge/gid/OneUp/opponentId/123
-                                        MG_API.ajaxCall('/multiplayer/acceptChallenge/gid/' + MG_GAME_API.settings.gid + '/opponentId/' + opponent_id , function(challenges_response) {
+                                        MG_API.ajaxCall('/multiplayer/acceptChallenge/gid/' + MG_GAME_API.settings.gid + '/opponentId/' + opponent_id + '/', function(challenges_response) {
                                             start_game = true;
                                         });
                                     } else {
