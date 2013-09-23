@@ -20,7 +20,7 @@ $this->breadcrumbs=array(
 
 <?php
 //TODO fix path
-$imghtml = CHtml::image('/newmg_f/assets/32671d82/facebook/facebook_login_button.png');
+$imghtml = CHtml::image( Yii::app()->getBaseUrl() . '/images/facebook.png');
 echo CHtml::link($imghtml, array('../site/login', 'provider' => 'facebook'));
 ?>
 
