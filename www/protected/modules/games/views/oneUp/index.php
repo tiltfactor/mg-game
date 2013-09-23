@@ -3,7 +3,7 @@
   <!-- Images from the database appear here --> 
   <div id="stage">
       <div id="header" class="group">
-          <a href="#menu-left">
+          <a href="#menu-left" class="back hidden">
               <span class="words hidden">Words</span>
               <span class="back hidden">Back</span>
           </a>
@@ -39,7 +39,7 @@
           <div id="game_customize" class="hidden">
               <h2>CUSTOMIZE YOUR GAME</h2>
               <div class="padding">Share your interests and you might see more images with those subjects!</div>
-              <div class="text-center"><input type="text" placeholder="I'm interested in..." /></div>
+              <div class="new_interest text-center"><input id="new_interest" type="text" placeholder="I'm interested in..." /></div>
               <hr />
           </div>
 
@@ -70,7 +70,7 @@
           </div>
 
           <div id="institution_info" class="hidden">
-              need to load template here
+
           </div>
 
           <div id="how_to" class="hidden">
@@ -93,11 +93,25 @@
               <h2>Account</h2>
               <div class="back_blue row"><a href="#" location="account_settings">UPDATE ACCOUNT SETTINGS</a></div>
               <div id="account_info">
+                  <div id="bookmarks">
+                      <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
+                      <div id="account_bookmark" class="group">
+                      </div>
+                  </div>
+
+                  <div id="play_lists">
+                      <h3>YOUR PLAYLIST</h3>
+                      <div id="account_playlist" class="group"></div>
+                  </div>
+
+                  <div id="interests">
+                      <h3>YOUR INTERESTS</h3>
+                      <div id="account_interest" class="group"></div>
+                  </div>
               </div>
           </div>
       </div>
       <nav id="menu-left">
-
       </nav>
       <nav id="menu-right">
           <ul>
@@ -108,60 +122,40 @@
               <li class="back_blue row"><a href="#" location="account"><span>ACCOUNT</span></a></li>
           </ul>
       </nav>
-    <!-- user text field -->
-    <div id="fieldholder" class="clearfix">   
-      <form action="#"><textarea name="words" cols="50" rows="8" id="words"></textarea></form> 
-    </div>  
-    <div id="scores"></div>
-    <div id="licences"></div>
-    <div id="more_info"></div>
-    <div id="words_to_avoid"></div>
-    <div id="partner-waiting"></div>
   </div>
 </div>
 
-
-<!--<div>
-    <h3 class="padding">Your Playlist</h3>
-    TODO
-</div>-->
+<script id="template-show_institution" type="text/x-jquery-tmpl">
+    <div><img src="${logo}" /></div>
+    <div>${name}</div>
+    <div>${description}</div>
+</script>
 
 <script id="template-account_playlist" type="text/x-jquery-tmpl">
-    <div id="play_lists">
-        <h3>YOUR PLAYLIST</h3>
-        {{each play_lists}}
-            {{if isBanned != true}}
-            <div opponent_id="${id}" class="back_yellow row">
-                ${name}
-                <div class="delete right"></div>
-            </div>
-            {{/if}}
-        {{/each}}
-    </div>
+    {{each play_lists}}
+        {{if isBanned != true}}
+        <div institution_id="${id}" class="back_yellow row">
+            <span class="institution">${name}</span>
+            <div class="delete right"></div>
+        </div>
+        {{/if}}
+    {{/each}}
 </script>
 
 <script id="template-account_interest" type="text/x-jquery-tmpl">
-    <div id="interests">
-        <h3>YOUR INTERESTS</h3>
-        {{each interests}}
-        <div opponent_id="${id}" class="back_yellow row">
-            ${interest}
-            <div class="delete right"></div>
-        </div>
-        {{/each}}
+    {{each interests}}
+    <div interest_id="${id}" class="back_yellow row">
+        ${interest}
+        <div class="delete right"></div>
     </div>
+    {{/each}}
 </script>
 
 <script id="template-account_bookmark" type="text/x-jquery-tmpl">
-    <div id="bookmarks" >
-        <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
-        <div class="group" >
-            <div class="bookmark">
-            {{each bookmarked}}
-                <img src="${thumbnail}" class="show_big" scaled="${scaled}" />
-            {{/each}}
-            </div>
-        </div>
+    <div class="bookmark">
+    {{each bookmarked}}
+        <img src="${thumbnail}" class="show_big" scaled="${scaled}" />
+    {{/each}}
     </div>
 </script>
 
@@ -171,15 +165,15 @@
             <h3 class="no_margin">YOUR TURN</h3>
             <div class="no_value hidden">Challenge anyone. Start to play!</div>
             {{each received}}
-            <div opponent_id="${id}" class="back_yellow row">
+            <div opponent_id="${id}" playedGameId="" class="back_yellow row">
                 <span class="start_game" type="accept_challenge"><span class="username">${username}</span> CHALLENGED YOU</span>
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each your_turn}}
-            <div opponent_id="${id}" class="back_yellow row">
-                <span class="start_game" type="game">GAME WITH <span class="username">${username}</span></span>
+            <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_yellow row">
+                <span class="start_game" type="game">GAME WITH <span class="username">${opponentName}</span></span>
                 <div class="delete right"></div>
             </div>
             {{/each}}
@@ -189,15 +183,15 @@
             <h3>WAITING</h3>
             <div class="no_value hidden">Noone waits for you!</div>
             {{each sent}}
-            <div opponent_id="${id}" class="back_gray row">
+            <div opponent_id="${id}" playedGameId="" class="back_gray row">
                 GAME WITH ${username}
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each waiting_turn}}
-            <div opponent_id="${id}" class="back_gray row">
-                GAME WITH ${username}
+            <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_gray row">
+                GAME WITH ${opponentName}
                 <div class="delete right"></div>
             </div>
             {{/each}}
@@ -210,10 +204,10 @@
         ROUND ${turn}
         <div class="right">
             <div>You ${score}</div>
-            <div>${opponent_name} ${opponentScore}</div>
+            <div>${oppoentName} ${opponentScore}</div>
         </div>
     </div>
-    <img src="${media.imageScaled}" />
+    <img src="${media.imageFullSize}" />
     <div class="words">
         {{each(j, subItem) tags.word}}
             <div class="back_gray row">
@@ -223,7 +217,7 @@
             </div>
         {{/each}}
 
-        {{for(i = tags.num_words; i < 3; i++)}}
+        {{for(i = num_words; i < 3; i++)}}
             <div class="row"><input type="text" placeholder="Add a word" /></div>
         {{/for }}
     </div>

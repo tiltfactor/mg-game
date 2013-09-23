@@ -84,6 +84,46 @@ class MGUserInstitution extends CComponent
 
     /**
      * @param int $institutionId
+     * @return GameUserInstitutionDTO[]
+     */
+    public function getByID($institutionId)
+    {
+        $result = array();
+        /**
+         * @var Institution[] $institutions
+         */
+        $institutions = Institution::model()->findAll('status=1 and id=:institutionId', array(':institutionId' => $institutionId));
+        if ($institutions) {
+            foreach ($institutions as $row) {
+                $inst = new GameUserInstitutionDTO();
+                $inst->id = $row->id;
+                $inst->description = $row->description;
+                $inst->logo = $row->logo_url;
+                $inst->name = $row->name;
+                $inst->isBanned = false;
+                array_push($result, $inst);
+            }
+        }
+        /**
+         * @var UserGameBannedInstitution[] $bannedInsts
+         */
+        $bannedInsts = UserGameBannedInstitution::model()->findAll('user_id=:userId and game_id=:gameId', array(':userId' => $this->userId, ':gameId' => $this->game->id));
+
+        if ($bannedInsts) {
+            foreach ($bannedInsts as $row) {
+                foreach ($result as $i => $row2) {
+                    if ($row->id == $row2->id) {
+                        $result[$i]->isBanned = true;
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $institutionId
      * @throws CHttpException
      */
     public function ban($institutionId)
