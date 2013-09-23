@@ -731,7 +731,7 @@ abstract class MGMultiPlayer extends CComponent
             if ($opponentOnline) {
                 $opponenSessId = $opponentOnline->session_id;
             } else {
-                $opponentSess = Session::model()->find('user_id =:userId ORDER BY id DESC LIMIT 1', array(':userId' => $opponentId));
+                $opponentSess = Session::model()->find('user_id =:userId ORDER BY id DESC', array(':userId' => $opponentId));
                 $opponenSessId = $opponentSess->id;
             }
 
@@ -774,7 +774,6 @@ abstract class MGMultiPlayer extends CComponent
             }
 
             $opponentOnline = UserOnline::model()->find('user_id =:userId AND game_id=:gameID', array(':userId' => $opponentId, ':gameID' => $this->game->id));
-
             if ($opponentOnline) {
                 $userDTO = new GameUserDTO();
                 $userDTO->id = $this->userOnline->user_id;
@@ -935,6 +934,7 @@ abstract class MGMultiPlayer extends CComponent
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, count($fields));
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         curl_exec($ch);
         if (!curl_errno($ch)) {
