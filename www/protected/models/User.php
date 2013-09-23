@@ -7,7 +7,9 @@ class User extends BaseUser
 	const STATUS_NOACTIVE=0;
   const STATUS_ACTIVE=1;
   const STATUS_BANNED=-1;
-    
+
+    private static $_models = array();
+
   public static function model($className=__CLASS__) {
     return parent::model($className);
   }
@@ -359,4 +361,23 @@ class User extends BaseUser
 
     return true;
   }
+
+
+        public static function getUserRole($id) {
+            $user = self::loadUser($id);
+            if ($user) {
+                return $user->role;
+            }
+            return false;
+        }
+
+        public static function loadUser($id = null) {
+            if ($id) {
+                if (!isset(self::$_models[$id])) {
+                    self::$_models[$id] = User::model()->findByPk($id);
+                }
+                return self::$_models[$id];
+            }
+            return false;
+        }
 }

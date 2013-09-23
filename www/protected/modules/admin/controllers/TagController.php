@@ -220,6 +220,12 @@ class TagController extends GxController {
 		if (isset($_GET['Tag']))
 			$model->setAttributes($_GET['Tag']);
 
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('i.institution_id', $institutions->id);
+        }
+
 		$this->render('admin', array(
 			'model' => $model,
             'admin' => Yii::app()->user->checkAccess(ADMIN),

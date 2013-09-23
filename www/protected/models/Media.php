@@ -53,7 +53,7 @@ class Media extends BaseMedia
     $criteria->compare('locked', 1);
     $criteria->compare('created', $this->created, true);
     $criteria->compare('modified', $this->modified, true);
-    
+
     if (isset($_GET["Custom"])) {
       
       if (isset($_GET["Custom"]["tags"])) {

@@ -189,7 +189,7 @@ inst.url
     // an array.
     for($i=0;$i<$c;$i++) {
         if ($i == 0) {
-            YiiBase::logProps($info[$i], CLogger::LEVEL_ERROR);
+            //YiiBase::logProps($info[$i], CLogger::LEVEL_ERROR);
             $url = $info[$i]['url'];
         }
       $tags[] = $info[$i]['tag'];
@@ -218,7 +218,7 @@ inst.url
       if (!file_exists($output_directory)/* || !is_dir($output_directory)*/) {
           mkdir($output_directory);
       } else {
-          YiiBase::log('file/directory exists:' . $output_directory, CLogger::LEVEL_ERROR);
+          //YiiBase::log('file/directory exists:' . $output_directory, CLogger::LEVEL_ERROR);
       }
     $output_filepath = "$output_directory/$filename";
     $source_filepath = "$source_directory/$filename";
@@ -287,7 +287,6 @@ inst.url
     debug_log(get_XMP_text($header_data));
     
     // Load the new metadata into the image.
-      YiiBase::log('$source_filepath:' . $source_filepath .' $output_filepath:' . $output_filepath, CLogger::LEVEL_ERROR);
     $result =
       $xmp->put_jpeg_header_data($source_filepath,
 				 $output_filepath,

@@ -18,7 +18,7 @@ class MediaController extends GxController {
   				),
   			array('allow', 
   				'actions'=>array('view', 'batch', 'create','update', 'admin', 'delete', 'searchUser'),
-                'roles' => array(EDITOR, EDITOR),
+                'roles' => array(EDITOR),
   				),
   			array('deny', 
   				'users'=>array('*'),
@@ -116,7 +116,12 @@ EOD;
 
 		if (isset($_GET['Media']))
 			$model->setAttributes($_GET['Media']);
-        //YiiBase::log(var_export($model->institution, true) .' '. $model->institution_id, CLogger::LEVEL_ERROR);
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
+
 		$this->render('admin', array(
 			'model' => $model,
 		));

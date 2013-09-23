@@ -22,7 +22,8 @@ class Tag extends BaseTag {
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->alias = "t";
-        $criteria->join = "LEFT JOIN {{tag_use}} tu ON tu.tag_id=t.id"; // all conditions make use of tag_use;
+        $criteria->join = "LEFT JOIN {{tag_use}} tu ON tu.tag_id=t.id
+                           LEFT JOIN {{media}} i ON i.id=tu.media_id"; // all conditions make use of tag_use, and media to detect institution;
         $criteria->distinct = true;
         $criteria->compare('t.id', $this->id);
         $criteria->compare('t.tag', $this->tag, true);
@@ -37,8 +38,7 @@ class Tag extends BaseTag {
                 $criteria->compare('tu.weight', "> 0", true);
             }
             if (isset($_GET["Custom"]["collections"]) && is_array($_GET["Custom"]["collections"])) {
-                $criteria->join .= "  LEFT JOIN {{media}} i ON i.id=tu.media_id
-                              LEFT JOIN {{collection_to_media}} isi ON isi.media_id=i.id";
+                $criteria->join .= "LEFT JOIN {{collection_to_media}} isi ON isi.media_id=i.id";
                 $criteria->addInCondition('isi.collection_id', array_values($_GET["Custom"]["collections"]));
             }
             if (isset($_GET["Custom"]["username"]) && trim($_GET["Custom"]["username"]) != "") {
