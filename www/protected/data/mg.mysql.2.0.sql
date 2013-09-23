@@ -944,10 +944,11 @@ COMMIT;
 -- Data for table `AuthItemChild`
 -- -----------------------------------------------------
 START TRANSACTION;
-INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('researcher', 'player');
 INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('gameadmin', 'player');
 INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('gameadmin', 'researcher');
 INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('gameadmin', 'institution');
+INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('institution', 'player');
+INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('researcher', 'player');
 
 COMMIT;
 
