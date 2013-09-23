@@ -94,6 +94,56 @@ class SiteController extends Controller
 		$this->render('credits');
 	}
 
+    //action only for the login from third-party authentication providers, such as Google, Facebook etc. Not for direct login using username/password
+    public function actionLogin()
+    {
+
+        if (!isset($_GET['provider']))
+        {
+            // TODO set propper redirect
+            $this->redirect('/site/index');
+            return;
+        }
+
+        try
+        {
+            Yii::import('application.components.HybridAuthIdentity');
+            $haComp = new HybridAuthIdentity();
+
+            if (!$haComp->validateProviderName($_GET['provider']))
+                throw new CHttpException ('500', 'Invalid Action. Please try again.');
+
+
+
+            $haComp->adapter = $haComp->hybridAuth->authenticate($_GET['provider']);
+
+
+
+            $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
+
+
+            $haComp->processLogin($haComp);  //<---- Here to hybridAuthIdentity
+
+            $this->redirect(array('/site'));
+            return;
+
+                 // [$haComp->processLogin] further action based on successful login or re-direct user to the required url [won`t redirect in this method]
+        }
+        catch (Exception $e)
+        {
+            $this->redirect(array('/site'));
+            return;
+        }
+    }
+
+    public function actionSocialLogin()
+    {
+        Yii::import('application.components.HybridAuthIdentity');
+        $path = Yii::getPathOfAlias('ext.HybridAuth');
+        require_once $path . '/hybridauth-' . HybridAuthIdentity::VERSION . '/index.php';
+
+    }
+
 	/**
 	 * Displays the About page.
 	 */

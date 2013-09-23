@@ -15,7 +15,25 @@ $this->breadcrumbs=array(
 
 <?php endif; ?>
 
+
 <p><?php echo UserModule::t("Please fill out the following form with your login credentials:"); ?></p>
+
+<?php
+//TODO fix path
+$imghtml = CHtml::image('/newmg_f/assets/32671d82/facebook/facebook_login_button.png');
+echo CHtml::link($imghtml, array('../site/login', 'provider' => 'facebook'));
+?>
+
+<?php
+//echo "Base Path: " . print_r(Yii::app()->basePath) ; 
+echo "<br/>";
+//echo "Base request->hostInfo: " . print_r(Yii::app()->request->hostInfo);
+echo "<br/>";
+//echo "Base user->baseUrl: " . print_r(Yii::app()->user->baseUrl);
+//print_r(Yii::app()->request->scriptFile);
+//print_r(Yii::app()->params['webRoot']);
+
+?>
 
 <div class="form">
 <?php echo CHtml::beginForm(); ?>
