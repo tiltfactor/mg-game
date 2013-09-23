@@ -1,12 +1,15 @@
 <?php
 
 Yii::import('application.models._base.BaseTag');
-class Tag extends BaseTag {
-    public static function model($className = __CLASS__) {
+class Tag extends BaseTag
+{
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('tag, created, modified', 'required'),
             array('tag', 'length', 'max' => 64),
@@ -19,7 +22,8 @@ class Tag extends BaseTag {
      *
      * @return CActiveDataProvider
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->alias = "t";
         $criteria->join = "LEFT JOIN {{tag_use}} tu ON tu.tag_id=t.id
@@ -68,7 +72,8 @@ class Tag extends BaseTag {
      * @param int $user_id The id of the user for which the tags should be listed
      * @return CArrayDataProvider
      */
-    public function searchUserTags($user_id) {
+    public function searchUserTags($user_id)
+    {
         $tags = Yii::app()->db->createCommand()
             ->select('count(t.id) as counted, AVG(tu.weight) as weight, t.id, t.tag')
             ->from('{{session}} s')
@@ -99,7 +104,8 @@ class Tag extends BaseTag {
      * @param int $media_id The id of the media for which the tags should be listed
      * @return CArrayDataProvider
      */
-    public function searchMediaTags($media_id) {
+    public function searchMediaTags($media_id)
+    {
         $tags = Yii::app()->db->createCommand()
             ->select('count(t.id) as counted, AVG(tu.weight) as weight, t.id, t.tag')
             ->from('{{tag_use}} tu')
@@ -127,9 +133,10 @@ class Tag extends BaseTag {
      * @param int $num_medias The amount of medias to be listed
      * @return string Partial HTML. The linked medias or empty string
      */
-    public function getTopMedias($num_medias = 10) {
+    public function getTopMedias($num_medias = 10)
+    {
         $medias = Yii::app()->db->createCommand()
-            ->select('count(i.id) as counted, i.id, i.name,inst.url')
+            ->select('count(i.id) as counted, i.id, i.name,i.mime_type,inst.url')
             ->from('{{tag_use}} tu')
             ->join('{{media}} i', 'tu.media_id = i.id')
             ->join('{{institution}} inst', 'inst.id = i.institution_id')
@@ -144,7 +151,14 @@ class Tag extends BaseTag {
                 $path = $media['url'];
                 $path = rtrim($path, "/");
                 $path .= UPLOAD_PATH;
-                $html_media = CHtml::image($path . '/thumbs/' . $media['name'], $media['name']) . " <span>x " . $media['counted'] . "</span>";
+                $media_type = substr($media['mime_type'], 0, 5);
+                if ($media_type == 'image') {
+                    $html_media = CHtml::image($path . '/thumbs/' . $media['name'], $media['name']) . " <span>x " . $media['counted'] . "</span>";
+                } else if ($media_type == 'video') {
+                    $html_media = CHtml::image($path . '/videos/' . urlencode(substr($media['name'], 0, -4)) . 'jpeg', $media['name']) . " <span>x " . $media['counted'] . "</span>";
+                } else {
+                    $html_media = CHtml::image($media['url'] . '/images/audio_ico.png', $media['name']) . " <span>x " . $media['counted'] . "</span>";
+                }
                 $out .= CHtml::link($html_media, array("/admin/media/view", "id" => $media["id"]));
             }
             return $out;
@@ -159,7 +173,8 @@ class Tag extends BaseTag {
      * @param int $num_users The amount of users to be listed
      * @return string Partial HTML. The linked users or empty string
      */
-    public function getTopUsers($num_users = 10) {
+    public function getTopUsers($num_users = 10)
+    {
         $users = Yii::app()->db->createCommand()
             ->select('count(u.id) as counted, u.id, u.username')
             ->from('{{user}} u')
@@ -187,7 +202,8 @@ class Tag extends BaseTag {
      *
      * @param array The result or null
      */
-    public function tagUseInfo() {
+    public function tagUseInfo()
+    {
         return Yii::app()->db->createCommand()
             ->select('count(tu.id) as use_count, AVG(tu.weight) as average, MAX(tu.weight) as max_weight, MIN(tu.weight) as min_weight, count(distinct tu.media_id) as media_count')
             ->from('{{tag_use}} tu')
@@ -200,7 +216,8 @@ class Tag extends BaseTag {
      *
      * @return string List of info or empty string
      */
-    public function getTagUseInfo() {
+    public function getTagUseInfo()
+    {
         $tag_info = $this->tagUseInfo();
         if ($tag_info) {
             $params = array(
@@ -223,7 +240,8 @@ class Tag extends BaseTag {
      * @param string $tag the begin of the tag that should be found
      * @return mixed array containing the tag column or null
      */
-    function searchForTags($tag) {
+    function searchForTags($tag)
+    {
         return Yii::app()->db->createCommand()
             ->selectDistinct('t.tag')
             ->from('{{tag}} t')
