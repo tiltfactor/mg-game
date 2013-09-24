@@ -204,7 +204,7 @@ input {
     }
   }
 
-  .row {
+  .row, .small_row {
     padding-left: 22px;
     padding-right: 22px;
   }
@@ -242,6 +242,22 @@ body {
     color: #341d33;
   }
 
+  .small_row {
+    text-transform: uppercase;
+    height: 35px !important;
+    line-height: 35px;
+    font-size: 13px !important;
+
+    input {
+      background-color: transparent;
+      height: 35px;
+      font-size: 13px;
+      border-radius: 0px;
+      padding: 0;
+      color: #341D33;
+    }
+  }
+
   .back_yellow {
     .at2x('../images/back_yellow.png');
     color: #341d33 !important;
@@ -269,12 +285,54 @@ body {
     }
   }
 
-  .back_black {
+  .upped_bar {
+    .at2x('../images/back_upped_bar.png');
+    color: white !important;
+  }
+
+  .bonus_bar {
+    .at2x('../images/back_bonus_bar.png');
+    color: white !important;
+  }
+
+  .back_black, .standard_bar {
     .at2x('../images/back_black.png');
     color: white !important;
     a {
       color: white !important;
       text-decoration: none;
+    }
+  }
+
+  .bar_right {
+    display: block;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 10px;
+    margin-top: -32px;
+    right: 0;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .standard_bar, .up_bar, .bonus_bar {
+    span:first-of-type {
+      color: #46a5c4;
+      padding-right: 10px;
+    }
+
+    span:nth-of-type(2) {
+      color: white;
+    }
+  }
+
+  .upped_bar {
+    span:first-of-type {
+      color: #f8f400;
+      padding-right: 10px;
+    }
+    span:nth-of-type(2) {
+      color: #46a5c4;
     }
   }
 
@@ -284,7 +342,7 @@ body {
     padding: 10px;
   }
 
-  .back_blue {
+  .back_blue, .up_bar {
     .at2x('../images/back_blue.png');
     color: white !important;
     a {
@@ -317,6 +375,23 @@ body.retina {
     height: 82px !important;
     line-height: 82px;
     font-size: 25px !important;
+  }
+
+  .small_row {
+    height: 70px !important;
+    line-height: 70px;
+    font-size: 25px !important;
+
+    input {
+      height: 70px;
+      font-size: 25px;
+    }
+  }
+
+  .bar_right {
+    font-size: 20px;
+    line-height: 22px;
+    margin-top: -67px;
   }
 
   #content {
@@ -366,7 +441,7 @@ body.retina {
       margin-top: 22px;
     }
 
-    .row {
+    .row, .small_row {
       padding-left: 44px;
       padding-right: 44px;
     }

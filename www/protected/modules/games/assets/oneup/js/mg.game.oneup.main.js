@@ -182,6 +182,7 @@ MG_GAME_ONEUP = function ($) {
                         json = turn_response;
                         json.oppoentName = MG_GAME_ONEUP.opponent_name;
                         json.num_words = turn_response.tags.length;
+                        var tag_count = json.num_words;
 /*
                         turn_response.tags.word = [];
                         turn_response.tags.word[0] = {};
@@ -198,27 +199,50 @@ MG_GAME_ONEUP = function ($) {
                                 var that = $(this),
                                     current_tag;
                                 that.empty();
-                                that.append('<input type="text" placeholder="Add a word" />');
+                                that.append('<input type="text" placeholder="ADD A WORD" />');
                                 that.find('input').focus();
                                 that.find('input').keypress(function (e) {
                                     if (e.which == 13) {
-                                        var tag = that.find('input').val();
+                                        var tag = that.find('input').val(),
+                                            new_html;
                                         if (validTag(that.find('input').val(), turn_response.tags)) {
                                             //http://localhost/mggameserver/index.php/api/multiplayer/sunmit/gid/OneUp/playedGameId/212
                                             //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
                                             current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.media[0].id + '","type":null,"tag_id":null}]';
+                                            MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(response) {
 /*
-                                            current_tag[0] = {};
-                                            current_tag[0].tag = tag;
-                                            current_tag[0].original = null;
-                                            current_tag[0].score = null;
-                                            current_tag[0].weight = null;
-                                            current_tag[0].mediaId = turn_response.media[0].id;
-                                            current_tag[0].type = null;
-                                            current_tag[0].tag_id = null;
+                                              var response = [];
+                                                response[0] = {};
+                                                response[0].tag = that.find('input').val();
+                                                response[0].original = null;
+                                                response[0].score = 3;
+                                                response[0].weight = null;
+                                                response[0].mediaId = response[0].mediaId = "";
+                                                response[0].type = 'new';
+                                                response[0].tag_id = null;
 */
-                                            MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(institution_response) {
-
+                                                that.removeClass('blank_bar');
+                                                if (parseInt(response[0].score, 10) === 1 && turn_response.turn === 1) {
+                                                    that.addClass('standard_bar');
+                                                    new_html = '<span>+1</span>' + response[0].tag;
+                                                } else if (parseInt(response[0].score, 10) === 1 && turn_response.turn !== 1) {
+                                                    that.addClass('up_bar');
+                                                    new_html = '<span>+1</span>' + response[0].tag + '<span class="bar_right">YOU GOT<br/>' + MG_GAME_ONEUP.opponent_name + '<br/>POINT!</span>';
+                                                } else if (response[0].score === -1) {
+                                                    that.addClass('upped_bar');
+                                                    new_html = '<span>-1</span>' + response[0].tag + '<span class="bar_right">' + MG_GAME_ONEUP.opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+                                                } else if (parseInt(response[0].score, 10) === 3) {
+                                                    that.addClass('bonus_bar');
+                                                    new_html = '<span>+3</span>' + response[0].tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+                                                }
+                                                that.html(new_html);
+                                                that.off('click');
+                                                var score_obj = $("#game_screen .you span");
+                                                score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10));
+                                                tag_count++;
+                                                if (tag_count === 3) {
+                                                    $("#game_screen .round").html('WAITING ...');
+                                                }
                                             }, {
                                                     type: 'post',
                                                     data: {

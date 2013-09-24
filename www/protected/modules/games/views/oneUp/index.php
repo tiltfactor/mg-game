@@ -3,7 +3,7 @@
   <!-- Images from the database appear here --> 
   <div id="stage">
       <div id="header" class="group">
-          <a href="#menu-left">
+          <a href="#menu-left" class="header_mm_left">
               <span class="words hidden top_btn">Words</span>
               <span class="back hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/back.png" /></span>
           </a>
@@ -203,9 +203,9 @@
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray">
-        ROUND ${turn}
+        <span class="round">ROUND ${turn}</span>
         <div class="right header_scores">
-            <div class="you">You ${score}</div>
+            <div class="you">You <span>${score}</span></div>
             <div class="opponent">${oppoentName} ${opponentScore}</div>
         </div>
     </div>
@@ -224,7 +224,7 @@
         {{/each}}
 
         {{for(i = num_words; i < 3; i++)}}
-            <div class="row blank_bar">ADD A WORD</div>
+            <div class="small_row blank_bar">ADD A WORD</div>
         {{/for }}
     </div>
 

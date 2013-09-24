@@ -56,8 +56,11 @@ class OneUpGame extends MGMultiPlayer
             $opponentId = $this->playedGame->sessionId1->user_id;
         }
         $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
-
-        $submissions = count($playerTagDTOs[$this->gameTurn->turn]);
+        if (isset($playerTagDTOs[$this->gameTurn->turn])) {
+            $submissions = count($playerTagDTOs[$this->gameTurn->turn]);
+        } else {
+            $submissions = 0;
+        }
         if ($submissions < $this->game->submissions) {
             foreach ($tags as $tag) {
                 $tag->type = "new";
