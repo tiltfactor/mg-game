@@ -52,6 +52,8 @@ class m111119_234451_install_v2_0 extends CDbMigration
               CONSTRAINT `fk_user_banned_inst` FOREIGN KEY (`institution_id` ) REFERENCES `institution` (`id` ))
             ENGINE = InnoDB DEFAULT CHARSET=UTF8;
 
+            INSERT INTO `AuthItemChild` (`parent`, `child`) VALUES ('researcher', 'player');
+
 	  ";
 
         if (trim($script) != "") {

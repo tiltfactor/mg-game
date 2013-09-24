@@ -40,7 +40,7 @@ class HybridAuthIdentity extends CUserIdentity
 
         $this->config = array(
 
-            "base_url" => Yii::app()->basePath. "/site/socialLogin", // make it more generic
+            "base_url" => Yii::app()->getBaseUrl() . "/index.php/site/socialLogin", // make it more generic
 
 
 

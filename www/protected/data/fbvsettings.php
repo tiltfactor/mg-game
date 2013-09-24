@@ -35,7 +35,7 @@ return array (
       'name' => 'Media',
       'description' => 'Manage media that have been imported and processed.',
       'url' => '/admin/media',
-      'role' => EDITOR,
+      'roles' => array(EDITOR,INSTITUTION),
       'group' => 'Media & Tags',
     ),
     'tool-tag' => 
@@ -43,7 +43,7 @@ return array (
       'name' => 'Tags',
       'description' => 'Manage tags that have been created by players.',
       'url' => '/admin/tag',
-      'role' => EDITOR,
+      'roles' => array(EDITOR,INSTITUTION),
       'group' => 'Media & Tags',
     ),
     'tool-collection' => 
@@ -51,7 +51,7 @@ return array (
       'name' => 'Collections',
       'description' => 'Group media and apply applicable licences.',
       'url' => '/admin/collection',
-      'role' => EDITOR,
+      'roles' => array(EDITOR,INSTITUTION),
       'group' => 'Media & Tags',
     ),
     'tool-licence' => 
@@ -59,7 +59,7 @@ return array (
       'name' => 'Licences',
       'description' => 'Create licences under which media can be published in the system.',
       'url' => '/admin/licence',
-      'role' => EDITOR,
+      'roles' => array(EDITOR,INSTITUTION),
       'group' => 'Media & Tags',
     ),
     'tool-export' => 
@@ -67,7 +67,7 @@ return array (
       'name' => 'Export',
       'description' => 'Export tags, tag uses, and tagged media.',
       'url' => '/admin/export',
-      'role' => INSTITUTION,
+      'roles' => array(INSTITUTION),
       'group' => 'Media & Tags',
     ),
     'tool-user' => 
@@ -75,7 +75,7 @@ return array (
       'name' => 'Players',
       'description' => 'Manage registered players and the tags they have created.',
       'url' => '/admin/user',
-      'role' => ADMIN,
+      'roles' => array(EDITOR),
       'group' => 'Players',
     ),
     'tool-subject-matter' => 
@@ -83,7 +83,7 @@ return array (
       'name' => 'Subject Matters',
       'description' => 'Manage subject matter categories in which players can express interest. These values are used to influence media selection and tag weights.',
       'url' => '/admin/subjectMatter',
-      'role' => EDITOR,
+      'roles' => array(EDITOR),
       'group' => 'Players',
     ),
     'tool-plugins' => 
@@ -91,7 +91,7 @@ return array (
       'name' => 'Plugins',
       'description' => 'Plugins allow the flexible extension of functionality and can be managed here.',
       'url' => '/plugins',
-      'role' => EDITOR,
+      'roles' => array(ADMIN),
       'group' => 'Games & Plugins',
     ),
     'tool-games' => 
@@ -99,7 +99,7 @@ return array (
       'name' => 'Games',
       'description' => 'Manage games.',
       'url' => '/games',
-      'role' => ADMIN,
+      'roles' => array(EDITOR),
       'group' => 'Games & Plugins',
     ),
     'tool-bages' => 
@@ -107,7 +107,7 @@ return array (
       'name' => 'Badges',
       'description' => 'Manage badges that can be achieved by players.',
       'url' => '/admin/badge',
-      'role' => EDITOR,
+      'roles' => array(ADMIN),
       'group' => 'Games & Plugins',
     ),
     'tool-ip' => 
@@ -115,7 +115,7 @@ return array (
       'name' => 'IP Blacklist',
       'description' => 'Restrict access to Metadata Games by whitelisting or blacklisting IP addresses.',
       'url' => '/admin/blockedIp',
-      'role' => EDITOR,
+      'roles' => array(ADMIN),
       'group' => 'Other',
     ),
     'tool-settings' => 
@@ -123,7 +123,7 @@ return array (
       'name' => 'Global Settings',
       'description' => 'Configure settings that are used globally in the system.',
       'url' => '/admin/settings',
-      'role' => ADMIN,
+      'roles' => array(ADMIN),
       'group' => 'Other',
     ),
     'tool-logs' => 
@@ -131,7 +131,7 @@ return array (
       'name' => 'Admin Log',
       'description' => 'Access records of changes made using admin tools.',
       'url' => '/admin/log',
-      'role' => ADMIN,
+      'roles' => array(ADMIN),
       'group' => 'Other',
     ),
     'update-code' => 
@@ -139,7 +139,7 @@ return array (
       'name' => 'Update DB',
       'description' => 'Please visit this tool after an update of the code base to make sure the database structure is up-to date.',
       'url' => '/admin/update',
-      'role' => ADMIN,
+      'roles' => array(ADMIN),
       'group' => 'Other',
     ),
     'tool-institution' => 
@@ -147,7 +147,7 @@ return array (
       'name' => 'Institution',
       'description' => 'Manage MG Content Server register to MG Game Server',
       'url' => '/admin/institution',
-      'role' => ADMIN,
+      'roles' => array(ADMIN),
       'group' => 'Other',
     ),
   ),
