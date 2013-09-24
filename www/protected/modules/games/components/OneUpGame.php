@@ -32,7 +32,7 @@ class OneUpGame extends MGMultiPlayer
         $playerTagDTOs = array();
         $opponentTagDTOs = array();
         foreach ($submits as $submit) {
-            $tagsArr = json_decode($submit->submission);
+            $tagsArr = json_decode($submit->submission,true);
             $tmpTags = GameTagDTO::createFromArray($tagsArr);
             if ($submit->session_id == $this->sessionId) {
                 if (!isset($playerTagDTOs[$submit->turn])) {
@@ -56,8 +56,11 @@ class OneUpGame extends MGMultiPlayer
             $opponentId = $this->playedGame->sessionId1->user_id;
         }
         $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
-
-        $submissions = count($playerTagDTOs[$this->gameTurn->turn]);
+        if (isset($playerTagDTOs[$this->gameTurn->turn])) {
+            $submissions = count($playerTagDTOs[$this->gameTurn->turn]);
+        } else {
+            $submissions = 0;
+        }
         if ($submissions < $this->game->submissions) {
             foreach ($tags as $tag) {
                 $tag->type = "new";

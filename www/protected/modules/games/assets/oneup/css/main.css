@@ -62,6 +62,17 @@ input {
   background-color: #030104;
   height: auto;
 }
+#header a {
+  text-decoration: none;
+  line-height: 25px;
+}
+#header .top_btn {
+  border: 1px solid #403b3d;
+  border-radius: 7px 7px 7px 7px;
+  color: #46A5C4;
+  padding: 3px 8px;
+  text-decoration: none;
+}
 #header .setting {
   display: block;
   background-image: url('../images/settings.png');
@@ -78,6 +89,9 @@ input {
     width: auto;
     height: auto;
   }
+}
+#header .back {
+  padding-left: 25px;
 }
 .mm-right.mm-opening .mm-page,
 html.mm-right.mm-opening #mm-blocker {
@@ -131,7 +145,30 @@ html.mm-right.mm-opening #mm-blocker {
   padding-right: 15px;
   margin-top: 20px;
 }
-#content .row {
+#content h4 {
+  color: #a3a3a3;
+  height: 17px;
+  line-height: 17px;
+  font-size: 12px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 20px;
+}
+#content .header_scores {
+  text-align: right;
+  margin-top: -8px;
+}
+#content .header_scores div {
+  height: 15px;
+}
+#content .header_scores div.you {
+  color: #a3a3a3;
+}
+#content .header_scores div.opponent {
+  color: #f7f200;
+}
+#content .row,
+#content .small_row {
   padding-left: 22px;
   padding-right: 22px;
 }
@@ -170,6 +207,20 @@ body .row {
   font-size: 13px !important;
   color: #341d33;
 }
+body .small_row {
+  text-transform: uppercase;
+  height: 35px !important;
+  line-height: 35px;
+  font-size: 13px !important;
+}
+body .small_row input {
+  background-color: transparent;
+  height: 35px;
+  font-size: 13px;
+  border-radius: 0px;
+  padding: 0;
+  color: #341D33;
+}
 body .back_yellow {
   background-image: url('../images/back_yellow.png');
   background-repeat: repeat;
@@ -189,7 +240,8 @@ body .back_yellow a {
   color: #341d33 !important;
   text-decoration: none;
 }
-body .back_gray {
+body .back_gray,
+body .blank_bar {
   background-image: url('../images/back_gray.png');
   background-repeat: repeat;
   width: auto;
@@ -197,18 +249,70 @@ body .back_gray {
   color: #341d33 !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  body .back_gray {
+  body .back_gray,
+  body .blank_bar {
     background-image: url('../images/back_gray@2x.png');
     background-repeat: repeat;
     width: auto;
     height: auto;
   }
 }
-body .back_gray a {
+body .back_gray a,
+body .blank_bar a {
   color: #341d33 !important;
   text-decoration: none;
 }
-body .back_black {
+body .back_dark_gray {
+  background-image: url('../images/back_dark_gray.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  color: white !important;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .back_dark_gray {
+    background-image: url('../images/back_dark_gray@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+body .back_dark_gray a {
+  color: white !important;
+  text-decoration: none;
+}
+body .upped_bar {
+  background-image: url('../images/back_upped_bar.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  color: white !important;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .upped_bar {
+    background-image: url('../images/back_upped_bar@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+body .bonus_bar {
+  background-image: url('../images/back_bonus_bar.png');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  color: white !important;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .bonus_bar {
+    background-image: url('../images/back_bonus_bar@2x.png');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+body .back_black,
+body .standard_bar {
   background-image: url('../images/back_black.png');
   background-repeat: repeat;
   width: auto;
@@ -216,18 +320,65 @@ body .back_black {
   color: white !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  body .back_black {
+  body .back_black,
+  body .standard_bar {
     background-image: url('../images/back_black@2x.png');
     background-repeat: repeat;
     width: auto;
     height: auto;
   }
 }
-body .back_black a {
+body .back_black a,
+body .standard_bar a {
   color: white !important;
   text-decoration: none;
 }
-body .back_blue {
+body .bar_right {
+  display: block;
+  font-size: 9px;
+  font-weight: bold;
+  line-height: 10px;
+  margin-top: -32px;
+  right: 0;
+  text-align: right;
+  text-transform: uppercase;
+}
+body .standard_bar span:first-of-type,
+body .up_bar span:first-of-type,
+body .bonus_bar span:first-of-type {
+  color: #46a5c4;
+  padding-right: 10px;
+}
+body .standard_bar span:nth-of-type(2),
+body .up_bar span:nth-of-type(2),
+body .bonus_bar span:nth-of-type(2) {
+  color: white;
+}
+body .upped_bar span:first-of-type {
+  color: #f8f400;
+  padding-right: 10px;
+}
+body .upped_bar span:nth-of-type(2) {
+  color: #46a5c4;
+}
+body .main_gray {
+  background-image: url('../images/pattern.gif');
+  background-repeat: repeat;
+  width: auto;
+  height: auto;
+  text-align: center;
+  padding: 10px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .main_gray {
+    background-image: url('../images/pattern@2x.gif');
+    background-repeat: repeat;
+    width: auto;
+    height: auto;
+  }
+}
+body .back_blue,
+body .up_bar {
   background-image: url('../images/back_blue.png');
   background-repeat: repeat;
   width: auto;
@@ -235,14 +386,16 @@ body .back_blue {
   color: white !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  body .back_blue {
+  body .back_blue,
+  body .up_bar {
     background-image: url('../images/back_blue@2x.png');
     background-repeat: repeat;
     width: auto;
     height: auto;
   }
 }
-body .back_blue a {
+body .back_blue a,
+body .up_bar a {
   color: white !important;
   text-decoration: none;
 }
@@ -277,6 +430,20 @@ body.retina .row {
   line-height: 82px;
   font-size: 25px !important;
 }
+body.retina .small_row {
+  height: 70px !important;
+  line-height: 70px;
+  font-size: 25px !important;
+}
+body.retina .small_row input {
+  height: 70px;
+  font-size: 25px;
+}
+body.retina .bar_right {
+  font-size: 20px;
+  line-height: 22px;
+  margin-top: -67px;
+}
 body.retina #content .padding {
   padding-left: 50px;
   padding-right: 50px;
@@ -303,12 +470,21 @@ body.retina #content h3 {
   padding-left: 30px;
   padding-right: 30px;
 }
+body.retina #content h4 {
+  height: 34px;
+  line-height: 34px;
+  font-size: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-bottom: 20px;
+}
 body.retina #content .delete {
   width: 62px;
   height: 44px;
   margin-top: 22px;
 }
-body.retina #content .row {
+body.retina #content .row,
+body.retina #content .small_row {
   padding-left: 44px;
   padding-right: 44px;
 }
@@ -323,6 +499,9 @@ body.retina #content .institution_logo {
 body.retina #header .setting {
   width: 68px;
   height: 42px;
+}
+body.retina #header .back {
+  padding-left: 50px;
 }
 .no_margin {
   margin-top: 0 !important;

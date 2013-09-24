@@ -26,7 +26,7 @@ class ExportController extends GxController {
         return array(
             array('allow',
                 'actions' => array('admin', 'exported', 'queueprocess'),
-                'roles' => array(INSTITUTION, ADMIN),
+                'roles' => array(INSTITUTION),
             ),
             array('allow',
                 'actions' => array('remove'),
@@ -175,7 +175,7 @@ class ExportController extends GxController {
                         if (file_exists($this->path . $model->filename . '.zip')) {
                             MGHelper::rrmdir($tmp_folder);
                             if (file_exists($tmp_folder) && is_dir($tmp_folder)) {
-                                rmdir($tmp_folder);
+                                @rmdir($tmp_folder);
                             }
                             $this->_finishExportQueue($model->filename . '.zip');
                         } else {

@@ -224,8 +224,10 @@ class PluginsModule extends CWebModule
         
         $component_name = str_replace("Plugin", "", $plugin_class);
         $component = Yii::createComponent($plugin_class);
-        
-        if (Yii::app()->user->checkAccess($component->accessRole)) {
+
+        $user = User::loadUser(Yii::app()->user->id);
+
+        if (Yii::app()->user->checkAccess($component->accessRole) || ($user && $user->role == INSTITUTION)) {
           if (is_null($type) || $type == $plugin_type) {
             $list[] = (object) array(
               'id' => $plugin->id, 

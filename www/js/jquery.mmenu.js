@@ -1399,6 +1399,7 @@
 		$m.trigger( _e.opening );
 
         $("#content").css('visibility', 'hidden');
+        $("#header .header_mm_left").css('visibility', 'hidden');
         $("#mg_error").empty();
         $(".mm-menu.mm-right").width($wndw.width() + 10);
         $(".mm-page").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
@@ -1411,6 +1412,7 @@
 			function()
 			{
                 $("#content").css('visibility', 'visible');
+                $("#header .header_mm_left").css('visibility', 'visible');
 				$m.removeClass( _c.opened );
 
 				$html

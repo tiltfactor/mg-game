@@ -3,9 +3,9 @@
   <!-- Images from the database appear here --> 
   <div id="stage">
       <div id="header" class="group">
-          <a href="#menu-left" class="back hidden">
-              <span class="words hidden">Words</span>
-              <span class="back hidden">Back</span>
+          <a href="#menu-left" class="header_mm_left">
+              <span class="words hidden top_btn">Words</span>
+              <span class="back hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/back.png" /></span>
           </a>
           <a href="#menu-right" class="right setting"></a>
       </div>
@@ -126,9 +126,11 @@
 </div>
 
 <script id="template-show_institution" type="text/x-jquery-tmpl">
-    <div><img src="${logo}" /></div>
-    <div>${name}</div>
-    <div>${description}</div>
+    <div class="padding" style="width: 320px;">
+        <div class="text-center"><img src="${logo}" /></div>
+        <h4>${name}</h4>
+        <div>${description}</div>
+    </div>
 </script>
 
 <script id="template-account_playlist" type="text/x-jquery-tmpl">
@@ -200,14 +202,18 @@
 </script>
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
-    <div class="row back_yellow">
-        ROUND ${turn}
-        <div class="right">
-            <div>You ${score}</div>
-            <div>${oppoentName} ${opponentScore}</div>
+    <div class="row back_dark_gray">
+        <span class="round">ROUND ${turn}</span>
+        <div class="right header_scores">
+            <div class="you">You <span>${score}</span></div>
+            <div class="opponent">${oppoentName} ${opponentScore}</div>
         </div>
     </div>
-    <img src="${media.imageFullSize}" />
+    <div class="main_gray">
+        {{each(i, media_item) media}}
+        <img src="${media_item.imageFullSize}" />
+        {{/each}}
+    </div>
     <div class="words">
         {{each(j, subItem) tags.word}}
             <div class="back_gray row">
@@ -218,7 +224,7 @@
         {{/each}}
 
         {{for(i = num_words; i < 3; i++)}}
-            <div class="row"><input type="text" placeholder="Add a word" /></div>
+            <div class="small_row blank_bar">ADD A WORD</div>
         {{/for }}
     </div>
 

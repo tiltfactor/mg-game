@@ -55,6 +55,11 @@ class Tag extends BaseTag
         } else {
             $criteria->compare('tu.weight', "> 0", true);
         }
+
+        if (isset($_GET['institutionId'])) {
+            $criteria->compare('i.institution_id', $_GET['institutionId']);
+        }
+
         if (!Yii::app()->request->isAjaxRequest)
             $criteria->order = 'tag ASC';
         return new CActiveDataProvider($this, array(

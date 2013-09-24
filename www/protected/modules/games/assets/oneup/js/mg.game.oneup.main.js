@@ -171,21 +171,18 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'game_screen':
+                    $("#header").find('.words').show();
                     //game_screen
                     //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGameState/gid/OneUp/playedGameId/212
                     MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
                         /**
-                        public $turn;
-                        public $score;
-                        public $opponentScore;
                         public $tags //GameTagDTO[]
-                        public $media; //GameMediaDTO
-                        public $wordsToAvoid;
                         */
                         var json = {};
                         json = turn_response;
                         json.oppoentName = MG_GAME_ONEUP.opponent_name;
                         json.num_words = turn_response.tags.length;
+                        var tag_count = json.num_words;
 /*
                         turn_response.tags.word = [];
                         turn_response.tags.word[0] = {};
@@ -198,8 +195,74 @@ MG_GAME_ONEUP = function ($) {
                         turn_response.tags.word[1].comment = 'GREAT WORD';
 */
                         $("#template-game_screen").tmpl(json).appendTo($("#game_screen")).after(function () {
+                            $("#game_screen .blank_bar").off('click').on('click', function () {
+                                var that = $(this),
+                                    current_tag;
+                                that.empty();
+                                that.append('<input type="text" placeholder="ADD A WORD" />');
+                                that.find('input').focus();
+                                that.find('input').keypress(function (e) {
+                                    if (e.which == 13) {
+                                        var tag = that.find('input').val(),
+                                            new_html;
+                                        if (validTag(that.find('input').val(), turn_response.tags)) {
+                                            //http://localhost/mggameserver/index.php/api/multiplayer/sunmit/gid/OneUp/playedGameId/212
+                                            //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
+                                            current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.media[0].id + '","type":null,"tag_id":null}]';
+                                            MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(response) {
+/*
+                                              var response = [];
+                                                response[0] = {};
+                                                response[0].tag = that.find('input').val();
+                                                response[0].original = null;
+                                                response[0].score = 3;
+                                                response[0].weight = null;
+                                                response[0].mediaId = response[0].mediaId = "";
+                                                response[0].type = 'new';
+                                                response[0].tag_id = null;
+*/
+                                                that.removeClass('blank_bar');
+                                                if (parseInt(response[0].score, 10) === 1 && turn_response.turn === 1) {
+                                                    that.addClass('standard_bar');
+                                                    new_html = '<span>+1</span>' + response[0].tag;
+                                                } else if (parseInt(response[0].score, 10) === 1 && turn_response.turn !== 1) {
+                                                    that.addClass('up_bar');
+                                                    new_html = '<span>+1</span>' + response[0].tag + '<span class="bar_right">YOU GOT<br/>' + MG_GAME_ONEUP.opponent_name + '<br/>POINT!</span>';
+                                                } else if (response[0].score === -1) {
+                                                    that.addClass('upped_bar');
+                                                    new_html = '<span>-1</span>' + response[0].tag + '<span class="bar_right">' + MG_GAME_ONEUP.opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+                                                } else if (parseInt(response[0].score, 10) === 3) {
+                                                    that.addClass('bonus_bar');
+                                                    new_html = '<span>+3</span>' + response[0].tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+                                                }
+                                                that.html(new_html);
+                                                that.off('click');
+                                                var score_obj = $("#game_screen .you span");
+                                                score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10));
+                                                tag_count++;
+                                                if (tag_count === 3) {
+                                                    $("#game_screen .round").html('WAITING ...');
+                                                }
+                                            }, {
+                                                    type: 'post',
+                                                    data: {
+                                                        tags: current_tag
+                                                    }
+                                                }
+                                            );
+                                        }
 
+
+                                        return false;
+                                    }
+                                });
+                            });
                         });
+
+                        function validTag (tag, tags) {
+                            //TODO check if tag is already entered this turn
+                            return true;
+                        }
                     });
                     break;
                 case 'game_customize':
@@ -393,11 +456,12 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'institution_info':
+                    $("#institution_info").empty();
                     $("#header").find('.setting').hide();
                     $("#header").find('.back').show();
                     MG_API.ajaxCall('/multiplayer/GetInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
-                        var inst_remove = '<div class="right favorite" type="remove">REMOVE FROM PLAYLIST</div>',
-                            inst_add = '<div class="right favorite" type="add">FAVORITE</div>';
+                        var inst_remove = '<div class="right top_btn favorite" type="remove">REMOVE FROM PLAYLIST</div>',
+                            inst_add = '<div class="right top_btn favorite" type="add">FAVORITE</div>';
 
                         //show_institution
                         $("#template-show_institution").tmpl(response).appendTo($("#institution_info")).after(function () {
