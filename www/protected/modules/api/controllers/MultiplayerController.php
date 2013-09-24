@@ -9,7 +9,7 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - validateSecret,disconnect, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
+            'throttle - submit, validateSecret,disconnect, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
             'IPBlock',
             'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - validateSecret,disconnect',
@@ -157,7 +157,7 @@ class MultiplayerController extends ApiController
         }
 
         $tags = array();
-        $_POST["tags"] = '[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
+        //$_POST["tags"] = '[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
         if (isset($_POST["tags"])) {
             $tags = GameTagDTO::createTagsFromJson($_POST["tags"]);
         }

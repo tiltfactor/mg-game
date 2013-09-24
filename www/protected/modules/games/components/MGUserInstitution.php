@@ -112,7 +112,7 @@ class MGUserInstitution extends CComponent
         if ($bannedInsts) {
             foreach ($bannedInsts as $row) {
                 foreach ($result as $i => $row2) {
-                    if ($row->id == $row2->id) {
+                    if ($row->institution_id == $row2->id) {
                         $result[$i]->isBanned = true;
                     }
                 }

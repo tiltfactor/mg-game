@@ -93,12 +93,30 @@ input {
   background-color: #030104;
   height: auto;
 
+  a {
+    text-decoration: none;
+    line-height: 25px;
+  }
+
+  .top_btn {
+    border: 1px solid #403b3d;
+    border-radius: 7px 7px 7px 7px;
+    color: #46A5C4;
+    padding: 3px 8px;
+    text-decoration: none;
+  }
+
   .setting {
     display: block;
     .at2x('../images/settings.png');
     width: 35px;
     height: 22px;
   }
+
+  .back {
+    padding-left: 25px;
+  }
+
 }
 
 .mm-right.mm-opening .mm-page, html.mm-right.mm-opening #mm-blocker {
@@ -161,6 +179,31 @@ input {
     margin-top: 20px;
   }
 
+  h4 {
+    color: #a3a3a3;
+    height: 17px;
+    line-height: 17px;
+    font-size: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 20px;
+  }
+
+  .header_scores {
+    text-align: right;
+    margin-top: -8px;
+
+    div {
+      height: 15px;
+      &.you {
+        color: #a3a3a3;
+      }
+      &.opponent {
+        color: #f7f200;
+      }
+    }
+  }
+
   .row {
     padding-left: 22px;
     padding-right: 22px;
@@ -208,11 +251,20 @@ body {
     }
   }
 
-  .back_gray {
+  .back_gray, .blank_bar {
     .at2x('../images/back_gray.png');
     color: #341d33 !important;
     a {
       color: #341d33 !important;
+      text-decoration: none;
+    }
+  }
+
+  .back_dark_gray {
+    .at2x('../images/back_dark_gray.png');
+    color: white !important;
+    a {
+      color: white !important;
       text-decoration: none;
     }
   }
@@ -224,6 +276,12 @@ body {
       color: white !important;
       text-decoration: none;
     }
+  }
+
+  .main_gray {
+    .at2x('../images/pattern.gif');
+    text-align: center;
+    padding: 10px;
   }
 
   .back_blue {
@@ -293,6 +351,15 @@ body.retina {
       padding-right: 30px;
     }
 
+    h4 {
+      height: 34px;
+      line-height: 34px;
+      font-size: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+      margin-bottom: 20px;
+    }
+
     .delete {
       width: 62px;
       height: 44px;
@@ -316,9 +383,15 @@ body.retina {
   }
 
 
-  #header .setting {
+  #header{
+    .setting {
       width: 68px;
       height: 42px;
+    }
+
+    .back {
+      padding-left: 50px;
+    }
   }
 }
 

@@ -171,16 +171,12 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'game_screen':
+                    $("#header").find('.words').show();
                     //game_screen
                     //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGameState/gid/OneUp/playedGameId/212
                     MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
                         /**
-                        public $turn;
-                        public $score;
-                        public $opponentScore;
                         public $tags //GameTagDTO[]
-                        public $media; //GameMediaDTO
-                        public $wordsToAvoid;
                         */
                         var json = {};
                         json = turn_response;
@@ -198,8 +194,51 @@ MG_GAME_ONEUP = function ($) {
                         turn_response.tags.word[1].comment = 'GREAT WORD';
 */
                         $("#template-game_screen").tmpl(json).appendTo($("#game_screen")).after(function () {
+                            $("#game_screen .blank_bar").off('click').on('click', function () {
+                                var that = $(this),
+                                    current_tag;
+                                that.empty();
+                                that.append('<input type="text" placeholder="Add a word" />');
+                                that.find('input').focus();
+                                that.find('input').keypress(function (e) {
+                                    if (e.which == 13) {
+                                        var tag = that.find('input').val();
+                                        if (validTag(that.find('input').val(), turn_response.tags)) {
+                                            //http://localhost/mggameserver/index.php/api/multiplayer/sunmit/gid/OneUp/playedGameId/212
+                                            //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
+                                            current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.media[0].id + '","type":null,"tag_id":null}]';
+/*
+                                            current_tag[0] = {};
+                                            current_tag[0].tag = tag;
+                                            current_tag[0].original = null;
+                                            current_tag[0].score = null;
+                                            current_tag[0].weight = null;
+                                            current_tag[0].mediaId = turn_response.media[0].id;
+                                            current_tag[0].type = null;
+                                            current_tag[0].tag_id = null;
+*/
+                                            MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(institution_response) {
 
+                                            }, {
+                                                    type: 'post',
+                                                    data: {
+                                                        tags: current_tag
+                                                    }
+                                                }
+                                            );
+                                        }
+
+
+                                        return false;
+                                    }
+                                });
+                            });
                         });
+
+                        function validTag (tag, tags) {
+                            //TODO check if tag is already entered this turn
+                            return true;
+                        }
                     });
                     break;
                 case 'game_customize':
@@ -393,11 +432,12 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'institution_info':
+                    $("#institution_info").empty();
                     $("#header").find('.setting').hide();
                     $("#header").find('.back').show();
                     MG_API.ajaxCall('/multiplayer/GetInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
-                        var inst_remove = '<div class="right favorite" type="remove">REMOVE FROM PLAYLIST</div>',
-                            inst_add = '<div class="right favorite" type="add">FAVORITE</div>';
+                        var inst_remove = '<div class="right top_btn favorite" type="remove">REMOVE FROM PLAYLIST</div>',
+                            inst_add = '<div class="right top_btn favorite" type="add">FAVORITE</div>';
 
                         //show_institution
                         $("#template-show_institution").tmpl(response).appendTo($("#institution_info")).after(function () {
