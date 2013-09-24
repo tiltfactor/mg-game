@@ -72,7 +72,7 @@ class MGUserInstitution extends CComponent
         if ($bannedInsts) {
             foreach ($bannedInsts as $row) {
                 foreach ($result as $i => $row2) {
-                    if ($row->id == $row2->id) {
+                    if ($row->institution_id == $row2->id) {
                         $result[$i]->isBanned = true;
                     }
                 }
@@ -110,7 +110,7 @@ class MGUserInstitution extends CComponent
      */
     public function unban($institutionId)
     {
-        $model = UserGameBannedInstitution::model()->findAll('user_id=:userId and game_id=:gameId and institution_id=:instId', array(':userId' => $this->userId, ':gameId' => $this->game->id, 'instId' => $institutionId));
+        $model = UserGameBannedInstitution::model()->find('user_id=:userId and game_id=:gameId and institution_id=:instId', array(':userId' => $this->userId, ':gameId' => $this->game->id, 'instId' => $institutionId));
 
         if ($model) {
             if (!$model->delete()) {
