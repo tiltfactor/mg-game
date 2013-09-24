@@ -9,7 +9,7 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - validateSecret,disconnect, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames',
+            'throttle - validateSecret,disconnect, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
             'IPBlock',
             'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - validateSecret,disconnect',
@@ -43,6 +43,7 @@ class MultiplayerController extends ApiController
                     'addInterest',
                     'removeInterest',
                     'getInstitutions',
+                    'getInstitution',
                     'banInstitution',
                     'unbanInstitution'
                 ),
@@ -408,6 +409,24 @@ class MultiplayerController extends ApiController
         $data = array();
         $data['status'] = "ok";
         $this->sendResponse($data);
+    }
+
+    /**
+     * Get all active institutions
+     * Response sent is json encode of GameUserInstitutionDTO[]
+     *
+     * @param string $gid
+     * @param int $id
+     */
+    public function actionGetInstitution($gid, $id)
+    {
+        Yii::import("games.components.*");
+        $component = new MGUserInstitution($gid);
+        if (is_null($component)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $this->sendResponse($component->getByID($id));
     }
 
     /**
