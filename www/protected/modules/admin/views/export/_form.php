@@ -23,7 +23,7 @@
   
   <div class="row">
     <?php echo $form->label($model, 'collections'); ?>
-    <?php echo CHtml::checkBoxList("ExportForm[collections]", ((isset($_POST["ExportForm"]) && isset($_POST["ExportForm"]["collections"]))? $_POST["ExportForm"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Collection::model()->findAllAttributes(null, true)), false, true), array(
+    <?php echo CHtml::checkBoxList("ExportForm[collections]", ((isset($_POST["ExportForm"]) && isset($_POST["ExportForm"]["collections"]))? $_POST["ExportForm"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx($model->getCollections()), false, true), array(
         'template' => '<div class="checkbox">{input} {label}</div>',
         'separator' => '',
         )); ?>

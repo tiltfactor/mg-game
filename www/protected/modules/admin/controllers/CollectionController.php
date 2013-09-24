@@ -1,113 +1,127 @@
 <?php
 
-class CollectionController extends GxController {
+class CollectionController extends GxController
+{
 
-  public function filters() {
-  	return array(
-      'IPBlock',
-      'accessControl', 
-      );
-  }
-  
-  public function accessRules() {
-  	return array(
-  			array('allow',
-  				'actions'=>array('view'),
-  				'roles'=>array('*'),
-  				),
-  			array('allow', 
-  				'actions'=>array('index','view', 'batch', 'create','update', 'admin', 'delete'),
-                'roles' => array(EDITOR, ADMIN),
-  				),
-  			array('deny', 
-  				'users'=>array('*'),
-  				),
-  			);
-  }
+    public function filters()
+    {
+        return array(
+            'IPBlock',
+            'accessControl',
+        );
+    }
 
-	public function actionView($id) {
-		$this->render('view', array(
-			'model' => $this->loadModel($id, 'Collection'),
-		));
-	}
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                'actions' => array('view'),
+                'roles' => array('*'),
+            ),
+            array('allow',
+                'actions' => array('index', 'view', 'admin'),
+                'roles' => array(EDITOR, INSTITUTION),
+            ),
+            array('deny',
+                'users' => array('*'),
+            ),
+        );
+    }
 
-	public function actionCreate() {
-		$model = new Collection;
-		$model->created = date('Y-m-d H:i:s'); 
-    $model->modified = date('Y-m-d H:i:s'); 
-    
-		$this->performAjaxValidation($model, 'collection-form');
+    public function actionView($id)
+    {
+        $model = $this->loadModel($id, 'Collection');
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
+        $this->render('view', array(
+            'model' => $model,
+        ));
+    }
 
-		if (isset($_POST['Collection'])) {
-			$model->setAttributes($_POST['Collection']);
-			$relatedData = array(
-				'games' => $_POST['Collection']['games'] === '' ? null : $_POST['Collection']['games'],
-				'subjectMatters' => $_POST['Collection']['subjectMatters'] === '' ? null : $_POST['Collection']['subjectMatters'],
-				);
+    public function actionCreate()
+    {
+        $model = new Collection;
+        $model->created = date('Y-m-d H:i:s');
+        $model->modified = date('Y-m-d H:i:s');
 
-			if ($model->saveWithRelated($relatedData)) {
-        MGHelper::log('create', 'Created Collection with ID(' . $model->id . ')');
-				Flash::add('success', Yii::t('app', "Collection created"));
-        if (Yii::app()->getRequest()->getIsAjaxRequest())
-					Yii::app()->end();
-				else 
-				  $this->redirect(array('view', 'id' => $model->id));
-			}
-		}
+        $this->performAjaxValidation($model, 'collection-form');
 
-		$this->render('create', array( 'model' => $model));
-	}
+        if (isset($_POST['Collection'])) {
+            $model->setAttributes($_POST['Collection']);
+            $relatedData = array(
+                'games' => $_POST['Collection']['games'] === '' ? null : $_POST['Collection']['games'],
+                'subjectMatters' => $_POST['Collection']['subjectMatters'] === '' ? null : $_POST['Collection']['subjectMatters'],
+            );
 
-	public function actionUpdate($id) {
-		$model = $this->loadModel($id, 'Collection');
-    $model->modified = date('Y-m-d H:i:s');
-		$this->performAjaxValidation($model, 'collection-form');
+            if ($model->saveWithRelated($relatedData)) {
+                MGHelper::log('create', 'Created Collection with ID(' . $model->id . ')');
+                Flash::add('success', Yii::t('app', "Collection created"));
+                if (Yii::app()->getRequest()->getIsAjaxRequest())
+                    Yii::app()->end();
+                else
+                    $this->redirect(array('view', 'id' => $model->id));
+            }
+        }
 
-		if (isset($_POST['Collection'])) {
-			$model->setAttributes($_POST['Collection']);
-			$relatedData = array(
-				'subjectMatters' => $_POST['Collection']['subjectMatters'] === '' ? null : $_POST['Collection']['subjectMatters'],
-				);
-      
-      if (isset($_POST['Collection']['games']))
-        $relatedData['games'] = $_POST['Collection']['games'] === '' ? null : $_POST['Collection']['games'];
-        
-			if ($model->saveWithRelated($relatedData)) {
-        MGHelper::log('update', 'Updated Collection with ID(' . $id . ')');
-        Flash::add('success', Yii::t('app', "Collection updated"));
-				$this->redirect(array('view', 'id' => $model->id));
-			}
-		}
+        $this->render('create', array('model' => $model));
+    }
 
-		$this->render('update', array(
-				'model' => $model,
-				));
-	}
+    public function actionUpdate($id)
+    {
+        $model = $this->loadModel($id, 'Collection');
+        $model->modified = date('Y-m-d H:i:s');
+        $this->performAjaxValidation($model, 'collection-form');
 
-	public function actionDelete($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$model = $this->loadModel($id, 'Collection');
-			if ($model->hasAttribute("locked") && $model->locked) {
-			  throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
-			} else {
-			  $model->delete();
-			  MGHelper::log('delete', 'Deleted Collection with ID(' . $id . ')');
-        
-        Flash::add('success', Yii::t('app', "Collection deleted"));
+        if (isset($_POST['Collection'])) {
+            $model->setAttributes($_POST['Collection']);
+            $relatedData = array(
+                'subjectMatters' => $_POST['Collection']['subjectMatters'] === '' ? null : $_POST['Collection']['subjectMatters'],
+            );
 
-			  if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				  $this->redirect(array('admin'));
-		  }
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
-	}
+            if (isset($_POST['Collection']['games']))
+                $relatedData['games'] = $_POST['Collection']['games'] === '' ? null : $_POST['Collection']['games'];
 
-	public function actionIndex() {
-		$model = new Collection('search');
-    $model->unsetAttributes();
+            if ($model->saveWithRelated($relatedData)) {
+                MGHelper::log('update', 'Updated Collection with ID(' . $id . ')');
+                Flash::add('success', Yii::t('app', "Collection updated"));
+                $this->redirect(array('view', 'id' => $model->id));
+            }
+        }
 
-    if (isset($_GET['Collection']))
-      $model->setAttributes($_GET['Collection']);
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionDelete($id)
+    {
+        if (Yii::app()->getRequest()->getIsPostRequest()) {
+            $model = $this->loadModel($id, 'Collection');
+            if ($model->hasAttribute("locked") && $model->locked) {
+                throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+            } else {
+                $model->delete();
+                MGHelper::log('delete', 'Deleted Collection with ID(' . $id . ')');
+
+                Flash::add('success', Yii::t('app', "Collection deleted"));
+
+                if (!Yii::app()->getRequest()->getIsAjaxRequest())
+                    $this->redirect(array('admin'));
+            }
+        } else
+            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+    }
+
+    public function actionIndex()
+    {
+        $model = new Collection('search');
+        $model->unsetAttributes();
+
+        if (isset($_GET['Collection']))
+            $model->setAttributes($_GET['Collection']);
 
         $user = User::loadUser(Yii::app()->user->id);
         if ($user && $user->role == INSTITUTION) {
@@ -115,17 +129,18 @@ class CollectionController extends GxController {
             $model->setAttribute('institution_id', $institutions->id);
         }
 
-    $this->render('admin', array(
-      'model' => $model,
-    ));
-	}
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
 
-	public function actionAdmin() {
-		$model = new Collection('search');
-		$model->unsetAttributes();
+    public function actionAdmin()
+    {
+        $model = new Collection('search');
+        $model->unsetAttributes();
 
-		if (isset($_GET['Collection']))
-			$model->setAttributes($_GET['Collection']);
+        if (isset($_GET['Collection']))
+            $model->setAttributes($_GET['Collection']);
 
         $user = User::loadUser(Yii::app()->user->id);
         if ($user && $user->role == INSTITUTION) {
@@ -133,36 +148,38 @@ class CollectionController extends GxController {
             $model->setAttribute('institution_id', $institutions->id);
         }
 
-		$this->render('admin', array(
-			'model' => $model,
-		));
-	}
-  
-  
-  public function actionBatch($op) {
-    if (Yii::app()->getRequest()->getIsPostRequest()) {
-      switch ($op) {
-        case "delete":
-          $this->_batchDelete();
-          break;
-      }
-      if (!Yii::app()->getRequest()->getIsAjaxRequest())
-        $this->redirect(array('admin'));
-    } else
-      throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));  
-    
-  }
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
 
-  private function _batchDelete() {
-    if (isset($_POST['collection-ids'])) {
-      $criteria=new CDbCriteria;
-      $criteria->addInCondition("id", $_POST['collection-ids']);
-      $criteria->addInCondition("locked", array(0));      
-      MGHelper::log('batch-delete', 'Batch deleted Collection with IDs(' . implode(',', $_POST['collection-ids']) . ')');
-        
-      $model = new Collection;
-      $model->deleteAll($criteria);
-        
-    } 
-  }
+
+    public function actionBatch($op)
+    {
+        if (Yii::app()->getRequest()->getIsPostRequest()) {
+            switch ($op) {
+                case "delete":
+                    $this->_batchDelete();
+                    break;
+            }
+            if (!Yii::app()->getRequest()->getIsAjaxRequest())
+                $this->redirect(array('admin'));
+        } else
+            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+
+    }
+
+    private function _batchDelete()
+    {
+        if (isset($_POST['collection-ids'])) {
+            $criteria = new CDbCriteria;
+            $criteria->addInCondition("id", $_POST['collection-ids']);
+            $criteria->addInCondition("locked", array(0));
+            MGHelper::log('batch-delete', 'Batch deleted Collection with IDs(' . implode(',', $_POST['collection-ids']) . ')');
+
+            $model = new Collection;
+            $model->deleteAll($criteria);
+
+        }
+    }
 }

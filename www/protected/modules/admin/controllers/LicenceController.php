@@ -1,146 +1,176 @@
 <?php
 
-class LicenceController extends GxController {
+class LicenceController extends GxController
+{
 
-  public function filters() {
-  	return array(
-      'IPBlock',
-      'accessControl', 
-      );
-  }
-  
-  public function accessRules() {
-  	return array(
-  			array('allow',
-  				'actions'=>array('view'),
-  				'roles'=>array('*'),
-  				),
-  			array('allow', 
-  				'actions'=>array('index','view', 'batch', 'create','update', 'admin', 'delete'),
-  				'roles'=>array(EDITOR, EDITOR),
-  				),
-  			array('deny', 
-  				'users'=>array('*'),
-  				),
-  			);
-  }
+    public function filters()
+    {
+        return array(
+            'IPBlock',
+            'accessControl',
+        );
+    }
 
-	public function actionView($id) {
-		$this->render('view', array(
-			'model' => $this->loadModel($id, 'Licence'),
-		));
-	}
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                'actions' => array('view'),
+                'roles' => array('*'),
+            ),
+            array('allow',
+                'actions' => array('index', 'view', 'admin'),
+                'roles' => array(EDITOR, INSTITUTION),
+            ),
+            array('deny',
+                'users' => array('*'),
+            ),
+        );
+    }
 
-	public function actionCreate() {
-		$model = new Licence;
-		$model->created = date('Y-m-d H:i:s'); 
-    $model->modified = date('Y-m-d H:i:s'); 
-    
-		$this->performAjaxValidation($model, 'licence-form');
+    public function actionView($id)
+    {
+        $model = $this->loadModel($id, 'Licence');
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
 
-		if (isset($_POST['Licence'])) {
-			$model->setAttributes($_POST['Licence']);
+        $this->render('view', array(
+            'model' => $model,
+        ));
+    }
 
-			if ($model->save()) {
-        MGHelper::log('create', 'Created Licence with ID(' . $model->id . ')');
-				Flash::add('success', Yii::t('app', "Licence created"));
-        if (Yii::app()->getRequest()->getIsAjaxRequest())
-					Yii::app()->end();
-				else 
-				  $this->redirect(array('view', 'id' => $model->id));
-			}
-		}
+    public function actionCreate()
+    {
+        $model = new Licence;
+        $model->created = date('Y-m-d H:i:s');
+        $model->modified = date('Y-m-d H:i:s');
 
-		$this->render('create', array( 'model' => $model));
-	}
+        $this->performAjaxValidation($model, 'licence-form');
 
-	public function actionUpdate($id) {
-		$model = $this->loadModel($id, 'Licence');
-    $model->modified = date('Y-m-d H:i:s');
-		$this->performAjaxValidation($model, 'licence-form');
+        if (isset($_POST['Licence'])) {
+            $model->setAttributes($_POST['Licence']);
 
-		if (isset($_POST['Licence'])) {
-			$model->setAttributes($_POST['Licence']);
+            if ($model->save()) {
+                MGHelper::log('create', 'Created Licence with ID(' . $model->id . ')');
+                Flash::add('success', Yii::t('app', "Licence created"));
+                if (Yii::app()->getRequest()->getIsAjaxRequest())
+                    Yii::app()->end();
+                else
+                    $this->redirect(array('view', 'id' => $model->id));
+            }
+        }
 
-			if ($model->save()) {
-        MGHelper::log('update', 'Updated Licence with ID(' . $id . ')');
-        Flash::add('success', Yii::t('app', "Licence updated"));
-				$this->redirect(array('view', 'id' => $model->id));
-			}
-		}
+        $this->render('create', array('model' => $model));
+    }
 
-		$this->render('update', array(
-				'model' => $model,
-				));
-	}
+    public function actionUpdate($id)
+    {
+        $model = $this->loadModel($id, 'Licence');
+        $model->modified = date('Y-m-d H:i:s');
+        $this->performAjaxValidation($model, 'licence-form');
 
-	public function actionDelete($id) {
-		if (Yii::app()->getRequest()->getIsPostRequest()) {
-			$model = $this->loadModel($id, 'Licence');
-			if ($model->hasAttribute("locked") && $model->locked) {
-			  throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
-			} else {
-			  $model->delete();
-			  MGHelper::log('delete', 'Deleted Licence with ID(' . $id . ')');
-        
-        Flash::add('success', Yii::t('app', "Licence deleted"));
+        if (isset($_POST['Licence'])) {
+            $model->setAttributes($_POST['Licence']);
 
-			  if (!Yii::app()->getRequest()->getIsAjaxRequest())
-				  $this->redirect(array('admin'));
-		  }
-		} else
-			throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
-	}
+            if ($model->save()) {
+                MGHelper::log('update', 'Updated Licence with ID(' . $id . ')');
+                Flash::add('success', Yii::t('app', "Licence updated"));
+                $this->redirect(array('view', 'id' => $model->id));
+            }
+        }
 
-	public function actionIndex() {
-		$model = new Licence('search');
-    $model->unsetAttributes();
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
 
-    if (isset($_GET['Licence']))
-      $model->setAttributes($_GET['Licence']);
+    public function actionDelete($id)
+    {
+        if (Yii::app()->getRequest()->getIsPostRequest()) {
+            $model = $this->loadModel($id, 'Licence');
+            if ($model->hasAttribute("locked") && $model->locked) {
+                throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+            } else {
+                $model->delete();
+                MGHelper::log('delete', 'Deleted Licence with ID(' . $id . ')');
 
-    $this->render('admin', array(
-      'model' => $model,
-    ));
-	}
+                Flash::add('success', Yii::t('app', "Licence deleted"));
 
-	public function actionAdmin() {
-		$model = new Licence('search');
-		$model->unsetAttributes();
+                if (!Yii::app()->getRequest()->getIsAjaxRequest())
+                    $this->redirect(array('admin'));
+            }
+        } else
+            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+    }
 
-		if (isset($_GET['Licence']))
-			$model->setAttributes($_GET['Licence']);
+    public function actionIndex()
+    {
+        $model = new Licence('search');
+        $model->unsetAttributes();
 
-		$this->render('admin', array(
-			'model' => $model,
-		));
-	}
-  
-  
-  public function actionBatch($op) {
-    if (Yii::app()->getRequest()->getIsPostRequest()) {
-      switch ($op) {
-        case "delete":
-          $this->_batchDelete();
-          break;
-      }
-      if (!Yii::app()->getRequest()->getIsAjaxRequest())
-        $this->redirect(array('admin'));
-    } else
-      throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));  
-    
-  }
+        if (isset($_GET['Licence']))
+            $model->setAttributes($_GET['Licence']);
 
-  private function _batchDelete() {
-    if (isset($_POST['licence-ids'])) {
-      $criteria=new CDbCriteria;
-      $criteria->addInCondition("id", $_POST['licence-ids']);
-            
-      MGHelper::log('batch-delete', 'Batch deleted Licence with IDs(' . implode(',', $_POST['licence-ids']) . ')');
-        
-      $model = new Licence;
-      $model->deleteAll($criteria);
-        
-    } 
-  }
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
+
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionAdmin()
+    {
+        $model = new Licence('search');
+        $model->unsetAttributes();
+
+        if (isset($_GET['Licence']))
+            $model->setAttributes($_GET['Licence']);
+
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
+
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
+
+    public function actionBatch($op)
+    {
+        if (Yii::app()->getRequest()->getIsPostRequest()) {
+            switch ($op) {
+                case "delete":
+                    $this->_batchDelete();
+                    break;
+            }
+            if (!Yii::app()->getRequest()->getIsAjaxRequest())
+                $this->redirect(array('admin'));
+        } else
+            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+
+    }
+
+    private function _batchDelete()
+    {
+        if (isset($_POST['licence-ids'])) {
+            $criteria = new CDbCriteria;
+            $criteria->addInCondition("id", $_POST['licence-ids']);
+
+            MGHelper::log('batch-delete', 'Batch deleted Licence with IDs(' . implode(',', $_POST['licence-ids']) . ')');
+
+            $model = new Licence;
+            $model->deleteAll($criteria);
+
+        }
+    }
 }
