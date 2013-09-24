@@ -887,7 +887,7 @@ abstract class MGMultiPlayer extends CComponent
 
         foreach ($submits as $submit) {
             if ($submit->session_id == $this->sessionId) {
-                $tagsArr = json_decode($submit->submission);
+                $tagsArr = json_decode($submit->submission, true);
                 $tmpTags = GameTagDTO::createFromArray($tagsArr);
                 $gameTurn->tags = array_merge($gameTurn->tags, $tmpTags);
             }
