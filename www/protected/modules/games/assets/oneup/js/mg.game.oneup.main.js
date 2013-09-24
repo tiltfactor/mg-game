@@ -206,7 +206,7 @@ MG_GAME_ONEUP = function ($) {
                     $("#game_customize").find("#listing").remove();
                     $('#new_interest').attr('value', '');
 
-                    $('input').keypress(function (e) {
+                    $('input#new_interest').keypress(function (e) {
                         if (e.which == 13) {
                             $("#game_customize").find('.note').remove();
                             //http://localhost/mggameserver/index.php/api/multiplayer/addInterest/gid/OneUp/interest/alabala/
@@ -223,6 +223,16 @@ MG_GAME_ONEUP = function ($) {
                         json.all_institution = institution_response;
                         $("#template-favorite_institutions").tmpl(json).appendTo($("#game_customize")).after(function () {
                             // add click on an institution
+                            // click on an institution
+                            $("#list_institutions .institution").off('click').on('click', function (e) {
+                                e.preventDefault();
+                                var row = $(this);
+                                MG_GAME_ONEUP.institution_id = row.attr('institution_id');
+                                MG_GAME_ONEUP.back_location = 'game_customize';
+                                // institution_info
+                                MG_GAME_ONEUP.actions('institution_info', '');
+
+                            });
                         });
                     });
 
@@ -375,6 +385,13 @@ MG_GAME_ONEUP = function ($) {
                     });
 
                     break;
+                case 'find_opponent':
+                    $('#find_opponent input.opponent_name').keypress(function (e) {
+                            if (e.which == 13) {
+                                $('#find_opponent .play').click();
+                            }
+                    });
+                    break;
                 case 'institution_info':
                     $("#header").find('.setting').hide();
                     $("#header").find('.back').show();
@@ -386,7 +403,6 @@ MG_GAME_ONEUP = function ($) {
                         $("#template-show_institution").tmpl(response).appendTo($("#institution_info")).after(function () {
 
                         });
-                        console.log(response[0].isBanned);
                         if (response[0].isBanned === false) {
                             // Institution is in favorite list
                             $("#header").append(inst_remove);
@@ -420,8 +436,8 @@ MG_GAME_ONEUP = function ($) {
                             $("#header").find('.back').hide();
                             $("#header").find('.favorite').remove();
                             $("#header").find('.setting').show();
-                            click_parent = 'account';
-                            $("a[location='account']").click();
+                            click_parent = MG_GAME_ONEUP.back_location;
+                            $("a[location='" + MG_GAME_ONEUP.back_location + "']").click();
                             return false;
                         });
                     });

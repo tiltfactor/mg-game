@@ -28,8 +28,8 @@
 
           <div id="find_opponent" class="hidden">
               <h2>ENTER A USER NAME</h2>
-              <div><input type="text" name="opponent_name" class="opponent_name" /></div>
-              <a href="#" location="make_challenge" class="big_button play"><span>PLAY</span></a>
+              <div class="padding text-center"><input type="text" id="input_opponent" name="opponent_name" class="opponent_name" /></div>
+              <div class="margin_topBottom"><a href="#" location="make_challenge" class="big_button play"><span>PLAY</span></a></div>
           </div>
 
           <div id="game_screen" class="hidden">
@@ -76,16 +76,16 @@
           <div id="how_to" class="hidden">
               <h2>How to Play</h2>
               <div id="image_gallery">
-                  <div number="1"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_1.jpg" /></div>
-                  <div number="2" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_2.jpg" width="320" height="502" /></div>
-                  <div number="3" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_3.jpg" width="320" height="502" /></div>
-                  <div number="4" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_4.jpg" width="320" height="502" /></div>
-                  <div number="5" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_5.jpg" width="320" height="502" /></div>
-                  <div number="6" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_6.jpg" width="320" height="502" /></div>
-                  <div number="7" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_7.jpg" width="320" height="502" /></div>
-                  <div number="8" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_8.jpg" width="320" height="502" /></div>
-                  <div number="9" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_9.jpg" width="320" height="502" /></div>
-                  <div number="10" class="hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_10.jpg" width="320" height="502" /></div>
+                  <div number="1" class="text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_1.jpg" /></div>
+                  <div number="2" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_2.jpg" width="320" height="502" /></div>
+                  <div number="3" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_3.jpg" width="320" height="502" /></div>
+                  <div number="4" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_4.jpg" width="320" height="502" /></div>
+                  <div number="5" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_5.jpg" width="320" height="502" /></div>
+                  <div number="6" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_6.jpg" width="320" height="502" /></div>
+                  <div number="7" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_7.jpg" width="320" height="502" /></div>
+                  <div number="8" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_8.jpg" width="320" height="502" /></div>
+                  <div number="9" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_9.jpg" width="320" height="502" /></div>
+                  <div number="10" class="hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_10.jpg" width="320" height="502" /></div>
               </div>
           </div>
 
@@ -230,7 +230,7 @@
         <div id="favorite_institutions"  class="padding" align="center">
             <div id="list_institutions" class="group">
                 {{each all_institution}}
-                <div institution_id="${id}" class="left">
+                <div institution_id="${id}" class="institution left right_padding">
                     <a href="" title="${name}"><img class="institution_logo" src="${logo}" width="70" height="70" /></a>
                 </div>
                 {{/each}}
