@@ -24,6 +24,12 @@ class GameTurnDTO
      * @var GameTagDTO[]
      */
     public $tags;
+
+    /**
+     * opponent turn tags
+     * @var GameTagDTO[]
+     */
+    public $opponentTags;
     /**
      * Turn images to show
      * @var GameMediaDTO[]

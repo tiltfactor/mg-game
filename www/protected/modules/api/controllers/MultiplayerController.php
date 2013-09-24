@@ -294,7 +294,7 @@ class MultiplayerController extends ApiController
 
     /**
      * Get current game state
-     * Response sent is json encode of GameTurnDTO
+     * Response sent is json encode of GameStateDTO
      *
      * @param string $gid
      * @param int $playedGameId

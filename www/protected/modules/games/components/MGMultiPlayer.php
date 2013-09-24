@@ -864,36 +864,55 @@ abstract class MGMultiPlayer extends CComponent
 
     /**
      * @param $playedGameId
-     * @return GameTurnDTO|mixed
+     * @return GameStateDTO|mixed
      */
     public function getOfflineGameState($playedGameId)
     {
-
-        $gameTurn = $this->gameTurn;
-        if ($this->playedGame->session_id_1 == $this->sessionId) {
-            $gameTurn->score = $this->playedGame->score_1;
-            $gameTurn->opponentScore = $this->playedGame->score_2;
-        } else {
-            $gameTurn->score = $this->playedGame->score_2;
-            $gameTurn->opponentScore = $this->playedGame->score_1;
+        $result = new GameStateDTO();
+        $result->turns = array();
+        $result->finished = false;
+        if($this->playedGame->finished){
+            $result->finished = true;
         }
+        $turns = PlayedGameTurnInfo::model()->findAll('played_game_id=:playedId ORDER BY turn ASC', array(':playedId' => $this->playedGame->id));
+        if ($turns) {
+            foreach($turns as $turn){
+                /**
+                 * @var GameTurnDTO $pTurn
+                 */
+                $pTurn = unserialize($turn->data);
 
-        $gameTurn->tags = array();
+                if ($this->playedGame->session_id_1 == $this->sessionId) {
+                    $pTurn->score = $this->playedGame->score_1;
+                    $pTurn->opponentScore = $this->playedGame->score_2;
+                } else {
+                    $pTurn->score = $this->playedGame->score_2;
+                    $pTurn->opponentScore = $this->playedGame->score_1;
+                }
 
-        /**
-         * @var GameSubmission[] $submits
-         */
-        $submits = GameSubmission::model()->findAll('played_game_id=:playedGameId AND turn=:turn', array(':playedGameId' => $this->playedGame->id, ':turn' => $this->gameTurn->turn));
+                $pTurn->tags = array();
+                $pTurn->opponentTags = array();
 
-        foreach ($submits as $submit) {
-            if ($submit->session_id == $this->sessionId) {
-                $tagsArr = json_decode($submit->submission, true);
-                $tmpTags = GameTagDTO::createFromArray($tagsArr);
-                $gameTurn->tags = array_merge($gameTurn->tags, $tmpTags);
+                /**
+                 * @var GameSubmission[] $submits
+                 */
+                $submits = GameSubmission::model()->findAll('played_game_id=:playedGameId AND turn=:turn', array(':playedGameId' => $this->playedGame->id, ':turn' => $pTurn->turn));
+
+                foreach ($submits as $submit) {
+                    $tagsArr = json_decode($submit->submission, true);
+                    $tmpTags = GameTagDTO::createFromArray($tagsArr);
+                    if ($submit->session_id == $this->sessionId) {
+                        $pTurn->tags = array_merge($pTurn->tags, $tmpTags);
+                    }else{
+                        $pTurn->opponentTags = array_merge($pTurn->opponentTags, $tmpTags);
+                    }
+                }
+
+                array_push($result->turns,$pTurn);
             }
         }
 
-        return $gameTurn;
+        return $result;
     }
 
     /**
