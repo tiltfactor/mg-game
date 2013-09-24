@@ -119,42 +119,13 @@ class HybridAuthIdentity extends CUserIdentity
         $userProfile = (array)$haComp->userProfile;
         $email = $userProfile['email'];
 
-     //   $user = new User;
-        $facebook_user = new FacebookUser;
-
-        $facebook_user->username = $email;
-        $facebook_user->password = Yii::app()->getModule('user')->encrypting("dummy_value");
-
-        $facebook_user->email = $email;
-        $facebook_user->activekey = "dummy_value";
-        $facebook_user->status = 1;
-        $facebook_user->open_id = $accessToken['access_token'];
-        $res = $facebook_user->save();
-
-        if($facebook_user->errors == null) $user_id = $facebook_user->id;
-        else
-        {
-            // in case we`ve already written the user in the users table
-            $sql = "SELECT id FROM user WHERE username = \"{$email}\" LIMIT 1" ;
-            $command=Yii::app()->db->createCommand($sql);
-            // [TODO] update the token
-            $results=$command->queryAll();
-            $user_id = $results[0]['id'];
-        }
-
-
-//        MGHelper::createSharedSecretAndSession($user_id, $email, true);
-
-        $identity=new UserIdentity($facebook_user->username,"dummy_value");
-        //      $identity=new UserIdentity("admin","admin");
+        $identity = new UserIdentity($email, "dummy_value");
+        $identity->open_id = $accessToken['access_token'];
 
         $identity->authenticate();
-
-        $duration=60;  // 60 sec
-
-       Yii::app()->user->login($identity,$duration);  // will create the session*/
-
-
+        if ($identity->errorCode == UserIdentity::ERROR_NONE) {
+            $duration=60;  // 60 sec
+            Yii::app()->user->login($identity, $duration);  // will create the session*/
+        }
     }
-
 }

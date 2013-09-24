@@ -20,104 +20,111 @@
  * @property integer $edited_count
  * @property string $created
  * @property string $modified
+ * @property string $open_id
  *
+ * @property Institution[] $institutions
  * @property Log[] $logs
  * @property Profile $profile
  * @property Session[] $sessions
+ * @property TagOriginalVersion[] $tagOriginalVersions
  * @property Game[] $games
  * @property SubjectMatter[] $subjectMatters
- * @property Institution $institution
  */
 abstract class BaseUser extends GxActiveRecord {
 
-	public static function model($className=__CLASS__) {
-		return parent::model($className);
-	}
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
 
-	public function tableName() {
-		return 'user';
-	}
+    public function tableName() {
+        return 'user';
+    }
 
-	public static function label($n = 1) {
-		return Yii::t('app', 'User|Users', $n);
-	}
+    public static function label($n = 1) {
+        return Yii::t('app', 'User|Users', $n);
+    }
 
-	public static function representingColumn() {
-		return 'username';
-	}
+    public static function representingColumn() {
+        return 'username';
+    }
 
-	public function rules() {
-		return array(
-			array('username, password, email, created, modified', 'required'),
-			array('status, edited_count', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>32),
-			array('password, email, activekey', 'length', 'max'=>128),
-			array('role', 'length', 'max'=>45),
-			array('lastvisit', 'safe'),
-			array('activekey, lastvisit, role, status, edited_count', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, username, password, email, activekey, lastvisit, role, status, edited_count, created, modified', 'safe', 'on'=>'search'),
-		);
-	}
+    public function rules() {
+        return array(
+            array('username, password, email, created, modified', 'required'),
+            array('status, edited_count', 'numerical', 'integerOnly' => true),
+            array('username', 'length', 'max' => 32),
+            array('password, email, activekey', 'length', 'max' => 128),
+            array('role', 'length', 'max' => 45),
+            array('open_id', 'length', 'max' => 500),
+            array('lastvisit', 'safe'),
+            array('activekey, lastvisit, role, status, edited_count, open_id', 'default', 'setOnEmpty' => true, 'value' => null),
+            array('id, username, password, email, activekey, lastvisit, role, status, edited_count, created, modified, open_id', 'safe', 'on' => 'search'),
+        );
+    }
 
-	public function relations() {
-		return array(
-			'logs' => array(self::HAS_MANY, 'Log', 'user_id'),
-			'profile' => array(self::HAS_ONE, 'Profile', 'user_id'),
-			'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
-			'games' => array(self::MANY_MANY, 'Game', 'user_to_game(user_id, game_id)'),
-			'subjectMatters' => array(self::MANY_MANY, 'SubjectMatter', 'user_to_subject_matter(user_id, subject_matter_id)'),
+    public function relations() {
+        return array(
+            'institutions' => array(self::HAS_MANY, 'Institution', 'user_id'),
+            'logs' => array(self::HAS_MANY, 'Log', 'user_id'),
+            'profile' => array(self::HAS_ONE, 'Profile', 'user_id'),
+            'sessions' => array(self::HAS_MANY, 'Session', 'user_id'),
+            'tagOriginalVersions' => array(self::HAS_MANY, 'TagOriginalVersion', 'user_id'),
+            'games' => array(self::MANY_MANY, 'Game', 'user_to_game(user_id, game_id)'),
+            'subjectMatters' => array(self::MANY_MANY, 'SubjectMatter', 'user_to_subject_matter(user_id, subject_matter_id)'),
             'institution' => array(self::HAS_ONE, 'Institution', 'user_id'),
-		);
-	}
+        );
+    }
 
-	public function pivotModels() {
-		return array(
-			'games' => 'UserToGame',
-			'subjectMatters' => 'UserToSubjectMatter',
-		);
-	}
+    public function pivotModels() {
+        return array(
+            'games' => 'UserToGame',
+            'subjectMatters' => 'UserToSubjectMatter',
+        );
+    }
 
-	public function attributeLabels() {
-		return array(
-			'id' => Yii::t('app', 'ID'),
-			'username' => Yii::t('app', 'Username'),
-			'password' => Yii::t('app', 'Password'),
-			'email' => Yii::t('app', 'Email'),
-			'activekey' => Yii::t('app', 'Activation Key'),
-			'lastvisit' => Yii::t('app', 'Lastvisit'),
-			'role' => Yii::t('app', 'Role'),
-			'status' => Yii::t('app', 'Status'),
-			'edited_count' => Yii::t('app', 'Edited Count'),
-			'created' => Yii::t('app', 'Created'),
-			'modified' => Yii::t('app', 'Modified'),
-			'logs' => null,
-			'profile' => null,
-			'sessions' => null,
-			'games' => null,
-			'subjectMatters' => null,
-		);
-	}
+    public function attributeLabels() {
+        return array(
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
+            'email' => Yii::t('app', 'Email'),
+            'activekey' => Yii::t('app', 'Activation Key'),
+            'lastvisit' => Yii::t('app', 'Lastvisit'),
+            'role' => Yii::t('app', 'Role'),
+            'status' => Yii::t('app', 'Status'),
+            'edited_count' => Yii::t('app', 'Edited Count'),
+            'created' => Yii::t('app', 'Created'),
+            'modified' => Yii::t('app', 'Modified'),
+            'open_id' => Yii::t('app', 'Open ID'),
+            'institutions' => null,
+            'logs' => null,
+            'profile' => null,
+            'sessions' => null,
+            'tagOriginalVersions' => null,
+            'games' => null,
+            'subjectMatters' => null,
+        );
+    }
 
-	public function search() {
-		$criteria = new CDbCriteria;
-
-		$criteria->compare('id', $this->id);
-		$criteria->compare('username', $this->username, true);
-		$criteria->compare('password', $this->password, true);
-		$criteria->compare('email', $this->email, true);
-		$criteria->compare('activekey', $this->activekey, true);
-		$criteria->compare('lastvisit', $this->lastvisit, true);
-		$criteria->compare('role', $this->role, true);
-		$criteria->compare('status', $this->status);
-		$criteria->compare('edited_count', $this->edited_count);
-		$criteria->compare('created', $this->created, true);
-		$criteria->compare('modified', $this->modified, true);
-
-		return new CActiveDataProvider($this, array(
-			'criteria' => $criteria,
-			'pagination'=>array(
-        'pageSize'=>Yii::app()->fbvStorage->get("settings.pagination_size"),
-      ),
-		));
-	}
+    public function search() {
+        $criteria = new CDbCriteria;
+        $criteria->compare('id', $this->id);
+        $criteria->compare('username', $this->username, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('activekey', $this->activekey, true);
+        $criteria->compare('lastvisit', $this->lastvisit, true);
+        $criteria->compare('role', $this->role, true);
+        $criteria->compare('status', $this->status);
+        $criteria->compare('edited_count', $this->edited_count);
+        $criteria->compare('created', $this->created, true);
+        $criteria->compare('modified', $this->modified, true);
+        $criteria->compare('open_id', $this->open_id, true);
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => Yii::app()->fbvStorage->get("settings.pagination_size"),
+            ),
+        ));
+    }
 }
