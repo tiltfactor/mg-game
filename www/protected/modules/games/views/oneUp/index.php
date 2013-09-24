@@ -203,19 +203,19 @@
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray">
-        <span class="round">ROUND ${turn}</span>
+        <span class="round">ROUND ${current_level}</span>
         <div class="right header_scores">
-            <div class="you">You <span>${score}</span></div>
-            <div class="opponent">${oppoentName} ${opponentScore}</div>
+            <div class="you">You <span>${turn.score}</span></div>
+            <div class="opponent">${opponentName} ${turn.opponentScore}</div>
         </div>
     </div>
     <div class="main_gray">
-        {{each(i, media_item) media}}
+        {{each(i, media_item) turn.media}}
         <img src="${media_item.imageFullSize}" />
         {{/each}}
     </div>
     <div class="words">
-        {{each(j, subItem) tags.word}}
+        {{each(j, subItem) turn.tags.word}}
             <div class="back_gray row">
                 <span>${subItem.point}</span>
                 ${subItem.tag}

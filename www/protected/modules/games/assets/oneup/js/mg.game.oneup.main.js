@@ -177,11 +177,13 @@ MG_GAME_ONEUP = function ($) {
                     MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
                         /**
                         public $tags //GameTagDTO[]
+                         {"turns":[{"turn":1,"score":"5","opponentScore":"10","tags":[{"tag":"pool","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null},{"tag":"dfwefwe","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null}],"opponentTags":[{"tag":"rtytr","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null},{"tag":"ergerge","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null},{"tag":"pool","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null}],"media":[{"id":"2","mimeType":"image\/jpeg","imageFullSize":"http:\/\/localhost\/mgc\/www\/\/uploads\/images\/image026.jpg","imageScaled":null,"thumbnail":"http:\/\/localhost\/mgc\/www\/\/uploads\/thumbs\/image026.jpg","videoWebm":null,"videoMp4":null,"audioMp3":null,"audioOgg":null,"licence":{"id":"","name":"","description":""}}],"wordsToAvoid":[]}],"finished":false}
                         */
                         var json = {};
-                        json = turn_response;
-                        json.oppoentName = MG_GAME_ONEUP.opponent_name;
-                        json.num_words = turn_response.tags.length;
+                        json.current_level = turn_response.turns.length;
+                        json.turn = turn_response.turns[(json.current_level -1)];
+                        json.opponentName = MG_GAME_ONEUP.opponent_name;
+                        json.num_words = turn_response.turns[(json.current_level - 1)].tags.length;
                         var tag_count = json.num_words;
 /*
                         turn_response.tags.word = [];
@@ -206,21 +208,9 @@ MG_GAME_ONEUP = function ($) {
                                         var tag = that.find('input').val(),
                                             new_html;
                                         if (validTag(that.find('input').val(), turn_response.tags)) {
-                                            //http://localhost/mggameserver/index.php/api/multiplayer/sunmit/gid/OneUp/playedGameId/212
                                             //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
-                                            current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.media[0].id + '","type":null,"tag_id":null}]';
+                                            current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.turns[0].media[0].id + '","type":null,"tag_id":null}]';
                                             MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(response) {
-/*
-                                              var response = [];
-                                                response[0] = {};
-                                                response[0].tag = that.find('input').val();
-                                                response[0].original = null;
-                                                response[0].score = 3;
-                                                response[0].weight = null;
-                                                response[0].mediaId = response[0].mediaId = "";
-                                                response[0].type = 'new';
-                                                response[0].tag_id = null;
-*/
                                                 that.removeClass('blank_bar');
                                                 if (parseInt(response[0].score, 10) === 1 && turn_response.turn === 1) {
                                                     that.addClass('standard_bar');
