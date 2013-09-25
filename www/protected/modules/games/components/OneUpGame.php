@@ -39,9 +39,6 @@ class OneUpGame extends MGMultiPlayer
                     $playerTagDTOs[$submit->turn] = array();
                 }
                 $playerTagDTOs[$submit->turn] = array_merge($playerTagDTOs[$submit->turn], $tmpTags);
-                foreach ($tmpTags as $row) {
-                    array_push($playerTagDTOs, $row->tag);
-                }
             } else {
                 if (!isset($opponentTagDTOs[$submit->turn])) {
                     $opponentTagDTOs[$submit->turn] = array();
@@ -157,7 +154,7 @@ class OneUpGame extends MGMultiPlayer
         if ($submissions == $this->game->submissions) {
             $opponentSubmissions = count($opponentTagDTOs[$this->gameTurn->turn]);
             if ($opponentSubmissions == $this->game->submissions) {
-                $this->createGameTurn();
+                $this->createGameTurn($this->gameTurn->media[0]);
                 if ($userGame) {
                     $userGame->turn_user_id = 0;
                     $userGame->save();

@@ -298,7 +298,7 @@ abstract class MGMultiPlayer extends CComponent
             throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
         }
 
-        $this->createGameTurn();
+        $this->createGameTurn(null);
     }
 
     /**
@@ -358,7 +358,7 @@ abstract class MGMultiPlayer extends CComponent
      *
      * @throws CHttpException
      */
-    protected function createGameTurn()
+    protected function createGameTurn($media)
     {
         $turn = new GameTurnDTO();
         $turn->turn = 1;
@@ -372,12 +372,14 @@ abstract class MGMultiPlayer extends CComponent
         }
 
         if ($turn->turn <= $this->game->turns) {
-            $media = $this->getMedia();
-            if ($media == null) {
-                throw new CHttpException(500, Yii::t('app', 'Not enough medias available!'));
+            if($media==null){
+                $media = $this->getMedia();
+                if ($media == null) {
+                    throw new CHttpException(500, Yii::t('app', 'Not enough medias available!'));
+                }
+                $this->setUsedMedias(array($media->id));
             }
             array_push($turn->media, $media);
-            $this->setUsedMedias(array($media->id));
 
             $this->game->loadWordsToAvoid($this->getUsedMedias());
             $turn->wordsToAvoid = $this->game->wordsToAvoid;
@@ -742,7 +744,7 @@ abstract class MGMultiPlayer extends CComponent
 
             $this->createUserGame($playedGameId, $opponentId);
 
-            $this->createGameTurn();
+            $this->createGameTurn(null);
 
             if (!$msg->delete()) {
                 $message = "";
