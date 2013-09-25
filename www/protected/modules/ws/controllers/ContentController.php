@@ -46,6 +46,10 @@ class ContentController extends CController
             $user->status = User::STATUS_NOACTIVE;
 
             if ($user->save()) {
+                $profile = new Profile;
+                $profile->user_id = $user->id;
+                $profile->save();
+
                 $institution = new Institution();
                 $institution->name = $institutionDto->name;
                 $institution->url = $institutionDto->url;
@@ -96,8 +100,8 @@ class ContentController extends CController
     {
         $message = "";
         try {
-            $institution = Institution::model()->find('token=:token',array(':token'=>$institutionDto->token));
-            if($institution){
+            $institution = Institution::model()->find('token=:token', array(':token' => $institutionDto->token));
+            if ($institution) {
                 $institution->name = $institutionDto->name;
                 $institution->url = $institutionDto->url;
                 $institution->logo_url = $institutionDto->logoUrl;
@@ -118,7 +122,7 @@ class ContentController extends CController
                 $rr = new RegisterResult();
                 $rr->status = Status::getStatus(StatusCode::ILLEGAL_ARGUMENT(), $message);
                 return $rr;
-            }else{
+            } else {
                 $res = new RegisterResult();
                 $res->status = Status::getStatus(StatusCode::FATAL_ERROR(), "Invalid token!");
                 return $res;
