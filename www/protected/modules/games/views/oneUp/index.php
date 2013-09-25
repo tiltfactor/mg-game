@@ -110,6 +110,10 @@
                   </div>
               </div>
           </div>
+
+          <div id="word_screen" class="hidden">
+
+          </div>
       </div>
       <nav id="menu-left">
       </nav>
@@ -124,6 +128,22 @@
       </nav>
   </div>
 </div>
+
+<script id="template-word_screen" type="text/x-jquery-tmpl">
+    <div class="row back_dark_gray">
+        <span class="round">ROUND ${current_level}</span>
+        <div class="right header_scores">
+            <div class="you">You <span>${score}</span></div>
+            <div class="opponent">${opponentName} ${opponentScore}</div>
+        </div>
+    </div>
+    <h3>ROUND 1</h3>
+    {{html round_1}}
+    <h3>ROUND 2</h3>
+    {{html round_2}}
+    <h3>ROUND 3</h3>
+    {{html round_3}}
+</script>
 
 <script id="template-show_institution" type="text/x-jquery-tmpl">
     <div class="padding" style="width: 320px;">
@@ -215,12 +235,8 @@
         {{/each}}
     </div>
     <div class="words">
-        {{each(j, subItem) turn.tags.word}}
-            <div class="back_gray row">
-                <span>${subItem.point}</span>
-                ${subItem.tag}
-                <div>$(subItem.comment)</div>
-            </div>
+        {{each current_turn_tag}}
+            {{html div}}
         {{/each}}
 
         {{for(i = num_words; i < 3; i++)}}
@@ -244,8 +260,10 @@
         </div>
     </div>
 </script>
+
 <script id="template-final-summary" type="text/x-jquery-tmpl">
 </script>
+
 <script id="template-make-sound" type="text/x-jquery-tmpl">
     <audio id='make_sound' style="height: 0px;">
         <source src="${ogg_path}" type="audio/ogg">

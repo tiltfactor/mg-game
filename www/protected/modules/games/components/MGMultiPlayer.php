@@ -522,10 +522,11 @@ abstract class MGMultiPlayer extends CComponent
             ->from('{{licence}} l')
             ->where('l.id=:id', array(':id' => $id))
             ->queryAll();
+
         $licence = new GameLicenceDTO();
-        $licence->id = $data['id'];
-        $licence->name = $data['name'];
-        $licence->description = $data['description'];
+        $licence->id = $data[0]['id'];
+        $licence->name = $data[0]['name'];
+        $licence->description = $data[0]['description'];
         return $licence;
     }
 

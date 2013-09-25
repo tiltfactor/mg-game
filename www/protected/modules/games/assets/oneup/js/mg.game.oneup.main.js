@@ -148,18 +148,16 @@ MG_GAME_ONEUP = function ($) {
                                         var start_game = false;
 
                                         if (this_clicked.attr('type') === 'accept_challenge') {
-                                            //http://localhost/mggameserver/index.php/api/multiplayer/acceptChallenge/gid/OneUp/opponentId/123
-                                            MG_API.ajaxCall('/multiplayer/acceptChallenge/gid/' + MG_GAME_API.settings.gid + '/opponentId/' + opponent_id + '/', function($playedGameId) {
+                                            MG_API.ajaxCall('/multiplayer/acceptChallenge/gid/' + MG_GAME_API.settings.gid + '/opponentId/' + opponent_id, function(response) {
                                                 // $playedGameId
-                                                MG_GAME_ONEUP.pass_game_id = $playedGameId;
-                                                start_game = true;
+                                                MG_GAME_ONEUP.pass_game_id = response.playedGameID;
+                                                MG_GAME_ONEUP.opponent_id = opponent_id;
+                                                MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
+                                                MG_GAME_ONEUP.actions('game_screen', '');
                                             });
                                         } else {
                                             start_game = true;
                                             MG_GAME_ONEUP.pass_game_id = this_clicked.closest(".row").attr('playedGameId');
-                                        }
-
-                                        if (start_game) {
                                             MG_GAME_ONEUP.opponent_id = opponent_id;
                                             MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
                                             MG_GAME_ONEUP.actions('game_screen', '');
@@ -184,6 +182,15 @@ MG_GAME_ONEUP = function ($) {
                         json.turn = turn_response.turns[(json.current_level -1)];
                         json.opponentName = MG_GAME_ONEUP.opponent_name;
                         json.num_words = turn_response.turns[(json.current_level - 1)].tags.length;
+
+                        json.current_turn_tag = [];
+                        var tags = turn_response.turns[(json.current_level -1)].tags;
+                        for (i = 0; i < tags.length; i++) {
+                            json.current_turn_tag[i] = {};
+                            var tags = turn_response.turns[(json.current_level -1)].tags;
+                            json.current_turn_tag[i].div = calculatedRow(tags[i].tag, tags[i].score, json.current_level);
+                        }
+
                         var tag_count = json.num_words;
 /*
                         turn_response.tags.word = [];
@@ -211,22 +218,13 @@ MG_GAME_ONEUP = function ($) {
                                             //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
                                             current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.turns[0].media[0].id + '","type":null,"tag_id":null}]';
                                             MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(response) {
-                                                that.removeClass('blank_bar');
-                                                if (parseInt(response[0].score, 10) === 1 && turn_response.turn === 1) {
-                                                    that.addClass('standard_bar');
-                                                    new_html = '<span>+1</span>' + response[0].tag;
-                                                } else if (parseInt(response[0].score, 10) === 1 && turn_response.turn !== 1) {
-                                                    that.addClass('up_bar');
-                                                    new_html = '<span>+1</span>' + response[0].tag + '<span class="bar_right">YOU GOT<br/>' + MG_GAME_ONEUP.opponent_name + '<br/>POINT!</span>';
-                                                } else if (response[0].score === -1) {
-                                                    that.addClass('upped_bar');
-                                                    new_html = '<span>-1</span>' + response[0].tag + '<span class="bar_right">' + MG_GAME_ONEUP.opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
-                                                } else if (parseInt(response[0].score, 10) === 3) {
-                                                    that.addClass('bonus_bar');
-                                                    new_html = '<span>+3</span>' + response[0].tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
-                                                }
-                                                that.html(new_html);
+                                                var new_row = {};
+                                                    new_row.current_turn_tag = [],
+                                                    tags = turn_response.turns[(json.current_level -1)].tags;
+
+                                                that.replaceWith(calculatedRow(response[0].tag, response[0].score, json.current_level));
                                                 that.off('click');
+
                                                 var score_obj = $("#game_screen .you span");
                                                 score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10));
                                                 tag_count++;
@@ -247,12 +245,59 @@ MG_GAME_ONEUP = function ($) {
                                     }
                                 });
                             });
+
+                            $("#header").find('.words').off('click').on('click', function (e) {
+                                e.preventDefault();
+                                $("#word_screen").empty();
+                                $("#header").find('.back').show();
+                                $("#header").find('.words').hide();
+                                MG_GAME_ONEUP.actions('word_screen', '');
+                                return false;
+                            });
                         });
 
                         function validTag (tag, tags) {
                             //TODO check if tag is already entered this turn
                             return true;
                         }
+                    });
+                    break;
+                case 'word_screen':
+                    $("#game_screen").empty();
+                    MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
+                            var json = {};
+                            json.round_1 = '';
+                            json.round_2 = '';
+                            json.round_3 = '';
+
+                            var current_level = turn_response.turns.length;
+                            for (var i = 1; i <= current_level; i++) {
+                                for (var j = 0; j < 3; j++) {
+                                    if (j < turn_response.turns[(i-1)].tags.length) {
+                                        var j_tag = turn_response.turns[0].tags[j];
+                                        json['round_' + i]+= calculatedRow(j_tag.tag, j_tag.score, i);
+                                    } else {
+                                        json['round_' + i]+= '<div class="small_row blank_bar">ADD A WORD</div>';
+                                    }
+                                }
+                            }
+                            json.current_level = current_level;
+                            json.score = turn_response.turns[(current_level-1)].score;
+                            json.opponentName = MG_GAME_ONEUP.opponent_name;
+                            json.opponentScore = turn_response.turns[(current_level-1)].opponentScore;
+
+                            $("#template-word_screen").tmpl(json).appendTo($("#word_screen")).after(function () {
+
+                            });
+                    });
+
+                    $("#header").find('.back').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        $("#header").find('.back').hide();
+                        $("#header").find('.words').show();
+                        MG_GAME_ONEUP.back_location = 'game_screen';
+                        MG_GAME_ONEUP.actions('game_screen', '');
+                        return false;
                     });
                     break;
                 case 'game_customize':
@@ -696,7 +741,28 @@ function confirmPretty(text, onOk) {
     });
 })(jQuery);
 
+function calculatedRow (tag, score, current_level) {
+    var new_html,
+        html_class;
+    if (score === null) {
+        score = 1;
+    }
+    if (parseInt(score, 10) === 1 && current_level === 1) {
+        html_class = 'standard_bar';
+        new_html = '<span>+1</span>' + tag;
+    } else if (parseInt(score, 10) === 1 && current_level !== 1) {
+        html_class = 'up_bar';
+        new_html = '<span>+1</span>' + tag + '<span class="bar_right">YOU GOT<br/>' + MG_GAME_ONEUP.opponent_name + '<br/>POINT!</span>';
+    } else if (score === -1) {
+        html_class = 'upped_bar';
+        new_html = '<span>-1</span>' + tag + '<span class="bar_right">' + MG_GAME_ONEUP.opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+    } else if (parseInt(score, 10) === 3) {
+        html_class = 'bonus_bar';
+        new_html = '<span>+3</span>' + tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+    }
 
+    return '<div class="small_row ' + html_class + '">' + new_html + '</div>';
+}
 
 function onResize () {
     var max_height,
