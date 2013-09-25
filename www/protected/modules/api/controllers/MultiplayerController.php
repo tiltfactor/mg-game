@@ -487,4 +487,42 @@ class MultiplayerController extends ApiController
         $data['status'] = "ok";
         $this->sendResponse($data);
     }
+
+    /**
+     * User end game
+     * string JSON response with status message on success will be send
+     *
+     * @param string $gid
+     * @param int $playedGameId
+     */
+    public function actionEndGame($gid, $playedGameId)
+    {
+        $_POST['playedGameId'] = $playedGameId;
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $gameEngine->gameEnd();
+
+        $data = array();
+        $data['status'] = "ok";
+        $this->sendResponse($data);
+    }
+
+    /**
+     * Get ended games for which user is not notified
+     * Response sent is json encode of GameOfflineDTO[]
+     *
+     * @param string $gid
+     */
+    public function actionGetEndedGames($gid)
+    {
+        $gameEngine = GamesModule::getMultiplayerEngine($gid);
+        if (is_null($gameEngine)) {
+            $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
+        }
+
+        $this->sendResponse($gameEngine->getEndedGames());
+    }
 }

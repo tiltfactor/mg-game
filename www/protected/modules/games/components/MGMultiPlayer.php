@@ -108,9 +108,8 @@ abstract class MGMultiPlayer extends CComponent
      * @param $userId
      */
     abstract public function disconnect($userId);
-
     abstract public function gameEnd();
-
+    abstract public function getEndedGames();
 
     /**
      * Allows to implement weighting of the submitted tags. Here you should usually

@@ -32,7 +32,7 @@ class OneUpGame extends MGMultiPlayer
         $playerTagDTOs = array();
         $opponentTagDTOs = array();
         foreach ($submits as $submit) {
-            $tagsArr = json_decode($submit->submission,true);
+            $tagsArr = json_decode($submit->submission, true);
             $tmpTags = GameTagDTO::createFromArray($tagsArr);
             if ($submit->session->user_id == $this->userId) {
                 if (!isset($playerTagDTOs[$submit->turn])) {
@@ -193,6 +193,9 @@ class OneUpGame extends MGMultiPlayer
         }
     }
 
+    /**
+     * @throws CHttpException
+     */
     public function gameEnd()
     {
         $this->playedGame->finished = date('Y-m-d H:i:s');
@@ -237,6 +240,56 @@ class OneUpGame extends MGMultiPlayer
         $opponentOnline = UserOnline::model()->find('user_id =:userId', array(':userId' => $opponentId));
         if ($opponentOnline) {
             $this->pushMessage($opponentId, MGMultiPlayer::PUSH_GAME_END, json_encode($this->playedGame->id));
+        } else {
+            $msg = new UserMessage();
+            $msg->from_user_id = $this->userId;
+            $msg->to_user_id = $opponentId;
+            $msg->game_id = $this->game->id;
+            $msg->played_game_id = $this->playedGame->id;
+            $msg->type = UserMessage::TYPE_END_GAME;
+
+            $gameDTO = new GameOfflineDTO();
+            $gameDTO->opponentId = $this->userId;
+            $gameDTO->playedGameId = $this->playedGame->id;
+            if (isset($this->userOnline)) {
+                $gameDTO->opponentName = $this->userOnline->session->username;
+            }
+            $gameDTO->turnUserId = 0;
+            $msg->message = serialize($gameDTO);
+
+            if (!$msg->save()) {
+                $message = "";
+                $errors = $msg->getErrors();
+                foreach ($errors as $field => $error) {
+                    $message .= $error[0] . ";";
+                }
+                throw new CHttpException(500, $message);
+            }
         }
+    }
+
+    /**
+     * @throws CHttpException
+     * @return array
+     */
+    public function getEndedGames()
+    {
+        $result = array();
+        $endedGames = UserMessage::model()->findAll('to_user_id =:userId AND game_id=:gameId AND type=:msgType', array(':userId' => $this->userId,':gameId'=>$this->game->id,':msgType'=>UserMessage::TYPE_END_GAME));
+        if($endedGames){
+            foreach($endedGames as $game){
+                $gameDTO = unserialize($game->message);
+                array_push($result,$gameDTO);
+                if (!$game->delete()) {
+                    $message = "";
+                    $errors = $game->getErrors();
+                    foreach ($errors as $field => $error) {
+                        $message .= $error[0] . ";";
+                    }
+                    throw new CHttpException(500, $message);
+                }
+            }
+        }
+        return $result;
     }
 }
