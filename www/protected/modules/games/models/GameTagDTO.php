@@ -63,8 +63,10 @@ class GameTagDTO
                 $t = new GameTagDTO();
                 $t->mediaId = $mediaId;
                 $t->tag = $value['tag'];
+                $t->score = $value['score'];
                 $t->weight = $value['weight'];
                 $t->type = $value['type'];
+                $t->mediaId = $value['mediaId'];
                 $t->tag_id = $value['tag_id'];
                 array_push($tagsDto, $t);
                 break;
@@ -85,8 +87,10 @@ class GameTagDTO
             $tagsArr[$tag->mediaId] = array();
             $tagsArr[$tag->mediaId][$tag->tag] = array();
             $tagsArr[$tag->mediaId][$tag->tag]["tag"] = $tag->tag;
+            $tagsArr[$tag->mediaId][$tag->tag]["score"] = $tag->score;
             $tagsArr[$tag->mediaId][$tag->tag]["weight"] = $tag->weight;
             $tagsArr[$tag->mediaId][$tag->tag]["type"] = $tag->type;
+            $tagsArr[$tag->mediaId][$tag->tag]["mediaId"] = $tag->mediaId;
             $tagsArr[$tag->mediaId][$tag->tag]["tag_id"] = $tag->tag_id;
         }
         return $tagsArr;

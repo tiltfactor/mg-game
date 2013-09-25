@@ -34,7 +34,7 @@ class OneUpGame extends MGMultiPlayer
         foreach ($submits as $submit) {
             $tagsArr = json_decode($submit->submission,true);
             $tmpTags = GameTagDTO::createFromArray($tagsArr);
-            if ($submit->session_id == $this->sessionId) {
+            if ($submit->session->user_id == $this->userId) {
                 if (!isset($playerTagDTOs[$submit->turn])) {
                     $playerTagDTOs[$submit->turn] = array();
                 }
@@ -62,7 +62,7 @@ class OneUpGame extends MGMultiPlayer
             $submissions = 0;
         }
         if ($submissions < $this->game->submissions) {
-            foreach ($tags as $tag) {
+            foreach ($tags as &$tag) {
                 $tag->type = "new";
                 if (in_array($tag->tag, $playerTags)) {
                     throw new CHttpException(400, Yii::t('app', 'You already submitted this word!'));
@@ -155,7 +155,7 @@ class OneUpGame extends MGMultiPlayer
 
         $submissions += 1;
         if ($submissions == $this->game->submissions) {
-            $opponentSubmissions = count($playerTagDTOs[$this->gameTurn->turn]);
+            $opponentSubmissions = count($opponentTagDTOs[$this->gameTurn->turn]);
             if ($opponentSubmissions == $this->game->submissions) {
                 $this->createGameTurn();
                 if ($userGame) {
