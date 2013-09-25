@@ -217,7 +217,7 @@
             <h3 class="no_margin">YOUR TURN</h3>
             {{each finished_games}}
             <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_yellow row">
-                <span class="start_game" type="show_final">GAME WITH <span class="username">${opponentName}</span> FINISHES</span>
+                <span class="start_game" type="show_final">GAME WITH <span class="username">${opponentName}</span> FINISHED</span>
             </div>
             {{/each}}
             <div class="no_value hidden">Challenge anyone. Start to play!</div>
