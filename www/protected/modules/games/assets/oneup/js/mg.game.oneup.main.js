@@ -12,6 +12,7 @@ MG_GAME_ONEUP = function ($) {
         sounds: {},
         user: {},
         opponent_id: {},
+        endedGames: {},
         opponent_name: {},
         pass_game_id: null,
         institution_id: null,
@@ -69,7 +70,7 @@ MG_GAME_ONEUP = function ($) {
                             waiting_turn = [],
                             counter_my_turns = 0,
                             counter_waiting_turns = 0;
-                        console.log(length);
+
                         for (var i = 0; i < length; i++) {
                             // its my turn
                             if (parseInt(offline_games[i].turnUserId, 10) === MG_GAME_ONEUP.user.id || parseInt(offline_games[i].turnUserId, 10) === 0) {
@@ -84,6 +85,8 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
+                            //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
+                            challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
                             $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
                                 if ((challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
@@ -107,7 +110,7 @@ MG_GAME_ONEUP = function ($) {
                                                 });
                                             } else {
                                                 // game started
-                                                MG_API.ajaxCall('/multiplayer/finishGame/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + playedGameId , function(challenges_response) {
+                                                MG_API.ajaxCall('/multiplayer/endGame/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + playedGameId , function(challenges_response) {
                                                     $("a[location='main_screen']").click();
                                                 });
                                             }
@@ -116,7 +119,8 @@ MG_GAME_ONEUP = function ($) {
                                 }
                                 if ((challenges_response.received.length + challenges_response.your_turn.length) === 0) {
                                     $("#challenges_received").find(".no_value").show();
-                                } else {
+                                }
+                                if ((challenges_response.received.length + challenges_response.your_turn.length + challenges_response.finished_games.length ) > 0) {
                                     $("#challenges_received .delete").off('click').on('click', function () {
                                         var that,
                                             this_clicked = $(this);
@@ -157,6 +161,11 @@ MG_GAME_ONEUP = function ($) {
                                                 MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
                                                 MG_GAME_ONEUP.actions('game_screen', '');
                                             });
+                                        } else if (this_clicked.attr('type') === 'show_final') {
+                                            MG_GAME_ONEUP.pass_game_id = this_clicked.closest(".row").attr('playedGameId');
+                                            MG_GAME_ONEUP.opponent_id = opponent_id;
+                                            MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
+                                            MG_GAME_ONEUP.actions('final_screen', '');
                                         } else {
                                             start_game = true;
                                             MG_GAME_ONEUP.pass_game_id = this_clicked.closest(".row").attr('playedGameId');
@@ -191,21 +200,10 @@ MG_GAME_ONEUP = function ($) {
                         for (i = 0; i < tags.length; i++) {
                             json.current_turn_tag[i] = {};
                             var tags = turn_response.turns[(json.current_level -1)].tags;
-                            json.current_turn_tag[i].div = calculatedRow(tags[i].tag, tags[i].score, json.current_level);
+                            json.current_turn_tag[i].div = calculatedRow(tags[i].tag, tags[i].score, json.current_level, MG_GAME_ONEUP.opponent_name);
                         }
 
                         var tag_count = json.num_words;
-/*
-                        turn_response.tags.word = [];
-                        turn_response.tags.word[0] = {};
-                        turn_response.tags.word[0].tag = 'PRETTY';
-                        turn_response.tags.word[0].point = '-1';
-                        turn_response.tags.word[0].comment = 'SIMON GOT YOUR POINT';
-                        turn_response.tags.word[1] = {};
-                        turn_response.tags.word[1].tag = 'IMPRESSIONISM';
-                        turn_response.tags.word[1].point = '+3';
-                        turn_response.tags.word[1].comment = 'GREAT WORD';
-*/
                         $("#template-game_screen").tmpl(json).appendTo($("#game_screen")).after(function () {
                             $("#game_screen .blank_bar").off('click').on('click', function () {
                                 var that = $(this),
@@ -225,11 +223,11 @@ MG_GAME_ONEUP = function ($) {
                                                     new_row.current_turn_tag = [],
                                                     tags = turn_response.turns[(json.current_level -1)].tags;
 
-                                                that.replaceWith(calculatedRow(response[0].tag, response[0].score, json.current_level));
+                                                that.replaceWith(calculatedRow(response[0].tag, response[0].score, json.current_level, MG_GAME_ONEUP.opponent_name));
                                                 that.off('click');
 
                                                 var score_obj = $("#game_screen .you span");
-                                                score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10));
+                                                score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10, MG_GAME_ONEUP.opponent_name));
                                                 tag_count++;
                                                 if (tag_count === 3) {
                                                     $("#game_screen .round").html('WAITING ...');
@@ -264,6 +262,75 @@ MG_GAME_ONEUP = function ($) {
                             return true;
                         }
                     });
+                    break;
+                case 'final_screen':
+                    $("#final_screen").empty();
+                    MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
+                        var json = {};
+                        json.you = {};
+                        json.you.round_1 = '';
+                        json.you.round_2 = '';
+                        json.you.round_3 = '';
+
+                        json.opponent = {};
+                        json.opponent.round_1 = '';
+                        json.opponent.round_2 = '';
+                        json.opponent.round_3 = '';
+
+                        var current_level = turn_response.turns.length;
+                        for (var i = 1; i <= current_level; i++) {
+                            for (var j = 0; j < 3; j++) {
+                                if (j < turn_response.turns[(i-1)].tags.length) {
+                                    var j_tag = turn_response.turns[(i-1)].tags[j];
+                                    json.you['round_' + i]+= calculatedRow(j_tag.tag, j_tag.score, i, MG_GAME_ONEUP.opponent_name);
+                                } else {
+                                    json.you['round_' + i]+= '<div class="small_row blank_bar">SKIPPED WORD</div>';
+                                }
+                            }
+                        }
+                        var user = MG_GAME_ONEUP.user;
+                        //opponentTags
+                        for (var i = 1; i <= current_level; i++) {
+                            for (var j = 0; j < 3; j++) {
+                                if (j < turn_response.turns[(i-1)].opponentTags.length) {
+                                    var j_tag = turn_response.turns[(i-1)].opponentTags[j];
+                                    json.opponent['round_' + i]+= calculatedRow(j_tag.tag, j_tag.score, i, user.username);
+                                } else {
+                                    json.opponent['round_' + i]+= '<div class="small_row blank_bar">SKIPPED WORD</div>';
+                                }
+                            }
+                        }
+
+                        json.current_level = current_level;
+                        json.score = turn_response.turns[(current_level-1)].score;
+                        json.opponentName = MG_GAME_ONEUP.opponent_name;
+                        json.opponentScore = turn_response.turns[(current_level-1)].opponentScore;
+
+                        if (json.score > json.opponentScore) {
+                            json.game_result = 'YOU WON!';
+                            json.congratulation_text = 'Congratulations! You are the winner.';
+                        } else if (json.score < json.opponentScore) {
+                            json.game_result = 'YOU LOST!';
+                            json.congratulation_text = 'We are sorry but you lost.';
+                        } else {
+                            json.game_result = 'TIED GAME!';
+                            json.congratulation_text = "The game was too close it's a tied game.";
+                        }
+
+                        $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
+
+                        });
+                    });
+
+                    $("#header").find('.back').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        $("#header").find('.back').hide();
+                        $("#header").find('.words').show();
+                        MG_GAME_ONEUP.back_location = 'game_screen';
+                        MG_GAME_ONEUP.actions('game_screen', '');
+                        return false;
+                    });
+                    break;
                     break;
                 case 'word_screen':
                     $("#game_screen").empty();
@@ -351,7 +418,8 @@ MG_GAME_ONEUP = function ($) {
                                 text: 'Player is not found!',
                                 position: "tops-center",
                                 type: "notice",
-                                background: "white"
+                                background: "white",
+                                color: "black"
                             });
                             MG_GAME_ONEUP.actions(location, '');
                         } else {
@@ -565,6 +633,11 @@ MG_GAME_ONEUP = function ($) {
                 MG_GAME_API.curtain.hide();
                 MG_GAME_ONEUP.user = response.user;
 
+                MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
+                    //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
+                    MG_GAME_ONEUP.endedGames = response;
+                });
+
                 $("#content a[href='#']").on('click', function(e) {
                     var location = $(this).attr('location');
                     if (location != undefined) {
@@ -621,36 +694,51 @@ MG_GAME_ONEUP = function ($) {
             socket.on('challenge', function(data) {
                 //Receive challenge from game player
                 // data is JSON encoded object GameUserDTO
+                console.log('Someone challenged you!');
             });
 
             socket.on('rejectChallenge', function(data) {
                 // Receive reject challenge from game player
                 // data is JSON encoded object GameUserDTO
+                console.log('Someone reject you!');
             });
 
             socket.on('newTurn', function(data) {
                 // Receive information when new turn is created
                 // data is JSON encoded object GameTurnDTO
+                console.log('New turn is fired!');
             });
 
             socket.on('gameEnd', function(data) {
                 // Receive when the game end i.e. no more turns
                 // data is JSON encoded integer of played game id
+                console.log('Game End is fired!');
             });
 
             socket.on('penalty', function(data) {
                 // Receive penalty
                 // data is JSON encoded negative integer of penalty scores
+                console.log('You got a penalty!');
             });
 
             socket.on('bonus', function(data) {
                 // Receive bonus points
                 // data is JSON encoded integer of bonus scores
+                console.log('You got a bonus!');
             });
 
             socket.on('opponentWaiting', function(data) {
                 // Receive notification that opponent finished his turn and waiting for you
                 // data is JSON encoded integer of played game id
+                if ($("#main_screen").is(":visible")) {
+                    $().toastmessage("showToast", {
+                        text: 'XXX finished his turn and now is your turn!',
+                        position: "tops-center",
+                        type: "notice",
+                        background: "white",
+                        color: "black"
+                    });
+                }
             });
 
             socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
@@ -659,13 +747,14 @@ MG_GAME_ONEUP = function ($) {
          * display games turn
          */
         renderTurn: function (response) {
-
+            console.log('Render turn');
         },
 
         /*
          * display the final turn
          */
         renderFinal:function () {
+            console.log('Game over');
         },
 
         /*
@@ -744,7 +833,7 @@ function confirmPretty(text, onOk) {
     });
 })(jQuery);
 
-function calculatedRow (tag, score, current_level) {
+function calculatedRow (tag, score, current_level, opponent_name) {
     var new_html,
         html_class;
     if (score === null) {
@@ -755,10 +844,10 @@ function calculatedRow (tag, score, current_level) {
         new_html = '<span>+1</span>' + tag;
     } else if (parseInt(score, 10) === 1 && current_level !== 1) {
         html_class = 'up_bar';
-        new_html = '<span>+1</span>' + tag + '<span class="bar_right">YOU GOT<br/>' + MG_GAME_ONEUP.opponent_name + '<br/>POINT!</span>';
+        new_html = '<span>+1</span>' + tag + '<span class="bar_right">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
     } else if (score === -1) {
         html_class = 'upped_bar';
-        new_html = '<span>-1</span>' + tag + '<span class="bar_right">' + MG_GAME_ONEUP.opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+        new_html = '<span>-1</span>' + tag + '<span class="bar_right">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
     } else if (parseInt(score, 10) === 3) {
         html_class = 'bonus_bar';
         new_html = '<span>+3</span>' + tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';

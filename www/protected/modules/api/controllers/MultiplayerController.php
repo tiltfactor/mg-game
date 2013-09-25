@@ -9,7 +9,7 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - submit, validateSecret,disconnect, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
+            'throttle - submit, validateSecret,disconnect, getEndedGames, endGame, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
             'IPBlock',
             'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - validateSecret,disconnect',
@@ -32,6 +32,8 @@ class MultiplayerController extends ApiController
                     'validateSecret',
                     'disconnect',
                     'challenge',
+                    'endGame',
+                    'getEndedGames',
                     'acceptChallenge',
                     'rejectChallenge',
                     'getChallenges',

@@ -1,11 +1,15 @@
-(function(c){var b={inEffect:{opacity:"show"},inEffectDuration:600,stayTime:900,text:"",sticky:false,type:"notice",position:"top-right",closeText:"",close:null,background:null};
+(function(c){var b={inEffect:{opacity:"show"},inEffectDuration:600,stayTime:9900,text:"",sticky:false,type:"notice",position:"top-right",closeText:"",close:null,background:null,color:null};
 var a={init:function(d){if(d){c.extend(b,d)
 }},showToast:function(f){var g={};
 c.extend(g,b,f);
 var j,e,d,i,h;
 j=(!c(".toast-container").length)?c("<div></div>").addClass("toast-container").addClass("toast-position-"+g.position).appendTo("body"):c(".toast-container");
 e=c("<div></div>").addClass("toast-item-wrapper");
-d=c("<div></div>").hide().addClass("toast-item toast-type-"+g.type).appendTo(j).html(c("<p>").append(g.text)).animate(g.inEffect,g.inEffectDuration).wrap(e);
+    var g_color = "";
+    if (g.color !== null) {
+        g_color = 'style="color: ' + g.color + ';"'
+    }
+d=c("<div></div>").hide().addClass("toast-item toast-type-"+g.type).appendTo(j).html(c("<p " + g_color + ">").append(g.text)).animate(g.inEffect,g.inEffectDuration).wrap(e);
     if (g.background !== null) {
         c(".toast-item").css('cssText', 'background-color: ' + g.background + ' !important;');
     }
