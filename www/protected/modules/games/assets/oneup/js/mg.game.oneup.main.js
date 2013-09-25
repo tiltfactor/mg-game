@@ -171,6 +171,7 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'game_screen':
+                    $("#game_screen").empty();
                     $("#header").find('.words').show();
                     //game_screen
                     //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGameState/gid/OneUp/playedGameId/212
@@ -276,7 +277,7 @@ MG_GAME_ONEUP = function ($) {
                             for (var i = 1; i <= current_level; i++) {
                                 for (var j = 0; j < 3; j++) {
                                     if (j < turn_response.turns[(i-1)].tags.length) {
-                                        var j_tag = turn_response.turns[0].tags[j];
+                                        var j_tag = turn_response.turns[(i-1)].tags[j];
                                         json['round_' + i]+= calculatedRow(j_tag.tag, j_tag.score, i);
                                     } else {
                                         json['round_' + i]+= '<div class="small_row blank_bar">ADD A WORD</div>';
@@ -761,6 +762,15 @@ function calculatedRow (tag, score, current_level) {
     } else if (parseInt(score, 10) === 3) {
         html_class = 'bonus_bar';
         new_html = '<span>+3</span>' + tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+    } else if (parseInt(score, 10) === 4) {
+        html_class = 'bonus_bar';
+        new_html = '<span>+4</span>' + tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+    } else if (parseInt(score, 10) === 2) {
+        html_class = 'bonus_bar';
+        new_html = '<span>+2</span>' + tag;
+    } else {
+        html_class = 'standard_bar';
+        new_html = '<span>' + score + '</span>' + tag;
     }
 
     return '<div class="small_row ' + html_class + '">' + new_html + '</div>';
