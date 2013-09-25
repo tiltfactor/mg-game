@@ -63,6 +63,20 @@ class MGHelper
         return $institutionUrl."index.php/image/scale/token/".$token."/name/".urlencode($name)."/width/".$width."/height/".$height."/";
     }
 
+    public static function getMediaThumb($url,$mimeType,$mediaName){
+        $mediaType = substr($mimeType, 0, 5);
+        $path = $path = rtrim($url, "/") . UPLOAD_PATH;
+        $thumb = "";
+        if ($mediaType === "image") {
+            $thumb = $path . "/thumbs/" . $mediaName;
+        } else if ($mediaType === "video") {
+            $thumb = $path . "/videos/" . urlencode(substr($mediaName, 0, -4) . "jpeg");
+        } else if ($mediaType === "audio") {
+            $thumb = Yii::app()->getBaseUrl(true) . "/images/audio_ico.png";
+        }
+        return $thumb;
+    }
+
     /**
      * This is the shortcut to Yii::app()->request->baseUrl
      * If the parameter is given, it will be returned and prefixed with the app baseUrl.

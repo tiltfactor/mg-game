@@ -259,11 +259,12 @@ class Media extends BaseMedia
     public function searchTagMedias($tag_id)
     {
         $command = Yii::app()->db->createCommand()
-            ->select('COUNT(i.id) as counted, COUNT(DISTINCT s.user_id) as user_counted, i.id, i.name')
+            ->select('COUNT(i.id) as counted, COUNT(DISTINCT s.user_id) as user_counted, i.id, i.name,i.mime_type,inst.url')
             ->from('{{session}} s')
             ->join('{{game_submission}} gs', 'gs.session_id=s.id')
             ->join('{{tag_use}} tu', 'tu.game_submission_id = gs.id')
             ->join('{{media}} i', 'i.id = tu.media_id')
+            ->leftJoin('{{institution}} inst', 'inst.id=i.institution_id')
             ->where(array('and', 'tu.weight > 0', 'tu.tag_id=:tagID'), array(":tagID" => $tag_id))
             ->group('i.id, i.name')
             ->order('gs.created DESC');
@@ -273,7 +274,7 @@ class Media extends BaseMedia
             'id' => 'id',
             'sort' => array(
                 'attributes' => array(
-                    'id', 'name', 'counted'
+                    'id', 'name', 'counted', 'mime_type','url'
                 ),
             ),
             'pagination' => array(

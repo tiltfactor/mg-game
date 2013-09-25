@@ -153,17 +153,7 @@ class Tag extends BaseTag
         if ($medias) {
             $out = "";
             foreach ($medias as $media) {
-                $path = $media['url'];
-                $path = rtrim($path, "/");
-                $path .= UPLOAD_PATH;
-                $media_type = substr($media['mime_type'], 0, 5);
-                if ($media_type == 'image') {
-                    $html_media = CHtml::image($path . '/thumbs/' . $media['name'], $media['name']) . " <span>x " . $media['counted'] . "</span>";
-                } else if ($media_type == 'video') {
-                    $html_media = CHtml::image($path . '/videos/' . urlencode(substr($media['name'], 0, -4)) . 'jpeg', $media['name']) . " <span>x " . $media['counted'] . "</span>";
-                } else {
-                    $html_media = CHtml::image($media['url'] . '/images/audio_ico.png', $media['name']) . " <span>x " . $media['counted'] . "</span>";
-                }
+                $html_media = CHtml::image(MGHelper::getMediaThumb($media['url'],$media['mime_type'], $media['name']), $media['name']) . " <span>x " . $media['counted'] . "</span>";
                 $out .= CHtml::link($html_media, array("/admin/media/view", "id" => $media["id"]));
             }
             return $out;

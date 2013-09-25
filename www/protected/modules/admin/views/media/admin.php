@@ -39,17 +39,7 @@ $tagDialog = $this->widget('MGTagJuiDialog');
 $max_toptags = 15;
 
 function generateImage($data) {
-    //YiiBase::log(var_export($data->institution->url, true) .' '. $data->institution_id, CLogger::LEVEL_ERROR);
-    $media_type = substr($data->mime_type, 0, 5);
-
-    if ($media_type === 'image') {
-        $media = CHtml::image($data->institution->url . UPLOAD_PATH . '/thumbs/' . $data->name, $data->name) . " <span>" . $data->name . "</span>";
-    } else if ($media_type === 'video') {
-        $media = CHtml::image($data->institution->url . UPLOAD_PATH . '/videos/' . urlencode(substr($data->name, 0, -4)) . 'jpeg', $data->name) . " <span>" . $data->name . "</span>";
-    } else {
-        $media = CHtml::image(Yii::app()->getBaseUrl() . '/images/audio_ico.png', $data->name) . " <span>" . $data->name . "</span>";
-    }
-
+    $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url,$data->mime_type,$data->name),$data->name) . " <span>" . $data->name . "</span>";
     return $media;
 }
 
