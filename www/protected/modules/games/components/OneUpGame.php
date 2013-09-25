@@ -61,6 +61,23 @@ class OneUpGame extends MGMultiPlayer
         if ($submissions < $this->game->submissions) {
             foreach ($tags as &$tag) {
                 $tag->type = "new";
+                $tag->weight = 1;
+                foreach($opponentTagDTOs as $turn=>$oTags){
+                    $found = false;
+                    foreach($oTags as $oTag){
+                        if($oTag->tag == $tag->tag){
+                            if($turn == $this->gameTurn->turn)
+                                $tag->weight +=1;
+                            else
+                                $tag->weight+=2;
+                            $found=true;
+                            break;
+                        }
+                    }
+                    if($found){
+                        break;
+                    }
+                }
                 if (in_array($tag->tag, $playerTags)) {
                     throw new CHttpException(400, Yii::t('app', 'You already submitted this word!'));
                 }
@@ -146,6 +163,7 @@ class OneUpGame extends MGMultiPlayer
         }
 
         $tags = $this->setWeights($tags);
+
         $this->saveSubmission($tags);
 
         $userGame = UserGame::model()->find('played_game_id=:playedGameId', array(':playedGameId' => $this->playedGame->id));
