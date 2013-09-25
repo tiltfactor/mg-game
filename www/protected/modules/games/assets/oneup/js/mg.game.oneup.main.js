@@ -71,7 +71,7 @@ MG_GAME_ONEUP = function ($) {
                             counter_waiting_turns = 0;
                         for (var i = 0; i < length; i++) {
                             // its my turn
-                            if (parseInt(offline_games[i].turnUserId, 10) === MG_GAME_ONEUP.user.id) {
+                            if (parseInt(offline_games[i].turnUserId, 10) === MG_GAME_ONEUP.user.id || parseInt(offline_games[i].turnUserId, 10) === 0) {
                                 your_turn[counter_my_turns] = offline_games[i];
                             } else {
                                 // its in waiting
