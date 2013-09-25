@@ -36,6 +36,10 @@
 
           </div>
 
+          <div id="final_screen" class="hidden">
+
+          </div>
+
           <div id="game_customize" class="hidden">
               <h2>CUSTOMIZE YOUR GAME</h2>
               <div class="padding">Share your interests and you might see more images with those subjects!</div>
@@ -145,6 +149,32 @@
     {{html round_3}}
 </script>
 
+<script id="template-final_screen" type="text/x-jquery-tmpl">
+    <div class="row back_dark_gray">
+        <span class="round">${game_result}</span>
+        <div class="right header_scores">
+            <div class="you">You <span>${score}</span></div>
+            <div class="opponent">${opponentName} ${opponentScore}</div>
+        </div>
+    </div>
+    <h4>${congratulation_text}</h4>
+    <div>
+        <a href="#" opponent="${opponentName}" class="big_button rematch"><span>REMATCH</span></a>
+    </div>
+    <h3>${opponentName} SAID <span>ROUND 1</span></h3>
+    {{html opponent.round_1}}
+    <h3><span>ROUND 2</span></h3>
+    {{html opponent.round_2}}
+    <h3><span>ROUND 3</span></h3>
+    {{html opponent.round_3}}
+    <h3>YOU SAID <span>ROUND 1</span></h3>
+    {{html you.round_1}}
+    <h3><span>ROUND 2</span></h3>
+    {{html you.round_2}}
+    <h3><span>ROUND 3</span></h3>
+    {{html you.round_3}}
+</script>
+
 <script id="template-show_institution" type="text/x-jquery-tmpl">
     <div class="padding" style="width: 320px;">
         <div class="text-center"><img src="${logo}" /></div>
@@ -185,6 +215,11 @@
     <div id="challenges">
         <div id="challenges_received" class="list_challenges">
             <h3 class="no_margin">YOUR TURN</h3>
+            {{each finished_games}}
+            <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_yellow row">
+                <span class="start_game" type="show_final">GAME WITH <span class="username">${opponentName}</span> FINISHED</span>
+            </div>
+            {{/each}}
             <div class="no_value hidden">Challenge anyone. Start to play!</div>
             {{each received}}
             <div opponent_id="${id}" playedGameId="" class="back_yellow row">
@@ -222,6 +257,7 @@
 </script>
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
+    <input type="hidden" id="" />
     <div class="row back_dark_gray">
         <span class="round">ROUND ${current_level}</span>
         <div class="right header_scores">

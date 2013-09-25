@@ -1,6 +1,9 @@
 body {
   background-color: #150917;
 }
+.toast-item-image-notice {
+  display: none;
+}
 @font-face {
   font-family: Museo;
   font-weight: normal;
@@ -154,7 +157,8 @@ html.mm-right.mm-opening #mm-blocker {
   padding-right: 15px;
   margin-top: 20px;
 }
-#content #word_screen h3 {
+#content #word_screen h3,
+#content #final_screen h3 {
   margin-top: 4px !important;
 }
 #content .header_scores {
