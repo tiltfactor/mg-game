@@ -69,16 +69,18 @@ MG_GAME_ONEUP = function ($) {
                             waiting_turn = [],
                             counter_my_turns = 0,
                             counter_waiting_turns = 0;
+                        console.log(length);
                         for (var i = 0; i < length; i++) {
                             // its my turn
                             if (parseInt(offline_games[i].turnUserId, 10) === MG_GAME_ONEUP.user.id || parseInt(offline_games[i].turnUserId, 10) === 0) {
                                 your_turn[counter_my_turns] = offline_games[i];
+                                counter_my_turns++;
                             } else {
                                 // its in waiting
                                 waiting_turn[counter_waiting_turns] = offline_games[i];
+                                counter_waiting_turns++;
                             }
                         }
-
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid , function(challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
