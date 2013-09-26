@@ -157,9 +157,17 @@
             <div class="opponent">${opponentName} ${opponentScore}</div>
         </div>
     </div>
-    <h4>${congratulation_text}</h4>
+    <h4 class="text-center">${congratulation_text}</h4>
+    <br/>
     <div>
         <a href="#" opponent="${opponentName}" class="big_button rematch"><span>REMATCH</span></a>
+    </div>
+    <br/>
+    <br/>
+
+    <div class="text-center">
+        <img src="${media.thumbnail}" /> <br/><br/>
+        <span class="bookmark_image top_btn">Bookmark this image</span><br/><br/>
     </div>
     <h3>${opponentName} SAID <span>ROUND 1</span></h3>
     {{html opponent.round_1}}
@@ -259,7 +267,7 @@
 <script id="template-game_screen" type="text/x-jquery-tmpl">
     <input type="hidden" id="" />
     <div class="row back_dark_gray">
-        <span class="round">ROUND ${current_level}</span>
+        <span class="round" status="playing">ROUND ${current_level}</span>
         <div class="right header_scores">
             <div class="you">You <span>${turn.score}</span></div>
             <div class="opponent">${opponentName} ${turn.opponentScore}</div>
@@ -295,9 +303,6 @@
             </div>
         </div>
     </div>
-</script>
-
-<script id="template-final-summary" type="text/x-jquery-tmpl">
 </script>
 
 <script id="template-make-sound" type="text/x-jquery-tmpl">

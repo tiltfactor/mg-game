@@ -69,13 +69,6 @@ input {
   text-decoration: none;
   line-height: 25px;
 }
-#header .top_btn {
-  border: 1px solid #403b3d;
-  border-radius: 7px 7px 7px 7px;
-  color: #46A5C4;
-  padding: 3px 8px;
-  text-decoration: none;
-}
 #header .setting {
   display: block;
   background-image: url('../images/settings.png');
@@ -95,6 +88,13 @@ input {
 }
 #header .back {
   padding-left: 25px;
+}
+.top_btn {
+  border: 1px solid #403b3d;
+  border-radius: 7px 7px 7px 7px;
+  color: #46A5C4;
+  padding: 3px 8px;
+  text-decoration: none;
 }
 .mm-right.mm-opening .mm-page,
 html.mm-right.mm-opening #mm-blocker {
