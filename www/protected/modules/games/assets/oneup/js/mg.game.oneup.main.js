@@ -331,7 +331,7 @@ MG_GAME_ONEUP = function ($) {
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
                             $("#final_screen .bookmark_image").off('click').on('click', function () {
                                 //http://localhost/mggameserver/index.php/api/multiplayer/bookmark/gid/OneUp/mediaId/1/playedId/1/
-                                MG_API.ajaxCall('/multiplayer/bookmark/gid/' + MG_GAME_API.settings.gid + '/mediaId/' + json.media.id + '/playedId/' + user.id , function(turn_response) {
+                                MG_API.ajaxCall('/multiplayer/bookmark/gid/' + MG_GAME_API.settings.gid + '/mediaId/' + json.media.id + '/playedId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
 
                                 });
                             });

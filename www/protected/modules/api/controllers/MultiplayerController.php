@@ -9,7 +9,7 @@ class MultiplayerController extends ApiController
     public function filters()
     {
         return array( // add blocked IP filter here
-            'throttle - submit, validateSecret,disconnect, getEndedGames, endGame, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
+            'throttle - bookmark, submit, validateSecret,disconnect, getEndedGames, endGame, register,getBookmarks, getInterests, getInstitutions, challenge, getChallenges, rejectChallenge, acceptChallenge, getOfflineGames, getOfflineGameState, addInterest, removeInterest, banInstitution, unbanInstitution, getInstitution',
             'IPBlock',
             'APIAjaxOnly - validateSecret,disconnect', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - validateSecret,disconnect',
@@ -342,7 +342,9 @@ class MultiplayerController extends ApiController
     public function actionBookmark($gid, $mediaId, $playedId)
     {
         Yii::import("games.components.*");
+
         $bookmark = new MGBookmark($gid);
+
         if (is_null($bookmark)) {
             $this->sendResponse(Yii::t('app', 'Internal Server Error.'), 500);
         }
