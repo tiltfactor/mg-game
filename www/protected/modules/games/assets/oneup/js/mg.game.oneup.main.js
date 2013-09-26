@@ -485,29 +485,95 @@ MG_GAME_ONEUP = function ($) {
                     MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
 /*
                         var account_bookmarks = [];
-                        account_bookmarks[0] = {'id': 0, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[1] = {'id': 1, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[2] = {'id': 2, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[3] = {'id': 3, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[4] = {'id': 4, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[5] = {'id': 5, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[6] = {'id': 6, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[7] = {'id': 7, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[8] = {'id': 8, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[9] = {'id': 9, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[10] = {'id': 10, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[11] = {'id': 11, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[12] = {'id': 12, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[13] = {'id': 13, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[14] = {'id': 14, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[15] = {'id': 15, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[0] = {'id': 0, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[1] = {'id': 1, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[2] = {'id': 2, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[3] = {'id': 3, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[4] = {'id': 4, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[5] = {'id': 5, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[6] = {'id': 6, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/facebook.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/facebook.png'};
+                        account_bookmarks[7] = {'id': 7, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[8] = {'id': 8, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[9] = {'id': 9, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[10] = {'id': 10, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[11] = {'id': 11, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[12] = {'id': 12, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/facebook.png'};
+                        account_bookmarks[13] = {'id': 13, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[14] = {'id': 14, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
+                        account_bookmarks[15] = {'id': 15, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/facebook.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
 */
                         var json = {};
                         json.bookmarked = account_bookmarks;
                         $("#template-account_bookmark").tmpl(json).appendTo($("#account_bookmark")).after(function () {
+                            function Slider (container ) {
+                                this.container = container;
+                                this.imgs = container.find('img');
+                                this.myImg = container.find('#my_image');
+                                this.myImgPaddingLeftValue = parseInt(container.css('padding-left'), 10);
+                                if (this.imgs.length > 0) {
+                                    this.imgWidth = (this.imgs[0].width || 0) + (this.myImgPaddingLeftValue || 0);
+                                } else {
+                                    this.imgWidth = 0;
+                                }
+                                this.windowWidth = $( window ).width();
+                                this.allImagesWidth = this.getAllImagesWidth();
+                                this.sliderMaxOffset = this.getSliderMaxOffset();
+                                this.sliderOffset = 0;
+
+                            };
+
+                            Slider.prototype.getAllImagesWidth = function() { // must be private
+                                var tmpSum = 0;
+                                var i = 0;
+                                for( i ; i<this.imgs.length; i++) {
+                                    tmpSum += this.imgs[i].width;
+                                }
+                                return tmpSum;
+                            }
+
+
+                            Slider.prototype.getSliderMaxOffset = function() { // must be private
+                                var tmp = this.allImagesWidth/this.windowWidth;
+                                var offset = Math.floor(tmp);
+                                return offset;
+                            }
+
+                            Slider.prototype.transition = function (direction) {
+                                var unit;
+                                if(direction === "next" && !(mySlider.sliderOffset < mySlider.sliderMaxOffset)) { // no more images for slide right
+                                    return;
+                                }
+                                if(direction !== "next" && !(mySlider.sliderOffset > 0)) { // no more images for slide left
+                                    return;
+                                }
+                                if(this.windowWidth != 0) {
+                                    if(direction === "next") { // clicked on the next button
+                                        unit = '-=';
+                                        this.sliderOffset++;
+                                    }
+                                    else {
+                                        unit = '+=';
+                                        this.sliderOffset--;
+                                    }
+                                }
+                                this.container.animate (
+                                    {'margin-left': unit ? (unit + this.windowWidth) : this.windowWidth}
+                                )
+                            }
+
+                            var container = $('.bookmark');
+                            var mySlider = new Slider(container);
+
+                            Hammer(container).off('swipeleft').on("swipeleft", function() { // swipeleft
+                                mySlider.transition('next');
+                            });
+                            Hammer(container).off('swiperight').on("swiperight", function() { // swiperight
+                                mySlider.transition( 'previous');
+                            });
                             // add zoom to scaled and move swipe_left::swipe_right
                         });
                     });
+
                     // Interests
                     MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_GAME_API.settings.gid , function(account_interest) {
                         var json = {};
@@ -678,7 +744,7 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit: function () {
-            var socket = io.connect('http://localhost:8000');
+            var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'");
 
 
             socket.on('reconnect', function () {

@@ -65,8 +65,14 @@ class OneUpController extends GxController
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
+            $nodeJSUrl = Yii::app()->fbvStorage->get("nodeJSUrl");
+            $pushUrl = Yii::app()->fbvStorage->get("pushUrl");
 
             $js = <<<EOD
+            MG_INIT = {};
+            MG_INIT.nodeJSUrl = '$nodeJSUrl';
+            MG_INIT.pushUrl = '{$pushUrl}';
+
     MG_GAME_ONEUP.init({
         gid : 'OneUp',
         app_id : 'MG_API',
