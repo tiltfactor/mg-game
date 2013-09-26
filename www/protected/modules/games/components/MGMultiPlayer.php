@@ -696,7 +696,7 @@ abstract class MGMultiPlayer extends CComponent
 
             $challenger = new GameUserDTO();
             $challenger->id = $this->userId;
-            $challenger->username = $opponent->username;
+            $challenger->username = $this->userOnline->session->username;
 
             $msg->message = serialize($challenger);
 
