@@ -11,33 +11,50 @@ class UserIdentity extends CUserIdentity {
     CONST ERROR_STATUS_NOTACTIVE = 4;
     CONST ERROR_STATUS_BAN = 5;
     CONST ERROR_STATUS_BLOCKED = 6;
+    CONST ERROR_FACEBOOK = 7;
     public $open_id;
+    public $facebookProfile;
+    function __construct($username, $password, $openId = null, $facebookProfile = null) {
+        $this->open_id = $openId;
+        $this->facebookProfile = $facebookProfile;
+        parent::__construct($username, $password);
+    }
+
     /**
      * Authenticates a user.
      * @return boolean whether authentication succeeds.
      */
     public function authenticate() {
-        //YiiBase::log('username:' . $this->username);
         if (strpos($this->username, "@")) {
             $user = User::model()->notsafe()->findByAttributes(array('email' => $this->username));
         } else {
             $user = User::model()->notsafe()->findByAttributes(array('username' => $this->username));
         }
-        YiiBase::log($user->username);
         if ($user === null) {
             if (strpos($this->username, "@")) {
-                $this->errorCode = self::ERROR_EMAIL_INVALID;
+                if ($this->password == 'dummy_value' && $this->open_id && $this->facebookProfile) {
+                    $user = new User();
+                    $user->email = $this->username;
+                    $user->open_id = $this->facebookProfile['identifier'];
+                    $user->password = $this->password;
+                    $user->role = PLAYER;
+                    $username = $this->facebookProfile['profileURL'];
+                    $user->username = substr($username, strrpos($username, '/') + 1);
+                    $user->status = 1;
+                    $user->insert();
+                    $this->setLogged($user);
+                    $this->errorCode = self::ERROR_NONE;
+                } else {
+                    $this->errorCode = self::ERROR_EMAIL_INVALID;
+                }
             } else {
                 $this->errorCode = self::ERROR_USERNAME_INVALID;
             }
         } else if ($this->password == 'dummy_value' && $this->open_id) {
-            if ($user->open_id == $this->open_id) {
-                $this->errorCode = self::ERROR_NONE;
-            } else if (!$user->open_id) {
-                $user->open_id = $this->open_id;
-                $user->save();
-                $this->errorCode = self::ERROR_NONE;
+            if ($user->open_id == $this->facebookProfile['identifier'] && $user->email == $this->username) {
+                YiiBase::log('mail and openid are matching');
                 $this->setLogged($user);
+                $this->errorCode = self::ERROR_NONE;
             } else {
                 $this->errorCode = self::ERROR_EMAIL_INVALID;
             }

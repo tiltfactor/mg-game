@@ -57,7 +57,7 @@ class User extends BaseUser
     $criteria->compare('edited_count', $this->edited_count);
     $criteria->compare('created', $this->created, true);
     $criteria->compare('modified', $this->modified, true);
-    
+
     if (isset($_GET["Custom"]) && isset($_GET["Custom"]["tags"])) {
       $parsed_tags = MGTags::parseTags($_GET["Custom"]["tags"]);
       if (count($parsed_tags) > 0) {
@@ -174,7 +174,7 @@ class User extends BaseUser
             'condition'=>'role=\'' . INSTITUTION . '\'',
         ),
       'notsafe'=>array(
-        'select' => 'id, username, password, email, activekey, edited_count, created, modified, lastvisit, role, status',
+        'select' => 'id, username, password, email, activekey, edited_count, created, modified, lastvisit, role, status, open_id',
       ),
     );
   }

@@ -7,80 +7,84 @@
  */
 class UserLogin extends CFormModel
 {
-	public $username;
-	public $password;
-	public $rememberMe;
+    public $username;
+    public $password;
+    public $rememberMe;
 
-	/**
-	 * Declares the validation rules.
-	 * The rules state that username and password are required,
-	 * and password needs to be authenticated.
-	 */
+    /**
+     * Declares the validation rules.
+     * The rules state that username and password are required,
+     * and password needs to be authenticated.
+     */
 	public function rules()
 	{
-		return array(
-			// username and password are required
-			array('username, password', 'required'),
-			// rememberMe needs to be a boolean
-			array('rememberMe', 'boolean'),
-			// password needs to be authenticated
-			array('password', 'authenticate'),
-		);
-	}
+        return array(
+            // username and password are required
+            array('username, password', 'required'),
+            // rememberMe needs to be a boolean
+            array('rememberMe', 'boolean'),
+            // password needs to be authenticated
+            array('password', 'authenticate'),
+        );
+    }
 
-	/**
-	 * Declares attribute labels.
-	 */
+    /**
+     * Declares attribute labels.
+     */
 	public function attributeLabels()
 	{
-		return array(
-			'rememberMe'=>UserModule::t("Remember me next time"),
-			'username'=>UserModule::t("username or email"),
-			'password'=>UserModule::t("password"),
-		);
-	}
+        return array(
+            'rememberMe' => UserModule::t("Remember me next time"),
+            'username' => UserModule::t("username or email"),
+            'password' => UserModule::t("password"),
+        );
+    }
 
-	/**
-	 * Authenticates the password.
-	 * This is the 'authenticate' validator as declared in rules().
-	 */
+    /**
+     * Authenticates the password.
+     * This is the 'authenticate' validator as declared in rules().
+     */
 	public function authenticate($attribute,$params)
 	{
-		if(!$this->hasErrors())  // we only want to authenticate when no input errors
-		{
-			$identity=new UserIdentity($this->username,$this->password);
-			$identity->authenticate();
+        if (!$this->hasErrors()) // we only want to authenticate when no input errors
+        {
+            $identity = new UserIdentity($this->username, $this->password);
+            $identity->authenticate();
 			switch($identity->errorCode)
 			{
-				case UserIdentity::ERROR_NONE:
-					$duration=$this->rememberMe ? 3600*24*30 : 0; // 30 days
-					Yii::app()->user->login($identity,$duration);
-					break;
-				case UserIdentity::ERROR_EMAIL_INVALID:
-					$this->addError("username",UserModule::t("Email is incorrect."));
-					break;
-				case UserIdentity::ERROR_USERNAME_INVALID:
-					$this->addError("username",UserModule::t("Username is incorrect."));
-					break;
-				case UserIdentity::ERROR_STATUS_NOTACTIVE:
-					$this->addError("status",UserModule::t("Your account is not activated."));
-					break;
-				case UserIdentity::ERROR_STATUS_BAN:
-					$this->addError("status",UserModule::t("Your account is blocked."));
-					break;
-				case UserIdentity::ERROR_PASSWORD_INVALID:
-					$this->addError("password",UserModule::t("Password is incorrect."));
-          break;
-        case UserIdentity::ERROR_STATUS_BLOCKED:
-          $this->addError("status",UserModule::t("The IP address you are accessing from is blocked."));
-					break;
-			}
-		}
-	}
+                case UserIdentity::ERROR_NONE:
+                    $duration = $this->rememberMe ? 3600 * 24 * 30 : 0; // 30 days
+                    Yii::app()->user->login($identity, $duration);
+                    break;
+                case UserIdentity::ERROR_EMAIL_INVALID:
+                    $this->addError("username", UserModule::t("Email is incorrect."));
+                    break;
+                case UserIdentity::ERROR_USERNAME_INVALID:
+                    $this->addError("username", UserModule::t("Username is incorrect."));
+                    break;
+                case UserIdentity::ERROR_STATUS_NOTACTIVE:
+                    $this->addError("status", UserModule::t("Your account is not activated."));
+                    break;
+                case UserIdentity::ERROR_STATUS_BAN:
+                    $this->addError("status", UserModule::t("Your account is blocked."));
+                    break;
+                case UserIdentity::ERROR_PASSWORD_INVALID:
+                    $this->addError("password", UserModule::t("Password is incorrect."));
+                    break;
+                case
+                    UserIdentity::ERROR_FACEBOOK:
+                    $this->addError("username", UserModule::t("Facebook authentication error."));
+                    break;
+                case UserIdentity::ERROR_STATUS_BLOCKED:
+                    $this->addError("status", UserModule::t("The IP address you are accessing from is blocked."));
+                    break;
+            }
+        }
+    }
 
-  public function setLastVisit() {
-    $user = User::model()->notsafe()->findByPk(Yii::app()->user->id);
-    $user->lastvisit = date('Y-m-d H:i:s');
-    $user->save(FALSE);
-  }
+    public function setLastVisit() {
+        $user = User::model()->notsafe()->findByPk(Yii::app()->user->id);
+        $user->lastvisit = date('Y-m-d H:i:s');
+        $user->save(FALSE);
+    }
 }

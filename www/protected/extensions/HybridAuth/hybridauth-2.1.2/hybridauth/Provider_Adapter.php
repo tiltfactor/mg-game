@@ -132,7 +132,7 @@ class Hybrid_Provider_Adapter
 
 		# for default HybridAuth endpoint url hauth_login_done_url
 		# 	auth.done   required  the IDp ID
-		$this->params["login_done"]  = 'http://' .$_SERVER['SERVER_NAME'] . $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "hauth.done={$this->id}";
+		$this->params["login_done"]  = 'http://' /*.$_SERVER['SERVER_NAME']*/ .'localhost' . $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "hauth.done={$this->id}";
 
 		Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.hauth_return_to"    , $this->params["hauth_return_to"] );
 		Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.hauth_endpoint"     , $this->params["login_done"] ); 

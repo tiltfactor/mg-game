@@ -117,10 +117,8 @@ class HybridAuthIdentity extends CUserIdentity
 
         $accessToken = $haComp->adapter->getAccessToken();
         $userProfile = (array)$haComp->userProfile;
-        $email = $userProfile['email'];
 
-        $identity = new UserIdentity($email, "dummy_value");
-        $identity->open_id = $accessToken['access_token'];
+        $identity = new UserIdentity($userProfile['email'], "dummy_value", $accessToken['access_token'], $userProfile);
 
         $identity->authenticate();
         if ($identity->errorCode == UserIdentity::ERROR_NONE) {

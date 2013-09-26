@@ -160,7 +160,6 @@ class MediasExportPlugin extends MGExportPlugin
         // an array.
         for ($i = 0; $i < $c; $i++) {
             if ($i == 0) {
-                //YiiBase::logProps($info[$i], CLogger::LEVEL_ERROR);
                 $url = $info[$i]['url'];
             }
             $tags[] = $info[$i]['tag'];
