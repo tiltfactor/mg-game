@@ -4,7 +4,7 @@ class GamesController extends ApiController {
   
   public function filters() {
     return array( // add blocked IP filter here
-        'throttle - messages, abort, abortpartnersearch, postmessage',
+        'throttle - messages, abort, abortpartnersearch, postmessage, play',
         'IPBlock',
         'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
         'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
