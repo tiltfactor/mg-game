@@ -108,6 +108,7 @@ class SiteController extends Controller
         try
         {
             Yii::import('application.components.HybridAuthIdentity');
+            Yii::import('application.modules.user.components.UserIdentity');
             $haComp = new HybridAuthIdentity();
 
             if (!$haComp->validateProviderName($provider)) {
@@ -137,7 +138,7 @@ class SiteController extends Controller
     }
 
     public function actionSocialLogin() // redirect_uri login_done hauth_session.facebook.hauth_endpoint
-    { // https://www.facebook.com/dialog/oauth?client_id=672156142814370&redirect_uri=%2Fmggameserver%2Findex.php%2Fsite%2FsocialLogin%3Fhauth.done%3DFacebook&state=b66c6718274da9729f732aeca53dcd0e&scope=email&display=popup
+    {
         Yii::import('application.components.HybridAuthIdentity');
         $path = Yii::getPathOfAlias('ext.HybridAuth');
         require_once $path . '/hybridauth-' . HybridAuthIdentity::VERSION . '/index.php';
