@@ -91,6 +91,7 @@ MG_GAME_ONEUP = function ($) {
                             //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
+                            $("#challenges").remove();
                             $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
                                 if ((challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
                                     $("#challenges_sent").find(".no_value").show();
