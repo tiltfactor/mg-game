@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">One Up</string>
+    <string name="gameUrl">http://192.168.128.210/mggameserver/index.php/games/OneUp</string>
+
+</resources>

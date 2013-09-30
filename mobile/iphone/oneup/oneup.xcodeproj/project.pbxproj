@@ -1,0 +1,348 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		15A697F917F9AD7C0090D5F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A697F817F9AD7C0090D5F8 /* UIKit.framework */; };
+		15A697FB17F9AD7C0090D5F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A697FA17F9AD7C0090D5F8 /* Foundation.framework */; };
+		15A697FD17F9AD7C0090D5F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A697FC17F9AD7C0090D5F8 /* CoreGraphics.framework */; };
+		15A6980317F9AD7C0090D5F8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 15A6980117F9AD7C0090D5F8 /* InfoPlist.strings */; };
+		15A6980517F9AD7C0090D5F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A6980417F9AD7C0090D5F8 /* main.m */; };
+		15A6980917F9AD7C0090D5F8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A6980817F9AD7C0090D5F8 /* AppDelegate.m */; };
+		15A6980B17F9AD7C0090D5F8 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A6980A17F9AD7C0090D5F8 /* Default.png */; };
+		15A6980D17F9AD7C0090D5F8 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A6980C17F9AD7C0090D5F8 /* Default@2x.png */; };
+		15A6980F17F9AD7C0090D5F8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A6980E17F9AD7C0090D5F8 /* Default-568h@2x.png */; };
+		15A6981217F9AD7C0090D5F8 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15A6981017F9AD7C0090D5F8 /* MainStoryboard_iPhone.storyboard */; };
+		15A6981517F9AD7C0090D5F8 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15A6981317F9AD7C0090D5F8 /* MainStoryboard_iPad.storyboard */; };
+		15A6981817F9AD7C0090D5F8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A6981717F9AD7C0090D5F8 /* ViewController.m */; };
+		15A6985217F9B7260090D5F8 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A6985017F9B7260090D5F8 /* Icon.png */; };
+		15A6985317F9B7260090D5F8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A6985117F9B7260090D5F8 /* Icon@2x.png */; };
+		15AA8FEE17F9C378008D8904 /* darkGrey_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 15AA8FED17F9C378008D8904 /* darkGrey_background.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		15A697F517F9AD7C0090D5F8 /* oneup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oneup.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15A697F817F9AD7C0090D5F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		15A697FA17F9AD7C0090D5F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		15A697FC17F9AD7C0090D5F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		15A6980017F9AD7C0090D5F8 /* oneup-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "oneup-Info.plist"; sourceTree = "<group>"; };
+		15A6980217F9AD7C0090D5F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		15A6980417F9AD7C0090D5F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		15A6980617F9AD7C0090D5F8 /* oneup-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "oneup-Prefix.pch"; sourceTree = "<group>"; };
+		15A6980717F9AD7C0090D5F8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		15A6980817F9AD7C0090D5F8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		15A6980A17F9AD7C0090D5F8 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		15A6980C17F9AD7C0090D5F8 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		15A6980E17F9AD7C0090D5F8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		15A6981117F9AD7C0090D5F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		15A6981417F9AD7C0090D5F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		15A6981617F9AD7C0090D5F8 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		15A6981717F9AD7C0090D5F8 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		15A6985017F9B7260090D5F8 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		15A6985117F9B7260090D5F8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		15AA8FED17F9C378008D8904 /* darkGrey_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = darkGrey_background.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		15A697F217F9AD7C0090D5F8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15A697F917F9AD7C0090D5F8 /* UIKit.framework in Frameworks */,
+				15A697FB17F9AD7C0090D5F8 /* Foundation.framework in Frameworks */,
+				15A697FD17F9AD7C0090D5F8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		15A697EC17F9AD7C0090D5F8 = {
+			isa = PBXGroup;
+			children = (
+				15A6985017F9B7260090D5F8 /* Icon.png */,
+				15A6985117F9B7260090D5F8 /* Icon@2x.png */,
+				15A697FE17F9AD7C0090D5F8 /* oneup */,
+				15A697F717F9AD7C0090D5F8 /* Frameworks */,
+				15A697F617F9AD7C0090D5F8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		15A697F617F9AD7C0090D5F8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				15A697F517F9AD7C0090D5F8 /* oneup.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		15A697F717F9AD7C0090D5F8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				15A697F817F9AD7C0090D5F8 /* UIKit.framework */,
+				15A697FA17F9AD7C0090D5F8 /* Foundation.framework */,
+				15A697FC17F9AD7C0090D5F8 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		15A697FE17F9AD7C0090D5F8 /* oneup */ = {
+			isa = PBXGroup;
+			children = (
+				15AA8FED17F9C378008D8904 /* darkGrey_background.png */,
+				15A6980717F9AD7C0090D5F8 /* AppDelegate.h */,
+				15A6980817F9AD7C0090D5F8 /* AppDelegate.m */,
+				15A6981017F9AD7C0090D5F8 /* MainStoryboard_iPhone.storyboard */,
+				15A6981317F9AD7C0090D5F8 /* MainStoryboard_iPad.storyboard */,
+				15A6981617F9AD7C0090D5F8 /* ViewController.h */,
+				15A6981717F9AD7C0090D5F8 /* ViewController.m */,
+				15A697FF17F9AD7C0090D5F8 /* Supporting Files */,
+			);
+			path = oneup;
+			sourceTree = "<group>";
+		};
+		15A697FF17F9AD7C0090D5F8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				15A6980017F9AD7C0090D5F8 /* oneup-Info.plist */,
+				15A6980117F9AD7C0090D5F8 /* InfoPlist.strings */,
+				15A6980417F9AD7C0090D5F8 /* main.m */,
+				15A6980617F9AD7C0090D5F8 /* oneup-Prefix.pch */,
+				15A6980A17F9AD7C0090D5F8 /* Default.png */,
+				15A6980C17F9AD7C0090D5F8 /* Default@2x.png */,
+				15A6980E17F9AD7C0090D5F8 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		15A697F417F9AD7C0090D5F8 /* oneup */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 15A6981B17F9AD7C0090D5F8 /* Build configuration list for PBXNativeTarget "oneup" */;
+			buildPhases = (
+				15A697F117F9AD7C0090D5F8 /* Sources */,
+				15A697F217F9AD7C0090D5F8 /* Frameworks */,
+				15A697F317F9AD7C0090D5F8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = oneup;
+			productName = oneup;
+			productReference = 15A697F517F9AD7C0090D5F8 /* oneup.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		15A697ED17F9AD7C0090D5F8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Kristina Nenkova";
+			};
+			buildConfigurationList = 15A697F017F9AD7C0090D5F8 /* Build configuration list for PBXProject "oneup" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 15A697EC17F9AD7C0090D5F8;
+			productRefGroup = 15A697F617F9AD7C0090D5F8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				15A697F417F9AD7C0090D5F8 /* oneup */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		15A697F317F9AD7C0090D5F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15A6980317F9AD7C0090D5F8 /* InfoPlist.strings in Resources */,
+				15A6980B17F9AD7C0090D5F8 /* Default.png in Resources */,
+				15A6980D17F9AD7C0090D5F8 /* Default@2x.png in Resources */,
+				15A6980F17F9AD7C0090D5F8 /* Default-568h@2x.png in Resources */,
+				15A6981217F9AD7C0090D5F8 /* MainStoryboard_iPhone.storyboard in Resources */,
+				15A6981517F9AD7C0090D5F8 /* MainStoryboard_iPad.storyboard in Resources */,
+				15A6985217F9B7260090D5F8 /* Icon.png in Resources */,
+				15A6985317F9B7260090D5F8 /* Icon@2x.png in Resources */,
+				15AA8FEE17F9C378008D8904 /* darkGrey_background.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		15A697F117F9AD7C0090D5F8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15A6980517F9AD7C0090D5F8 /* main.m in Sources */,
+				15A6980917F9AD7C0090D5F8 /* AppDelegate.m in Sources */,
+				15A6981817F9AD7C0090D5F8 /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		15A6980117F9AD7C0090D5F8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15A6980217F9AD7C0090D5F8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		15A6981017F9AD7C0090D5F8 /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15A6981117F9AD7C0090D5F8 /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		15A6981317F9AD7C0090D5F8 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				15A6981417F9AD7C0090D5F8 /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		15A6981917F9AD7C0090D5F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		15A6981A17F9AD7C0090D5F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		15A6981C17F9AD7C0090D5F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "oneup/oneup-Prefix.pch";
+				INFOPLIST_FILE = "oneup/oneup-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		15A6981D17F9AD7C0090D5F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kristina Nenkova (AW4N48R2JQ)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "oneup/oneup-Prefix.pch";
+				INFOPLIST_FILE = "oneup/oneup-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B27786E6-E046-40AE-BB95-0CFB850EDA80";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		15A697F017F9AD7C0090D5F8 /* Build configuration list for PBXProject "oneup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15A6981917F9AD7C0090D5F8 /* Debug */,
+				15A6981A17F9AD7C0090D5F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		15A6981B17F9AD7C0090D5F8 /* Build configuration list for PBXNativeTarget "oneup" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				15A6981C17F9AD7C0090D5F8 /* Debug */,
+				15A6981D17F9AD7C0090D5F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 15A697ED17F9AD7C0090D5F8 /* Project object */;
+}
