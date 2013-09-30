@@ -1402,7 +1402,8 @@
         $("#header .header_mm_left").css('visibility', 'hidden');
         $("#mg_error").empty();
         $(".mm-menu.mm-right").width($wndw.width() + 10);
-        $(".mm-page").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
+        //$(".mm-menu.mm-right").width($(".mm-inner").width());
+        $(".mm-page").css({'right': ($(".mm-inner").width() + 44), 'width': ($("#header .setting").width() + 10)});
         $("#mm-blocker").css({'right': ($wndw.width() + 10), 'width': ($("#header .setting").width() + 10)});
 	}
 	function closeMenu( $m, o, c )

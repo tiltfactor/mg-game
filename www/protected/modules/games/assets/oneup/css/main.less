@@ -5,19 +5,19 @@
   height: @h;
   @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
 
-  @media all and  (-webkit-min-device-pixel-ratio : 1.5) and (max-height: 620px),
-  only screen and (    min--moz-device-pixel-ratio: 1.5) and (max-height: 620px),
-  only screen and (      -o-max-device-pixel-ratio: 2/1) and (max-height: 620px),
-  only screen and (         min-device-pixel-ratio: 1.5) and (max-height: 620px),
-  only screen and (              min-resolution: 192dpi) and (max-height: 620px),
-  only screen and (               min-resolution: 2dppx) and (max-height: 620px),
+  @media all and  (-webkit-min-device-pixel-ratio : 1.5),
+  only screen and (    min--moz-device-pixel-ratio: 1.5),
+  only screen and (      -o-max-device-pixel-ratio: 2/1),
+  only screen and (         min-device-pixel-ratio: 1.5),
+  only screen and (              min-resolution: 192dpi),
+  only screen and (               min-resolution: 2dppx),
   only screen and (         min-device-pixel-ratio: 1.5) and (pointer:coarse),
   only screen and (              min-resolution: 1.5dppx) and (orientation: portrait) {
     background-image: url(@at2x_path);
     //background-size: @w @h;
     background-repeat: @repeat;
-    width: @w_retina;
-    height: @h_retina;
+/*    width: @w_retina;
+    height: @h_retina;*/
   }
 }
 
@@ -245,7 +245,7 @@ input {
 }
 
 body {
-  .row {
+  .row, .row a {
     height: 42px !important;
     line-height: 42px;
     font-size: 13px !important;
@@ -378,10 +378,10 @@ body {
 
 body.retina {
   .mm-menu.mm-right .mm-inner {
-    padding: 0 0 0 100px;
+    padding: 0 0 0 76px;
   }
 
-  .row {
+  .row, .row a {
     height: 82px !important;
     line-height: 82px;
     font-size: 25px !important;

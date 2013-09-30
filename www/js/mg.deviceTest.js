@@ -28,6 +28,18 @@ $( document ).ready(function() {
 
 Modernizr.addTest('highres', function() {
 
+    try {
+        if (window.devicePixelRatio > 1.25) {
+            return true;
+        }
+    } catch (err) {
+        return false;
+    }
+
+/*    if (window.devicePixelRatio > 1) {
+        return true;
+    }
+
     // for opera
     var ratio = '2.99/2';
     // for webkit
@@ -39,7 +51,7 @@ Modernizr.addTest('highres', function() {
         'only screen and (min-device-pixel-ratio:' + num + ')'
     ];
     var isHighRes = false;
-
+console.log(mqs.length);
     // loop through vendors, checking non-prefixed first
     for (var i = mqs.length - 1; i >= 0; i--) {
         isHighRes = Modernizr.mq( mqs[i] );
@@ -49,7 +61,7 @@ Modernizr.addTest('highres', function() {
         }
     }
     // not highres
-    return isHighRes;
+    return isHighRes;*/
 
 });
 
