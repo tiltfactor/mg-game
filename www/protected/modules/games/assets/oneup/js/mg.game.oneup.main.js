@@ -1,6 +1,7 @@
 MG_GAME_ONEUP = function ($) {
     return $.extend(MG_GAME_API, {
         wordField:null,
+        gameName: 'One Up',
         submitButton:null,
         media:null,
         licence_info:[],
@@ -54,6 +55,8 @@ MG_GAME_ONEUP = function ($) {
         actions: function (action, click_parent) {
             console.log('call for '+ action + " - click from: " + click_parent);
             var continue_action = '';
+            $("#header .words").hide();
+            $("#header .back").hide();
             switch(action)
             {
                 case 'main_screen':
@@ -167,6 +170,7 @@ MG_GAME_ONEUP = function ($) {
                                             MG_GAME_ONEUP.opponent_name = this_clicked.closest(".row").find('span.username').text();
                                             MG_GAME_ONEUP.actions('final_screen', '');
                                         } else {
+                                            // next turn
                                             start_game = true;
                                             MG_GAME_ONEUP.pass_game_id = this_clicked.closest(".row").attr('playedGameId');
                                             MG_GAME_ONEUP.opponent_id = opponent_id;
@@ -186,13 +190,20 @@ MG_GAME_ONEUP = function ($) {
                     //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGameState/gid/OneUp/playedGameId/212
                     MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
                         /**
-                        public $tags //GameTagDTO[]
+                         public $tags //GameTagDTO[]
                          {"turns":[{"turn":1,"score":"5","opponentScore":"10","tags":[{"tag":"pool","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null},{"tag":"dfwefwe","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null}],"opponentTags":[{"tag":"rtytr","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null},{"tag":"ergerge","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null},{"tag":"pool","original":null,"score":null,"weight":null,"mediaId":2,"type":"new","tag_id":null}],"media":[{"id":"2","mimeType":"image\/jpeg","imageFullSize":"http:\/\/localhost\/mgc\/www\/\/uploads\/images\/image026.jpg","imageScaled":null,"thumbnail":"http:\/\/localhost\/mgc\/www\/\/uploads\/thumbs\/image026.jpg","videoWebm":null,"videoMp4":null,"audioMp3":null,"audioOgg":null,"licence":{"id":"","name":"","description":""}}],"wordsToAvoid":[]}],"finished":false}
-                        */
+                         */
                         var json = {};
                         json.current_level = turn_response.turns.length;
                         json.turn = turn_response.turns[(json.current_level -1)];
                         json.opponentName = MG_GAME_ONEUP.opponent_name;
+                        var opponentTagCount = turn_response.turns[(json.current_level - 1)].opponentTags.length;
+                        if (opponentTagCount === 3) {
+                            json.opponentStatus = 'finished';
+                        } else {
+                            json.opponentStatus = '';
+                        }
+
                         json.num_words = turn_response.turns[(json.current_level - 1)].tags.length;
 
                         json.current_turn_tag = [];
@@ -201,6 +212,7 @@ MG_GAME_ONEUP = function ($) {
                             json.current_turn_tag[i] = {};
                             var tags = turn_response.turns[(json.current_level -1)].tags;
                             json.current_turn_tag[i].div = calculatedRow(tags[i].tag, tags[i].score, json.current_level, MG_GAME_ONEUP.opponent_name);
+
                         }
 
                         var tag_count = json.num_words;
@@ -219,20 +231,20 @@ MG_GAME_ONEUP = function ($) {
                                             //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
                                             current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.turns[0].media[0].id + '","type":null,"tag_id":null}]';
                                             MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(response) {
-                                                var new_row = {};
+                                                    var new_row = {};
                                                     new_row.current_turn_tag = [],
-                                                    tags = turn_response.turns[(json.current_level -1)].tags;
+                                                        tags = turn_response.turns[(json.current_level -1)].tags;
 
-                                                that.replaceWith(calculatedRow(response[0].tag, response[0].score, json.current_level, MG_GAME_ONEUP.opponent_name));
-                                                that.off('click');
+                                                    that.replaceWith(calculatedRow(response[0].tag, response[0].score, json.current_level, MG_GAME_ONEUP.opponent_name));
+                                                    that.off('click');
 
-                                                var score_obj = $("#game_screen .you span");
-                                                score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10, MG_GAME_ONEUP.opponent_name));
-                                                tag_count++;
-                                                if (tag_count === 3) {
-                                                    $("#game_screen .round").html('WAITING ...');
-                                                }
-                                            }, {
+                                                    var score_obj = $("#game_screen .you span");
+                                                    score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10, MG_GAME_ONEUP.opponent_name));
+                                                    tag_count++;
+                                                    if (tag_count === 3) {
+                                                        $("#game_screen .round").attr('status', 'waiting').html('WAITING ...');
+                                                    }
+                                                }, {
                                                     type: 'post',
                                                     data: {
                                                         tags: current_tag
@@ -276,6 +288,7 @@ MG_GAME_ONEUP = function ($) {
                         json.opponent.round_1 = '';
                         json.opponent.round_2 = '';
                         json.opponent.round_3 = '';
+                        json.media = turn_response.turns[0].media[0];
 
                         var current_level = turn_response.turns.length;
                         for (var i = 1; i <= current_level; i++) {
@@ -318,7 +331,19 @@ MG_GAME_ONEUP = function ($) {
                         }
 
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
+                            $("#final_screen .bookmark_image").off('click').on('click', function () {
+                                //http://localhost/mggameserver/index.php/api/multiplayer/bookmark/gid/OneUp/mediaId/1/playedId/1/
+                                MG_API.ajaxCall('/multiplayer/bookmark/gid/' + MG_GAME_API.settings.gid + '/mediaId/' + json.media.id + '/playedId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
 
+                                });
+                            });
+
+                            $("#final_screen .rematch").off('click').on('click', function () {
+                                //http://localhost/mggameserver/index.php/api/multiplayer/challenge/gid/OneUp/username/test
+                                MG_API.ajaxCall('/multiplayer/challenge/gid/' + MG_GAME_API.settings.gid + '/username/' + json.opponentName , function(turn_response) {
+
+                                });
+                            });
                         });
                     });
 
@@ -335,30 +360,30 @@ MG_GAME_ONEUP = function ($) {
                 case 'word_screen':
                     $("#game_screen").empty();
                     MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
-                            var json = {};
-                            json.round_1 = '';
-                            json.round_2 = '';
-                            json.round_3 = '';
+                        var json = {};
+                        json.round_1 = '';
+                        json.round_2 = '';
+                        json.round_3 = '';
 
-                            var current_level = turn_response.turns.length;
-                            for (var i = 1; i <= current_level; i++) {
-                                for (var j = 0; j < 3; j++) {
-                                    if (j < turn_response.turns[(i-1)].tags.length) {
-                                        var j_tag = turn_response.turns[(i-1)].tags[j];
-                                        json['round_' + i]+= calculatedRow(j_tag.tag, j_tag.score, i);
-                                    } else {
-                                        json['round_' + i]+= '<div class="small_row blank_bar">ADD A WORD</div>';
-                                    }
+                        var current_level = turn_response.turns.length;
+                        for (var i = 1; i <= current_level; i++) {
+                            for (var j = 0; j < 3; j++) {
+                                if (j < turn_response.turns[(i-1)].tags.length) {
+                                    var j_tag = turn_response.turns[(i-1)].tags[j];
+                                    json['round_' + i]+= calculatedRow(j_tag.tag, j_tag.score, i);
+                                } else {
+                                    json['round_' + i]+= '<div class="small_row blank_bar">ADD A WORD</div>';
                                 }
                             }
-                            json.current_level = current_level;
-                            json.score = turn_response.turns[(current_level-1)].score;
-                            json.opponentName = MG_GAME_ONEUP.opponent_name;
-                            json.opponentScore = turn_response.turns[(current_level-1)].opponentScore;
+                        }
+                        json.current_level = current_level;
+                        json.score = turn_response.turns[(current_level-1)].score;
+                        json.opponentName = MG_GAME_ONEUP.opponent_name;
+                        json.opponentScore = turn_response.turns[(current_level-1)].opponentScore;
 
-                            $("#template-word_screen").tmpl(json).appendTo($("#word_screen")).after(function () {
+                        $("#template-word_screen").tmpl(json).appendTo($("#word_screen")).after(function () {
 
-                            });
+                        });
                     });
 
                     $("#header").find('.back').off('click').on('click', function (e) {
@@ -462,17 +487,17 @@ MG_GAME_ONEUP = function ($) {
                         my_iter = next_iter;
                     });
 
-                    function swipe_images_next (my_iter, next_iter) {
-                        swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'left', complete: function () {
-                            swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'right'}, 1000);
-                        }}, 1000);
-                    }
+                function swipe_images_next (my_iter, next_iter) {
+                    swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'left', complete: function () {
+                        swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'right'}, 1000);
+                    }}, 1000);
+                }
 
-                    function swipe_images_prev (my_iter, next_iter) {
-                        swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'right', complete: function () {
-                            swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'left'}, 1000);
-                        }}, 1000);
-                    }
+                function swipe_images_prev (my_iter, next_iter) {
+                    swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'right', complete: function () {
+                        swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'left'}, 1000);
+                    }}, 1000);
+                }
                     break;
                 case 'learn_more':
                     break;
@@ -483,25 +508,25 @@ MG_GAME_ONEUP = function ($) {
 
                     //getBookmarks
                     MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
-/*
-                        var account_bookmarks = [];
-                        account_bookmarks[0] = {'id': 0, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[1] = {'id': 1, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[2] = {'id': 2, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[3] = {'id': 3, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[4] = {'id': 4, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[5] = {'id': 5, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[6] = {'id': 6, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/facebook.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/facebook.png'};
-                        account_bookmarks[7] = {'id': 7, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[8] = {'id': 8, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[9] = {'id': 9, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[10] = {'id': 10, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[11] = {'id': 11, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[12] = {'id': 12, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/facebook.png'};
-                        account_bookmarks[13] = {'id': 13, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[14] = {'id': 14, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/video_ico.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-                        account_bookmarks[15] = {'id': 15, 'thumbnail': 'http://10.15.20.92/mgg_test/www/images/facebook.png', 'scaled': 'http://10.15.20.92/mgg_test/www/images/video_ico.png'};
-*/
+                        /*
+                         var account_bookmarks = [];
+                         account_bookmarks[0] = {'id': 0, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[1] = {'id': 1, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[2] = {'id': 2, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[3] = {'id': 3, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[4] = {'id': 4, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[5] = {'id': 5, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[6] = {'id': 6, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[7] = {'id': 7, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[8] = {'id': 8, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[9] = {'id': 9, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[10] = {'id': 10, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[11] = {'id': 11, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[12] = {'id': 12, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[13] = {'id': 13, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[14] = {'id': 14, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         account_bookmarks[15] = {'id': 15, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
+                         */
                         var json = {};
                         json.bookmarked = account_bookmarks;
                         $("#template-account_bookmark").tmpl(json).appendTo($("#account_bookmark")).after(function () {
@@ -529,14 +554,14 @@ MG_GAME_ONEUP = function ($) {
                                     tmpSum += this.imgs[i].width;
                                 }
                                 return tmpSum;
-                            }
+                            };
 
 
                             Slider.prototype.getSliderMaxOffset = function() { // must be private
                                 var tmp = this.allImagesWidth/this.windowWidth;
                                 var offset = Math.floor(tmp);
                                 return offset;
-                            }
+                            };
 
                             Slider.prototype.transition = function (direction) {
                                 var unit;
@@ -559,7 +584,7 @@ MG_GAME_ONEUP = function ($) {
                                 this.container.animate (
                                     {'margin-left': unit ? (unit + this.windowWidth) : this.windowWidth}
                                 )
-                            }
+                            };
 
                             var container = $('.bookmark');
                             var mySlider = new Slider(container);
@@ -567,6 +592,7 @@ MG_GAME_ONEUP = function ($) {
                             Hammer(container).off('swipeleft').on("swipeleft", function() { // swipeleft
                                 mySlider.transition('next');
                             });
+
                             Hammer(container).off('swiperight').on("swiperight", function() { // swiperight
                                 mySlider.transition( 'previous');
                             });
@@ -622,9 +648,9 @@ MG_GAME_ONEUP = function ($) {
                     break;
                 case 'find_opponent':
                     $('#find_opponent input.opponent_name').keypress(function (e) {
-                            if (e.which == 13) {
-                                $('#find_opponent .play').click();
-                            }
+                        if (e.which == 13) {
+                            $('#find_opponent .play').click();
+                        }
                     });
                     break;
                 case 'institution_info':
@@ -701,6 +727,12 @@ MG_GAME_ONEUP = function ($) {
 
                 MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
                     //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
+                    /*                    var response = [];
+                     response[0] = {};
+                     response[0].playedGameId = 48;
+                     response[0].opponentId = '3';
+                     response[0].opponentName = 'alabala';
+                     response[0].turnUserId = 0;*/
                     MG_GAME_ONEUP.endedGames = response;
                 });
 
@@ -744,67 +776,174 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit: function () {
-            var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'");
-
+            var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
+                game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
 
             socket.on('reconnect', function () {
                 console.log('Reconnected to the server');
                 socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
             });
 
-
             socket.on('registerFailure', function(data) {
-
+                //TODO what to do in this case
             });
 
             socket.on('challenge', function(data) {
                 //Receive challenge from game player
                 // data is JSON encoded object GameUserDTO
-                console.log('Someone challenged you!');
+                var response = JSON.parse(data.payload);
+                console.log(response);
+                $().toastmessage("showToast", {
+                    text: game_title + response.username + ' challenged you to a game!',
+                    position: "tops-center",
+                    type: "notice",
+                    background: "white",
+                    color: "black"
+                });
+                if ($("#main_screen").is(":visible")) {
+                    $("a[location='main_screen']").click();
+                }
             });
 
             socket.on('rejectChallenge', function(data) {
                 // Receive reject challenge from game player
                 // data is JSON encoded object GameUserDTO
-                console.log('Someone reject you!');
+                var response = JSON.parse(data.payload);
+                console.log(response);
+                $().toastmessage("showToast", {
+                    text: game_title + response.username + ' turned down your challenge.',
+                    position: "tops-center",
+                    type: "notice",
+                    background: "white",
+                    color: "black"
+                });
+                if ($("#main_screen").is(":visible")) {
+                    $("a[location='main_screen']").click();
+                }
             });
 
             socket.on('newTurn', function(data) {
                 // Receive information when new turn is created
                 // data is JSON encoded object GameTurnDTO
-                console.log('New turn is fired!');
-            });
+                var response = JSON.parse(data.payload);
+                console.log('Receive information when new turn is created');
+                console.log(response);
 
-            socket.on('gameEnd', function(data) {
-                // Receive when the game end i.e. no more turns
-                // data is JSON encoded integer of played game id
-                console.log('Game End is fired!');
-            });
-
-            socket.on('penalty', function(data) {
-                // Receive penalty
-                // data is JSON encoded negative integer of penalty scores
-                console.log('You got a penalty!');
-            });
-
-            socket.on('bonus', function(data) {
-                // Receive bonus points
-                // data is JSON encoded integer of bonus scores
-                console.log('You got a bonus!');
-            });
-
-            socket.on('opponentWaiting', function(data) {
-                // Receive notification that opponent finished his turn and waiting for you
-                // data is JSON encoded integer of played game id
-                if ($("#main_screen").is(":visible")) {
+                if($("#game_screen").is(":visible")) {
+                    if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10) &&
+                        ($("#game_screen .round").attr('status') === 'waiting' || $("#game_screen .round").attr('opponent') === 'finished')) {
+                        MG_GAME_ONEUP.actions('game_screen', '');
+                    }
+                } else {
+                    if ($("#main_screen").is(":visible")) {
+                        $("a[location='main_screen']").click();
+                    }
                     $().toastmessage("showToast", {
-                        text: 'XXX finished his turn and now is your turn!',
+                        text: game_title + " It's your turn!",
                         position: "tops-center",
                         type: "notice",
                         background: "white",
                         color: "black"
                     });
                 }
+            });
+
+            socket.on('gameEnd', function(data) {
+                // Receive when the game end i.e. no more turns
+                // data is JSON encoded integer of played game id
+                console.log('Game End is fired!');
+                var response = JSON.parse(data.payload);
+                console.log(response);
+
+                if($("#game_screen").is(":visible")) {
+                    if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
+                        MG_GAME_ONEUP.actions('final_screen', '');
+                    }
+                } else {
+                    // need to add line
+                    var counter = MG_GAME_ONEUP.endedGames.length;
+                    MG_GAME_ONEUP.endedGames[counter] = {};
+                    MG_GAME_ONEUP.endedGames[counter].playedGameId = response.playedGameId;
+                    MG_GAME_ONEUP.endedGames[counter].opponentId = response.id;
+                    MG_GAME_ONEUP.endedGames[counter].opponentName = response.username;
+                    MG_GAME_ONEUP.endedGames[counter].turnUserId = 0;
+
+                    if ($("#main_screen").is(":visible")) {
+                        $("a[location='main_screen']").click();
+                    }
+                }
+            });
+
+            socket.on('penalty', function(data) {
+                // Receive penalty
+                // data is JSON encoded negative integer of penalty scores
+                var response = JSON.parse(data.payload);
+                console.log(response);
+
+                if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
+                    $().toastmessage("showToast", {
+                        text: game_title + " You got " + MG_GAME_ONEUP.opponent_name + " 's point with " + response.tag.tag,
+                        position: "tops-center",
+                        type: "notice",
+                        background: "white",
+                        color: "black"
+                    });
+                    var current_points = parseInt($("#game_screen .you span").text(), 10);
+                    $("#game_screen .you span").html((current_points + 1));
+                    $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, $("#game_screen .round span").text(), MG_GAME_ONEUP.opponent_name));
+                }
+            });
+
+            socket.on('bonus', function(data) {
+                // Receive bonus points
+                // data is JSON encoded integer of bonus scores
+                var response = JSON.parse(data.payload);
+                console.log(response);
+
+                $().toastmessage("showToast", {
+                    text: game_title + ' ' + response.opponentName + " got your points with " + response.tag.tag + "!",
+                    position: "tops-center",
+                    type: "notice",
+                    background: "white",
+                    color: "black"
+                });
+
+                if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
+                    var current_points = parseInt($("#game_screen .you span").text(), 10);
+                    $("#game_screen .you span").html((current_points - 1));
+                    $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, $("#game_screen .round span").text(), MG_GAME_ONEUP.opponent_name));
+                }
+            });
+
+            socket.on('opponentWaiting', function(data) {
+                // Receive notification that opponent finished his turn and waiting for you
+                // data is JSON encoded integer of played game id
+                var response = JSON.parse(data.payload);
+                console.log('opponentWaiting');
+                console.log(response);
+
+                if ($("#main_screen").is(":visible")) {
+                    $().toastmessage("showToast", {
+                        text: game_title + " It's your turn! opponentWaiting",
+                        position: "tops-center",
+                        type: "notice",
+                        background: "white",
+                        color: "black"
+                    });
+                    $("a[location='main_screen']").click();
+                } else if($("#game_screen").is(":visible")) {
+                    if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
+                        $().toastmessage("showToast", {
+                            text: game_title + ' ' + response.username + " finished his turn.",
+                            position: "tops-center",
+                            type: "notice",
+                            background: "white",
+                            color: "black"
+                        });
+                        $("#game_screen .round").attr('opponent', 'finished')
+                    }
+                }
+
             });
 
             socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
@@ -928,7 +1067,7 @@ function calculatedRow (tag, score, current_level, opponent_name) {
         new_html = '<span>' + score + '</span>' + tag;
     }
 
-    return '<div class="small_row ' + html_class + '">' + new_html + '</div>';
+    return '<div class="small_row ' + html_class + '" tag="' + tag + '">' + new_html + '</div>';
 }
 
 function onResize () {
