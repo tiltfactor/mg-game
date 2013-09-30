@@ -1,8 +1,10 @@
 <IfModule mod_php5.c>
 php_value upload_max_filesize 200M
 php_value post_max_size 220M
-php_value error_reporting E_ALL & ~E_NOTICE & ~E_STRICT
+php_value error_reporting 'E_ALL & ~E_NOTICE & ~E_STRICT'
 </IfModule>
+
+Allow from all
 
 AddType video/ogg .ogv
 AddType video/mp4 .mp4
