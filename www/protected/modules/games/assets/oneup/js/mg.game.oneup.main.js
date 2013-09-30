@@ -145,7 +145,7 @@ MG_GAME_ONEUP = function ($) {
                                                 });
                                             } else {
                                                 // game started
-                                                MG_API.ajaxCall('/multiplayer/finishGame/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + playedGameId , function(challenges_response) {
+                                                MG_API.ajaxCall('/multiplayer/endGame/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + playedGameId , function(challenges_response) {
                                                     $("a[location='main_screen']").click();
                                                 });
                                             }
@@ -355,7 +355,6 @@ MG_GAME_ONEUP = function ($) {
                         MG_GAME_ONEUP.actions('game_screen', '');
                         return false;
                     });
-                    break;
                     break;
                 case 'word_screen':
                     $("#game_screen").empty();

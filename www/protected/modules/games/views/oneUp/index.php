@@ -265,7 +265,6 @@
 </script>
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
-    <input type="hidden" id="" />
     <div class="row back_dark_gray">
         <span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span>
         <div class="right header_scores">
