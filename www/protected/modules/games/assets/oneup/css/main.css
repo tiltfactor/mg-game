@@ -180,6 +180,10 @@ html.mm-right.mm-opening #mm-blocker {
   padding-left: 22px;
   padding-right: 22px;
 }
+#content .row input,
+#content .small_row input {
+  width: 100%;
+}
 #content .delete {
   background-image: url('../images/delete.png');
   background-repeat: repeat;
