@@ -5,6 +5,13 @@ return array (
   'frontend_theme' => 'metadatagames',
   'nodeJSUrl' => 'http://localhost:8000',
   'pushUrl' => 'http://localhost:8000/message/',
+  // can not work with localhost need ip or real address
+  'weinreUrl' => 'http://10.15.20.92:8088',
+  //Linux: sudo npm install -g weinre || Windows: npm install -g weinre
+  //weinre --httpPort 8088 --boundHost -all-
+  //http://localhost:8088/client/
+  //development mode will enable waine and consolejs with key DA9E1A3-4EE0-4DC0-9AFF-81427DECD9F5 - works for OneUp
+  'developmentMode' => false,
   'arcade' => 
   array (
     'description' => 'This is a short description of the project',

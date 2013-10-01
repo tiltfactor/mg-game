@@ -2,21 +2,19 @@
  * Required modernizr lib
  */
 
-var device_ratio = 1,
-    is_touch_device = is_touch_device();
-
-if (is_touch_device) {
-    device_ratio = window.devicePixelRatio;
-}
+var device_ratio = 1;
 
 $( document ).ready(function() {
-    if (is_touch_device) {
+    if (Modernizr.touch_device) {
         $("body").addClass('touch_device');
+        is_touch_device = true;
+        device_ratio = window.devicePixelRatio;
     } else {
         $("body").addClass('no-touch_device');
+        is_touch_device = false;
     }
 
-    if (Modernizr.highres) {
+    if (Modernizr.retina_resolution) {
         $("body").addClass('retina');
     } else {
         $("body").addClass('no-retina');
@@ -26,7 +24,20 @@ $( document ).ready(function() {
     $("body").addClass(BrowserDetect.browser);
 })
 
-Modernizr.addTest('highres', function() {
+Modernizr.addTest('development_mode', function() {
+    return true;
+});
+
+/*
+ USE
+ if (Modernizr.retina_resolution) {
+ // high resolution device - Retina like
+ }
+ else {
+ // low resolution device
+ }
+ */
+Modernizr.addTest('retina_resolution', function() {
 
     try {
         if (window.devicePixelRatio > 1.25) {
@@ -35,34 +46,24 @@ Modernizr.addTest('highres', function() {
     } catch (err) {
         return false;
     }
+});
 
-/*    if (window.devicePixelRatio > 1) {
-        return true;
-    }
+/*
+ USE
+ if (Modernizr.touch_device) {
+ // code if this is touch device
+ }
 
-    // for opera
-    var ratio = '2.99/2';
-    // for webkit
-    var num = '1.499';
-    var mqs = [
-        'only screen and (-o-min-device-pixel-ratio:' + ratio + ')',
-        'only screen and (min--moz-device-pixel-ratio:' + ratio + ')',
-        'only screen and (-webkit-min-device-pixel-ratio:' + num + ')',
-        'only screen and (min-device-pixel-ratio:' + num + ')'
-    ];
-    var isHighRes = false;
-console.log(mqs.length);
-    // loop through vendors, checking non-prefixed first
-    for (var i = mqs.length - 1; i >= 0; i--) {
-        isHighRes = Modernizr.mq( mqs[i] );
-        // if found one, return early
-        if ( isHighRes ) {
-            return isHighRes;
-        }
-    }
-    // not highres
-    return isHighRes;*/
-
+ Modernizr.touch is different
+ if ( Modernizr.touch ) {
+ // click
+ } else {
+ // mouseover
+ }
+ */
+Modernizr.addTest('touch_device', function() {
+    return !!('ontouchstart' in window) // works on most browsers
+        || !!('onmsgesturechange' in window); // works on ie10
 });
 
 var BrowserDetect = {
@@ -97,11 +98,6 @@ var BrowserDetect = {
             { string: navigator.userAgent, subString: "Opera",   identity: "Opera" }
         ]
 
-};
-
-function is_touch_device() {
-    return !!('ontouchstart' in window) // works on most browsers
-        || !!('onmsgesturechange' in window); // works on ie10
 };
 
 $.fn.centerHorizontal = function () {

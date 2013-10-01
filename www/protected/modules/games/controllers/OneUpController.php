@@ -67,11 +67,19 @@ class OneUpController extends GxController
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
             $nodeJSUrl = Yii::app()->fbvStorage->get("nodeJSUrl");
             $pushUrl = Yii::app()->fbvStorage->get("pushUrl");
+            $developmentMode = Yii::app()->fbvStorage->get("developmentMode");
+            $weineDebugUrl = Yii::app()->fbvStorage->get("weinreUrl") . "/target/target-script-min.js#anonymous";
 
             $js = <<<EOD
             MG_INIT = {};
             MG_INIT.nodeJSUrl = '$nodeJSUrl';
             MG_INIT.pushUrl = '{$pushUrl}';
+            MG_INIT.developmentMode = true;
+
+yepnope({
+  test : MG_INIT.developmentMode,
+  yep  : ["http://jsconsole.com/remote.js?7DA9E1A3-4EE0-4DC0-9AFF-81427DECD9F5", "{$weineDebugUrl}"]
+});
 
     MG_GAME_ONEUP.init({
         gid : 'OneUp',
