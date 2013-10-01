@@ -10,7 +10,6 @@
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/mmenu.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/mmenu-positioning.css" />
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-  <script src="<?php echo Yii::app()->fbvStorage->get("nodeJSUrl"); ?>/socket.io/socket.io.js"></script>
 </head>
 
 <body>

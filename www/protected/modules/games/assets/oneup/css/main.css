@@ -445,6 +445,17 @@ body html.mm-right.mm-opening #mm-blocker {
 body .mm-menu.mm-right .mm-inner {
   padding: 0 0 0 50px;
 }
+body .index_screen div.button {
+  margin: 20px;
+}
+body a.button {
+  background-color: #46a5c4;
+  border: 1px solid #FFFFFF;
+  border-radius: 7px 7px 7px 7px;
+  color: #FFFFFF;
+  padding: 3px 8px;
+  text-decoration: none;
+}
 body.retina .mm-menu.mm-right .mm-inner {
   padding: 0 0 0 76px;
 }
