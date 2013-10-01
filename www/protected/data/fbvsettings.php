@@ -11,7 +11,8 @@ return array (
   //weinre --httpPort 8088 --boundHost -all-
   //http://localhost:8088/client/
   //development mode will enable waine and consolejs with key DA9E1A3-4EE0-4DC0-9AFF-81427DECD9F5 - works for OneUp
-  'developmentMode' => false,
+  //NOTE: true or false should be with ''
+  'developmentMode' => 'false',
   'arcade' => 
   array (
     'description' => 'This is a short description of the project',

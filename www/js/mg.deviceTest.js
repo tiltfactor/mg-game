@@ -22,11 +22,10 @@ $( document ).ready(function() {
 
     BrowserDetect.init();
     $("body").addClass(BrowserDetect.browser);
+
 })
 
-Modernizr.addTest('development_mode', function() {
-    return true;
-});
+
 
 /*
  USE

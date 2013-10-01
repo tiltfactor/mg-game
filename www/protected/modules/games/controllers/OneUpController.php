@@ -74,10 +74,18 @@ class OneUpController extends GxController
             MG_INIT = {};
             MG_INIT.nodeJSUrl = '$nodeJSUrl';
             MG_INIT.pushUrl = '{$pushUrl}';
-            MG_INIT.developmentMode = true;
+            MG_INIT.developmentMode = '$developmentMode';
+
+Modernizr.addTest('development_mode', function() {
+    if ( typeof MG_INIT !== 'undefined' && MG_INIT.developmentMode === 'true') {
+        return true;
+    } else {
+        return false;
+    }
+});
 
 yepnope({
-  test : MG_INIT.developmentMode,
+  test : Modernizr.development_mode,
   yep  : ["http://jsconsole.com/remote.js?7DA9E1A3-4EE0-4DC0-9AFF-81427DECD9F5", "{$weineDebugUrl}"]
 });
 
