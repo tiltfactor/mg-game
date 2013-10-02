@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
 // change the following paths if necessary
 require_once(dirname(__FILE__).'/protected/config/consts.php');
 

@@ -1,5 +1,5 @@
 <div id="gamearea">
-    <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl(); ?>" />
+    <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/" />
     <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
     <!-- Images from the database appear here -->
     <div id="stage">

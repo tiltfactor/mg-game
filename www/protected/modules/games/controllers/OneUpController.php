@@ -48,18 +48,18 @@ class OneUpController extends GxController
             $cs = Yii::app()->clientScript;
             $cs->registerCoreScript('jquery');
             $cs->registerCoreScript('jquery.ui');
-            $cs->registerScriptFile(Yii::app()->fbvStorage->get("nodeJSUrl") . '/socket.io/socket.io.js', CClientScript::POS_HEAD);
+            //$cs->registerScriptFile(Yii::app()->fbvStorage->get("nodeJSUrl") . '/socket.io/socket.io.js', CClientScript::POS_HEAD);
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/oneup/css/main.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/modernizr.custom.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/retina.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.hammer.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
             //$cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_END);
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
@@ -76,20 +76,14 @@ class OneUpController extends GxController
             } else {
                 $isLogged = 'true';
             }
-
-                $js = <<<EOD
-MG_INIT = {};
-MG_INIT.nodeJSUrl = '$nodeJSUrl';
-MG_INIT.pushUrl = '{$pushUrl}';
-MG_INIT.developmentMode = '$developmentMode';
-MG_INIT.isLogged = '$isLogged';
-
-yepnope([
+/*
+ * yepnope([
     {
         load: [
             '{$nodeJSUrl}/socket.io/socket.io.js'
         ],
         complete: function(){
+
             if (typeof io === 'undefined') {
                alert('Contact Administrator. Error node.');
             } else {
@@ -111,6 +105,29 @@ yepnope([
         }
     }
 ]);
+ */
+
+                $js = <<<EOD
+MG_INIT = {};
+MG_INIT.nodeJSUrl = '$nodeJSUrl';
+MG_INIT.pushUrl = '{$pushUrl}';
+MG_INIT.developmentMode = '$developmentMode';
+MG_INIT.isLogged = '$isLogged';
+
+Modernizr.load([{
+    load : ["{$oneOpJs}"],
+    complete : function() {
+        MG_GAME_ONEUP.init({
+            gid : 'OneUp',
+            app_id : 'MG_API',
+            asset_url : '$asset_url',
+            api_url : '{$game->api_base_url}',
+            arcade_url : '$arcade_url',
+            game_base_url : '{$game->game_base_url}',
+            throttleInterval : $throttleInterval
+        });
+    }
+}]);
 
 Modernizr.addTest('development_mode', function() {
     if ( typeof MG_INIT !== 'undefined' && MG_INIT.developmentMode === 'true') {

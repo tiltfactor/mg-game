@@ -21,7 +21,7 @@ $( document ).ready(function() {
     }
 
     BrowserDetect.init();
-    $("body").addClass(BrowserDetect.browser + ' hidden');
+    $("body").addClass(BrowserDetect.browser);
 
 })
 

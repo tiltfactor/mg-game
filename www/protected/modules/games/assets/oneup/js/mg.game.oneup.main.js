@@ -1,5 +1,3 @@
-$("body").show();
-
 MG_GAME_ONEUP = function ($) {
     return $.extend(MG_GAME_API, {
         wordField:null,
@@ -793,41 +791,57 @@ MG_GAME_ONEUP = function ($) {
             });
         },
         validUser: function () {
-            $("#header .setting").show();
-            // Called just after sharedSecret is triggered
-            ///api/multiplayer/register/gid/OneUp/
-            MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid , function(response) {
-                MG_GAME_ONEUP.user = response.user;
+            MG_API.curtain.show();
+            yepnope([
+                {
+                    load: [
+                        MG_INIT.nodeJSUrl + '/socket.io/socket.io.js'
+                    ],
+                    complete: function(){
+                        if (typeof io === 'undefined') {
+                            alert('Contact Administrator. Error node.');
+                        } else {
+                            MG_API.curtain.hide();
+                            MG_GAME_ONEUP.nodeInit();
+                            $("#header .setting").show();
+                            // Called just after sharedSecret is triggered
+                            ///api/multiplayer/register/gid/OneUp/
+                            MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid , function(response) {
+                                MG_GAME_ONEUP.user = response.user;
 
-                MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
-                    MG_GAME_ONEUP.endedGames = response;
-                });
+                                MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
+                                    MG_GAME_ONEUP.endedGames = response;
+                                });
 
-                $("#main_screen").find(".username").html(response.user.username);
+                                $("#main_screen").find(".username").html(response.user.username);
 
-                $("a[location='main_screen']").on('click', function (){
-                    MG_GAME_ONEUP.actions('main_screen', 'menu');
-                });
+                                $("a[location='main_screen']").on('click', function (){
+                                    MG_GAME_ONEUP.actions('main_screen', 'menu');
+                                });
 
-                $("a[location='game_customize']").on('click', function (){
-                    MG_GAME_ONEUP.actions('game_customize', 'menu');
-                });
+                                $("a[location='game_customize']").on('click', function (){
+                                    MG_GAME_ONEUP.actions('game_customize', 'menu');
+                                });
 
-                $("a[location='how_to']").on('click', function (){
-                    MG_GAME_ONEUP.actions('how_to', 'menu');
-                });
+                                $("a[location='how_to']").on('click', function (){
+                                    MG_GAME_ONEUP.actions('how_to', 'menu');
+                                });
 
-                $("a[location='learn_more']").on('click', function (){
-                    MG_GAME_ONEUP.actions('learn_more', 'menu');
-                });
+                                $("a[location='learn_more']").on('click', function (){
+                                    MG_GAME_ONEUP.actions('learn_more', 'menu');
+                                });
 
-                $("a[location='account']").on('click', function (){
-                    MG_GAME_ONEUP.actions('account', 'menu');
-                });
+                                $("a[location='account']").on('click', function (){
+                                    MG_GAME_ONEUP.actions('account', 'menu');
+                                });
 
-                $("a[location='main_screen']").click();
+                                $("a[location='main_screen']").click();
 
-            });
+                            });
+                        }
+                    }
+                }
+            ]);
         },
 
         setLoginScreen: function () {
@@ -868,7 +882,6 @@ MG_GAME_ONEUP = function ($) {
          REGISTER USER AS ONLINE TO GAME SERVER
          */
         onapiinit: function () {
-            MG_GAME_ONEUP.nodeInit();
             MG_GAME_API.curtain.hide();
             MG_GAME_ONEUP.setClick();
             if (MG_INIT.isLogged === 'true') {
@@ -881,189 +894,179 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit: function () {
-            if (typeof io === 'undefined') {
-                console.log('check');
+            var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
+                game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
+
+            socket.on('reconnect', function () {
+                console.log('Reconnected to the server');
+                socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
+            });
+
+            socket.on('registerFailure', function(data) {
+                console.log(data);
+                console.log('registerFailure');
+                //TODO what to do in this case
+            });
+
+            socket.on('challenge', function(data) {
+                //Receive challenge from game player
+                // data is JSON encoded object GameUserDTO
+                var response = JSON.parse(data.payload);
+                console.log(response);
                 $().toastmessage("showToast", {
-                    text: 'Contact Administrator. Error node.',
+                    text: game_title + response.username + ' challenged you to a game!',
                     position: "tops-center",
                     type: "notice",
                     background: "white",
                     color: "black"
                 });
-            } else {
-                var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
-                    game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
+                if ($("#main_screen").is(":visible")) {
+                    $("a[location='main_screen']").click();
+                }
+            });
 
-                socket.on('reconnect', function () {
-                    console.log('Reconnected to the server');
-                    socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
+            socket.on('rejectChallenge', function(data) {
+                // Receive reject challenge from game player
+                // data is JSON encoded object GameUserDTO
+                var response = JSON.parse(data.payload);
+                console.log(response);
+                $().toastmessage("showToast", {
+                    text: game_title + response.username + ' turned down your challenge.',
+                    position: "tops-center",
+                    type: "notice",
+                    background: "white",
+                    color: "black"
                 });
+                if ($("#main_screen").is(":visible")) {
+                    $("a[location='main_screen']").click();
+                }
+            });
 
-                socket.on('registerFailure', function(data) {
-                    console.log('registerFailure');
-                    //TODO what to do in this case
-                });
+            socket.on('newTurn', function(data) {
+                // Receive information when new turn is created
+                // data is JSON encoded object GameTurnDTO
+                var response = JSON.parse(data.payload);
+                console.log('Receive information when new turn is created');
+                console.log(response);
 
-                socket.on('challenge', function(data) {
-                    //Receive challenge from game player
-                    // data is JSON encoded object GameUserDTO
-                    var response = JSON.parse(data.payload);
-                    console.log(response);
+                if($("#game_screen").is(":visible")) {
+                    if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10) &&
+                        ($("#game_screen .round").attr('status') === 'waiting' || $("#game_screen .round").attr('opponent') === 'finished')) {
+                        MG_GAME_ONEUP.actions('game_screen', '');
+                    }
+                } else if ($(".index_screen").not(":visible")) {
+                    if ($("#main_screen").is(":visible")) {
+                        $("a[location='main_screen']").click();
+                    }
                     $().toastmessage("showToast", {
-                        text: game_title + response.username + ' challenged you to a game!',
+                        text: game_title + " It's your turn!",
                         position: "tops-center",
                         type: "notice",
                         background: "white",
                         color: "black"
                     });
+                }
+            });
+
+            socket.on('gameEnd', function(data) {
+                // Receive when the game end i.e. no more turns
+                // data is JSON encoded integer of played game id
+                console.log('Game End is fired!');
+                var response = JSON.parse(data.payload);
+                console.log(response);
+
+                if($("#game_screen").is(":visible")) {
+                    if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
+                        MG_GAME_ONEUP.actions('final_screen', '');
+                    }
+                } else if ($(".index_screen").not(":visible")) {
+                    // need to add line
+                    var counter = MG_GAME_ONEUP.endedGames.length;
+                    MG_GAME_ONEUP.endedGames[counter] = {};
+                    MG_GAME_ONEUP.endedGames[counter].playedGameId = response.playedGameId;
+                    MG_GAME_ONEUP.endedGames[counter].opponentId = response.id;
+                    MG_GAME_ONEUP.endedGames[counter].opponentName = response.username;
+                    MG_GAME_ONEUP.endedGames[counter].turnUserId = 0;
+
                     if ($("#main_screen").is(":visible")) {
                         $("a[location='main_screen']").click();
                     }
-                });
+                }
+            });
 
-                socket.on('rejectChallenge', function(data) {
-                    // Receive reject challenge from game player
-                    // data is JSON encoded object GameUserDTO
-                    var response = JSON.parse(data.payload);
-                    console.log(response);
+            socket.on('penalty', function(data) {
+                // Receive penalty
+                // data is JSON encoded negative integer of penalty scores
+                var response = JSON.parse(data.payload);
+                console.log(response);
+
+                if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                     $().toastmessage("showToast", {
-                        text: game_title + response.username + ' turned down your challenge.',
+                        text: game_title + " You got " + MG_GAME_ONEUP.opponent_name + " 's point with " + response.tag.tag,
                         position: "tops-center",
                         type: "notice",
                         background: "white",
                         color: "black"
                     });
-                    if ($("#main_screen").is(":visible")) {
-                        $("a[location='main_screen']").click();
-                    }
+                    var current_points = parseInt($("#game_screen .you span").text(), 10);
+                    $("#game_screen .you span").html((current_points + 1));
+                    $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, $("#game_screen .round span").text(), MG_GAME_ONEUP.opponent_name));
+                }
+            });
+
+            socket.on('bonus', function(data) {
+                // Receive bonus points
+                // data is JSON encoded integer of bonus scores
+                var response = JSON.parse(data.payload);
+                console.log(response);
+
+                $().toastmessage("showToast", {
+                    text: game_title + ' ' + response.opponentName + " got your points with " + response.tag.tag + "!",
+                    position: "tops-center",
+                    type: "notice",
+                    background: "white",
+                    color: "black"
                 });
 
-                socket.on('newTurn', function(data) {
-                    // Receive information when new turn is created
-                    // data is JSON encoded object GameTurnDTO
-                    var response = JSON.parse(data.payload);
-                    console.log('Receive information when new turn is created');
-                    console.log(response);
+                if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
+                    var current_points = parseInt($("#game_screen .you span").text(), 10);
+                    $("#game_screen .you span").html((current_points - 1));
+                    $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, $("#game_screen .round span").text(), MG_GAME_ONEUP.opponent_name));
+                }
+            });
 
-                    if($("#game_screen").is(":visible")) {
-                        if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10) &&
-                            ($("#game_screen .round").attr('status') === 'waiting' || $("#game_screen .round").attr('opponent') === 'finished')) {
-                            MG_GAME_ONEUP.actions('game_screen', '');
-                        }
-                    } else if ($(".index_screen").not(":visible")) {
-                        if ($("#main_screen").is(":visible")) {
-                            $("a[location='main_screen']").click();
-                        }
-                        $().toastmessage("showToast", {
-                            text: game_title + " It's your turn!",
-                            position: "tops-center",
-                            type: "notice",
-                            background: "white",
-                            color: "black"
-                        });
-                    }
-                });
+            socket.on('opponentWaiting', function(data) {
+                // Receive notification that opponent finished his turn and waiting for you
+                // data is JSON encoded integer of played game id
+                var response = JSON.parse(data.payload);
+                console.log('opponentWaiting');
+                console.log(response);
 
-                socket.on('gameEnd', function(data) {
-                    // Receive when the game end i.e. no more turns
-                    // data is JSON encoded integer of played game id
-                    console.log('Game End is fired!');
-                    var response = JSON.parse(data.payload);
-                    console.log(response);
-
-                    if($("#game_screen").is(":visible")) {
-                        if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
-                            MG_GAME_ONEUP.actions('final_screen', '');
-                        }
-                    } else if ($(".index_screen").not(":visible")) {
-                        // need to add line
-                        var counter = MG_GAME_ONEUP.endedGames.length;
-                        MG_GAME_ONEUP.endedGames[counter] = {};
-                        MG_GAME_ONEUP.endedGames[counter].playedGameId = response.playedGameId;
-                        MG_GAME_ONEUP.endedGames[counter].opponentId = response.id;
-                        MG_GAME_ONEUP.endedGames[counter].opponentName = response.username;
-                        MG_GAME_ONEUP.endedGames[counter].turnUserId = 0;
-
-                        if ($("#main_screen").is(":visible")) {
-                            $("a[location='main_screen']").click();
-                        }
-                    }
-                });
-
-                socket.on('penalty', function(data) {
-                    // Receive penalty
-                    // data is JSON encoded negative integer of penalty scores
-                    var response = JSON.parse(data.payload);
-                    console.log(response);
-
+                if ($("#main_screen").is(":visible")) {
+                    $().toastmessage("showToast", {
+                        text: game_title + " It's your turn! opponentWaiting",
+                        position: "tops-center",
+                        type: "notice",
+                        background: "white",
+                        color: "black"
+                    });
+                    $("a[location='main_screen']").click();
+                } else if($("#game_screen").is(":visible")) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         $().toastmessage("showToast", {
-                            text: game_title + " You got " + MG_GAME_ONEUP.opponent_name + " 's point with " + response.tag.tag,
+                            text: game_title + ' ' + response.username + " finished his turn.",
                             position: "tops-center",
                             type: "notice",
                             background: "white",
                             color: "black"
                         });
-                        var current_points = parseInt($("#game_screen .you span").text(), 10);
-                        $("#game_screen .you span").html((current_points + 1));
-                        $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, $("#game_screen .round span").text(), MG_GAME_ONEUP.opponent_name));
+                        $("#game_screen .round").attr('opponent', 'finished')
                     }
-                });
+                }
 
-                socket.on('bonus', function(data) {
-                    // Receive bonus points
-                    // data is JSON encoded integer of bonus scores
-                    var response = JSON.parse(data.payload);
-                    console.log(response);
+            });
 
-                    $().toastmessage("showToast", {
-                        text: game_title + ' ' + response.opponentName + " got your points with " + response.tag.tag + "!",
-                        position: "tops-center",
-                        type: "notice",
-                        background: "white",
-                        color: "black"
-                    });
-
-                    if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
-                        var current_points = parseInt($("#game_screen .you span").text(), 10);
-                        $("#game_screen .you span").html((current_points - 1));
-                        $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, $("#game_screen .round span").text(), MG_GAME_ONEUP.opponent_name));
-                    }
-                });
-
-                socket.on('opponentWaiting', function(data) {
-                    // Receive notification that opponent finished his turn and waiting for you
-                    // data is JSON encoded integer of played game id
-                    var response = JSON.parse(data.payload);
-                    console.log('opponentWaiting');
-                    console.log(response);
-
-                    if ($("#main_screen").is(":visible")) {
-                        $().toastmessage("showToast", {
-                            text: game_title + " It's your turn! opponentWaiting",
-                            position: "tops-center",
-                            type: "notice",
-                            background: "white",
-                            color: "black"
-                        });
-                        $("a[location='main_screen']").click();
-                    } else if($("#game_screen").is(":visible")) {
-                        if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
-                            $().toastmessage("showToast", {
-                                text: game_title + ' ' + response.username + " finished his turn.",
-                                position: "tops-center",
-                                type: "notice",
-                                background: "white",
-                                color: "black"
-                            });
-                            $("#game_screen .round").attr('opponent', 'finished')
-                        }
-                    }
-
-                });
-
-                socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
-            }
+            socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
 
         },
         /*
