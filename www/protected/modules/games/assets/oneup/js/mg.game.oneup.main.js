@@ -77,7 +77,7 @@ MG_GAME_ONEUP = function ($) {
 
                     $('#register input#email').keypress(function (e) {
                         if (e.which == 13) {
-                            $('#btn_login').click();
+                            $('#register #btn_register').click();
                         }
                     });
 
@@ -89,9 +89,9 @@ MG_GAME_ONEUP = function ($) {
                         return false;
                     });
 
-                    $('#btn_register').off('click').on('click', function (e) {
+                    $('#register #btn_register').off('click').on('click', function (e) {
                         e.preventDefault();
-                        if (($("#register #username").val().length + $("#register #password").val().length + $("#register #email").val().length) < 4) {
+                        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #email").val().length < 5) {
                             $().toastmessage("showToast", {
                                 text: 'All fields are required.',
                                 position: "tops-center",
@@ -139,6 +139,58 @@ MG_GAME_ONEUP = function ($) {
                                 }
                             );
                         }
+                    });
+
+                    break;
+                case 'account_update':
+                    $("#header").find('.back').show();
+                    $("#header").find('.setting').hide();
+                    $("#account_update").empty();
+
+                    MG_GAME_ONEUP.back_location = 'account';
+
+                    var userSettings = {};
+                    userSettings.username = MG_GAME_ONEUP.user.username;
+                    userSettings.email = MG_GAME_ONEUP.user.email;
+
+                    $("#template-account_update").tmpl(userSettings).appendTo($("#account_update")).after(function () {
+                        $('#register input#email').keypress(function (e) {
+                            if (e.which == 13) {
+                                $('#account_update #btn_update').click();
+                            }
+                        });
+
+                        $("#header").find('.back').off('click').on('click', function (e) {
+                            e.preventDefault();
+                            $("#header").find('.back').hide();
+                            MG_GAME_ONEUP.back_location = null;
+                            MG_GAME_ONEUP.actions('account', '');
+                            return false;
+                        });
+
+                        $('#account_update #btn_update').off('click').on('click', function (e) {
+                            e.preventDefault();
+                            MG_API.ajaxCall('/user/update', function(response) {
+                                    if (response.status === 'ok') {
+                                        MG_GAME_ONEUP.actions('login', '');
+                                    }
+                                    $().toastmessage("showToast", {
+                                        text: response.message,
+                                        position: "tops-center",
+                                        type: "notice",
+                                        background: "white",
+                                        color: "black"
+                                    });
+                                }, {
+                                    type: 'post',
+                                    data: {
+                                        password: $("#account_update #password").val(),
+                                        username: $("#account_update #username").val(),
+                                        email: $("#account_update #email").val()
+                                    }
+                                }
+                            );
+                        });
                     });
 
                     break;
@@ -588,6 +640,7 @@ MG_GAME_ONEUP = function ($) {
                     $("#account_playlist").empty();
                     $("#account_interest").empty();
                     $("#account_bookmark").empty();
+                    $("#header").find('.setting').show();
 
                     //getBookmarks
                     MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {

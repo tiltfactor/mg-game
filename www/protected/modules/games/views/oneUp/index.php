@@ -46,6 +46,9 @@
                     <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
                 </div>
             </div>
+            <div id="account_update" class="hidden text-center">
+
+            </div>
             <div id="main_screen" class="hidden">
                 <div class="back_black header">
                     <div class="group title">WELCOME <span class="username"></span></div>
@@ -131,7 +134,7 @@
 
             <div id="account" class="hidden">
                 <h2>Account</h2>
-                <div class="back_blue row"><a href="#" location="account_settings">UPDATE ACCOUNT SETTINGS</a></div>
+                <div class="back_blue row"><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div>
                 <div id="account_info">
                     <div id="bookmarks">
                         <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
@@ -168,6 +171,21 @@
         </nav>
     </div>
 </div>
+
+<script id="template-account_update" type="text/x-jquery-tmpl">
+    <div class="button">
+        <input type="text" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
+    </div>
+    <div class="button">
+        <input type="password" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
+    </div>
+    <div class="button">
+        <input type="email" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
+    </div>
+    <div class="button">
+        <a href="#" id="btn_update" class="button login"><span>UPDATE</span></a>
+    </div>
+</script>
 
 <script id="template-word_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray">
