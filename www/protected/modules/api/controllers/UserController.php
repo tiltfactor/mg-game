@@ -2,6 +2,16 @@
 
 class UserController extends ApiController {
 
+    public function filters() {
+        return array( // add blocked IP filter here
+            'throttle - login, sharedsecret, register',
+            'IPBlock',
+            'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
+            'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
+            //'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded
+        );
+    }
+
     /**
      * Defines the access rules for this controller
      */
@@ -61,8 +71,7 @@ class UserController extends ApiController {
      * @throws CHttpException if the request is not a Post request or one of the needed fields is not set
      */
     public function actionLogin() {
-        if (Yii::app()->getRequest()->getIsPostRequest()
-      && isset($_POST['login']) && isset($_POST['password'])) {
+        if (Yii::app()->getRequest()->getIsPostRequest() && isset($_POST['login']) && isset($_POST['password'])) {
             // collect user input data
             Yii::import("application.modules.user.components.UserIdentity");
             Yii::import("application.modules.user.models.UserLogin");
@@ -71,7 +80,7 @@ class UserController extends ApiController {
             $model->username = $_POST['login'];
             $model->password = $_POST['password'];
             $model->rememberMe = false;
-      
+
             $data = array();
             // validate user input and redirect to previous page if valid
             if ($model->validate()) { // validate mean the user's credentials where correct

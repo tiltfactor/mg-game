@@ -714,15 +714,11 @@ MG_GAME_ONEUP = function ($) {
                 $("#" + action).slideUp().show();
             }
         },
-        /*
-         REGISTER USER AS ONLINE TO GAME SERVER
-         */
-        onapiinit: function () {
+        validUser: function () {
+            $("#header .setting").show();
             // Called just after sharedSecret is triggered
             ///api/multiplayer/register/gid/OneUp/
             MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid , function(response) {
-                MG_GAME_ONEUP.nodeInit();
-                MG_GAME_API.curtain.hide();
                 MG_GAME_ONEUP.user = response.user;
 
                 MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
@@ -771,6 +767,88 @@ MG_GAME_ONEUP = function ($) {
                 $("a[location='main_screen']").click();
 
             });
+        },
+
+        setLoginScreen: function () {
+            $("#header .setting").hide();
+            $("#btn_login").off('click').on('click', function (e) {
+                e.preventDefault();
+                if ($("#username").length + $("#password").length < 1) {
+                    alert("Username and passwords are required!");
+                } else {
+                    //user/gameLogin/
+                    //MG_API.ajaxCall('/user/login/', function(response) {
+                    MG_API.ajaxCall('/user/login', function(response) {
+                            if (response.status === 'ok') {
+                                MG_GAME_ONEUP.validUser();
+                            } else {
+                                $().toastmessage("showToast", {
+                                    text: 'Wrong username or password.',
+                                    position: "tops-center",
+                                    type: "notice",
+                                    background: "white",
+                                    color: "black"
+                                });
+                            }
+                        }, {
+                            type: 'post',
+                            data: {
+                                password: $("#password").val(),
+                                login: $("#username").val()
+                            }
+                        }
+                    );
+                }
+                return false;
+            });
+            $("#btn_newUser").off('click').on('click', function (e) {
+                e.preventDefault();
+                if ($("#username").length + $("#password").length < 1) {
+                    alert("Username and passwords are required!");
+                } else {
+                    MG_API.ajaxCall('/user/register', function(response) {
+                            if (response.status === 'ok') {
+                                MG_GAME_ONEUP.validUser();
+                            } else {
+                                $().toastmessage("showToast", {
+                                    text: 'Wrong username or password.',
+                                    position: "tops-center",
+                                    type: "notice",
+                                    background: "white",
+                                    color: "black"
+                                });
+                            }
+                        }, {
+                            /*
+                             RegistrationForm[username...	aaaa
+                             RegistrationForm[password...	aaaa
+                             RegistrationForm[verifyPa...	aaaa
+                             RegistrationForm[email]	aaaa@aaa.com
+                             RegistrationForm[verifyCo...	yozoxgz
+                             yt0	Register
+                             */
+                            type: 'post',
+                            data: {
+                                password: $("#password").val(),
+                                login: $("#username").val()
+                            }
+                        }
+                    );
+                }
+                return false;
+            });
+        },
+        /*
+         REGISTER USER AS ONLINE TO GAME SERVER
+         */
+        onapiinit: function () {
+            MG_GAME_ONEUP.nodeInit();
+            MG_GAME_API.curtain.hide();
+            if (MG_INIT.isLogged === 'true') {
+                MG_GAME_ONEUP.validUser();
+            } else {
+                MG_GAME_ONEUP.setLoginScreen();
+            }
         },
         playSound: function (index) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
@@ -834,7 +912,7 @@ MG_GAME_ONEUP = function ($) {
                         ($("#game_screen .round").attr('status') === 'waiting' || $("#game_screen .round").attr('opponent') === 'finished')) {
                         MG_GAME_ONEUP.actions('game_screen', '');
                     }
-                } else {
+                } else if ($(".index_screen").not(":visible")) {
                     if ($("#main_screen").is(":visible")) {
                         $("a[location='main_screen']").click();
                     }
@@ -859,7 +937,7 @@ MG_GAME_ONEUP = function ($) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         MG_GAME_ONEUP.actions('final_screen', '');
                     }
-                } else {
+                } else if ($(".index_screen").not(":visible")) {
                     // need to add line
                     var counter = MG_GAME_ONEUP.endedGames.length;
                     MG_GAME_ONEUP.endedGames[counter] = {};

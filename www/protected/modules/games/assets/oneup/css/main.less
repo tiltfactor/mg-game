@@ -47,14 +47,34 @@ p, div, h1, h2, h3, .mm-is-menu * {
 }
 
 input {
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
   width: 90%;
   padding-left: 10px;
   padding-right: 10px;
   border: 0px;
   background-color: gray;
+  color: #ffffff;
+  height: 22px;
+  line-height: 22px;
+  font-size: 22px;
+}
+
+::-webkit-input-placeholder {
+  font-family: Museo;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  font-family: Museo;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+  font-family: Museo;
+}
+
+:-ms-input-placeholder {
+  font-family: Museo;
 }
 
 .new_interest {
@@ -249,9 +269,10 @@ input {
 
 body {
   .row, .row a {
-    height: 42px !important;
+    height: 42px;
+    text-transform: uppercase;
     line-height: 42px;
-    font-size: 13px !important;
+    font-size: 14px;
     color: #341d33;
   }
 
@@ -259,7 +280,7 @@ body {
     text-transform: uppercase;
     height: 35px !important;
     line-height: 35px;
-    font-size: 13px !important;
+    font-size: 13px;
 
     input {
       background-color: transparent;
@@ -382,6 +403,14 @@ body {
     div.button {
       margin: 20px;
     }
+
+    input {
+      width: 60%;
+    }
+  }
+
+  .logo {
+    margin: 50px 20px;
   }
 
   a.button {
@@ -391,10 +420,39 @@ body {
     color: #FFFFFF;
     padding: 3px 8px;
     text-decoration: none;
+    line-height: 27px;
+    font-size: 15px;
   }
 }
 
 body.retina {
+
+  #header a {
+    font-size: 30px;
+    line-height: 42px;
+  }
+
+  .mm-is-menu li > a, .mm-is-menu li > span {
+    text-indent: 0px;
+  }
+
+  input {
+    height: 22px;
+    line-height: 20px;
+    font-size: 20px;
+  }
+
+  .index_screen {
+    div.button {
+      margin: 20px;
+    }
+  }
+
+  a.button {
+    line-height: 20px;
+    font-size: 20px;
+  }
+
   .mm-menu.mm-right .mm-inner {
     padding: 0 0 0 76px;
   }
@@ -403,12 +461,17 @@ body.retina {
     height: 82px !important;
     line-height: 82px;
     font-size: 25px !important;
+
+    span {
+      line-height: 82px;
+      font-size: 37px !important;
+    }
   }
 
   .small_row {
     height: 70px !important;
     line-height: 70px;
-    font-size: 25px !important;
+    font-size: 25px;
 
     input {
       height: 70px;
@@ -424,8 +487,8 @@ body.retina {
 
   #content {
     .padding {
-      padding-left: 50px;
-      padding-right: 50px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .header {
@@ -442,8 +505,8 @@ body.retina {
     h2 {
       line-height: 80px;
       font-size: 22px;
-      padding-left: 50px;
-      padding-right: 50px;
+/*      padding-left: 50px;
+      padding-right: 50px;*/
     }
 
     h3 {
@@ -470,8 +533,8 @@ body.retina {
     }
 
     .row, .small_row {
-      padding-left: 44px;
-      padding-right: 44px;
+      padding-left: 22px;
+      padding-right: 22px;
     }
 
     #list_institutions {
