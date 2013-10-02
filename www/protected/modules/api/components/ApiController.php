@@ -110,6 +110,6 @@ class ApiController extends Controller
     if ($ss && $ss === Yii::app()->session[$api_id .'_SHARED_SECRET']) {
       $filterChain->run();
     } else  
-      throw new CHttpException(400, Yii::t('app', 'Please Share Your True And Well Kept Secret.'));
+      throw new CHttpException(400, Yii::t('app', 'Please log-in again.'));
   }
 }

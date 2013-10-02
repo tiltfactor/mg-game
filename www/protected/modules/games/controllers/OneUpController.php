@@ -61,7 +61,7 @@ class OneUpController extends GxController
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
-            $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_END);
+            //$cs->registerScriptFile(GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js', CClientScript::POS_END);
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
@@ -69,6 +69,8 @@ class OneUpController extends GxController
             $pushUrl = Yii::app()->fbvStorage->get("pushUrl");
             $developmentMode = Yii::app()->fbvStorage->get("developmentMode");
             $weineDebugUrl = Yii::app()->fbvStorage->get("weinreUrl") . "/target/target-script-min.js#anonymous";
+            $oneOpJs = GamesModule::getAssetsUrl() . '/oneup/js/mg.game.oneup.main.js';
+
             if (Yii::app()->user->isGuest) {
                 $isLogged = 'false';
             } else {
@@ -76,11 +78,39 @@ class OneUpController extends GxController
             }
 
                 $js = <<<EOD
-            MG_INIT = {};
-            MG_INIT.nodeJSUrl = '$nodeJSUrl';
-            MG_INIT.pushUrl = '{$pushUrl}';
-            MG_INIT.developmentMode = '$developmentMode';
-            MG_INIT.isLogged = '$isLogged';
+MG_INIT = {};
+MG_INIT.nodeJSUrl = '$nodeJSUrl';
+MG_INIT.pushUrl = '{$pushUrl}';
+MG_INIT.developmentMode = '$developmentMode';
+MG_INIT.isLogged = '$isLogged';
+
+yepnope([
+    {
+        load: [
+            '{$nodeJSUrl}/socket.io/socket.io.js'
+        ],
+        complete: function(){
+            if (typeof io === 'undefined') {
+               alert('Contact Administrator. Error node.');
+            } else {
+                Modernizr.load([{
+                    load : ["{$oneOpJs}"],
+                    complete : function() {
+                        MG_GAME_ONEUP.init({
+                            gid : 'OneUp',
+                            app_id : 'MG_API',
+                            asset_url : '$asset_url',
+                            api_url : '{$game->api_base_url}',
+                            arcade_url : '$arcade_url',
+                            game_base_url : '{$game->game_base_url}',
+                            throttleInterval : $throttleInterval
+                        });
+                    }
+                }]);
+            }
+        }
+    }
+]);
 
 Modernizr.addTest('development_mode', function() {
     if ( typeof MG_INIT !== 'undefined' && MG_INIT.developmentMode === 'true') {
@@ -95,15 +125,6 @@ yepnope({
   yep  : ["http://jsconsole.com/remote.js?7DA9E1A3-4EE0-4DC0-9AFF-81427DECD9F5", "{$weineDebugUrl}"]
 });
 
-    MG_GAME_ONEUP.init({
-        gid : 'OneUp',
-        app_id : 'MG_API',
-        asset_url : '$asset_url',
-        api_url : '{$game->api_base_url}',
-        arcade_url : '$arcade_url',
-        game_base_url : '{$game->game_base_url}',
-        throttleInterval : $throttleInterval
-    });
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 

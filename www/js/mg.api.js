@@ -200,6 +200,7 @@ MG_API = function ($) {
          * @param function callback called on success
          * @param options object of additional options to influence ajax call
          * @param boolean doNotSaveLastCallTime Do not regard this call in the throttle interval management
+         *
          */
         ajaxCall: function (path, callback, options, doNotSaveLastCallTime) {
             var secretHeader = ('X_' + MG_API.settings.app_id + '_SHARED_SECRET').replace(/\_/g, "-");
@@ -209,6 +210,21 @@ MG_API = function ($) {
                 // set needed shared secret header
                 headers: $.parseJSON('{"' + secretHeader + '" : "' + MG_API.settings.shared_secret + '"}'),
                 success: callback,
+                timeout: 45000, // 45 seconds
+                error: function (xhr, textStatus, thrownError) {
+                    if (textStatus === "timeout") {
+                        var error = "Timeout error: Connection Has Been Lost";
+                    } else {
+                        var error = 'Following error occurred: [' + xhr.responseText + '].';
+                    }
+                    $().toastmessage("showToast", {
+                        text: error,
+                        position: "tops-center",
+                        type: "notice",
+                        background: "white",
+                        color: "black"
+                    });
+                },
                 statusCode: {
                     420: MG_API.enhanceYourCalm,
                     600: MG_API.exitGame
