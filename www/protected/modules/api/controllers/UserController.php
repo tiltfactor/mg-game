@@ -18,7 +18,7 @@ class UserController extends ApiController {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('index', 'login', 'user', 'passwordrecovery', 'sharedsecret'),
+                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret'),
                 'users' => array('*'),
             ),
             array('allow',

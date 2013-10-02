@@ -24,6 +24,7 @@ h3,
   color: white;
 }
 input {
+  font-family: Museo;
   -webkit-border-radius: 12px;
   -moz-border-radius: 12px;
   border-radius: 12px;

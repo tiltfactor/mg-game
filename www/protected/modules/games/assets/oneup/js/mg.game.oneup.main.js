@@ -59,6 +59,80 @@ MG_GAME_ONEUP = function ($) {
             $("#header .back").hide();
             switch(action)
             {
+                case 'login':
+                    MG_GAME_ONEUP.setLoginScreen();
+                    break;
+                case 'register':
+                    $("#header").find('.back').show();
+                    MG_GAME_ONEUP.back_location = 'login';
+
+                    $('#register input#email').keypress(function (e) {
+                        if (e.which == 13) {
+                            $('#btn_login').click();
+                        }
+                    });
+
+                    $("#header").find('.back').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        $("#header").find('.back').hide();
+                        MG_GAME_ONEUP.back_location = null;
+                        MG_GAME_ONEUP.actions('login', '');
+                        return false;
+                    });
+
+                    $('#btn_register').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        if (($("#register #username").val().length + $("#register #password").val().length + $("#register #email").val().length) < 4) {
+                            $().toastmessage("showToast", {
+                                text: 'All fields are required.',
+                                position: "tops-center",
+                                type: "notice",
+                                background: "white",
+                                color: "black"
+                            });
+                        } else {
+                            MG_API.ajaxCall('/user/register', function(response) {
+                                    var response_type = null;
+                                    try {
+                                        var response_type = jQuery.parseJSON(response);
+                                        response = jQuery.parseJSON(response);
+                                    } catch (e) {
+
+                                    }
+
+                                    if(typeof response_type === 'object' && response !== null) {
+                                        if (response.status === 'ok') {
+                                            MG_GAME_ONEUP.actions('login', '');
+                                        }
+                                        $().toastmessage("showToast", {
+                                            text: response.message,
+                                            position: "tops-center",
+                                            type: "notice",
+                                            background: "white",
+                                            color: "black"
+                                        });
+                                    } else {
+                                        $().toastmessage("showToast", {
+                                            text: 'Wrong server response!',
+                                            position: "tops-center",
+                                            type: "notice",
+                                            background: "white",
+                                            color: "black"
+                                        });
+                                    }
+                                }, {
+                                    type: 'post',
+                                    data: {
+                                        password: $("#register #password").val(),
+                                        username: $("#register #username").val(),
+                                        email: $("#register #email").val()
+                                    }
+                                }
+                            );
+                        }
+                    });
+
+                    break;
                 case 'main_screen':
                     var confirm_text,
                         opponent_id,
@@ -508,25 +582,6 @@ MG_GAME_ONEUP = function ($) {
 
                     //getBookmarks
                     MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
-                        /*
-                         var account_bookmarks = [];
-                         account_bookmarks[0] = {'id': 0, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[1] = {'id': 1, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[2] = {'id': 2, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[3] = {'id': 3, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[4] = {'id': 4, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[5] = {'id': 5, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[6] = {'id': 6, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[7] = {'id': 7, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[8] = {'id': 8, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[9] = {'id': 9, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[10] = {'id': 10, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[11] = {'id': 11, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[12] = {'id': 12, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[13] = {'id': 13, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[14] = {'id': 14, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         account_bookmarks[15] = {'id': 15, 'thumbnail': 'http://localhost/mgg_test/www/images/video_ico.png', 'scaled': 'http://localhost/mgg_test/www/images/video_ico.png'};
-                         */
                         var json = {};
                         json.bookmarked = account_bookmarks;
                         $("#template-account_bookmark").tmpl(json).appendTo($("#account_bookmark")).after(function () {
@@ -714,6 +769,18 @@ MG_GAME_ONEUP = function ($) {
                 $("#" + action).slideUp().show();
             }
         },
+        setClick: function () {
+            $("#content a[href='#']").off('click').on('click', function(e) {
+                e.preventDefault();
+                var location = $(this).attr('location');
+                if (location != undefined) {
+                    var location = $(this).attr('location');
+                    $("#content div:visible:eq(0)").hide();
+                    MG_GAME_ONEUP.actions(location, '');
+                }
+                return false;
+            });
+        },
         validUser: function () {
             $("#header .setting").show();
             // Called just after sharedSecret is triggered
@@ -722,24 +789,7 @@ MG_GAME_ONEUP = function ($) {
                 MG_GAME_ONEUP.user = response.user;
 
                 MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
-                    //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
-                    /*                    var response = [];
-                     response[0] = {};
-                     response[0].playedGameId = 48;
-                     response[0].opponentId = '3';
-                     response[0].opponentName = 'alabala';
-                     response[0].turnUserId = 0;*/
                     MG_GAME_ONEUP.endedGames = response;
-                });
-
-                $("#content a[href='#']").on('click', function(e) {
-                    var location = $(this).attr('location');
-                    if (location != undefined) {
-                        e.preventDefault();
-                        var location = $(this).attr('location');
-                        $("#content div:visible:eq(0)").hide();
-                        MG_GAME_ONEUP.actions(location, '');
-                    }
                 });
 
                 $("#main_screen").find(".username").html(response.user.username);
@@ -770,10 +820,11 @@ MG_GAME_ONEUP = function ($) {
         },
 
         setLoginScreen: function () {
+            $("#login").show();
             $("#header .setting").hide();
             $("#btn_login").off('click').on('click', function (e) {
                 e.preventDefault();
-                if ($("#username").length + $("#password").length < 1) {
+                if ($("#login #username").val().length + $("#login #password").val().length < 1) {
                     alert("Username and passwords are required!");
                 } else {
                     //user/gameLogin/
@@ -793,44 +844,8 @@ MG_GAME_ONEUP = function ($) {
                         }, {
                             type: 'post',
                             data: {
-                                password: $("#password").val(),
-                                login: $("#username").val()
-                            }
-                        }
-                    );
-                }
-                return false;
-            });
-            $("#btn_newUser").off('click').on('click', function (e) {
-                e.preventDefault();
-                if ($("#username").length + $("#password").length < 1) {
-                    alert("Username and passwords are required!");
-                } else {
-                    MG_API.ajaxCall('/user/register', function(response) {
-                            if (response.status === 'ok') {
-                                MG_GAME_ONEUP.validUser();
-                            } else {
-                                $().toastmessage("showToast", {
-                                    text: 'Wrong username or password.',
-                                    position: "tops-center",
-                                    type: "notice",
-                                    background: "white",
-                                    color: "black"
-                                });
-                            }
-                        }, {
-                            /*
-                             RegistrationForm[username...	aaaa
-                             RegistrationForm[password...	aaaa
-                             RegistrationForm[verifyPa...	aaaa
-                             RegistrationForm[email]	aaaa@aaa.com
-                             RegistrationForm[verifyCo...	yozoxgz
-                             yt0	Register
-                             */
-                            type: 'post',
-                            data: {
-                                password: $("#password").val(),
-                                login: $("#username").val()
+                                password: $("#login #password").val(),
+                                login: $("#login #username").val()
                             }
                         }
                     );
@@ -844,6 +859,7 @@ MG_GAME_ONEUP = function ($) {
         onapiinit: function () {
             MG_GAME_ONEUP.nodeInit();
             MG_GAME_API.curtain.hide();
+            MG_GAME_ONEUP.setClick();
             if (MG_INIT.isLogged === 'true') {
                 MG_GAME_ONEUP.validUser();
             } else {

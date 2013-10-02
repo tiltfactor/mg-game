@@ -11,7 +11,7 @@
             <a href="#menu-right" class="right setting hidden"></a>
         </div>
         <div id="content" class="group">
-            <div id="login" class="text-center index_screen <?php if (!Yii::app()->user->isGuest) echo 'hidden'; ?>">
+            <div id="login" class="text-center index_screen hidden">
                 <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
                 <div class="button">
                     <input type="text" id="username" name="username" placeholder="Username" />
@@ -26,12 +26,27 @@
                     or
                 </div>
                 <div class="button">
-                    <a href="#" id="btn_newUser" class="button new_user"><span>GET A USERNAME</span></a>
+                    <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
                     <span class="hidden"><a href=""></a></span>
                 </div>
                 <img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/facebook.png" />
             </div>
-            <div id="main_screen" class="<?php if (Yii::app()->user->isGuest) echo 'hidden'; ?>">
+            <div id="register" class="text-center index_screen hidden">
+                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
+                <div class="button">
+                    <input type="text" id="username" name="username" placeholder="Choose a username" value="" tabindex="1" />
+                </div>
+                <div class="button">
+                    <input type="password" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
+                </div>
+                <div class="button">
+                    <input type="email" id="email" name="email" placeholder="Choose an e-mail" tabindex="3" value="" />
+                </div>
+                <div class="button">
+                    <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
+                </div>
+            </div>
+            <div id="main_screen" class="hidden">
                 <div class="back_black header">
                     <div class="group title">WELCOME <span class="username"></span></div>
                     <div>
