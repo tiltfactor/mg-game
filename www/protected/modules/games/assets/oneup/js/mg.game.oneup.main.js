@@ -27,7 +27,7 @@ MG_GAME_ONEUP = function ($) {
             });
             MG_GAME_API.game_init(settings);
             var game_assets_uri = $("#game_assets_uri").val();
-
+            //MG_GAME_ONEUP.playSound('showimage');
             MG_GAME_ONEUP.sounds = {
                 feedbackbonus: game_assets_uri + 'audio/feedbackbonus.mp3',
                 feedbacknormal: game_assets_uri + 'audio/feedbacknormal.mp3',
@@ -38,10 +38,6 @@ MG_GAME_ONEUP = function ($) {
                 showimage: game_assets_uri + 'audio/showimage.mp3',
                 submit: game_assets_uri + 'audio/submit.mp3'
             };
-
-            /*
-
-             */
 
             $.each(MG_GAME_ONEUP.sounds, function(index, source) {
                 MG_GAME_ONEUP.sound[index] = new Sound(source);
@@ -62,7 +58,7 @@ MG_GAME_ONEUP = function ($) {
             });
         },
         actions: function (action, click_parent) {
-            console.log('call for '+ action + " - click from: " + click_parent);
+            console_log('call for '+ action + " - click from: " + click_parent);
             var continue_action = '';
             $("#header .words").hide();
             $("#header .back").hide();
@@ -331,6 +327,11 @@ MG_GAME_ONEUP = function ($) {
                          */
                         var json = {};
                         json.current_level = turn_response.turns.length;
+
+                        if (json.current_level == 1) {
+                            MG_GAME_ONEUP.playSound('showimage');
+                        }
+
                         json.turn = turn_response.turns[(json.current_level -1)];
                         json.opponentName = MG_GAME_ONEUP.opponent_name;
                         var opponentTagCount = turn_response.turns[(json.current_level - 1)].opponentTags.length;
@@ -357,12 +358,15 @@ MG_GAME_ONEUP = function ($) {
                                 var that = $(this),
                                     current_tag;
                                 that.empty();
+                                MG_GAME_ONEUP.playSound('select');
                                 that.append('<input type="text" placeholder="ADD A WORD" />');
                                 that.find('input').focus();
                                 that.find('input').keypress(function (e) {
                                     if (e.which == 13) {
                                         var tag = that.find('input').val(),
                                             new_html;
+
+                                        MG_GAME_ONEUP.playSound('submit');
                                         if (validTag(that.find('input').val(), turn_response.tags)) {
                                             //'[{"tag":"Test","original":null,"score":null,"weight":null,"mediaId":"6","type":null,"tag_id":null}]';
                                             current_tag = '[{"tag": "' + tag + '", "original":null,"score":null,"weight":null,"mediaId":"' + turn_response.turns[0].media[0].id + '","type":null,"tag_id":null}]';
@@ -822,7 +826,7 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 default:
-                    console.log('action is unknown');
+                    console_log('action is unknown');
                     break;
             }
 
@@ -951,13 +955,13 @@ MG_GAME_ONEUP = function ($) {
                 game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
 
             socket.on('reconnect', function () {
-                console.log('Reconnected to the server');
+                console_log('Reconnected to the server');
                 socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
             });
 
             socket.on('registerFailure', function(data) {
-                console.log(data);
-                console.log('registerFailure');
+                console_log(data);
+                console_log('registerFailure');
                 //TODO what to do in this case
             });
 
@@ -965,7 +969,7 @@ MG_GAME_ONEUP = function ($) {
                 //Receive challenge from game player
                 // data is JSON encoded object GameUserDTO
                 var response = JSON.parse(data.payload);
-                console.log(response);
+                console_log(response);
                 $().toastmessage("showToast", {
                     text: game_title + response.username + ' challenged you to a game!',
                     position: "tops-center",
@@ -982,7 +986,7 @@ MG_GAME_ONEUP = function ($) {
                 // Receive reject challenge from game player
                 // data is JSON encoded object GameUserDTO
                 var response = JSON.parse(data.payload);
-                console.log(response);
+                console_log(response);
                 $().toastmessage("showToast", {
                     text: game_title + response.username + ' turned down your challenge.',
                     position: "tops-center",
@@ -999,13 +1003,13 @@ MG_GAME_ONEUP = function ($) {
                 // Receive information when new turn is created
                 // data is JSON encoded object GameTurnDTO
                 var response = JSON.parse(data.payload);
-                console.log('Receive information when new turn is created');
-                console.log(response);
+                console_log('Receive information when new turn is created');
 
                 if($("#game_screen").is(":visible")) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10) &&
                         ($("#game_screen .round").attr('status') === 'waiting' || $("#game_screen .round").attr('opponent') === 'finished')) {
                         MG_GAME_ONEUP.actions('game_screen', '');
+                        MG_GAME_ONEUP.playSound('newround');
                     }
                 } else if ($(".index_screen").not(":visible")) {
                     if ($("#main_screen").is(":visible")) {
@@ -1024,13 +1028,14 @@ MG_GAME_ONEUP = function ($) {
             socket.on('gameEnd', function(data) {
                 // Receive when the game end i.e. no more turns
                 // data is JSON encoded integer of played game id
-                console.log('Game End is fired!');
+                console_log('Game End is fired!');
                 var response = JSON.parse(data.payload);
-                console.log(response);
+                console_log(response);
 
                 if($("#game_screen").is(":visible")) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         MG_GAME_ONEUP.actions('final_screen', '');
+                        MG_GAME_ONEUP.playSound('gameresult');
                     }
                 } else if ($(".index_screen").not(":visible")) {
                     // need to add line
@@ -1051,7 +1056,7 @@ MG_GAME_ONEUP = function ($) {
                 // Receive penalty
                 // data is JSON encoded negative integer of penalty scores
                 var response = JSON.parse(data.payload);
-                console.log(response);
+                console_log(response);
 
                 if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                     $().toastmessage("showToast", {
@@ -1071,7 +1076,7 @@ MG_GAME_ONEUP = function ($) {
                 // Receive bonus points
                 // data is JSON encoded integer of bonus scores
                 var response = JSON.parse(data.payload);
-                console.log(response);
+                console_log(response);
 
                 $().toastmessage("showToast", {
                     text: game_title + ' ' + response.opponentName + " got your points with " + response.tag.tag + "!",
@@ -1092,8 +1097,8 @@ MG_GAME_ONEUP = function ($) {
                 // Receive notification that opponent finished his turn and waiting for you
                 // data is JSON encoded integer of played game id
                 var response = JSON.parse(data.payload);
-                console.log('opponentWaiting');
-                console.log(response);
+                console_log('opponentWaiting');
+                console_log(response);
 
                 if ($("#main_screen").is(":visible")) {
                     $().toastmessage("showToast", {
@@ -1126,21 +1131,21 @@ MG_GAME_ONEUP = function ($) {
          * display games turn
          */
         renderTurn: function (response) {
-            console.log('Render turn');
+            console_log('Render turn');
         },
 
         /*
          * display the final turn
          */
         renderFinal:function () {
-            console.log('Game over');
+            console_log('Game over');
         },
 
         /*
          * evaluate each response from /api/games/play calls (POST or GET)
          */
         onresponse:function (response) {
-            console.log('response');
+            console_log('response');
         },
 
 
@@ -1148,14 +1153,14 @@ MG_GAME_ONEUP = function ($) {
          * on callback for the submit button
          */
         onsubmit:function () {
-            console.log('onsubmit');
+            console_log('onsubmit');
             return false;
         },
         /*
          * this method appears to be not used
          */
         submit:function () {
-            console.log('submit');
+            console_log('submit');
             return false;
         },
 
@@ -1218,24 +1223,30 @@ function calculatedRow (tag, score, current_level, opponent_name) {
     if (score === null) {
         score = 1;
     }
+
     if (parseInt(score, 10) === 1 && current_level === 1) {
         html_class = 'standard_bar';
         new_html = '<span>+1</span>' + tag;
+        MG_GAME_ONEUP.playSound('feedbacknormal');
     } else if (parseInt(score, 10) === 1 && current_level !== 1) {
         html_class = 'up_bar';
         new_html = '<span>+1</span>' + tag + '<span class="bar_right">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
+        MG_GAME_ONEUP.playSound('feedbackoneupped');
     } else if (score === -1) {
         html_class = 'upped_bar';
         new_html = '<span>-1</span>' + tag + '<span class="bar_right">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
     } else if (parseInt(score, 10) === 3) {
         html_class = 'bonus_bar';
         new_html = '<span>+3</span>' + tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+        MG_GAME_ONEUP.playSound('feedbacknormal');
     } else if (parseInt(score, 10) === 4) {
         html_class = 'bonus_bar';
         new_html = '<span>+4</span>' + tag + '<span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+        MG_GAME_ONEUP.playSound('feedbacknormal');
     } else if (parseInt(score, 10) === 2) {
         html_class = 'bonus_bar';
         new_html = '<span>+2</span>' + tag;
+        MG_GAME_ONEUP.playSound('feedbacknormal');
     } else {
         html_class = 'standard_bar';
         new_html = '<span>' + score + '</span>' + tag;
@@ -1254,5 +1265,11 @@ function onResize () {
     } else {
         max_height = $(window).height() - $("#header").height() -1 - $("#content header").height() - $("#content footer").height() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
         $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 35});
+    }
+}
+
+function console_log (logged_text) {
+    if (Modernizr.development_mode) {
+        console.log(logged_text);
     }
 }

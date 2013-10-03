@@ -505,6 +505,10 @@ body.retina .index_screen div.button,
 body.retina #account_update div.button {
   margin: 20px;
 }
+body.retina .index_screen div.button:last-of-type,
+body.retina #account_update div.button:last-of-type {
+  margin: 50px;
+}
 body.retina a.button {
   line-height: 20px;
   font-size: 20px;
@@ -595,7 +599,7 @@ body.retina #header .setting {
   height: 42px;
 }
 body.retina #header .back {
-  padding-left: 50px;
+  padding-left: 5px;
 }
 .no_margin {
   margin-top: 0 !important;
