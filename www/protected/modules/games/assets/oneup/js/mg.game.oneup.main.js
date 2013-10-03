@@ -38,7 +38,8 @@ MG_GAME_ONEUP = function ($) {
                 newround: game_assets_uri + 'audio/newround.mp3',
                 select: game_assets_uri + 'audio/select.mp3',
                 showimage: game_assets_uri + 'audio/showimage.mp3',
-                submit: game_assets_uri + 'audio/submit.mp3'
+                submit: game_assets_uri + 'audio/submit.mp3',
+                win: game_assets_uri + 'audio/win.mp3'
             };
 
             $.each(MG_GAME_ONEUP.sounds, function(index, source) {
@@ -477,6 +478,7 @@ MG_GAME_ONEUP = function ($) {
                         if (json.score > json.opponentScore) {
                             json.game_result = 'YOU WON!';
                             json.congratulation_text = 'Congratulations! You are the winner.';
+                            MG_GAME_ONEUP.playSound('win');
                         } else if (json.score < json.opponentScore) {
                             json.game_result = 'YOU LOST!';
                             json.congratulation_text = 'We are sorry but you lost.';
