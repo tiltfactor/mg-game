@@ -97,34 +97,16 @@ MG_GAME_ONEUP = function ($) {
                             });
                         } else {
                             MG_API.ajaxCall('/user/register', function(response) {
-                                    var response_type = null;
-                                    try {
-                                        var response_type = jQuery.parseJSON(response);
-                                        response = jQuery.parseJSON(response);
-                                    } catch (e) {
-
+                                    if (response.status === 'ok') {
+                                        MG_GAME_ONEUP.actions('login', '');
                                     }
-
-                                    if((typeof response_type === 'object' ||  typeof response === 'object') && response !== null) {
-                                        if (response.status === 'ok') {
-                                            MG_GAME_ONEUP.actions('login', '');
-                                        }
-                                        $().toastmessage("showToast", {
-                                            text: response.message,
-                                            position: "tops-center",
-                                            type: "notice",
-                                            background: "white",
-                                            color: "black"
-                                        });
-                                    } else {
-                                        $().toastmessage("showToast", {
-                                            text: 'Wrong server response!',
-                                            position: "tops-center",
-                                            type: "notice",
-                                            background: "white",
-                                            color: "black"
-                                        });
-                                    }
+                                    $().toastmessage("showToast", {
+                                        text: response.responseText,
+                                        position: "tops-center",
+                                        type: "notice",
+                                        background: "white",
+                                        color: "black"
+                                    });
                                 }, {
                                     type: 'post',
                                     data: {
