@@ -1,4 +1,4 @@
-(function(c){var b={inEffect:{opacity:"show"},inEffectDuration:600,stayTime:9900,text:"",sticky:false,type:"notice",position:"top-right",closeText:"",close:null,background:null,color:null};
+(function(c){var b={inEffect:{opacity:"show"},inEffectDuration:600,stayTime:900,text:"",sticky:false,type:"notice",position:"top-right",closeText:"",close:null,background:null,color:null};
 var a={init:function(d){if(d){c.extend(b,d)
 }},showToast:function(f){var g={};
 c.extend(g,b,f);
