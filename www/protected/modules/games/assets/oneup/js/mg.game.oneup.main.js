@@ -75,7 +75,7 @@ MG_GAME_ONEUP = function ($) {
                     $("#header").find('.back').show();
                     MG_GAME_ONEUP.back_location = 'login';
 
-                    $('#register input#email').keypress(function (e) {
+                    $('#register input#email').unbind("keypress").keypress(function (e) {
                         if (e.which == 13) {
                             $('#register #btn_register').click();
                         }
@@ -140,7 +140,7 @@ MG_GAME_ONEUP = function ($) {
                     userSettings.email = MG_GAME_ONEUP.user.email;
 
                     $("#template-account_update").tmpl(userSettings).appendTo($("#account_update")).after(function () {
-                        $('#register input#email').keypress(function (e) {
+                        $('#register input#email').unbind("keypress").keypress(function (e) {
                             if (e.which == 13) {
                                 $('#account_update #btn_update').click();
                             }
@@ -352,7 +352,7 @@ MG_GAME_ONEUP = function ($) {
                                 MG_GAME_ONEUP.playSound('select');
                                 that.append('<input type="text" placeholder="ADD A WORD" />');
                                 that.find('input').focus();
-                                that.find('input').keypress(function (e) {
+                                that.find('input').unbind("keypress").keypress(function (e) {
                                     if (e.which == 13) {
                                         var tag = that.find('input').val(),
                                             new_html;
@@ -569,17 +569,26 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'game_customize':
+                    $("#game_customize .note").remove();
                     $("#game_customize").find("#listing").remove();
                     $('#new_interest').attr('value', '');
 
-                    $('input#new_interest').keypress(function (e) {
+                    $('input#new_interest').unbind("keypress").keypress(function (e) {
                         if (e.which == 13) {
+                            $("#game_customize #node").remove();
                             $("#game_customize").find('.note').remove();
-                            //http://localhost/mggameserver/index.php/api/multiplayer/addInterest/gid/OneUp/interest/alabala/
-                            MG_API.ajaxCall('/multiplayer/addInterest/gid/' + MG_GAME_API.settings.gid + '/interest/' + encodeURIComponent($('#new_interest').val()), function(institution_response) {
-                                $('#new_interest').attr('value', '');
-                                $("#game_customize").find('.new_interest').append('<div id="note">The interest was added.</div>');
-                            });
+                            var string = $('#new_interest').val(),
+                                array = string.split(','),
+                                counter_i = 0;
+                            for (var i = 0; i < array.length; i++) {
+                                MG_API.ajaxCall('/multiplayer/addInterest/gid/' + MG_GAME_API.settings.gid + '/interest/' + encodeURIComponent($.trim(array[i])), function(institution_response) {
+                                    counter_i++;
+                                    if (i === counter_i) {
+                                        $('#new_interest').attr('value', '');
+                                        $("#game_customize").find('.new_interest').append('<div class="note">The interest was added.</div>');
+                                    }
+                                });
+                            }
                             return false;
                         }
                     });
@@ -803,7 +812,7 @@ MG_GAME_ONEUP = function ($) {
 
                     break;
                 case 'find_opponent':
-                    $('#find_opponent input.opponent_name').keypress(function (e) {
+                    $('#find_opponent input.opponent_name').unbind("keypress").keypress(function (e) {
                         if (e.which == 13) {
                             $('#find_opponent .play').click();
                         }
