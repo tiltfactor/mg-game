@@ -619,7 +619,7 @@ MG_GAME_ONEUP = function ($) {
                     }
 
                     MG_API.ajaxCall('/multiplayer/challenge/gid/' + MG_GAME_API.settings.gid + '/username/' + opponent_name , function(challenges_response) {
-                        if (challenges_response == 'null') {
+                        if (challenges_response === null) {
                             $().toastmessage("showToast", {
                                 text: 'Player is not found!',
                                 position: "tops-center",
@@ -629,9 +629,8 @@ MG_GAME_ONEUP = function ($) {
                                 stayTime: MG_GAME_ONEUP.toastStayTime,
                                 addClass: MG_GAME_ONEUP.toastBackgroundClass
                             });
-                            MG_GAME_ONEUP.actions(location, '');
+                            $("#content #new_game").show();
                         } else {
-                            // player is challenged
                             $("a[location='main_screen']").click();
                         }
                         $("#find_opponent").find('.opponent_name').attr('value', '');
