@@ -350,7 +350,7 @@ MG_GAME_ONEUP = function ($) {
                                     current_tag;
                                 that.empty();
                                 MG_GAME_ONEUP.playSound('select');
-                                that.append('<input type="text" placeholder="ADD A WORD" />');
+                                that.append('<form action="#" onsubmit="return false;"><input type="text" placeholder="ADD A WORD" /></form>');
                                 that.find('input').focus();
                                 that.find('input').unbind("keypress").keypress(function (e) {
                                     if (e.which == 13) {
