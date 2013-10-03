@@ -651,7 +651,7 @@ MG_GAME_ONEUP = function ($) {
                         my_iter = next_iter;
                     });
 
-                    Hammer(swipe_img).on("swiperight", function() { // swiperight
+                    Hammer(swipe_img).on("swipeleft", function() { // swiperight
                         next_iter = my_iter + 1;
                         if(next_iter === numb_img) {
                             next_iter = 1;
@@ -660,7 +660,7 @@ MG_GAME_ONEUP = function ($) {
                         my_iter = next_iter;
                     });
 
-                    Hammer(swipe_img).on("swipeleft", function() { // swipeleft
+                    Hammer(swipe_img).on("swiperight", function() { // swipeleft
                         next_iter = my_iter - 1;
                         if(next_iter === 0) {
                             next_iter = numb_img;

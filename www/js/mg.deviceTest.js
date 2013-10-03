@@ -1,6 +1,13 @@
 /**
  * Required modernizr lib
  */
+if ( $.browser.webkit ) {
+    var width = window.innerWidth;
+    if (width < screen.width) {
+        width = screen.width;
+    }
+    $("body").css('width', width + 'px');
+}
 
 var device_ratio = 1;
 
