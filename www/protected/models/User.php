@@ -275,6 +275,16 @@ class User extends BaseUser
                   ->limit(50)
                   ->queryColumn();
   }
+
+    function searchForEmail($email) { //pkostov
+        return Yii::app()->db->createCommand()
+            ->select('u.email')
+            ->from('{{user}} u')
+            ->where(array('like', 'email', '%' . $email . '%'))
+            ->order('u.email')
+            ->limit(50)
+            ->queryColumn();
+    }
   
   /**
    * Provide an CArrayDataProvider to allow to browse all users that tagged an media.

@@ -18,7 +18,9 @@ class UserController extends ApiController {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret'),
+
+                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', 'test'),
+
                 'users' => array('*'),
             ),
             array('allow',
@@ -148,72 +150,168 @@ class UserController extends ApiController {
     }
 
     public function actionRegister() {
+        Yii::import("application.modules.user.models.RegistrationForm"); // pkostov include the model
+        Yii::import("application.modules.user.UserModule"); // pkostov. Thus Yii::app()->controller->module->activeAfterRegister  <= will be just => activeAfterRegister. The path is C:\xampp\htdocs\mgg\www\protected\modules\user\UserModule.php
         $model = new RegistrationForm;
-        $profile = new Profile;
-        $profile->regMode = true;
-        if (Yii::app()->user->id) {
-            $this->redirect(Yii::app()->controller->module->profileUrl);
-        } else {
-            if (isset($_POST['RegistrationForm'])) {
-                $model->attributes = $_POST['RegistrationForm'];
-                $profile->attributes = ((isset($_POST['Profile']) ? $_POST['Profile'] : array()));
-                if ($model->validate() && $profile->validate()) {
-                    $soucePassword = $model->password;
-                    $model->activekey = UserModule::encrypting(microtime() . $model->password);
-                    $model->password = UserModule::encrypting($model->password);
-                    $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
-                    $model->created = date('Y-m-d H:i:s');
-                    $model->modified = date('Y-m-d H:i:s');
-                    $model->lastvisit = ((Yii::app()->controller->module->loginNotActiv || (Yii::app()->controller->module->activeAfterRegister && Yii::app()->controller->module->sendActivationMail == false)) && Yii::app()->controller->module->autoLogin) ? date('Y-m-d H:i:s') : NULL;
-                    $model->role = 'player';
-                    $model->status = ((Yii::app()->controller->module->activeAfterRegister) ? User::STATUS_ACTIVE : User::STATUS_NOACTIVE);
-                    if ($model->save()) {
-                        $profile->user_id = $model->id;
-                        $profile->save();
-                        if (Yii::app()->controller->module->sendActivationMail) {
-                            $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activekey" => $model->activekey, "email" => $model->email));
-                            $message = new YiiMailMessage;
-                            $message->view = 'userRegistrationConfirmation';
-                            $message->setSubject(UserModule::t("You registered from {site_name}", array('{site_name}' => Yii::app()->fbvStorage->get("settings.app_name"))));
-                            //userModel is passed to the view
-                            $message->setBody(array(
-                                'site_name' => Yii::app()->fbvStorage->get("settings.app_name"),
-                                'user' => $model,
-                                'activation_url' => $activation_url
-                            ), 'text/html');
-                            $message->addTo($model->email);
-                            $message->from = Yii::app()->fbvStorage->get("settings.app_email");
-                            Yii::app()->mail->send($message);
-                        }
-                        if ((Yii::app()->controller->module->loginNotActiv || (Yii::app()->controller->module->activeAfterRegister && Yii::app()->controller->module->sendActivationMail == false)) && Yii::app()->controller->module->autoLogin) {
-                            $data = array();
-                            $data['status'] = "error";
-                            $data['errors'] = 'account error';
-                            $this->sendResponse($data, 403);
-                        } else {
-                            if (!Yii::app()->controller->module->activeAfterRegister && !Yii::app()->controller->module->sendActivationMail) {
-                                $message = UserModule::t("Thank you for your registration. Contact Admin to activate your account.");
-                            } elseif (Yii::app()->controller->module->activeAfterRegister && Yii::app()->controller->module->sendActivationMail == false) {
-                                $message = UserModule::t("Thank you for your registration. Please {{login}}.", array('{{login}}' => CHtml::link(UserModule::t('Login'), Yii::app()->controller->module->loginUrl)));
-                            } elseif (Yii::app()->controller->module->loginNotActiv) {
-                                $message = UserModule::t("Thank you for your registration. Please check your email or login.");
-                            } else {
-                                $message = UserModule::t("Thank you for your registration. Please check your email.");
-                            }
-                            $data = array();
-                            $data['status'] = "ok";
-                            $data['message'] = $message;
-                            $this->sendResponse($data);
-                            Yii::app()->end();
-                        }
-                    }
-                } else
-                    $profile->validate();
-            }
-            $data = array();
+        $data = array(); // will handle the response
+        $username = trim($_POST['username']);
+        $password = trim($_POST['password']);
+        $email = trim($_POST['email']);
+
+        $sanitized_mail = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (!filter_var($sanitized_mail, FILTER_VALIDATE_EMAIL)) {
             $data['status'] = "error";
-            $data['errors'] = $model->getErrors();
-            $this->sendResponse($data, 403);
+            $data['responseText'] = "Please enter a valid email address";
+            $this->sendResponse($data);
+            Yii::app()->end();
         }
+        $check_array = array( 'username'=>array(32, "username"), 'password'=> array(32, "password"), 'email'=> array(128, "email"));
+
+        foreach ($check_array as $key=>$value )
+        {
+            if(strlen($$key) > $value[0])
+            {
+                $data['status'] = "error";
+                $data['responseText'] = $value[1] . " is too long.";
+                $this->sendResponse($data);
+                Yii::app()->end();
+            }
+        }
+
+        if (empty($username) || empty($password) || empty($email))
+        {
+            $data['status'] = "error";
+            $data['responseText'] = "Please fill all fields";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+
+        $unique_username_test = User::model()->searchForNames($username);
+        $unique_email_test = User::model()->searchForEmail($email);
+        if(!empty($unique_username_test[0]))
+        {
+            $data['status'] = "error";
+            $data['responseText'] = "Already existing user with that username. ";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+        if(!empty($unique_email_test[0]))
+        {
+            $data['status'] = "error";
+            $data['responseText'] = "That email address has already been registered. ";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+
+
+        $model->username = $username;
+        $model->password = $password;
+        $model->email = $email;
+        $model->verifyPassword = $password;
+
+        $profile = new Profile;
+
+        $profile->regMode = true;
+
+
+        if (Yii::app()->user->id)
+        {
+            $this->redirect(Yii::app()->controller->module->profileUrl);
+        }
+        else
+        {
+
+
+
+
+                $soucePassword = $model->password;
+                $model->activekey = UserModule::encrypting(microtime() . $model->password);
+                $model->password = UserModule::encrypting($model->password);
+                $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+                $model->created = date('Y-m-d H:i:s');
+                $model->modified = date('Y-m-d H:i:s');
+                $model->lastvisit =  date('Y-m-d H:i:s');
+                $model->role = 'player';
+                $model->status =  User::STATUS_ACTIVE;
+
+                if ($model->save(false)) {
+
+                    $profile->user_id = $model->id;
+                    $profile->save();
+
+                    $data['status'] = "ok";
+                    $data['responseText'] = "Thank you for your registration. Please login";
+                    $this->sendResponse($data);
+                    Yii::app()->end();
+                }
+
+
+        }
+    }
+
+    public function actionSocialLogin() // pkostov
+    {
+
+        $data = array();
+        if(isset($_GET['api_key'])) {
+            $data = array();
+            $data['status'] = "okkkk";
+            $data['message'] = 'The api key is set' ;
+            $this->sendResponse($data);
+        }
+
+        if(isset($GLOBALS['social'])) unset($GLOBALS['social']);
+        $GLOBALS['social'] = 'facebook';
+        $provider = $_GET['provider'];
+
+        try
+        {
+            Yii::import('application.components.HybridAuthIdentity');
+            Yii::import('application.modules.user.components.UserIdentity');
+            $haComp = new HybridAuthIdentity();
+
+            if (!$haComp->validateProviderName($provider)) {
+               // throw new CHttpException ('500', 'Invalid Action. Please try again.');
+                $data['status'] = "error";
+                $data['errors'] = 'not supported provider name';
+                $this->sendResponse($data, 500);
+            }
+
+            $haComp->adapter = $haComp->hybridAuth->authenticate($provider); //  to  protected\extensions\HybridAuth\hybridauth-2.1.2\hybridauth\Auth.php
+
+            $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
+            $haComp->processLogin($haComp);  //<---- Here to hybridAuthIdentity   i.e. protected\components\HybridAuthIdentity.php
+
+            $data['status'] = "ok";
+            $data['message'] =  "everything is OK!";
+            $this->sendResponse($data);
+
+        }
+        catch (Exception $e)
+        {
+            $data['status'] = "exeption error";
+            $data['message'] = $e->getMessage();
+            $this->sendResponse($data);
+           // $this->redirect(array('/site'));
+          //  return;
+        }
+    }
+
+    public function actionTest()
+    {
+
+      //  header("Location: http://www.example.com/"); // explode here
+     //   $provider = $_GET['provider'];
+        if(isset($_GET['api_key'])) {
+            $data = array();
+            $data['status'] = "okkkk";
+            $data['message'] = 'The api key is set' ;
+            $this->sendResponse($data);
+        }
+        $this->redirect(array('/site/login/provider/facebook'));
+        $data = array();
+        $data['status'] = "ok";
+        $data['message'] = 'The provider isaasadadadsad1111aa:' ;
+        $this->sendResponse($data);
     }
 }
