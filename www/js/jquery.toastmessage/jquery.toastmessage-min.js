@@ -1,4 +1,4 @@
-(function(c){var b={inEffect:{opacity:"show"},inEffectDuration:600,stayTime:900,text:"",sticky:false,type:"notice",position:"top-right",closeText:"",close:null,background:null,color:null};
+(function(c){var b={inEffect:{opacity:"show"},inEffectDuration:600,stayTime:900,text:"",sticky:false,type:"notice",position:"top-right",closeText:"",close:null,background:null,color:null, addClass: null};
 var a={init:function(d){if(d){c.extend(b,d)
 }},showToast:function(f){var g={};
 c.extend(g,b,f);
@@ -12,6 +12,9 @@ e=c("<div></div>").addClass("toast-item-wrapper");
 d=c("<div></div>").hide().addClass("toast-item toast-type-"+g.type).appendTo(j).html(c("<p " + g_color + ">").append(g.text)).animate(g.inEffect,g.inEffectDuration).wrap(e);
     if (g.background !== null) {
         c(".toast-item").css('cssText', 'background-color: ' + g.background + ' !important;');
+    }
+    if (g.addClass !== null) {
+        c(".toast-item").addClass(g.addClass);
     }
 i=c("<div></div>").addClass("toast-item-close").prependTo(d).html(g.closeText).click(function(){c().toastmessage("removeToast",d,g)
 });
