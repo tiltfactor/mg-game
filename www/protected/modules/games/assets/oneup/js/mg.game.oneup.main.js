@@ -489,14 +489,30 @@ MG_GAME_ONEUP = function ($) {
                             $("#final_screen .bookmark_image").off('click').on('click', function () {
                                 //http://localhost/mggameserver/index.php/api/multiplayer/bookmark/gid/OneUp/mediaId/1/playedId/1/
                                 MG_API.ajaxCall('/multiplayer/bookmark/gid/' + MG_GAME_API.settings.gid + '/mediaId/' + json.media.id + '/playedId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
-
+                                    $().toastmessage("showToast", {
+                                        text: 'You bookmarked this image. Checked already bookmarked in your profile.',
+                                        position: "tops-center",
+                                        type: "notice",
+                                        background: "white",
+                                        color: "black",
+                                        stayTime: 900,
+                                        addClass: MG_GAME_ONEUP.toastBackgroundClass
+                                    });
                                 });
                             });
 
                             $("#final_screen .rematch").off('click').on('click', function () {
                                 //http://localhost/mggameserver/index.php/api/multiplayer/challenge/gid/OneUp/username/test
                                 MG_API.ajaxCall('/multiplayer/challenge/gid/' + MG_GAME_API.settings.gid + '/username/' + json.opponentName , function(turn_response) {
-
+                                    $().toastmessage("showToast", {
+                                        text: 'Challenge to ' + json.opponentName + ' was sent.',
+                                        position: "tops-center",
+                                        type: "notice",
+                                        background: "white",
+                                        color: "black",
+                                        stayTime: '900',
+                                        addClass: MG_GAME_ONEUP.toastBackgroundClass
+                                    });
                                 });
                             });
                         });
