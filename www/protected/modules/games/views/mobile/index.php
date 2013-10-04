@@ -58,7 +58,7 @@
     </div>
 
     <div id="smallfooter">
-      &copy; <?php echo date('Y'); ?> <a href="http://www.tiltfactor.org/">tiltfactor</a>, all rights reserved
+      Powered by <a href="http://metadatagames.com/" target="_blank">Metadata Games</a> software developed by <a href="http://www.tiltfactor.org/" target="_blank">tiltfactor</a>
       <div id="footerLogos">
 	<a href="http://www.dartmouth.edu" target="_blank">
 	  <img src="<?php echo MGHelper::bu("/"); ?>images/dartmouth_logo_20120116.jpg" />
