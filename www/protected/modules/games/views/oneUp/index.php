@@ -1,6 +1,6 @@
 <div id="gamearea">
     <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/" />
-    <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
+    <div id="no_js" class="hidden">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
     <!-- Images from the database appear here -->
     <div id="stage">
         <div id="header" class="group">
@@ -160,7 +160,7 @@
         </div>
         <nav id="menu-left">
         </nav>
-        <nav id="menu-right">
+        <nav id="menu-right" style="visibility: hidden;">
             <ul>
                 <li class="back_blue row"><a href="#" location="main_screen"><span>PLAY</span></a></li>
                 <li class="back_blue row"><a href="#" location="game_customize"><span>CUSTOMIZE</span></a></li>

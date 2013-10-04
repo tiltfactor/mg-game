@@ -124,6 +124,12 @@ class InstallerController extends Controller
                 '<a href="http://www.yiiframework.com/doc/api/CWebService">CWebService</a>, <a href="http://www.yiiframework.com/doc/api/CWebServiceAction">CWebServiceAction</a>',
                 ''),
             array(
+                Yii::t('yii', 'CURL extension'),
+                false,
+                extension_loaded("curl"),
+                '',
+                ''),
+            array(
                 Yii::t('yii', 'GD extension in Version 2'),
                 MGRequirementsHelper::checkGDVersion(),
                 !MGRequirementsHelper::checkGDVersion(),

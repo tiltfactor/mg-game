@@ -108,7 +108,9 @@ abstract class MGMultiPlayer extends CComponent
      * @param $userId
      */
     abstract public function disconnect($userId);
+
     abstract public function gameEnd();
+
     abstract public function getEndedGames();
 
     /**
@@ -161,7 +163,7 @@ abstract class MGMultiPlayer extends CComponent
         if (count($plugins) > 0) {
             foreach ($plugins as $plugin) {
                 if (method_exists($plugin->component, "score")) {
-                    $score = $plugin->component->score($$this->game, GameTagDTO::convertToArray($tags), $score);
+                    $score = $plugin->component->score($this->game, GameTagDTO::convertToArray($tags), $score);
                 }
             }
         }
@@ -371,7 +373,7 @@ abstract class MGMultiPlayer extends CComponent
         }
 
         if ($turn->turn <= $this->game->turns) {
-            if($media==null){
+            if ($media == null) {
                 $media = $this->getMedia();
                 if ($media == null) {
                     throw new CHttpException(500, Yii::t('app', 'Not enough medias available!'));
@@ -877,12 +879,12 @@ abstract class MGMultiPlayer extends CComponent
         $result = new GameStateDTO();
         $result->turns = array();
         $result->finished = false;
-        if($this->playedGame->finished){
+        if ($this->playedGame->finished) {
             $result->finished = true;
         }
         $turns = PlayedGameTurnInfo::model()->findAll('played_game_id=:playedId ORDER BY turn ASC', array(':playedId' => $this->playedGame->id));
         if ($turns) {
-            foreach($turns as $turn){
+            foreach ($turns as $turn) {
                 /**
                  * @var GameTurnDTO $pTurn
                  */
@@ -909,12 +911,12 @@ abstract class MGMultiPlayer extends CComponent
                     $tmpTags = GameTagDTO::createFromArray($tagsArr);
                     if ($submit->session_id == $this->sessionId) {
                         $pTurn->tags = array_merge($pTurn->tags, $tmpTags);
-                    }else{
+                    } else {
                         $pTurn->opponentTags = array_merge($pTurn->opponentTags, $tmpTags);
                     }
                 }
 
-                array_push($result->turns,$pTurn);
+                array_push($result->turns, $pTurn);
             }
         }
 
