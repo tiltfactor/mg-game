@@ -97,8 +97,10 @@ class SiteController extends Controller
     //action only for the login from third-party authentication providers, such as Google, Facebook etc. Not for direct login using username/password
     public function actionLogin($provider,$backUrl = null)
     {
-        if($backUrl == null) $backUrl = Yii::app()->getRequest()->getHostInfo().Yii::app()->createUrl('/'); //  [Default behaviour => click]
-        else  $backUrl = "http://" . $backUrl;
+        if($backUrl == null)
+        {
+            $backUrl = Yii::app()->getRequest()->getHostInfo().Yii::app()->createUrl('/'); //  [Default behaviour => click]
+        }
 
         MGHelper::SocialLogin($provider,$backUrl);
 
