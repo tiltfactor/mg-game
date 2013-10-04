@@ -20,7 +20,7 @@
 {
     [super viewDidLoad];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://192.168.128.210/mggameserver/index.php/games/Pyramid"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://10.15.20.108/mgg/www/index.php/games/Pyramid"]];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     
     [customWebView loadRequest:requestObj];
