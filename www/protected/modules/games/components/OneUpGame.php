@@ -87,7 +87,6 @@ class OneUpGame extends MGMultiPlayer
                     foreach ($opponentTagDTOs[$prvTurn] as $row) {
                         if ($row->tag == $tag->tag) {
                             $tag->score = -1;
-
                             $payload = array();
                             $payload['tag'] = $tag;
                             $payload['playedGameId'] = $this->playedGame->id;
@@ -101,6 +100,7 @@ class OneUpGame extends MGMultiPlayer
                                 $payload['opponentName'] = $this->userOnline->session->username;
                                 $this->pushMessage($opponentId, MGMultiPlayer::PUSH_BONUS, json_encode($payload));
                             }
+                            $tag->score = -1;
 
                             //Player notified of penalty
                             //Opponent receives OneUp bonus and notification
