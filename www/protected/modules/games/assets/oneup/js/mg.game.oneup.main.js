@@ -350,7 +350,11 @@ MG_GAME_ONEUP = function ($) {
                                     current_tag;
                                 that.empty();
                                 MG_GAME_ONEUP.playSound('select');
-                                that.append('<input type="text" placeholder="ADD A WORD" />');
+                                if ($.browser.webkit) {
+                                    that.append('<form action="#" onsubmit="return false;"><input type="text" placeholder="ADD A WORD" /></form>');
+                                } else {
+                                    that.append('<input type="text" placeholder="ADD A WORD" />');
+                                }
                                 that.find('input').focus();
                                 that.find('input').unbind("keypress").keypress(function (e) {
                                     if (e.which == 13) {
@@ -651,7 +655,7 @@ MG_GAME_ONEUP = function ($) {
                         my_iter = next_iter;
                     });
 
-                    Hammer(swipe_img).on("swiperight", function() { // swiperight
+                    Hammer(swipe_img).on("swipeleft", function() { // swiperight
                         next_iter = my_iter + 1;
                         if(next_iter === numb_img) {
                             next_iter = 1;
@@ -660,7 +664,7 @@ MG_GAME_ONEUP = function ($) {
                         my_iter = next_iter;
                     });
 
-                    Hammer(swipe_img).on("swipeleft", function() { // swipeleft
+                    Hammer(swipe_img).on("swiperight", function() { // swipeleft
                         next_iter = my_iter - 1;
                         if(next_iter === 0) {
                             next_iter = numb_img;
