@@ -246,4 +246,51 @@ class MGHelper
             } catch(Exception $e){}
         }
     }
+
+/*Example URL call
+ * localhost/mgg/www/index.php/site/login/provider/facebook?backUrl=localhost%2Fmgg%2Fwww%2Findex.php%2Fsite%2Fcontact
+ * Note there should be '?' before the 'backUrl' key
+ * */
+    public static function SocialLogin($provider, $backUrl) // pkostov
+    {
+        if (empty($provider))
+        {
+
+            $lastVisitedUrl = Yii::app()->request->urlReferrer; // last visited url
+            header( "Location: $lastVisitedUrl" ) ;
+            return;
+        }
+        try
+        {
+            Yii::import('application.components.HybridAuthIdentity');
+            Yii::import('application.modules.user.components.UserIdentity');
+            $haComp = new HybridAuthIdentity();
+
+            if (!$haComp->validateProviderName($provider)) {
+                throw new CHttpException ('500', 'Invalid Action. Please try again.');
+            }
+
+
+            $haComp->adapter = $haComp->hybridAuth->authenticate($provider);
+
+
+
+            $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
+
+
+            $haComp->processLogin($haComp);  //<---- Here to hybridAuthIdentity
+
+            header( "Location: {$backUrl}" ) ;
+            return;
+
+            // [$haComp->processLogin] further action based on successful login or re-direct user to the required url [won`t redirect in this method]
+        }
+        catch (Exception $e)
+        {
+            $lastVisitedUrl = Yii::app()->request->urlReferrer; // last visited url
+            header( "Location: $lastVisitedUrl" ) ;
+            return;
+        }
+    }
+
 }
