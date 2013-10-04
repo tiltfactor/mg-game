@@ -95,55 +95,21 @@ class SiteController extends Controller
 	}
 
     //action only for the login from third-party authentication providers, such as Google, Facebook etc. Not for direct login using username/password
-    public function actionLogin()
+    public function actionLogin($provider,$backUrl = null)
     {
+        if($backUrl == null) $backUrl = Yii::app()->getRequest()->getHostInfo().Yii::app()->createUrl('/'); //  [Default behaviour => click]
+        else  $backUrl = "http://" . $backUrl;
 
-        if (!isset($_GET['provider']))
-        {
-            // TODO set propper redirect
-            $this->redirect('/site/index');
-            return;
-        }
-        $provider = $_GET['provider'];
-        try
-        {
-            Yii::import('application.components.HybridAuthIdentity');
-            Yii::import('application.modules.user.components.UserIdentity');
-            $haComp = new HybridAuthIdentity();
+        MGHelper::SocialLogin($provider,$backUrl);
 
-            if (!$haComp->validateProviderName($provider)) {
-                throw new CHttpException ('500', 'Invalid Action. Please try again.');
-            }
-
-
-            $haComp->adapter = $haComp->hybridAuth->authenticate($provider);
-
-
-
-            $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
-
-
-            $haComp->processLogin($haComp);  //<---- Here to hybridAuthIdentity
-
-            $this->redirect(array('/site'));
-            return;
-
-                 // [$haComp->processLogin] further action based on successful login or re-direct user to the required url [won`t redirect in this method]
-        }
-        catch (Exception $e)
-        {
-            $this->redirect(array('/site'));
-            return;
-        }
     }
 
-    public function actionSocialLogin()
+    public function actionSocialLogin() // must stay here. This is the back_endpoint for the HybridAuth Extension
     {
         Yii::import('application.components.HybridAuthIdentity');
         Yii::import('application.modules.user.components.UserIdentity');
         $path = Yii::getPathOfAlias('ext.HybridAuth');
         require_once $path . '/hybridauth-' . HybridAuthIdentity::VERSION . '/index.php';
-
     }
 
 	/**
