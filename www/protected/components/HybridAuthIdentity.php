@@ -58,8 +58,8 @@ class HybridAuthIdentity extends CUserIdentity
                     "enabled" => true,
                     "display" => "popup",
                     "keys" => array (
-                        "id" => "672156142814370",
-                        "secret" => "3fb442fe62ff22f00c7a60b81c00f305",
+                        "id" => Yii::app()->fbvStorage->get("facebookId"),
+                        "secret" => Yii::app()->fbvStorage->get("facebookSecret"),
                     ),
                     "scope" => "email"
                 ),
