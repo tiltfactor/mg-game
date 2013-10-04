@@ -215,7 +215,25 @@ MG_API = function ($) {
                     if (textStatus === "timeout") {
                         var error = "Timeout error: Connection Has Been Lost";
                     } else {
-                        var error = 'Following error occurred: [' + xhr.responseText + '].';
+                        var error_response = '';
+                        if (typeof JSON.parse(xhr.responseText) === 'object') {
+                            var err = JSON.parse(xhr.responseText);
+                            console.log(typeof err.errors);
+                            if (typeof err.errors !== 'undefined') {
+                                if (typeof err.errors === 'object') {
+                                    $.each( err.errors, function( key, value ) {
+                                        error_response+= "[" + value + "] <br />" ;
+                                    });
+                                } else {
+                                    error_response = err.errors;
+                                }
+                            } else {
+                                error_response = '[' + xhr.responseText + '].';
+                            }
+                        } else {
+                            error_response = '[' + xhr.responseText + '].';
+                        }
+                        var error = 'Following error occurred: <br />' + error_response;
                     }
                     $().toastmessage("showToast", {
                         text: error,

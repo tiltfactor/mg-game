@@ -1399,7 +1399,8 @@
 		$m.trigger( _e.opening );
 
         $("#content").css('visibility', 'hidden');
-        $("#header .header_mm_left").css('visibility', 'hidden');
+        $("#menu-right").css('visibility', 'visible');
+        $("#header .header_mm_left").css('display', 'none');
         $("#mg_error").empty();
         $(".mm-menu.mm-right").width($wndw.width() + 10);
         //$(".mm-menu.mm-right").width($(".mm-inner").width());
@@ -1412,8 +1413,9 @@
 		transitionend( $page,
 			function()
 			{
+                $("#menu-right").css('visibility', 'hidden');
                 $("#content").css('visibility', 'visible');
-                $("#header .header_mm_left").css('visibility', 'visible');
+                $("#header .header_mm_left").css('display', 'block');
 				$m.removeClass( _c.opened );
 
 				$html
