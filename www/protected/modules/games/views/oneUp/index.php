@@ -29,7 +29,7 @@
                     <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
                     <span class="hidden"><a href=""></a></span>
                 </div>
-                <img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/facebook.png" />
+                <div id="facebook"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/facebook.png" /></div>
             </div>
             <div id="register" class="text-center index_screen hidden">
                 <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
