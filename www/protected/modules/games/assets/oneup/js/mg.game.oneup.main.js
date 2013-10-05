@@ -962,12 +962,14 @@ MG_GAME_ONEUP = function ($) {
         },
 
         setLoginScreen: function () {
+            //MG_API.curtain.hide();
             $("#login").show();
             $("#header .setting").hide();
 
             $("#facebook").off('click').on('click', function () {
                 MG_API.curtain.show();
-                window.location.href = MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
+                alert(MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid));
+                //window.location.href = MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
             });
 
             $("#btn_login").off('click').on('click', function (e) {
