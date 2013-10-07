@@ -129,7 +129,7 @@ class GamesModule extends CWebModule
             Yii::import("games.components.*");
             $game_engine = Yii::createComponent($unique_id . "Game");
         } catch (Exception $e) {
-            throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+            throw $e;
         }
 
         if ($game_engine instanceof MGMultiPlayer) {

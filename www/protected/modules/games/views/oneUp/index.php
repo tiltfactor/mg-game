@@ -14,10 +14,10 @@
             <div id="login" class="text-center index_screen hidden">
                 <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
                 <div class="button">
-                    <input type="text" id="username" name="username" placeholder="Username" />
+                    <input type="text" autocapitalize="off" id="username" name="username" placeholder="Username" />
                 </div>
                 <div class="button">
-                    <input type="password" id="password" name="password" placeholder="Password" />
+                    <input type="password" autocapitalize="off" id="password" name="password" placeholder="Password" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_login" class="button login"><span>LOGIN</span></a>
@@ -34,13 +34,13 @@
             <div id="register" class="text-center index_screen hidden">
                 <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
                 <div class="button">
-                    <input type="text" id="username" name="username" placeholder="Choose a username" value="" tabindex="1" />
+                    <input type="text" autocapitalize="off" id="username" name="username" placeholder="Choose a username" value="" tabindex="1" />
                 </div>
                 <div class="button">
-                    <input type="password" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
+                    <input type="password" autocapitalize="off" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
                 </div>
                 <div class="button">
-                    <input type="email" id="email" name="email" placeholder="Choose an e-mail" tabindex="3" value="" />
+                    <input type="email" autocapitalize="off" id="email" name="email" placeholder="Choose an e-mail" tabindex="3" value="" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
@@ -60,14 +60,14 @@
 
             <div id="new_game" class="hidden">
                 <h2>NEW GAME</h2>
-                <div class="back_blue row"><a href="#" location="find_opponent">Opponent by User Name</a></div>
-                <div class="back_blue row"><a href="#" location="make_challenge">Random Opponent</a></div>
-                <div class="back_blue row"><a href="#" location="find_opponent">Facebook Friend</a></div>
+                <div class="back_blue row"><div><a href="#" location="find_opponent">Opponent by User Name</a></div></div>
+                <div class="back_blue row"><div><a href="#" location="make_challenge">Random Opponent</a></div></div>
+                <div class="back_blue row"><div><a href="#" location="find_opponent">Facebook Friend</a></div></div>
             </div>
 
             <div id="find_opponent" class="hidden">
                 <h2>ENTER A USER NAME</h2>
-                <div class="padding text-center"><input type="text" id="input_opponent" name="opponent_name" class="opponent_name" /></div>
+                <div class="padding text-center"><input autocapitalize="off" type="text" id="input_opponent" name="opponent_name" class="opponent_name" /></div>
                 <div class="margin_topBottom"><a href="#" location="make_challenge" class="big_button play"><span>PLAY</span></a></div>
             </div>
 
@@ -82,7 +82,7 @@
             <div id="game_customize" class="hidden">
                 <h2>CUSTOMIZE YOUR GAME</h2>
                 <div class="padding">Share your interests and you might see more images with those subjects!</div>
-                <div class="new_interest text-center"><input id="new_interest" type="text" placeholder="I'm interested in..." /></div>
+                <div class="new_interest text-center"><input autocapitalize="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
                 <hr />
             </div>
 
@@ -134,7 +134,7 @@
 
             <div id="account" class="hidden">
                 <h2>Account</h2>
-                <div class="back_blue row"><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div>
+                <div class="back_blue row"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
                 <div id="account_info">
                     <div id="bookmarks">
                         <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
@@ -162,11 +162,12 @@
         </nav>
         <nav id="menu-right" style="visibility: hidden;">
             <ul>
-                <li class="back_blue row"><a href="#" location="main_screen"><span>PLAY</span></a></li>
-                <li class="back_blue row"><a href="#" location="game_customize"><span>CUSTOMIZE</span></a></li>
-                <li class="back_blue row"><a href="#" location="how_to"><span>HOW TO PLAY</span></a></li>
-                <li class="back_blue row"><a href="#" location="learn_more"><span>LEARN MORE</span></a></li>
-                <li class="back_blue row"><a href="#" location="account"><span>ACCOUNT</span></a></li>
+                <li class="back_blue row"><div><a href="#" location="main_screen"><span>PLAY</span></a></div></li>
+                <li class="back_blue row"><div><a href="#" location="game_customize"><span>CUSTOMIZE</span></a></div></li>
+                <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
+                <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
+                <li class="back_blue row"><div><a href="#" location="account"><span>ACCOUNT</span></a></div></li>
+                <li class="back_blue row"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
             </ul>
         </nav>
     </div>
@@ -174,13 +175,13 @@
 
 <script id="template-account_update" type="text/x-jquery-tmpl">
     <div class="button">
-        <input type="text" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
+        <input type="text" autocapitalize="off" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
     </div>
     <div class="button">
-        <input type="password" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
+        <input type="password" autocapitalize="off" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
     </div>
     <div class="button">
-        <input type="email" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
+        <input type="email" autocapitalize="off" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
     </div>
     <div class="button">
         <a href="#" id="btn_update" class="button login"><span>UPDATE</span></a>
@@ -189,10 +190,12 @@
 
 <script id="template-word_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray">
-        <span class="round">ROUND <span>${current_level}</span></span>
-        <div class="right header_scores">
-            <div class="you">You <span>${score}</span></div>
-            <div class="opponent">${opponentName} ${opponentScore}</div>
+        <div>
+            <span class="round">ROUND <span>${current_level}</span></span>
+            <div class="right header_scores">
+                <div class="you">You <span>${score}</span></div>
+                <div class="opponent">${opponentName} ${opponentScore}</div>
+            </div>
         </div>
     </div>
     <h3>ROUND 1</h3>
@@ -205,10 +208,12 @@
 
 <script id="template-final_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray">
-        <span class="round">${game_result}</span>
-        <div class="right header_scores">
-            <div class="you">You <span>${score}</span></div>
-            <div class="opponent">${opponentName} ${opponentScore}</div>
+        <div>
+            <span class="round">${game_result}</span>
+            <div class="right header_scores">
+                <div class="you">You <span>${score}</span></div>
+                <div class="opponent">${opponentName} ${opponentScore}</div>
+            </div>
         </div>
     </div>
     <h4 class="text-center">${congratulation_text}</h4>
@@ -249,7 +254,7 @@
     {{each play_lists}}
     {{if isBanned != true}}
     <div institution_id="${id}" class="back_yellow row">
-        <span class="institution">${name}</span>
+        <div><span class="institution">${name}</span></div>
         <div class="delete right"></div>
     </div>
     {{/if}}
@@ -259,7 +264,7 @@
 <script id="template-account_interest" type="text/x-jquery-tmpl">
     {{each interests}}
     <div interest_id="${id}" class="back_yellow row">
-        ${interest}
+        <div>${interest}</div>
         <div class="delete right"></div>
     </div>
     {{/each}}
@@ -279,20 +284,20 @@
             <h3 class="no_margin">YOUR TURN</h3>
             {{each finished_games}}
             <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_yellow row">
-                <span class="start_game" type="show_final">GAME WITH <span class="username">${opponentName}</span> FINISHED</span>
+                <div class="start_game" type="show_final">GAME WITH <span class="username">${opponentName}</span> FINISHED</div>
             </div>
             {{/each}}
             <div class="no_value hidden">Challenge anyone. Start to play!</div>
             {{each received}}
             <div opponent_id="${id}" playedGameId="" class="back_yellow row">
-                <span class="start_game" type="accept_challenge"><span class="username">${username}</span> CHALLENGED YOU</span>
+                <div class="start_game" type="accept_challenge"><span class="username">${username}</span> CHALLENGED YOU</div>
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each your_turn}}
             <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_yellow row">
-                <span class="start_game" type="game">GAME WITH <span class="username">${opponentName}</span></span>
+                <div class="start_game" type="game">GAME WITH <span class="username">${opponentName}</span></div>
                 <div class="delete right"></div>
             </div>
             {{/each}}
@@ -303,14 +308,14 @@
             <div class="no_value hidden">Noone waits for you!</div>
             {{each sent}}
             <div opponent_id="${id}" playedGameId="" class="back_gray row">
-                GAME WITH ${username}
+                <div>GAME WITH ${username}</div>
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each waiting_turn}}
             <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_gray row">
-                GAME WITH ${opponentName}
+                <div>GAME WITH ${opponentName}</div>
                 <div class="delete right"></div>
             </div>
             {{/each}}
@@ -320,7 +325,7 @@
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray">
-        <span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span>
+        <div><span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span></div>
         <div class="right header_scores">
             <div class="you">You <span>${turn.score}</span></div>
             <div class="opponent">${opponentName} ${turn.opponentScore}</div>
@@ -328,7 +333,7 @@
     </div>
     <div class="main_gray">
         {{each(i, media_item) turn.media}}
-        <img src="${media_item.imageFullSize}" />
+        <img src="${media_item.imageFullSize}" id="game_image" />
         {{/each}}
     </div>
     <div class="words">
@@ -337,7 +342,7 @@
         {{/each}}
 
         {{for(i = num_words; i < 3; i++)}}
-        <div class="small_row blank_bar">ADD A WORD</div>
+        <div class="small_row blank_bar add_word"><div>ADD A WORD</div></div>
         {{/for }}
     </div>
 

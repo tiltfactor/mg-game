@@ -5,10 +5,10 @@ html.mm-opened .mm-page,
 html.mm-opened #mm-blocker,
 .mm-is-menu.mm-horizontal .mm-inner > ul
 {
-	-webkit-transition: none 1.5s ease;
-	-moz-transition: none 1.5s ease;
-	-o-transition: none 1.5s ease;
-	transition: none 1.5s ease;
+	-webkit-transition: none 1.2s ease;
+	-moz-transition: none 1.2s ease;
+	-o-transition: none 1.2s ease;
+	transition: none 1.2s ease;
 }
 html.mm-opened.mm-dragging .mm-page
 {
@@ -322,7 +322,7 @@ html.mm-blocking #mm-blocker
 }
 .mm-is-menu li:after
 {
-	border-bottom: 1px solid rgba( 0, 0, 0, 0.4 );
+	//border-bottom: 1px solid rgba( 0, 0, 0, 0.4 );
 }
 
 .mm-is-menu li,
