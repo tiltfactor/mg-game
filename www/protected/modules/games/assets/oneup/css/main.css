@@ -1,6 +1,9 @@
 body {
   background-color: #150917;
 }
+#mg_modals {
+  display: none !important;
+}
 .popup_gradient {
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
 

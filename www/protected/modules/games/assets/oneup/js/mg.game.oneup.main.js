@@ -20,7 +20,7 @@ MG_GAME_ONEUP = function ($) {
         back_location: null,
         toastStayTime: 9900,
         toastBackgroundClass: 'popup_gradient',
-        show_curtain: function () {
+        oneup_show_curtain: function () {
             // create functionality to show and hide the curtain
             var game_curtainDiv = $('<div id="oneUp_curtain"/>');
             game_curtainDiv.appendTo($("#content")).css({
@@ -45,7 +45,7 @@ MG_GAME_ONEUP = function ($) {
                     backgroundPosition: ($(window).width() / 2) + 'px ' + ($(window).height() / 2) + 'px'});
             });
         },
-        hide_curtain: function () {
+        oneup_hide_curtain: function () {
             $("#oneUp_curtain").remove();
         },
         /*
@@ -91,7 +91,7 @@ MG_GAME_ONEUP = function ($) {
         },
         actions: function (action, click_parent) {
             console_log('call for '+ action + " - click from: " + click_parent);
-            MG_GAME_ONEUP.hide_curtain();
+            MG_GAME_ONEUP.oneup_hide_curtain();
             var continue_action = '';
             $("#header .words").hide();
             $("#header .back").hide();
@@ -188,10 +188,11 @@ MG_GAME_ONEUP = function ($) {
                             e.preventDefault();
                             MG_API.ajaxCall('/user/update', function(response) {
                                     if (response.status === 'ok') {
-
+                                        // What to do if success
+                                        MG_GAME_ONEUP.actions('main_screen', '');
                                     }
                                     $().toastmessage("showToast", {
-                                        text: response.message,
+                                        text: response.responseText,
                                         position: "tops-center",
                                         type: "notice",
                                         background: "white",
@@ -407,7 +408,7 @@ MG_GAME_ONEUP = function ($) {
                                             // Work-around - Push service is fired before ajax is complete
                                             if (tag_count === 3) {
                                                 $("#game_screen .round").attr('status', 'waiting').html('WAITING ...');
-                                                MG_GAME_ONEUP.show_curtain();
+                                                MG_GAME_ONEUP.oneup_show_curtain();
                                             }
 
                                             MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function(response) {
@@ -536,8 +537,19 @@ MG_GAME_ONEUP = function ($) {
                         }
                     });
                     break;
+                case 'new_game':
+                    $("#header .back").show();
+
+                    $("#header .back").off('click').on('click', function (e) {
+                        e.preventDefault();
+                        $("#header").find('.back').hide();
+                        MG_GAME_ONEUP.back_location = 'main_screen';
+                        MG_GAME_ONEUP.actions('main_screen', '');
+                        return false;
+                    });
+                    break;
                 case 'final_screen':
-                    MG_GAME_ONEUP.hide_curtain();
+                    MG_GAME_ONEUP.oneup_hide_curtain();
                     $("#final_screen").empty();
                     MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
                         var json = {};
@@ -813,6 +825,15 @@ MG_GAME_ONEUP = function ($) {
                     break;
                 case 'learn_more':
                     break;
+                case 'logout':
+                    MG_API.curtain.show();
+                    $("#login #username").attr('value', '');
+                    $("#login #password").attr('value', '');
+                    MG_API.ajaxCall('/user/logout' , function() {
+                        MG_API.curtain.hide();
+                        MG_GAME_ONEUP.setLoginScreen();
+                    });
+                    break;
                 case 'account':
                     $("#account_playlist").empty();
                     $("#account_interest").empty();
@@ -1071,6 +1092,10 @@ MG_GAME_ONEUP = function ($) {
                                     MG_GAME_ONEUP.actions('account', 'menu');
                                 });
 
+                                $("a[location='logout']").on('click', function (){
+                                    MG_GAME_ONEUP.actions('logout', 'menu');
+                                });
+
                                 $("a[location='main_screen']").click();
 
                             });
@@ -1081,14 +1106,14 @@ MG_GAME_ONEUP = function ($) {
         },
 
         setLoginScreen: function () {
-            //MG_API.curtain.hide();
+            MG_API.curtain.hide();
             $("#login").show();
             $("#header .setting").hide();
 
             $("#facebook").off('click').on('click', function () {
                 MG_API.curtain.show();
-                alert(MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid));
-                //window.location.href = MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
+                //alert(MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid));
+                window.location.href = MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
             });
 
             $("#btn_login").off('click').on('click', function (e) {
@@ -1213,7 +1238,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_GAME_ONEUP.actions('game_screen', '');
                         MG_GAME_ONEUP.playSound('newround');
                         $("#header .words").show();
-                        MG_GAME_ONEUP.hide_curtain();
+                        MG_GAME_ONEUP.oneup_hide_curtain();
                     }
                 } else if ($(".index_screen").not(":visible")) {
                     if ($("#main_screen").is(":visible")) {
@@ -1242,7 +1267,7 @@ MG_GAME_ONEUP = function ($) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         MG_GAME_ONEUP.actions('final_screen', '');
                         MG_GAME_ONEUP.playSound('gameresult');
-                        MG_GAME_ONEUP.hide_curtain();
+                        MG_GAME_ONEUP.oneup_hide_curtain();
                     }
                 } else if ($(".index_screen").not(":visible")) {
                     // need to add line

@@ -167,6 +167,7 @@
                 <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
                 <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
                 <li class="back_blue row"><div><a href="#" location="account"><span>ACCOUNT</span></a></div></li>
+                <li class="back_blue row"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
             </ul>
         </nav>
     </div>
