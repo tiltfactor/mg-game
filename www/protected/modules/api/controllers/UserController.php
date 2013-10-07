@@ -103,7 +103,7 @@ class UserController extends ApiController {
 
     /**
      * Attempts to logout the user.
-     * 
+     *
      * The currently logged in user will be logged out and the session destroyed
      *
      * JSON: it will return
