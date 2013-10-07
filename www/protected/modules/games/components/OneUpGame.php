@@ -39,6 +39,9 @@ class OneUpGame extends MGMultiPlayer
                     $playerTagDTOs[$submit->turn] = array();
                 }
                 $playerTagDTOs[$submit->turn] = array_merge($playerTagDTOs[$submit->turn], $tmpTags);
+                foreach ($tmpTags as $tt) {
+                    array_push($playerTags, $tt->tag);
+                }
             } else {
                 if (!isset($opponentTagDTOs[$submit->turn])) {
                     $opponentTagDTOs[$submit->turn] = array();
@@ -126,22 +129,34 @@ class OneUpGame extends MGMultiPlayer
 
                 if (!$penalty) {
                     if (MGTags::isExisting($tag->mediaId, $tag->tag)) {
-                        //Roll to add accuracy bonus
-                        $chance = 100;
-                        $points = 4;
-                        if ($this->gameTurn->turn == 1) {
-                            $chance = 25;
-                            $points = 2;
+                        $bonusGiven = false;
+                        foreach ($playerTagDTOs[$this->gameTurn->turn] as $tt) {
+                            if ($tt->score > 2) {
+                                $bonusGiven = true;
+                                break;
+                            }
                         }
-                        if ($this->gameTurn->turn == 2) {
-                            $chance = 50;
-                            $points = 3;
+                        $tag->score = 1;
+
+                        if (!$bonusGiven) {
+                            $tagN = MGTags::countTag($tag->mediaId, $tag->tag);
+                            $tagC = (100 / sqrt($tagN)) + 30;
+                            if ($tagC > 100) $tagC = 100;
+                            else if ($tagC < 30) $tagC = 30;
+
+                            if (mt_rand(0, 100) < $tagC) {
+                                if ($this->gameTurn->turn == 1) {
+                                    $tag->type = "bonus";
+                                    $tag->score = 3;
+                                } elseif ($this->gameTurn->turn == 2) {
+                                    $tag->type = "bonus";
+                                    $tag->score = 5;
+                                } else if ($this->gameTurn->turn == 3) {
+                                    $tag->type = "bonus";
+                                    $tag->score = 7;
+                                }
+                            }
                         }
-                        if (mt_rand(0, 100) <= $chance) {
-                            $tag->type = "bonus";
-                            $tag->score = $points;
-                        } else
-                            $tag->score = 1;
                     } else {
                         $tag->score = 1;
                     }

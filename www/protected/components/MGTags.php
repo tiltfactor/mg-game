@@ -375,8 +375,6 @@ class MGTags
 
     public static function isExisting($mediaId, $tag)
     {
-        $tags = array();
-        $used_tags = array();
         $usedTag = Yii::app()->db->createCommand()
             ->select('t.tag')
             ->from('{{tag_use}} tu')
@@ -391,5 +389,16 @@ class MGTags
         }else{
             return false;
         }
+    }
+
+    public static function countTag($mediaId, $tag)
+    {
+        $number = Yii::app()->db->createCommand()
+            ->select('count(t.tag) as c')
+            ->from('{{tag_use}} tu')
+            ->leftJoin('{{tag}} t', 't.id = tu.tag_id')
+            ->where('tu.media_id=:id and t.tag=:tag', array(':id' => $mediaId, ':tag' => strtolower($tag)))
+            ->queryScalar();
+        return $number;
     }
 }
