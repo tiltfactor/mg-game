@@ -491,11 +491,11 @@ MG_GAME_ONEUP = function ($) {
                         json.opponentName = MG_GAME_ONEUP.opponent_name;
                         json.opponentScore = turn_response.turns[(current_level-1)].opponentScore;
 
-                        if (json.score > json.opponentScore) {
+                        if (parseInt(json.score, 10) > parseInt(json.opponentScore, 10)) {
                             json.game_result = 'YOU WON!';
                             json.congratulation_text = 'Congratulations! You are the winner.';
                             MG_GAME_ONEUP.playSound('win');
-                        } else if (json.score < json.opponentScore) {
+                        } else if (parseInt(json.score, 10) < parseInt(json.opponentScore, 10)) {
                             json.game_result = 'YOU LOST!';
                             json.congratulation_text = 'We are sorry but you lost.';
                         } else {
@@ -962,8 +962,16 @@ MG_GAME_ONEUP = function ($) {
         },
 
         setLoginScreen: function () {
+            //MG_API.curtain.hide();
             $("#login").show();
             $("#header .setting").hide();
+
+            $("#facebook").off('click').on('click', function () {
+                MG_API.curtain.show();
+                alert(MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid));
+                //window.location.href = MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
+            });
+
             $("#btn_login").off('click').on('click', function (e) {
                 e.preventDefault();
                 if ((jQuery.trim($("#login #username").val()).length + jQuery.trim($("#login #password").val()).length) < 1) {
@@ -1136,7 +1144,7 @@ MG_GAME_ONEUP = function ($) {
 
                 if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                     $().toastmessage("showToast", {
-                        text: game_title + " You got " + MG_GAME_ONEUP.opponent_name + " 's point with " + response.tag.tag,
+                        text: game_title + " " + MG_GAME_ONEUP.opponent_name + " got your points with " + response.tag.tag,
                         position: "tops-center",
                         type: "notice",
                         background: "white",
@@ -1157,7 +1165,7 @@ MG_GAME_ONEUP = function ($) {
                 console_log(response);
 
                 $().toastmessage("showToast", {
-                    text: game_title + ' ' + response.opponentName + " got your points with " + response.tag.tag + "!",
+                    text: game_title + ' You got ' + response.opponentName + " point with " + response.tag.tag + "!",
                     position: "tops-center",
                     type: "notice",
                     background: "white",

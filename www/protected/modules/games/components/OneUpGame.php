@@ -131,11 +131,11 @@ class OneUpGame extends MGMultiPlayer
                         $points = 4;
                         if ($this->gameTurn->turn == 1) {
                             $chance = 25;
-                            $points = 3;
+                            $points = 2;
                         }
                         if ($this->gameTurn->turn == 2) {
                             $chance = 50;
-                            $points = 2;
+                            $points = 3;
                         }
                         if (mt_rand(0, 100) <= $chance) {
                             $tag->type = "bonus";
