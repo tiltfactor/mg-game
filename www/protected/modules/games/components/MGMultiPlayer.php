@@ -68,9 +68,6 @@ abstract class MGMultiPlayer extends CComponent
 
             $this->userId = (int)Yii::app()->user->id;
             $this->userOnline = UserOnline::model()->with(array('session'))->find('session_id =:sessionId AND t.game_id=:gameId', array(':sessionId' => $this->sessionId, ':gameId' => $this->game->id));
-            if ($this->userOnline == null) {
-                throw new CHttpException(400, Yii::t('app', 'Authentication required.'));
-            }
         }
 
         if ($playedId > 0) {
