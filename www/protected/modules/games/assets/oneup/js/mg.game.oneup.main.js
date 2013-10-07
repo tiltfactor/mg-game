@@ -830,8 +830,18 @@ MG_GAME_ONEUP = function ($) {
                     $("#login #username").attr('value', '');
                     $("#login #password").attr('value', '');
                     MG_API.ajaxCall('/user/logout' , function() {
-                        MG_API.curtain.hide();
-                        MG_GAME_ONEUP.setLoginScreen();
+                        MG_API.settings.shared_secret = '';
+                        MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                            if (MG_API.checkResponse(response)) {
+                                if (response.shared_secret !== undefined && response.shared_secret !== "") {
+                                    MG_API.settings.shared_secret = response.shared_secret;
+                                    MG_API.curtain.hide();
+                                    MG_GAME_ONEUP.setLoginScreen();
+                                } else {
+                                    throw "MG_API.init() can't retrieve shared secret";
+                                }
+                            }
+                        }, {async: false});
                     });
                     break;
                 case 'account':
