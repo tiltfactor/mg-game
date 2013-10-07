@@ -115,8 +115,10 @@ class OneUpGame extends MGMultiPlayer
                             if (!$this->playedGame->update()) {
                                 $message = "";
                                 $errors = $this->playedGame->getErrors();
-                                foreach ($errors as $field => $error) {
-                                    $message .= $error[0] . ";";
+                                if (is_array($errors)) {
+                                    foreach ($errors as $field => $error) {
+                                        $message .= $error[0] . ";";
+                                    }
                                 }
                                 throw new CHttpException(400, Yii::t('app', $message));
                             }
