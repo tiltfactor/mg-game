@@ -308,14 +308,14 @@
             <div class="no_value hidden">Noone waits for you!</div>
             {{each sent}}
             <div opponent_id="${id}" playedGameId="" class="back_gray row">
-                <div>GAME WITH ${username}</div>
+                <div>GAME WITH <span class="username">${username}</span></div>
                 <div class="delete right"></div>
             </div>
             {{/each}}
 
             {{each waiting_turn}}
             <div opponent_id="${opponentId}" playedGameId="${playedGameId}" class="back_gray row">
-                <div>GAME WITH ${opponentName}</div>
+                <div>GAME WITH <span class="username">${opponentName}</span></div>
                 <div class="delete right"></div>
             </div>
             {{/each}}

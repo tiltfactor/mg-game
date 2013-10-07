@@ -1,9 +1,6 @@
 body {
   background-color: #150917;
 }
-#mg_modals {
-  display: none !important;
-}
 .popup_gradient {
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
 
@@ -763,4 +760,7 @@ body.retina #header .back {
 .no-title .ui-dialog-buttonset {
   width: 100%;
   text-align: center;
+}
+.username {
+  font-weight: bolder !important;
 }

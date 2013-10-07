@@ -1114,6 +1114,61 @@ MG_GAME_ONEUP = function ($) {
                 }
             ]);
         },
+        ajaxCall: function (path, callback, options, doNotSaveLastCallTime) {
+            var secretHeader = ('X_' + MG_API.settings.app_id + '_SHARED_SECRET').replace(/\_/g, "-");
+
+            var defaults = {
+                url: MG_API.settings.api_url + path,
+                // set needed shared secret header
+                headers: $.parseJSON('{"' + secretHeader + '" : "' + MG_API.settings.shared_secret + '"}'),
+                success: callback,
+                timeout: 45000, // 45 seconds
+                error: function (xhr, textStatus, thrownError) {
+                    if (xhr.status == 400) {
+                        MG_GAME_ONEUP.actions('logout', '');
+                        //logout
+                    } else {
+                        if (textStatus === "timeout") {
+                            var error = "Timeout error: Connection Has Been Lost";
+                        } else {
+                            var error_response = '';
+                            if (typeof JSON.parse(xhr.responseText) === 'object') {
+                                var err = JSON.parse(xhr.responseText);
+                                if (typeof err.errors !== 'undefined') {
+                                    if (typeof err.errors === 'object') {
+                                        $.each( err.errors, function( key, value ) {
+                                            error_response+= "[" + value + "] <br />" ;
+                                        });
+                                    } else {
+                                        error_response = err.errors;
+                                    }
+                                } else {
+                                    error_response = '[' + xhr.responseText + '].';
+                                }
+                            } else {
+                                error_response = '[' + xhr.responseText + '].';
+                            }
+                            var error = 'Following error occurred: <br />' + error_response;
+                        }
+                        $().toastmessage("showToast", {
+                            text: error,
+                            position: "tops-center",
+                            type: "notice",
+                            background: "white",
+                            color: "black"
+                        });
+                    }
+                }
+            }
+            if (options) {
+                defaults = $.extend(defaults, options); //Pull from both defaults and supplied options
+            }
+            var jsXHR = $.ajax(defaults);
+
+            if (!doNotSaveLastCallTime) {
+                MG_API.timeLastCall = new Date().getTime();
+            }
+        },
 
         setLoginScreen: function () {
             MG_API.curtain.hide();
