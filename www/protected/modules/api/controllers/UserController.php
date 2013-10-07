@@ -25,7 +25,7 @@ class UserController extends ApiController {
             ),
             array('allow',
                 'actions' => array('profile', 'passwordchange', 'logout', 'update'),
-                'roles' => array(PLAYER, EDITOR, ADMIN),
+                'roles' => array(PLAYER, EDITOR, ADMIN, INSTITUTION),
             ),
             array('deny',
                 'users' => array('*'),
