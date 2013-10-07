@@ -4,11 +4,11 @@ class UserController extends ApiController {
 
     public function filters() {
         return array( // add blocked IP filter here
-            'throttle - login, sharedsecret, register',
+            'throttle - login, sharedsecret, register , update, logout',
             'IPBlock',
             'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
-            'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
-            //'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded
+            'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage, ',
+            // 'sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 
@@ -19,12 +19,12 @@ class UserController extends ApiController {
         return array(
             array('allow',
 
-                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', 'test'),
+                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', ),
 
                 'users' => array('*'),
             ),
             array('allow',
-                'actions' => array('profile', 'passwordchange', 'logout'),
+                'actions' => array('profile', 'passwordchange', 'logout', 'update'),
                 'roles' => array(PLAYER, EDITOR, ADMIN),
             ),
             array('deny',
@@ -77,7 +77,7 @@ class UserController extends ApiController {
             // collect user input data
             Yii::import("application.modules.user.components.UserIdentity");
             Yii::import("application.modules.user.models.UserLogin");
-      
+
             $model = new UserLogin;
             $model->username = $_POST['login'];
             $model->password = $_POST['password'];
@@ -103,25 +103,30 @@ class UserController extends ApiController {
 
     /**
      * Attempts to logout the user.
-     * It has to be called via a GET request.
-     *
+     * 
      * The currently logged in user will be logged out and the session destroyed
      *
      * JSON: it will return
      * {status:'ok'} or throw an exception
      *
      * @return string JSON response
-     * @throws CHttpException if the request is not a GET request
+     *
      */
     public function actionLogout() {
-        if (Yii::app()->getRequest()->getIsGetRequest()) {
-            Yii::app()->session->clear(); //remove all of the session variables.
+        $data = array();
+        try
+        {
+            Yii::app()->session->destroy(); //remove all of the session variables.
             Yii::app()->user->logout();
-            $data = array();
             $data['status'] = "ok";
+            $data['responseText'] = "You have been successfully logged out.";
             $this->sendResponse($data);
-        } else {
-            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+        }
+        catch (Exception $e)
+        {
+            $data['status'] = "error";
+            $data['responseText'] = $e->getMessage();
+            $this->sendResponse($data);
         }
     }
 
@@ -220,36 +225,32 @@ class UserController extends ApiController {
         }
         else
         {
+            $soucePassword = $model->password;
+            $model->activekey = UserModule::encrypting(microtime() . $model->password);
+            $model->password = UserModule::encrypting($model->password);
+            $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+            $model->created = date('Y-m-d H:i:s');
+            $model->modified = date('Y-m-d H:i:s');
+            $model->lastvisit =  date('Y-m-d H:i:s');
+            $model->role = 'player';
+            $model->status =  User::STATUS_ACTIVE;
 
+            if ($model->save(false)) {
 
+                $profile->user_id = $model->id;
+                $profile->save();
 
-
-                $soucePassword = $model->password;
-                $model->activekey = UserModule::encrypting(microtime() . $model->password);
-                $model->password = UserModule::encrypting($model->password);
-                $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
-                $model->created = date('Y-m-d H:i:s');
-                $model->modified = date('Y-m-d H:i:s');
-                $model->lastvisit =  date('Y-m-d H:i:s');
-                $model->role = 'player';
-                $model->status =  User::STATUS_ACTIVE;
-
-                if ($model->save(false)) {
-
-                    $profile->user_id = $model->id;
-                    $profile->save();
-
-                    $data['status'] = "ok";
-                    $data['responseText'] = "Thank you for your registration. Please login";
-                    $this->sendResponse($data);
-                    Yii::app()->end();
-                }
+                $data['status'] = "ok";
+                $data['responseText'] = "Thank you for your registration. Please login";
+                $this->sendResponse($data);
+                Yii::app()->end();
+            }
 
 
         }
     }
 
-    public function actionSocialLogin() // pkostov
+    public function actionSocialLogin()
     {
 
         $data = array();
@@ -271,7 +272,7 @@ class UserController extends ApiController {
             $haComp = new HybridAuthIdentity();
 
             if (!$haComp->validateProviderName($provider)) {
-               // throw new CHttpException ('500', 'Invalid Action. Please try again.');
+                // throw new CHttpException ('500', 'Invalid Action. Please try again.');
                 $data['status'] = "error";
                 $data['errors'] = 'not supported provider name';
                 $this->sendResponse($data, 500);
@@ -292,26 +293,56 @@ class UserController extends ApiController {
             $data['status'] = "exeption error";
             $data['message'] = $e->getMessage();
             $this->sendResponse($data);
-           // $this->redirect(array('/site'));
-          //  return;
         }
     }
 
-    public function actionTest()
+    public function actionUpdate ()
     {
+        $data = array();
 
-      //  header("Location: http://www.example.com/"); // explode here
-     //   $provider = $_GET['provider'];
-        if(isset($_GET['api_key'])) {
-            $data = array();
-            $data['status'] = "okkkk";
-            $data['message'] = 'The api key is set' ;
+        $newUsername = $_POST['username'];
+        $newPassword = $_POST['password'];
+        $newEmail = $_POST['email'];
+
+        if(empty($newPassword))
+        {
+            $data['status'] = "error";
+            $data['responseText'] =  "Password can not be empty.";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+
+        $currentUserId = Yii::app()->user->id;
+
+        $model = User::model()->notsafe()->findByPk($currentUserId);
+
+        $model->username = $newUsername;
+        $model->password = UserModule::encrypting($newPassword);
+
+        $model->email = $newEmail;
+
+
+        if($model->validate())
+        {
+            try
+            {
+                $model->save();
+                $data['status'] = "ok";
+                $data['responseText'] =  "New data have been saved.";
+                $this->sendResponse($data);
+            }
+            catch (Exception $e)
+            {
+                $data['status'] = "error";
+                $data['message'] = $e->getMessage();
+                $this->sendResponse($data);
+            }
+        }
+        else
+        {
+            $data['status'] = "error";
+            $data['responseText'] =  "Validation did not pass. Existing username and/or email";
             $this->sendResponse($data);
         }
-        $this->redirect(array('/site/login/provider/facebook'));
-        $data = array();
-        $data['status'] = "ok";
-        $data['message'] = 'The provider isaasadadadsad1111aa:' ;
-        $this->sendResponse($data);
     }
 }
