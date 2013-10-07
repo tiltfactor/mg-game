@@ -24,12 +24,15 @@ class MultiplayerController extends ApiController
     {
         return array(
             array('allow',
+                'actions' => array('validateSecret'),
+                'users' => array('*'),
+            ),
+            array('allow',
                 'actions' => array('register',
                     'findOpponent',
                     'pair',
                     'rejectPair',
                     'submit',
-                    'validateSecret',
                     'disconnect',
                     'challenge',
                     'endGame',
@@ -47,15 +50,15 @@ class MultiplayerController extends ApiController
                     'getInstitutions',
                     'getInstitution',
                     'banInstitution',
-                    'unbanInstitution'
-                ),
-                'users' => array('*'),
+                    'unbanInstitution'),
+                'roles' => array(PLAYER, INSTITUTION, EDITOR, ADMIN),
             ),
             array('deny',
                 'users' => array('*'),
             ),
         );
     }
+
 
     /**
      * Register a player to the game

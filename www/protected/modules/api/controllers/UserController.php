@@ -1,31 +1,34 @@
 <?php
 
-class UserController extends ApiController {
+class UserController extends ApiController
+{
 
-    public function filters() {
+    public function filters()
+    {
         return array( // add blocked IP filter here
-            'throttle - login, sharedsecret, register , update, logout',
+            'throttle - login, sharedsecret, register',
             'IPBlock',
             'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
-            'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage, ',
-            // 'sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
+            'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
+            //'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 
     /**
      * Defines the access rules for this controller
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
 
-                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', ),
+                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', 'test'),
 
                 'users' => array('*'),
             ),
             array('allow',
-                'actions' => array('profile', 'passwordchange', 'logout', 'update'),
-                'roles' => array(PLAYER, EDITOR, ADMIN),
+                'actions' => array('profile', 'passwordchange', 'logout'),
+                'roles' => array(PLAYER, INSTITUTION, EDITOR, ADMIN),
             ),
             array('deny',
                 'users' => array('*'),
@@ -37,7 +40,8 @@ class UserController extends ApiController {
      * This action displays the a default page in case someone tries to consume
      * the page via the browser.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         parent::actionIndex();
     }
 
@@ -53,7 +57,8 @@ class UserController extends ApiController {
      *
      * @return string JSON response
      */
-    public function actionSharedSecret() {
+    public function actionSharedSecret()
+    {
         $data = array();
         $data['status'] = "ok";
         $data['shared_secret'] = MGHelper::createSharedSecretAndSession(Yii::app()->user->id, Yii::app()->user->name);
@@ -72,7 +77,8 @@ class UserController extends ApiController {
      * @return string JSON response
      * @throws CHttpException if the request is not a Post request or one of the needed fields is not set
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (Yii::app()->getRequest()->getIsPostRequest() && isset($_POST['login']) && isset($_POST['password'])) {
             // collect user input data
             Yii::import("application.modules.user.components.UserIdentity");
@@ -103,30 +109,26 @@ class UserController extends ApiController {
 
     /**
      * Attempts to logout the user.
-     * 
+     * It has to be called via a GET request.
+     *
      * The currently logged in user will be logged out and the session destroyed
      *
      * JSON: it will return
      * {status:'ok'} or throw an exception
      *
      * @return string JSON response
-     *
+     * @throws CHttpException if the request is not a GET request
      */
-    public function actionLogout() {
-        $data = array();
-        try
-        {
-            Yii::app()->session->destroy(); //remove all of the session variables.
+    public function actionLogout()
+    {
+        if (Yii::app()->getRequest()->getIsGetRequest()) {
+            Yii::app()->session->clear(); //remove all of the session variables.
             Yii::app()->user->logout();
+            $data = array();
             $data['status'] = "ok";
-            $data['responseText'] = "You have been successfully logged out.";
             $this->sendResponse($data);
-        }
-        catch (Exception $e)
-        {
-            $data['status'] = "error";
-            $data['responseText'] = $e->getMessage();
-            $this->sendResponse($data);
+        } else {
+            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
         }
     }
 
@@ -143,7 +145,8 @@ class UserController extends ApiController {
      * @return string JSON response
      * @throws CHttpException if the request is not a POST request
      */
-    public function actionPasswordRecovery() {
+    public function actionPasswordRecovery()
+    {
         if (Yii::app()->getRequest()->getIsPostRequest()) {
             Yii::import("application.modules.user.components.UFrontendActionHelper");
             Yii::import("application.modules.user.models.UserRecoveryForm");
@@ -154,7 +157,8 @@ class UserController extends ApiController {
         }
     }
 
-    public function actionRegister() {
+    public function actionRegister()
+    {
         Yii::import("application.modules.user.models.RegistrationForm"); // pkostov include the model
         Yii::import("application.modules.user.UserModule"); // pkostov. Thus Yii::app()->controller->module->activeAfterRegister  <= will be just => activeAfterRegister. The path is C:\xampp\htdocs\mgg\www\protected\modules\user\UserModule.php
         $model = new RegistrationForm;
@@ -170,12 +174,10 @@ class UserController extends ApiController {
             $this->sendResponse($data);
             Yii::app()->end();
         }
-        $check_array = array( 'username'=>array(32, "username"), 'password'=> array(32, "password"), 'email'=> array(128, "email"));
+        $check_array = array('username' => array(32, "username"), 'password' => array(32, "password"), 'email' => array(128, "email"));
 
-        foreach ($check_array as $key=>$value )
-        {
-            if(strlen($$key) > $value[0])
-            {
+        foreach ($check_array as $key => $value) {
+            if (strlen($$key) > $value[0]) {
                 $data['status'] = "error";
                 $data['responseText'] = $value[1] . " is too long.";
                 $this->sendResponse($data);
@@ -183,8 +185,7 @@ class UserController extends ApiController {
             }
         }
 
-        if (empty($username) || empty($password) || empty($email))
-        {
+        if (empty($username) || empty($password) || empty($email)) {
             $data['status'] = "error";
             $data['responseText'] = "Please fill all fields";
             $this->sendResponse($data);
@@ -193,15 +194,13 @@ class UserController extends ApiController {
 
         $unique_username_test = User::model()->searchForNames($username);
         $unique_email_test = User::model()->searchForEmail($email);
-        if(!empty($unique_username_test[0]))
-        {
+        if (!empty($unique_username_test[0])) {
             $data['status'] = "error";
             $data['responseText'] = "Already existing user with that username. ";
             $this->sendResponse($data);
             Yii::app()->end();
         }
-        if(!empty($unique_email_test[0]))
-        {
+        if (!empty($unique_email_test[0])) {
             $data['status'] = "error";
             $data['responseText'] = "That email address has already been registered. ";
             $this->sendResponse($data);
@@ -219,21 +218,20 @@ class UserController extends ApiController {
         $profile->regMode = true;
 
 
-        if (Yii::app()->user->id)
-        {
+        if (Yii::app()->user->id) {
             $this->redirect(Yii::app()->controller->module->profileUrl);
-        }
-        else
-        {
+        } else {
+
+
             $soucePassword = $model->password;
             $model->activekey = UserModule::encrypting(microtime() . $model->password);
             $model->password = UserModule::encrypting($model->password);
             $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
             $model->created = date('Y-m-d H:i:s');
             $model->modified = date('Y-m-d H:i:s');
-            $model->lastvisit =  date('Y-m-d H:i:s');
+            $model->lastvisit = date('Y-m-d H:i:s');
             $model->role = 'player';
-            $model->status =  User::STATUS_ACTIVE;
+            $model->status = User::STATUS_ACTIVE;
 
             if ($model->save(false)) {
 
@@ -250,23 +248,22 @@ class UserController extends ApiController {
         }
     }
 
-    public function actionSocialLogin()
+    public function actionSocialLogin() // pkostov
     {
 
         $data = array();
-        if(isset($_GET['api_key'])) {
+        if (isset($_GET['api_key'])) {
             $data = array();
             $data['status'] = "okkkk";
-            $data['message'] = 'The api key is set' ;
+            $data['message'] = 'The api key is set';
             $this->sendResponse($data);
         }
 
-        if(isset($GLOBALS['social'])) unset($GLOBALS['social']);
+        if (isset($GLOBALS['social'])) unset($GLOBALS['social']);
         $GLOBALS['social'] = 'facebook';
         $provider = $_GET['provider'];
 
-        try
-        {
+        try {
             Yii::import('application.components.HybridAuthIdentity');
             Yii::import('application.modules.user.components.UserIdentity');
             $haComp = new HybridAuthIdentity();
@@ -281,68 +278,36 @@ class UserController extends ApiController {
             $haComp->adapter = $haComp->hybridAuth->authenticate($provider); //  to  protected\extensions\HybridAuth\hybridauth-2.1.2\hybridauth\Auth.php
 
             $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
-            $haComp->processLogin($haComp);  //<---- Here to hybridAuthIdentity   i.e. protected\components\HybridAuthIdentity.php
+            $haComp->processLogin($haComp); //<---- Here to hybridAuthIdentity   i.e. protected\components\HybridAuthIdentity.php
 
             $data['status'] = "ok";
-            $data['message'] =  "everything is OK!";
+            $data['message'] = "everything is OK!";
             $this->sendResponse($data);
 
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $data['status'] = "exeption error";
             $data['message'] = $e->getMessage();
             $this->sendResponse($data);
+            // $this->redirect(array('/site'));
+            //  return;
         }
     }
 
-    public function actionUpdate ()
+    public function actionTest()
     {
+
+        //  header("Location: http://www.example.com/"); // explode here
+        //   $provider = $_GET['provider'];
+        if (isset($_GET['api_key'])) {
+            $data = array();
+            $data['status'] = "okkkk";
+            $data['message'] = 'The api key is set';
+            $this->sendResponse($data);
+        }
+        $this->redirect(array('/site/login/provider/facebook'));
         $data = array();
-
-        $newUsername = $_POST['username'];
-        $newPassword = $_POST['password'];
-        $newEmail = $_POST['email'];
-
-        if(empty($newPassword))
-        {
-            $data['status'] = "error";
-            $data['responseText'] =  "Password can not be empty.";
-            $this->sendResponse($data);
-            Yii::app()->end();
-        }
-
-        $currentUserId = Yii::app()->user->id;
-
-        $model = User::model()->notsafe()->findByPk($currentUserId);
-
-        $model->username = $newUsername;
-        $model->password = UserModule::encrypting($newPassword);
-
-        $model->email = $newEmail;
-
-
-        if($model->validate())
-        {
-            try
-            {
-                $model->save();
-                $data['status'] = "ok";
-                $data['responseText'] =  "New data have been saved.";
-                $this->sendResponse($data);
-            }
-            catch (Exception $e)
-            {
-                $data['status'] = "error";
-                $data['message'] = $e->getMessage();
-                $this->sendResponse($data);
-            }
-        }
-        else
-        {
-            $data['status'] = "error";
-            $data['responseText'] =  "Validation did not pass. Existing username and/or email";
-            $this->sendResponse($data);
-        }
+        $data['status'] = "ok";
+        $data['message'] = 'The provider isaasadadadsad1111aa:';
+        $this->sendResponse($data);
     }
 }
