@@ -28,9 +28,8 @@ class UFrontendActionHelper extends CApplicationComponent {
         
       $email = ((isset($_GET['email']))? $_GET['email']:'');
       $activekey = ((isset($_GET['activekey']))? $_GET['activekey']:'');
-      
-      
-      if ($email && $email) {
+
+      if ($email && $activekey) { 
         $form2 = new UserChangePassword;
         $find = User::model()->notsafe()->findByAttributes(array('email'=>$email));
         
@@ -61,15 +60,15 @@ class UFrontendActionHelper extends CApplicationComponent {
         }
       
       } else {
-        
         $valid = false;
-        if(Yii::app()->getRequest()->getIsAjaxRequest()) {
+
+        if(Yii::app()->getRequest()->getIsAjaxRequest()) { // NO
           if(isset($_POST['login_or_email'])) {
             $form->login_or_email = $_POST['login_or_email'];
             $valid = $form->validate();
           }
-        } else {
-          if(isset($_POST['UserRecoveryForm'])) {
+        } else { // yes
+          if(isset($_POST['UserRecoveryForm'])) { // yes
             $form->attributes=$_POST['UserRecoveryForm'];
             $valid = $form->validate();
           }
