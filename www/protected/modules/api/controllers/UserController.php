@@ -4,11 +4,11 @@ class UserController extends ApiController {
 
     public function filters() {
         return array( // add blocked IP filter here
-            'throttle - login, sharedsecret, register, update',
+            'throttle - login, sharedsecret, register , update, logout',
             'IPBlock',
             'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage, ',
-           // 'sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
+            // 'sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 
@@ -103,25 +103,30 @@ class UserController extends ApiController {
 
     /**
      * Attempts to logout the user.
-     * It has to be called via a GET request.
-     *
+     * 
      * The currently logged in user will be logged out and the session destroyed
      *
      * JSON: it will return
      * {status:'ok'} or throw an exception
      *
      * @return string JSON response
-     * @throws CHttpException if the request is not a GET request
+     *
      */
     public function actionLogout() {
-        if (Yii::app()->getRequest()->getIsGetRequest()) {
-            Yii::app()->session->clear(); //remove all of the session variables.
+        $data = array();
+        try
+        {
+            Yii::app()->session->destroy(); //remove all of the session variables.
             Yii::app()->user->logout();
-            $data = array();
             $data['status'] = "ok";
+            $data['responseText'] = "You have been successfully logged out.";
             $this->sendResponse($data);
-        } else {
-            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
+        }
+        catch (Exception $e)
+        {
+            $data['status'] = "error";
+            $data['responseText'] = $e->getMessage();
+            $this->sendResponse($data);
         }
     }
 
@@ -293,8 +298,6 @@ class UserController extends ApiController {
 
     public function actionUpdate ()
     {
-
-
         $data = array();
 
         $newUsername = $_POST['username'];
@@ -306,7 +309,7 @@ class UserController extends ApiController {
             $data['status'] = "error";
             $data['responseText'] =  "Password can not be empty.";
             $this->sendResponse($data);
-         //   Yii::app()->end();
+            Yii::app()->end();
         }
 
         $currentUserId = Yii::app()->user->id;
@@ -327,7 +330,6 @@ class UserController extends ApiController {
                 $data['status'] = "ok";
                 $data['responseText'] =  "New data have been saved.";
                 $this->sendResponse($data);
-
             }
             catch (Exception $e)
             {
@@ -341,8 +343,6 @@ class UserController extends ApiController {
             $data['status'] = "error";
             $data['responseText'] =  "Validation did not pass. Existing username and/or email";
             $this->sendResponse($data);
-
         }
     }
-
 }
