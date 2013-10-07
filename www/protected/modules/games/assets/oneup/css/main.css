@@ -78,7 +78,28 @@ input {
   font-family: Museo;
 }
 :-ms-input-placeholder {
-  font-family: Museo;
+  color: white;
+  font-size: 25px;
+}
+input.add_word::-webkit-input-placeholder {
+  color: white;
+  font-size: 25px;
+}
+input.add_word:-moz-placeholder {
+  /* Firefox 18- */
+
+  color: white;
+  font-size: 25px;
+}
+input.add_word::-moz-placeholder {
+  /* Firefox 19+ */
+
+  color: white;
+  font-size: 25px;
+}
+input.add_word::-ms-input-placeholder {
+  color: white;
+  font-size: 25px;
 }
 .new_interest {
   padding-top: 15px;
@@ -155,6 +176,10 @@ html.mm-right.mm-opening #mm-blocker {
     margin: 0 -77px 0 0 !important;
   }
 }
+.ie .row input,
+.ie .small_row input {
+  width: 100%;
+}
 #content {
   padding: 0;
 }
@@ -171,20 +196,20 @@ html.mm-right.mm-opening #mm-blocker {
   right: 50%;
   text-align: center;
   text-decoration: none;
-  font-size: 22px;
+  font-size: 24px;
 }
 #content .big_button span {
   border: 1px solid #877c80;
-  padding: 10px;
+  padding: 1px 18px;
   color: #46a5c4;
   border-radius: 7px;
 }
 #content .header {
-  height: 130px !important;
+  height: 110px !important;
   text-align: center;
 }
 #content .header .title {
-  padding: 35px 0 17px 0;
+  padding: 20px 0 15px 0;
 }
 #content h2 {
   color: #a3a3a3;
@@ -196,8 +221,8 @@ html.mm-right.mm-opening #mm-blocker {
 #content h3 {
   background-color: #403b3d;
   color: #a3a3a3;
-  height: 17px;
-  line-height: 17px;
+  height: 14px;
+  line-height: 13px;
   font-size: 9px;
   padding-left: 15px;
   padding-right: 15px;
@@ -218,7 +243,8 @@ html.mm-right.mm-opening #mm-blocker {
 }
 #content .header_scores {
   text-align: right;
-  margin-top: -8px;
+  margin-top: -43px;
+  padding-right: 12px;
 }
 #content .header_scores div {
   height: 15px;
@@ -229,14 +255,22 @@ html.mm-right.mm-opening #mm-blocker {
 #content .header_scores div.opponent {
   color: #f7f200;
 }
-#content .row,
-#content .small_row {
-  padding-left: 22px;
-  padding-right: 22px;
+#content #word_screen .header_scores,
+#content #final_screen .header_scores {
+  margin-right: -50px;
 }
-#content .row input,
-#content .small_row input {
-  width: 100%;
+#content .row > div:first-of-type,
+#content .small_row > div:first-of-type {
+  font-size: 15px;
+  padding-left: 22px;
+  padding-right: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#content #final_screen .small_row > div,
+#content #game_screen #words .small_row > div {
+  padding-right: 10px;
 }
 #content .delete {
   background-image: url('../images/delete.png');
@@ -246,7 +280,9 @@ html.mm-right.mm-opening #mm-blocker {
   background-repeat: no-repeat;
   width: 31px;
   height: 22px;
-  margin-top: 10px;
+  margin-top: -28px;
+  padding-right: 0s;
+  padding-right: 10px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   #content .delete {
@@ -271,25 +307,35 @@ html.mm-right.mm-opening #mm-blocker {
 }
 body .row,
 body .row a {
-  height: 42px;
+  height: 35px;
   text-transform: uppercase;
-  line-height: 42px;
+  line-height: 35px;
   font-size: 14px;
   color: #341d33;
+}
+body li.row {
+  padding-left: 10px;
+}
+body li.row div {
+  cursor: pointer;
 }
 body .small_row {
   text-transform: uppercase;
   height: 35px !important;
   line-height: 35px;
-  font-size: 13px;
+  font-size: 25px;
 }
 body .small_row input {
   background-color: transparent;
   height: 35px;
-  font-size: 13px;
+  font-size: 25px;
   border-radius: 0px;
   padding: 0;
-  color: #341D33;
+  color: #FFF;
+}
+body .small_row > div:first-of-type {
+  padding-left: 22px;
+  color: white;
 }
 body .back_yellow {
   background-image: url('../images/back_yellow.png');
@@ -308,9 +354,11 @@ body .back_yellow {
   
   }
 }
-body .back_yellow a {
+body .back_yellow a,
+body .back_yellow div:first-of-type {
   color: #341d33 !important;
   text-decoration: none;
+  cursor: pointer;
 }
 body .back_gray,
 body .blank_bar {
@@ -332,9 +380,16 @@ body .blank_bar {
   }
 }
 body .back_gray a,
-body .blank_bar a {
+body .blank_bar a,
+body .back_gray div,
+body .blank_bar div {
   color: #341d33 !important;
   text-decoration: none;
+  cursor: pointer;
+}
+body .blank_bar > div {
+  color: #FFF !important;
+  font-size: 25px !important;
 }
 body .back_dark_gray {
   background-image: url('../images/back_dark_gray.png');
@@ -353,9 +408,11 @@ body .back_dark_gray {
   
   }
 }
-body .back_dark_gray a {
+body .back_dark_gray a,
+body .back_dark_gray div {
   color: white !important;
   text-decoration: none;
+  cursor: pointer;
 }
 body .upped_bar {
   background-image: url('../images/back_upped_bar.png');
@@ -364,6 +421,7 @@ body .upped_bar {
   height: auto;
   background-repeat: repeat-x;
   color: white !important;
+  cursor: pointer;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .upped_bar {
@@ -391,8 +449,7 @@ body .bonus_bar {
   
   }
 }
-body .back_black,
-body .standard_bar {
+body .back_black {
   background-image: url('../images/back_black.png');
   background-repeat: 'repeat-x';
   width: auto;
@@ -401,8 +458,7 @@ body .standard_bar {
   color: white !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  body .back_black,
-  body .standard_bar {
+  body .back_black {
     background-image: url('../images/back_black@2x.png');
     background-repeat: 'repeat-x';
     /*    width: @w_retina;
@@ -410,8 +466,30 @@ body .standard_bar {
   
   }
 }
-body .back_black a,
-body .standard_bar a {
+body .back_black a {
+  color: white !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+body .standard_bar {
+  background-image: url('../images/back_standard.png');
+  background-repeat: 'repeat-x';
+  width: auto;
+  height: auto;
+  background-repeat: repeat-x;
+  color: white !important;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .standard_bar {
+    background-image: url('../images/back_standard@2x.png');
+    background-repeat: 'repeat-x';
+    /*    width: @w_retina;
+      height: @h_retina;*/
+  
+  }
+}
+body .standard_bar a,
+body .standard_bar div {
   color: white !important;
   text-decoration: none;
 }
@@ -484,6 +562,9 @@ body .up_bar a {
   color: white !important;
   text-decoration: none;
 }
+body .add_word {
+  color: white !important;
+}
 body .mm-is-menu {
   background-image: url('../images/all_blue.png');
   background-repeat: repeat;
@@ -529,6 +610,14 @@ body a.button {
   line-height: 27px;
   font-size: 15px;
 }
+body #oneUp_curtain {
+  background: url(../images/ajax-loader.gif) center center no-repeat #000000 !important;
+  z-index: 9000;
+  position: absolute;
+}
+body.retina li.row {
+  padding-left: 22px;
+}
 body.retina #header a {
   font-size: 30px;
   line-height: 42px;
@@ -564,7 +653,9 @@ body.retina .row a {
   font-size: 25px !important;
 }
 body.retina .row span,
-body.retina .row a span {
+body.retina .row a span,
+body.retina .row div,
+body.retina .row a div {
   line-height: 82px;
   font-size: 37px !important;
 }
@@ -582,6 +673,13 @@ body.retina .bar_right {
   line-height: 22px;
   margin-top: -67px;
 }
+body.retina #content {
+  /*    .row, .small_row {
+      padding-left: 22px;
+      padding-right: 22px;
+    }*/
+
+}
 body.retina #content .padding {
   padding-left: 20px;
   padding-right: 20px;
@@ -593,7 +691,9 @@ body.retina #content .header .title {
   padding: 70px 0 35px 0;
 }
 body.retina #content .header_scores {
-  margin-top: -15px;
+  margin-top: -100px;
+  margin-right: -70px;
+  padding-right: 0;
 }
 body.retina #content .header_scores div {
   height: 35px;
@@ -626,12 +726,12 @@ body.retina #content h4 {
 body.retina #content .delete {
   width: 62px;
   height: 44px;
-  margin-top: 22px;
+  margin-top: -62px;
+  margin-right: -60px;
 }
 body.retina #content .row,
-body.retina #content .small_row {
-  padding-left: 22px;
-  padding-right: 22px;
+body.retina #content .small_row > div:first-of-type {
+  padding-right: 65px;
 }
 body.retina #content #list_institutions {
   padding-top: 25px;

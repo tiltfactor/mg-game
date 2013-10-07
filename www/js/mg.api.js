@@ -218,7 +218,6 @@ MG_API = function ($) {
                         var error_response = '';
                         if (typeof JSON.parse(xhr.responseText) === 'object') {
                             var err = JSON.parse(xhr.responseText);
-                            console.log(typeof err.errors);
                             if (typeof err.errors !== 'undefined') {
                                 if (typeof err.errors === 'object') {
                                     $.each( err.errors, function( key, value ) {
