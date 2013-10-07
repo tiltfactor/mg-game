@@ -1196,6 +1196,7 @@ MG_GAME_ONEUP = function ($) {
                 console_log(data);
                 console_log('registerFailure');
                 //TODO what to do in this case
+                MG_GAME_ONEUP.actions('logout', 'menu');
             });
 
             socket.on('challenge', function(data) {
