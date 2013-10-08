@@ -66,7 +66,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
         /*
         'modified',
         */
-        'last_access_interval',
+        array(
+            'name' => 'ip_restrict',
+            'type' => 'raw',
+            'value' => "Collection::itemAlias('Ip Restrict', \$data->ip_restrict)",
+            'filter' => Collection::itemAlias('Ip Restrict'),
+        ),
         array(
             'header' => Yii::t('app', 'Institution'),
             'type' => 'raw',
