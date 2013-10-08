@@ -18,11 +18,13 @@
  * @property integer $status
  * @property string $created
  * @property integer $user_id
+ * @property string $ip
  *
  * @property Collection[] $collections
  * @property User $user
  * @property Licence[] $licences
  * @property Media[] $medias
+ * @property UserGameBannedInstitution[] $userGameBannedInstitutions
  */
 abstract class BaseInstitution extends GxActiveRecord {
 
@@ -44,12 +46,13 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('name, description, url, logo_url, token, created', 'required'),
+			array('name, description, url, logo_url, token, created, ip', 'required'),
 			array('status, user_id', 'numerical', 'integerOnly'=>true),
 			array('name, url, logo_url, token', 'length', 'max'=>128),
 			array('description', 'length', 'max'=>255),
+			array('ip', 'length', 'max'=>255),
 			array('status, user_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, description, url, logo_url, token, status, created, user_id', 'safe', 'on'=>'search'),
+			array('id, name, description, url, logo_url, token, status, created, user_id, ip', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +62,7 @@ abstract class BaseInstitution extends GxActiveRecord {
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'licences' => array(self::HAS_MANY, 'Licence', 'institution_id'),
 			'medias' => array(self::HAS_MANY, 'Media', 'institution_id'),
+			'userGameBannedInstitutions' => array(self::HAS_MANY, 'UserGameBannedInstitution', 'institution_id'),
 		);
 	}
 
@@ -78,10 +82,12 @@ abstract class BaseInstitution extends GxActiveRecord {
 			'status' => Yii::t('app', 'Status'),
 			'created' => Yii::t('app', 'Created'),
 			'user_id' => null,
+			'ip' => Yii::t('app', 'Ip'),
 			'collections' => null,
 			'user' => null,
 			'licences' => null,
 			'medias' => null,
+			'userGameBannedInstitutions' => null,
 		);
 	}
 
@@ -97,6 +103,7 @@ abstract class BaseInstitution extends GxActiveRecord {
 		$criteria->compare('status', $this->status);
 		$criteria->compare('created', $this->created, true);
 		$criteria->compare('user_id', $this->user_id);
+		$criteria->compare('ip', $this->ip, true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,

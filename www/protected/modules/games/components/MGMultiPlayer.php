@@ -415,10 +415,10 @@ abstract class MGMultiPlayer extends CComponent
 
     /**
      * This method get one random media that are available for the user.
-     *
+     * @param bool $secondAttempt
      * @return null|GameMediaDTO
      */
-    protected function getMedia()
+    protected function getMedia($secondAttempt = false)
     {
         $usedMedias = $this->getUsedMedias();
 
@@ -446,7 +446,7 @@ abstract class MGMultiPlayer extends CComponent
                 ->leftJoin('{{institution}} inst', 'inst.id=i.institution_id')
                 ->where($where)
                 ->order('RAND()')
-                ->limit(1)
+                ->limit(50)
                 ->queryAll();
         } else {
             // if a player is logged in the medias should be weight by interest
@@ -467,7 +467,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where[] = $where_add;
             }
             $result = Yii::app()->db->createCommand()
-                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id,(i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
                 ->join('{{collection}} is', 'is.id=is2i.collection_id')
@@ -477,40 +477,49 @@ abstract class MGMultiPlayer extends CComponent
                 ->where($where, array(':userID' => Yii::app()->user->id))
                 ->group('i.id, i.name, is.licence_id')
                 ->order('RAND()')
-                ->limit(1)
+                ->limit(50)
                 ->queryAll();
         }
 
         if ($result) {
-            $media = $result[0];
-            $mediaDTO = new GameMediaDTO();
-            if ($media['url']) {
-                $path = $media['url'] . Yii::app()->fbvStorage->get('settings.app_upload_url');
-            } else {
-                $path = Yii::app()->getBaseUrl(true) . Yii::app()->fbvStorage->get('settings.app_upload_url');
+            foreach ($result as $media) {
+                if ($media["last_access_ok"] && MGHelper::canUseMediaFromIP($media["id"])) {
+                    $mediaDTO = new GameMediaDTO();
+                    if ($media['url']) {
+                        $path = $media['url'] . Yii::app()->fbvStorage->get('settings.app_upload_url');
+                    } else {
+                        $path = Yii::app()->getBaseUrl(true) . Yii::app()->fbvStorage->get('settings.app_upload_url');
+                    }
+
+                    list($mediaType, $type_2) = explode("/", $media["mime_type"]);
+
+                    $mediaDTO->id = $media["id"];
+                    $mediaDTO->mimeType = $media["mime_type"];
+                    $mediaDTO->licence = $this->getLicenceInfo($media['licence_id']);
+
+                    if ($mediaType === "image") {
+                        $mediaDTO->thumbnail = $path . "/thumbs/" . $media["name"];
+                        $mediaDTO->imageFullSize = $path . "/images/" . $media["name"];
+                        //$scaled = $final_screen = $path . "/images/". urlencode($medias[$i]["name"]);
+                    } else if ($mediaType === "video") {
+                        $mediaDTO->thumbnail = $path . "/videos/" . urlencode(substr($media["name"], 0, -4) . "jpeg");
+                        $mediaDTO->videoWebm = $path . "/videos/" . urlencode($media["name"]);
+                        $mediaDTO->videoMp4 = $path . "/videos/" . urlencode(substr($media["name"], 0, -4) . "mp4");
+                    } else if ($mediaType === "audio") {
+                        $mediaDTO->thumbnail = Yii::app()->getBaseUrl(true) . "/images/audio.png";
+                        $mediaDTO->audioMp3 = $path . "/audios/" . urlencode($media["name"]);
+                        $mediaDTO->audioOgg = $path . "/audios/" . urlencode(substr($media["name"], 0, -3) . "ogg");
+                    }
+
+                    return $mediaDTO;
+                }
             }
 
-            list($mediaType, $type_2) = explode("/", $media["mime_type"]);
-
-            $mediaDTO->id = $media["id"];
-            $mediaDTO->mimeType = $media["mime_type"];
-            $mediaDTO->licence = $this->getLicenceInfo($media['licence_id']);
-
-            if ($mediaType === "image") {
-                $mediaDTO->thumbnail = $path . "/thumbs/" . $media["name"];
-                $mediaDTO->imageFullSize = $path . "/images/" . $media["name"];
-                //$scaled = $final_screen = $path . "/images/". urlencode($medias[$i]["name"]);
-            } else if ($mediaType === "video") {
-                $mediaDTO->thumbnail = $path . "/videos/" . urlencode(substr($media["name"], 0, -4) . "jpeg");
-                $mediaDTO->videoWebm = $path . "/videos/" . urlencode($media["name"]);
-                $mediaDTO->videoMp4 = $path . "/videos/" . urlencode(substr($media["name"], 0, -4) . "mp4");
-            } else if ($mediaType === "audio") {
-                $mediaDTO->thumbnail = Yii::app()->getBaseUrl(true) . "/images/audio.png";
-                $mediaDTO->audioMp3 = $path . "/audios/" . urlencode($media["name"]);
-                $mediaDTO->audioOgg = $path . "/audios/" . urlencode(substr($media["name"], 0, -3) . "ogg");
+            if(!$secondAttempt){
+                return $this->getMedia(true);
+            }else{
+                return null;
             }
-
-            return $mediaDTO;
         } else {
             return null;
         }

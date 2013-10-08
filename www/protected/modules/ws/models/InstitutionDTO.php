@@ -44,4 +44,11 @@ class InstitutionDTO {
      * @soap
      */
     public $token;
+
+    /**
+     * @var string
+     * @soap
+     */
+    public $ip;
+
 }

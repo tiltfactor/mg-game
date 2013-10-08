@@ -58,6 +58,7 @@ class ContentController extends CController
                 $institution->status = Institution::STATUS_NOACTIVE;
                 $institution->user_id = $user->id;
                 $institution->token = md5($institution->name . "_" . $institution->url);
+                $institution->ip = $institutionDto->ip;
                 $institution->created = date('Y-m-d H:i:s');
 
                 if ($institution->save()) {
@@ -106,6 +107,7 @@ class ContentController extends CController
                 $institution->url = $institutionDto->url;
                 $institution->logo_url = $institutionDto->logoUrl;
                 $institution->description = $institutionDto->description;
+                $institution->ip = $institutionDto->ip;
                 $institution->token = md5($institution->name . "_" . $institution->url);
                 if ($institution->save()) {
                     $res = new RegisterResult();
@@ -172,6 +174,7 @@ class ContentController extends CController
             $model->institution_id = $institution->id;
             $model->created = date('Y-m-d H:i:s');
             $model->modified = date('Y-m-d H:i:s');
+            $model->ip_restrict = $collection->ipRestrict;
 
             if ($model->save()) {
                 return Status::getStatus(StatusCode::SUCCESS(), "");
@@ -225,6 +228,7 @@ class ContentController extends CController
             $model->licence_id = $lModel->id;
             $model->last_access_interval = $collection->lastAccessInterval;
             $model->modified = date('Y-m-d H:i:s');
+            $model->ip_restrict = $collection->ipRestrict;
 
             if ($model->save()) {
                 return Status::getStatus(StatusCode::SUCCESS(), "");

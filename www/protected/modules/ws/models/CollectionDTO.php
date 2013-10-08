@@ -35,4 +35,9 @@ class CollectionDTO
      * @soap
      */
     public $lastAccessInterval;
+    /**
+     * @var integer
+     * @soap
+     */
+    public $ipRestrict;
 }

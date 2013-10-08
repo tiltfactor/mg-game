@@ -19,6 +19,7 @@
  * @property string $modified
  * @property integer $institution_id
  * @property integer $remote_id
+ * @property integer $ip_restrict
  *
  * @property Licence $licence
  * @property Institution $institution
@@ -47,11 +48,11 @@ abstract class BaseCollection extends GxActiveRecord {
 	public function rules() {
 		return array(
 			array('name, created, modified', 'required'),
-			array('locked, licence_id, last_access_interval, institution_id, remote_id', 'numerical', 'integerOnly'=>true),
+			array('locked, licence_id, last_access_interval, institution_id, remote_id, ip_restrict', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>64),
 			array('more_information', 'safe'),
-			array('locked, more_information, licence_id, last_access_interval, institution_id, remote_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, locked, more_information, licence_id, last_access_interval, created, modified, institution_id, remote_id', 'safe', 'on'=>'search'),
+			array('locked, more_information, licence_id, last_access_interval, institution_id, remote_id, ip_restrict', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('id, name, locked, more_information, licence_id, last_access_interval, created, modified, institution_id, remote_id, ip_restrict', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,6 +86,7 @@ abstract class BaseCollection extends GxActiveRecord {
 			'modified' => Yii::t('app', 'Modified'),
 			'institution_id' => null,
 			'remote_id' => Yii::t('app', 'Remote'),
+			'ip_restrict' => Yii::t('app', 'Ip Restrict'),
 			'licence' => null,
 			'institution' => null,
 			'medias' => null,
@@ -106,6 +108,7 @@ abstract class BaseCollection extends GxActiveRecord {
 		$criteria->compare('modified', $this->modified, true);
 		$criteria->compare('institution_id', $this->institution_id);
 		$criteria->compare('remote_id', $this->remote_id);
+		$criteria->compare('ip_restrict', $this->ip_restrict);
 
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
