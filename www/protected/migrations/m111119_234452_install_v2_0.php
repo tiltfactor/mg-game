@@ -1,5 +1,5 @@
 <?php
-class m111119_234451_install_v2_0 extends CDbMigration
+class m111119_234452_install_v2_0 extends CDbMigration
 {
     public function up()
     {
