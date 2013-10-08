@@ -58,12 +58,14 @@ class MGHelper
 
     }
 
-    public static function getScaledMediaUrl($name, $width, $height, $institutionToken,$institutionUrl) {
-        $token =  md5($institutionToken."_".$width."_".$height."_".$name);
-        return $institutionUrl."index.php/image/scale/token/".$token."/name/".urlencode($name)."/width/".$width."/height/".$height."/";
+    public static function getScaledMediaUrl($name, $width, $height, $institutionToken, $institutionUrl)
+    {
+        $token = md5($institutionToken . "_" . $width . "_" . $height . "_" . $name);
+        return $institutionUrl . "index.php/image/scale/token/" . $token . "/name/" . urlencode($name) . "/width/" . $width . "/height/" . $height . "/";
     }
 
-    public static function getMediaThumb($url,$mimeType,$mediaName){
+    public static function getMediaThumb($url, $mimeType, $mediaName)
+    {
         $mediaType = substr($mimeType, 0, 5);
         $path = $path = rtrim($url, "/") . UPLOAD_PATH;
         $thumb = "";
@@ -237,31 +239,30 @@ class MGHelper
                     if (filetype($filePath) == "dir") {
                         self::rrmdir($filePath);
                     } else {
-                            unlink($filePath);
+                        unlink($filePath);
                     }
                 }
             }
             try {
-                @rmdir(str_replace('\\','/',$dir));
-            } catch(Exception $e){}
+                @rmdir(str_replace('\\', '/', $dir));
+            } catch (Exception $e) {
+            }
         }
     }
 
-/*Example URL call
- * localhost/mgg/www/index.php/site/login/provider/facebook?backUrl=localhost%2Fmgg%2Fwww%2Findex.php%2Fsite%2Fcontact
- * Note there should be '?' before the 'backUrl' key
- * */
+    /*Example URL call
+   * localhost/mgg/www/index.php/site/login/provider/facebook?backUrl=localhost%2Fmgg%2Fwww%2Findex.php%2Fsite%2Fcontact
+   * Note there should be '?' before the 'backUrl' key
+   * */
     public static function SocialLogin($provider, $backUrl) // pkostov
     {
-        if (empty($provider))
-        {
+        if (empty($provider)) {
 
             $lastVisitedUrl = Yii::app()->request->urlReferrer; // last visited url
-            header( "Location: $lastVisitedUrl" ) ;
+            header("Location: $lastVisitedUrl");
             return;
         }
-        try
-        {
+        try {
             Yii::import('application.components.HybridAuthIdentity');
             Yii::import('application.modules.user.components.UserIdentity');
             $haComp = new HybridAuthIdentity();
@@ -274,23 +275,64 @@ class MGHelper
             $haComp->adapter = $haComp->hybridAuth->authenticate($provider);
 
 
-
             $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
 
 
-            $haComp->processLogin($haComp);  //<---- Here to hybridAuthIdentity
+            $haComp->processLogin($haComp); //<---- Here to hybridAuthIdentity
 
-            header( "Location: {$backUrl}" ) ;
+            header("Location: {$backUrl}");
             return;
 
             // [$haComp->processLogin] further action based on successful login or re-direct user to the required url [won`t redirect in this method]
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $lastVisitedUrl = Yii::app()->request->urlReferrer; // last visited url
-            header( "Location: $lastVisitedUrl" ) ;
+            header("Location: $lastVisitedUrl");
             return;
         }
     }
 
+    /**
+     * @param integer $mediaId
+     * @return bool
+     * @throws CHttpException
+     */
+    public static function canUseMediaFromIP($mediaId)
+    {
+        /**
+         * @var Media $media
+         */
+        $media = Media::model()->with('collections', 'institution')->findByPk($mediaId);
+        $canUse = true;
+        $user_ip = MGHelper::getUserHostAddress();
+        if ($user_ip) {
+            /**
+             * @var Collection[] $collections
+             */
+            $collections = $media->collections;
+            if ($collections) {
+                foreach ($collections as $col) {
+                    if ($col->ip_restrict == 1) {
+                        $canUse = false;
+                        /**
+                         * @var Institution $institution
+                         */
+                        $institution = $media->institution;
+                        $ips = explode(',', $institution->ip);
+                        if ($ips) {
+                            $c = count($ips);
+                            for ($i = 0; $i < $c; $i++) {
+                                $regularExp = '/^' . str_replace("*", ".*", str_replace(".", "\\.", $ips[$i])) . '$/';
+                                if (preg_match($regularExp, $user_ip)) {
+                                    $canUse = true;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        return $canUse;
+    }
 }

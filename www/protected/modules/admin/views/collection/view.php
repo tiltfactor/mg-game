@@ -39,6 +39,10 @@ $this->menu = array(
         'modified',
         'last_access_interval',
         array(
+            'name' => 'ip_restrict',
+            'value' => Collection::itemAlias("Ip Restrict", $model->ip_restrict),
+        ),
+        array(
             'name' => Yii::t('app', 'Medias'),
             'type' => 'html',
             'value' => '<b>' . Yii::t('app', 'This collection contains {count} medias: ', array("{count}" => count($model->medias))) . CHtml::link(Yii::t('app', 'view'), array('/admin/media/?Custom[collections][]=' . $model->id)) . '</b>',
