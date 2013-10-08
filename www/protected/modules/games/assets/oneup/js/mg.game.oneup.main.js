@@ -85,8 +85,8 @@ MG_GAME_ONEUP = function ($) {
 
             $('nav#menu-left').mmenu();
             $('nav#menu-right').mmenu({
-                position	: 'right',
-                counters	: true
+                position : 'right',
+                counters : true
             });
         },
         actions: function (action, click_parent) {
@@ -756,71 +756,65 @@ MG_GAME_ONEUP = function ($) {
                     break;
                 case 'how_to':
                     var swipe_img = $( "#image_gallery"),
-                        my_iter = 1,
+                        my_iter = 0, // zero based
                         next_iter,
-                        numb_img = $( "#image_gallery > div").length;
+                        numb_img = $( "#image_gallery > div").length; // 10
+
+                    if ($( "#how_to div.row:eq('" + my_iter + "')").not(":visible")) {
+                        $( "#how_to div.row").hide();
+                        $( "#how_to div.row:eq('" + my_iter + "')").show();
+                    }
 
                     if ($('body').hasClass('no-touch_device')) {
-                        Hammer(swipe_img).on('click', function(e) { // swiperight
+                        Hammer(swipe_img).off('click').on('click', function(e) { // swiperight   $('#image_gallery')
                             e.stopPropagation();
-                            next_iter = my_iter + 1;
-                            if(next_iter === numb_img) {
-                                next_iter = 1;
+                            next_iter = my_iter - 1;
+                            if(next_iter < 0) {
+                                next_iter = numb_img - 1;
                             }
-                            swipe_images_next (my_iter, next_iter);
+                            // swipe_images_prev (my_iter, next_iter); // TODO to remove
+                            alert("you swiped right");
+                            swipe_images(my_iter, next_iter, 'right');
                             my_iter = next_iter;
                         });
                     }
-                    if ($('body').hasClass('touch_device')) {
-                        Hammer(swipe_img).on("swipe", function(e) { // swiperight
+                    else  if ($('body').hasClass('touch_device')) {
+                        Hammer(swipe_img).off('swipe').on("swipe", function(e) {
                             e.stopPropagation();
                             if (e.gesture.direction === 'left') {
                                 next_iter = my_iter + 1;
-                                if(next_iter === numb_img) {
-                                    next_iter = 1;
+                                if(next_iter === numb_img ) {
+                                    next_iter = 0;
                                 }
-                                swipe_images_next (my_iter, next_iter);
+                                alert("you swiped left"); // TODO to remove
+                                swipe_images(my_iter , next_iter , 'left');
                                 my_iter = next_iter;
                             } else if (e.gesture.direction === 'right') {
                                 next_iter = my_iter - 1;
-                                if(next_iter === 0) {
-                                    next_iter = numb_img;
+                                if(next_iter < 0) {
+                                    next_iter = numb_img - 1;
                                 }
-                                swipe_images_prev (my_iter, next_iter);
+                                alert("you swiped right"); // TODO to remove
+                                swipe_images(my_iter, next_iter, 'right');
                                 my_iter = next_iter;
                             }
                         });
-/*                        Hammer(swipe_img).on("swipeleft", function(e) { // swiperight
-                            e.stopPropagation();
-                            next_iter = my_iter + 1;
-                            if(next_iter === numb_img) {
-                                next_iter = 1;
-                            }
-                            swipe_images_next (my_iter, next_iter);
-                            my_iter = next_iter;
-                        });
-
-                        Hammer(swipe_img).on("swiperight", function(e) { // swipeleft
-                            e.stopPropagation();
-                            next_iter = my_iter - 1;
-                            if(next_iter === 0) {
-                                next_iter = numb_img;
-                            }
-                            swipe_images_prev (my_iter, next_iter);
-                            my_iter = next_iter;
-                        });*/
                     }
 
-                function swipe_images_next (my_iter, next_iter) {
-                    swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'left', complete: function () {
-                        swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'right'}, 1000);
-                    }}, 1000);
-                }
-
-                function swipe_images_prev (my_iter, next_iter) {
-                    swipe_img.find("div[number='" + my_iter + "']").hide('slide', {direction: 'right', complete: function () {
-                        swipe_img.find("div[number='" + next_iter + "']").show('slide', {direction: 'left'}, 1000);
-                    }}, 1000);
+                function swipe_images (my_iter, next_iter, direction) { // pkostov
+                    var afterDirection;
+                    if(direction == 'left'){
+                        afterDirection = 'right';
+                    }
+                    else {
+                        afterDirection = 'left';
+                    }
+                    console_log("my_iter: ", my_iter);
+                    console_log("next_iter: ", next_iter);
+                    var images = $( "[data-number] > img");
+                    images.eq(my_iter).closest('div.row').hide('slide', {direction: direction, complete : function (){
+                        images.eq(next_iter).closest('div.row').show('slide', {direction: afterDirection}, 1000);
+                    }}, 1000 );
                 }
                     break;
                 case 'learn_more':

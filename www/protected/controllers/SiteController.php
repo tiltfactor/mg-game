@@ -34,6 +34,7 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
 		MGHelper::setFrontendTheme();
+
     $this->layout = '//layouts/arcade';
     
     $games = GamesModule::listActiveGames();
@@ -68,7 +69,7 @@ class SiteController extends Controller
 	public function actionContact()
 	{
 		MGHelper::setFrontendTheme();
-    
+
 		$model=new ContactForm;
 		if(isset($_POST['ContactForm'])) {
 			$model->attributes=$_POST['ContactForm'];
@@ -95,6 +96,12 @@ class SiteController extends Controller
 	}
 
     //action only for the login from third-party authentication providers, such as Google, Facebook etc. Not for direct login using username/password
+
+
+    /**
+     * @param $provider
+     * @param null $backUrl
+     */
     public function actionLogin($provider,$backUrl = null)
     {
         if($backUrl == null)
@@ -102,8 +109,11 @@ class SiteController extends Controller
             $backUrl = Yii::app()->getRequest()->getHostInfo().Yii::app()->createUrl('/'); //  [Default behaviour => click]
         }
 
-        MGHelper::SocialLogin($provider,$backUrl);
+        try{
+            MGHelper::SocialLogin($provider,$backUrl);
+        }catch (CHttpException $e){
 
+        }
     }
 
     public function actionSocialLogin() // must stay here. This is the back_endpoint for the HybridAuth Extension
