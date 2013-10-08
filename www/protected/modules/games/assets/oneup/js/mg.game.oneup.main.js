@@ -1181,6 +1181,12 @@ MG_GAME_ONEUP = function ($) {
                 window.location.href = MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
             });
 
+            $('#login input#password').unbind("keypress").keypress(function (e) {
+                if (e.which == 13) {
+                    $("#btn_login").click();
+                }
+            });
+
             $("#btn_login").off('click').on('click', function (e) {
                 e.preventDefault();
                 if ((jQuery.trim($("#login #username").val()).length + jQuery.trim($("#login #password").val()).length) < 1) {
