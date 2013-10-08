@@ -849,6 +849,10 @@ MG_GAME_ONEUP = function ($) {
                     $("#account_interest").empty();
                     $("#account_bookmark").empty();
                     $("#header").find('.setting').show();
+                    $("#account .row_link").unbind('click').click(function (e) {
+                        e.stopPropagation();
+                        $(this).find("a").click();
+                    });
 
                     //getBookmarks
                     MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
@@ -930,6 +934,10 @@ MG_GAME_ONEUP = function ($) {
                         var json = {};
                         json.interests = account_interest;
                         $("#template-account_interest").tmpl(json).appendTo($("#account_interest")).after(function () {
+                            $("#account_playlist .row").unbind('click').click(function (e) {
+                                e.stopPropagation();
+                                $(this).find("a").click();
+                            });
                             $("#account_interest .delete").off('click').on('click', function () {
                                 var row = $(this).closest('.row');
                                 var row_id = row.attr('interest_id');
@@ -947,6 +955,10 @@ MG_GAME_ONEUP = function ($) {
                         var json = {};
                         json.play_lists = account_playlist;
                         $("#template-account_playlist").tmpl(json).appendTo($("#account_playlist")).after(function () {
+                            $("#account_playlist .row").unbind('click').click(function (e) {
+                                e.stopPropagation();
+                                $(this).find("a").click();
+                            });
                             // click on an institution
                             $("#account_playlist .institution").off('click').on('click', function () {
                                 var row = $(this).closest('.row');

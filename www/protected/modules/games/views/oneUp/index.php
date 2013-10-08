@@ -134,7 +134,7 @@
 
             <div id="account" class="hidden">
                 <h2>Account</h2>
-                <div class="back_blue row"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
+                <div class="back_blue row row_link"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
                 <div id="account_info">
                     <div id="bookmarks">
                         <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>

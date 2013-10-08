@@ -345,6 +345,10 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
   }
 }
 
+.row_link {
+  cursor: pointer;
+}
+
 body {
   .row, .row a {
     height: 35px;
@@ -602,7 +606,7 @@ body.retina {
   .row, .row a {
     height: 82px !important;
     line-height: 82px;
-    font-size: 25px !important;
+    font-size: 25px;
 
     span, div {
       line-height: 82px;
@@ -614,6 +618,16 @@ body.retina {
     height: 70px !important;
     line-height: 70px;
     font-size: 25px;
+
+    div {
+      font-size: 32px;
+      height: 70px !important;
+      line-height: 70px;
+
+      span {
+        font-size: 45px !important;
+      }
+    }
 
     input {
       height: 70px;
@@ -636,13 +650,14 @@ body.retina {
     .header {
       height: 259px !important;
       .title {
-        padding: 70px 0 35px 0;
+        font-size: 40px;
+        padding: 40px 10px 35px 10px;
       }
     }
 
     .header_scores {
       margin-top: -100px;
-      margin-right: -70px;
+      margin-right: -50px;
       padding-right: 0;
 
       div {
@@ -651,12 +666,12 @@ body.retina {
     }
 
     .big_button {
-      font-size: 44px;
+      font-size: 50px;
     }
 
     h2 {
       line-height: 80px;
-      font-size: 22px;
+      font-size: 25px;
 /*      padding-left: 50px;
       padding-right: 50px;*/
     }
@@ -664,7 +679,7 @@ body.retina {
     h3 {
       height: 34px;
       line-height: 34px;
-      font-size: 16px;
+      font-size: 25px;
       padding-left: 30px;
       padding-right: 30px;
     }
@@ -672,7 +687,7 @@ body.retina {
     h4 {
       height: 34px;
       line-height: 34px;
-      font-size: 20px;
+      font-size: 25px;
       padding-left: 30px;
       padding-right: 30px;
       margin-bottom: 20px;

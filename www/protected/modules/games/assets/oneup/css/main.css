@@ -305,6 +305,9 @@ html.mm-right.mm-opening #mm-blocker {
   white-space: nowrap;
   overflow: hidden;
 }
+.row_link {
+  cursor: pointer;
+}
 body .row,
 body .row a {
   height: 35px;
@@ -654,7 +657,7 @@ body.retina .row,
 body.retina .row a {
   height: 82px !important;
   line-height: 82px;
-  font-size: 25px !important;
+  font-size: 25px;
 }
 body.retina .row span,
 body.retina .row a span,
@@ -667,6 +670,14 @@ body.retina .small_row {
   height: 70px !important;
   line-height: 70px;
   font-size: 25px;
+}
+body.retina .small_row div {
+  font-size: 32px;
+  height: 70px !important;
+  line-height: 70px;
+}
+body.retina .small_row div span {
+  font-size: 45px !important;
 }
 body.retina .small_row input {
   height: 70px;
@@ -692,22 +703,23 @@ body.retina #content .header {
   height: 259px !important;
 }
 body.retina #content .header .title {
-  padding: 70px 0 35px 0;
+  font-size: 40px;
+  padding: 40px 10px 35px 10px;
 }
 body.retina #content .header_scores {
   margin-top: -100px;
-  margin-right: -70px;
+  margin-right: -50px;
   padding-right: 0;
 }
 body.retina #content .header_scores div {
   height: 35px;
 }
 body.retina #content .big_button {
-  font-size: 44px;
+  font-size: 50px;
 }
 body.retina #content h2 {
   line-height: 80px;
-  font-size: 22px;
+  font-size: 25px;
   /*      padding-left: 50px;
       padding-right: 50px;*/
 
@@ -715,14 +727,14 @@ body.retina #content h2 {
 body.retina #content h3 {
   height: 34px;
   line-height: 34px;
-  font-size: 16px;
+  font-size: 25px;
   padding-left: 30px;
   padding-right: 30px;
 }
 body.retina #content h4 {
   height: 34px;
   line-height: 34px;
-  font-size: 20px;
+  font-size: 25px;
   padding-left: 30px;
   padding-right: 30px;
   margin-bottom: 20px;
