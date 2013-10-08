@@ -8,7 +8,7 @@ class UserController extends ApiController {
             'IPBlock',
             'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage, ',
-            // 'sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
+            'sharedSecret - sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 

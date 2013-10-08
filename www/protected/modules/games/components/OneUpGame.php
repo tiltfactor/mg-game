@@ -132,12 +132,15 @@ class OneUpGame extends MGMultiPlayer
                 if (!$penalty) {
                     if (MGTags::isExisting($tag->mediaId, $tag->tag)) {
                         $bonusGiven = false;
-                        foreach ($playerTagDTOs[$this->gameTurn->turn] as $tt) {
-                            if ($tt->score > 2) {
-                                $bonusGiven = true;
-                                break;
+                        if (is_array($playerTagDTOs[$this->gameTurn->turn])) {
+                            foreach ($playerTagDTOs[$this->gameTurn->turn] as $tt) {
+                                if ($tt->score > 2) {
+                                    $bonusGiven = true;
+                                    break;
+                                }
                             }
                         }
+
                         $tag->score = 1;
 
                         if (!$bonusGiven) {
