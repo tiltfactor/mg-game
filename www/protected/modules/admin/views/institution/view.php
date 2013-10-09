@@ -30,6 +30,7 @@ $this->menu = array(
         ),
         'url',
         'token',
+        'ip',
         array(
             'name' => 'status',
             'value' => Institution::itemAlias("Status", $model->status),
