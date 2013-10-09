@@ -59,10 +59,11 @@ input {
   padding-right: 10px;
   border: 0px;
   background-color: gray;
-  color: #ffffff;
+  color: black;
   height: 22px;
   line-height: 22px;
   font-size: 22px;
+  color: #ffffff;
 }
 ::-webkit-input-placeholder {
   font-family: Museo;
@@ -79,7 +80,6 @@ input {
 }
 :-ms-input-placeholder {
   color: white;
-  font-size: 25px;
 }
 input.add_word::-webkit-input-placeholder {
   color: white;
@@ -263,7 +263,7 @@ html.mm-right.mm-opening #mm-blocker {
 #content .small_row > div:first-of-type {
   font-size: 15px;
   padding-left: 22px;
-  padding-right: 50px;
+  padding-right: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -283,6 +283,7 @@ html.mm-right.mm-opening #mm-blocker {
   margin-top: -28px;
   padding-right: 0s;
   padding-right: 10px;
+  cursor: pointer;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   #content .delete {
@@ -304,6 +305,9 @@ html.mm-right.mm-opening #mm-blocker {
 #content #bookmarks .bookmark {
   white-space: nowrap;
   overflow: hidden;
+}
+.row_link {
+  cursor: pointer;
 }
 body .row,
 body .row a {
@@ -331,7 +335,7 @@ body .small_row input {
   font-size: 25px;
   border-radius: 0px;
   padding: 0;
-  color: #FFF;
+  color: black;
 }
 body .small_row > div:first-of-type {
   padding-left: 22px;
@@ -359,6 +363,9 @@ body .back_yellow div:first-of-type {
   color: #341d33 !important;
   text-decoration: none;
   cursor: pointer;
+}
+body #account_interest .row div:first-of-type {
+  cursor: auto;
 }
 body .back_gray,
 body .blank_bar {
@@ -562,9 +569,6 @@ body .up_bar a {
   color: white !important;
   text-decoration: none;
 }
-body .add_word {
-  color: white !important;
-}
 body .mm-is-menu {
   background-image: url('../images/all_blue.png');
   background-repeat: repeat;
@@ -615,6 +619,13 @@ body #oneUp_curtain {
   z-index: 9000;
   position: absolute;
 }
+body.retina .no_value {
+  font-size: 37px;
+  padding-left: 30px;
+}
+body.retina div {
+  font-size: 37px;
+}
 body.retina li.row {
   padding-left: 22px;
 }
@@ -630,6 +641,22 @@ body.retina input {
   height: 35px;
   line-height: 30px;
   font-size: 30px;
+}
+body.retina input.add_word::-webkit-input-placeholder {
+  font-size: 60px;
+}
+body.retina input.add_word:-moz-placeholder {
+  /* Firefox 18- */
+
+  font-size: 60px;
+}
+body.retina input.add_word::-moz-placeholder {
+  /* Firefox 19+ */
+
+  font-size: 60px;
+}
+body.retina input.add_word::-ms-input-placeholder {
+  font-size: 60px;
 }
 body.retina .index_screen div.button,
 body.retina #account_update div.button {
@@ -654,60 +681,105 @@ body.retina .row,
 body.retina .row a {
   height: 82px !important;
   line-height: 82px;
-  font-size: 25px !important;
+  font-size: 37px;
 }
 body.retina .row span,
 body.retina .row a span,
 body.retina .row div,
 body.retina .row a div {
   line-height: 82px;
+  font-size: 40px;
+}
+body.retina .row span.header_scores,
+body.retina .row a span.header_scores,
+body.retina .row div.header_scores,
+body.retina .row a div.header_scores {
   font-size: 37px !important;
+}
+body.retina .row span.round,
+body.retina .row a span.round,
+body.retina .row div.round,
+body.retina .row a div.round,
+body.retina .row spanround span,
+body.retina .row a spanround span,
+body.retina .row divround span,
+body.retina .row a divround span {
+  font-size: 70px !important;
+}
+body.retina .row_round {
+  padding-right: 0;
 }
 body.retina .small_row {
   height: 70px !important;
   line-height: 70px;
   font-size: 25px;
 }
+body.retina .small_row div {
+  font-size: 32px;
+  height: 70px !important;
+  line-height: 70px;
+}
+body.retina .small_row div span {
+  font-size: 45px !important;
+}
 body.retina .small_row input {
   height: 70px;
-  font-size: 32px;
+  font-size: 60px;
 }
 body.retina .bar_right {
   font-size: 20px;
   line-height: 22px;
   margin-top: -67px;
 }
-body.retina #content {
-  /*    .row, .small_row {
-      padding-left: 22px;
-      padding-right: 22px;
-    }*/
-
-}
 body.retina #content .padding {
   padding-left: 20px;
   padding-right: 20px;
+}
+body.retina #content .row,
+body.retina #content .small_row > div:first-of-type {
+  font-size: 40px !important;
+}
+body.retina #content .row,
+body.retina #content .small_row > div:first-of-type {
+  padding-right: 55px;
+}
+body.retina #content .row > div:first-of-type,
+body.retina #content .small_row > div:first-of-type {
+  font-size: 40px;
 }
 body.retina #content .header {
   height: 259px !important;
 }
 body.retina #content .header .title {
-  padding: 70px 0 35px 0;
+  font-size: 40px;
+  padding: 40px 10px 35px 10px;
 }
-body.retina #content .header_scores {
-  margin-top: -100px;
-  margin-right: -70px;
-  padding-right: 0;
+body.retina #content .round_row {
+  padding-right: 10px;
 }
 body.retina #content .header_scores div {
   height: 35px;
 }
+body.retina #content #game_screen .header_scores {
+  margin-top: -100px;
+  margin-right: -50px;
+  padding-right: 0;
+}
+body.retina #content #word_screen .header_scores {
+  margin-top: -18px;
+  margin-right: -50px;
+  padding-right: 0;
+}
+body.retina #content #word_screen .header_scores div,
+body.retina #content #word_screen .header_scores span {
+  font-size: 35px !important;
+}
 body.retina #content .big_button {
-  font-size: 44px;
+  font-size: 50px;
 }
 body.retina #content h2 {
   line-height: 80px;
-  font-size: 22px;
+  font-size: 40px;
   /*      padding-left: 50px;
       padding-right: 50px;*/
 
@@ -715,14 +787,14 @@ body.retina #content h2 {
 body.retina #content h3 {
   height: 34px;
   line-height: 34px;
-  font-size: 16px;
+  font-size: 24px;
   padding-left: 30px;
   padding-right: 30px;
 }
 body.retina #content h4 {
   height: 34px;
   line-height: 34px;
-  font-size: 20px;
+  font-size: 35px;
   padding-left: 30px;
   padding-right: 30px;
   margin-bottom: 20px;
@@ -732,10 +804,6 @@ body.retina #content .delete {
   height: 44px;
   margin-top: -62px;
   margin-right: -60px;
-}
-body.retina #content .row,
-body.retina #content .small_row > div:first-of-type {
-  padding-right: 65px;
 }
 body.retina #content #list_institutions {
   padding-top: 25px;

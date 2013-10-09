@@ -73,10 +73,11 @@ input {
   padding-right: 10px;
   border: 0px;
   background-color: gray;
-  color: #ffffff;
+  color: black;
   height: 22px;
   line-height: 22px;
   font-size: 22px;
+  color: #ffffff;
 }
 
 ::-webkit-input-placeholder {
@@ -93,7 +94,6 @@ input {
 
 :-ms-input-placeholder {
   color: white;
-  font-size: 25px;
 }
 
 input.add_word::-webkit-input-placeholder {
@@ -307,7 +307,7 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
   .row > div:first-of-type, .small_row > div:first-of-type {
       font-size: 15px;
       padding-left: 22px;
-      padding-right: 50px;
+      padding-right: 40px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -325,6 +325,7 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
     margin-top: -28px;
     padding-right: 0s;
     padding-right: 10px;
+    cursor: pointer;
   }
 
   #list_institutions {
@@ -343,6 +344,10 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
       overflow: hidden;
     }
   }
+}
+
+.row_link {
+  cursor: pointer;
 }
 
 body {
@@ -373,7 +378,7 @@ body {
       font-size: 25px;
       border-radius: 0px;
       padding: 0;
-      color: #FFF;
+      color: black;
     }
   }
 
@@ -391,6 +396,10 @@ body {
       text-decoration: none;
       cursor: pointer;
     }
+  }
+
+  #account_interest .row div:first-of-type {
+    cursor: auto;
   }
 
   .back_gray, .blank_bar {
@@ -503,10 +512,6 @@ body {
     }
   }
 
-  .add_word {
-      color: white !important;
-  }
-
   .mm-is-menu {
     .at2x('../images/all_blue.png');
     height: 100%;
@@ -556,6 +561,15 @@ body {
 }
 
 body.retina {
+  .no_value {
+    font-size: 37px;
+    padding-left: 30px;
+  }
+
+  div {
+    font-size: 37px;
+  }
+
   li.row {
     padding-left: 22px;
   }
@@ -573,6 +587,22 @@ body.retina {
     height: 35px;
     line-height: 30px;
     font-size: 30px;
+  }
+
+  input.add_word::-webkit-input-placeholder {
+    font-size: 60px;
+  }
+
+  input.add_word:-moz-placeholder { /* Firefox 18- */
+    font-size: 60px;
+  }
+
+  input.add_word::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 60px;
+  }
+
+  input.add_word::-ms-input-placeholder {
+    font-size: 60px;
   }
 
   .index_screen, #account_update {
@@ -602,12 +632,24 @@ body.retina {
   .row, .row a {
     height: 82px !important;
     line-height: 82px;
-    font-size: 25px !important;
+    font-size: 37px;
 
     span, div {
       line-height: 82px;
-      font-size: 37px !important;
+      font-size: 40px;
+
+      &.header_scores {
+        font-size: 37px !important;
+      }
+
+      &.round, &round span {
+        font-size: 70px !important;
+      }
     }
+  }
+
+  .row_round {
+    padding-right: 0;
   }
 
   .small_row {
@@ -615,9 +657,20 @@ body.retina {
     line-height: 70px;
     font-size: 25px;
 
+    div {
+      font-size: 32px;
+      height: 70px !important;
+      line-height: 70px;
+
+      span {
+        font-size: 45px !important;
+      }
+    }
+
     input {
       height: 70px;
-      font-size: 32px;
+      font-size: 60px;
+
     }
   }
 
@@ -633,30 +686,63 @@ body.retina {
       padding-right: 20px;
     }
 
+    .row, .small_row > div:first-of-type {
+      font-size: 40px !important;
+    }
+
+    .row, .small_row > div:first-of-type {
+      padding-right: 55px;
+    }
+
+    .row > div:first-of-type, .small_row > div:first-of-type {
+      font-size: 40px;
+    }
+
     .header {
       height: 259px !important;
       .title {
-        padding: 70px 0 35px 0;
+        font-size: 40px;
+        padding: 40px 10px 35px 10px;
       }
     }
 
-    .header_scores {
-      margin-top: -100px;
-      margin-right: -70px;
-      padding-right: 0;
+    .round_row {
+      padding-right: 10px;
+    }
 
+    .header_scores {
       div {
         height: 35px;
       }
     }
 
+    #game_screen {
+      .header_scores {
+        margin-top: -100px;
+        margin-right: -50px;
+        padding-right: 0;
+      }
+    }
+
+    #word_screen {
+      .header_scores {
+        margin-top: -18px;
+        margin-right: -50px;
+        padding-right: 0;
+
+        div, span {
+          font-size: 35px !important;
+        }
+      }
+    }
+
     .big_button {
-      font-size: 44px;
+      font-size: 50px;
     }
 
     h2 {
       line-height: 80px;
-      font-size: 22px;
+      font-size: 40px;
 /*      padding-left: 50px;
       padding-right: 50px;*/
     }
@@ -664,7 +750,7 @@ body.retina {
     h3 {
       height: 34px;
       line-height: 34px;
-      font-size: 16px;
+      font-size: 24px;
       padding-left: 30px;
       padding-right: 30px;
     }
@@ -672,7 +758,7 @@ body.retina {
     h4 {
       height: 34px;
       line-height: 34px;
-      font-size: 20px;
+      font-size: 35px;
       padding-left: 30px;
       padding-right: 30px;
       margin-bottom: 20px;
@@ -683,15 +769,6 @@ body.retina {
       height: 44px;
       margin-top: -62px;
       margin-right: -60px;
-    }
-
-/*    .row, .small_row {
-      padding-left: 22px;
-      padding-right: 22px;
-    }*/
-
-    .row, .small_row > div:first-of-type {
-      padding-right: 65px;
     }
 
     #list_institutions {

@@ -14,10 +14,10 @@
             <div id="login" class="text-center index_screen hidden">
                 <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
                 <div class="button">
-                    <input type="text" autocapitalize="off" id="username" name="username" placeholder="Username" />
+                    <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" />
                 </div>
                 <div class="button">
-                    <input type="password" autocapitalize="off" id="password" name="password" placeholder="Password" />
+                    <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_login" class="button login"><span>LOGIN</span></a>
@@ -34,16 +34,16 @@
             <div id="register" class="text-center index_screen hidden">
                 <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/logo.png" /></div>
                 <div class="button">
-                    <input type="text" autocapitalize="off" id="username" name="username" placeholder="Choose a username" value="" tabindex="1" />
+                    <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Choose a username" value="" tabindex="1" />
                 </div>
                 <div class="button">
-                    <input type="password" autocapitalize="off" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
+                    <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
                 </div>
                 <div class="button">
-                    <input type="password" autocapitalize="off" id="verifyPassword" name="verifyPassword" placeholder="Verify Password" value="" tabindex="3" />
+                    <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="verifyPassword" name="verifyPassword" placeholder="Verify Password" value="" tabindex="3" />
                 </div>
                 <div class="button">
-                    <input type="email" autocapitalize="off" id="email" name="email" placeholder="Choose an e-mail" tabindex="4" value="" />
+                    <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Choose an e-mail" tabindex="4" value="" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
@@ -70,7 +70,7 @@
 
             <div id="find_opponent" class="hidden">
                 <h2>ENTER A USER NAME</h2>
-                <div class="padding text-center"><input autocapitalize="off" type="text" id="input_opponent" name="opponent_name" class="opponent_name" /></div>
+                <div class="padding text-center"><input autocapitalize="off" autocorrect="off" autocomplete="off" type="text" id="input_opponent" name="opponent_name" class="opponent_name" /></div>
                 <div class="margin_topBottom"><a href="#" location="make_challenge" class="big_button play"><span>PLAY</span></a></div>
             </div>
 
@@ -85,7 +85,7 @@
             <div id="game_customize" class="hidden">
                 <h2>CUSTOMIZE YOUR GAME</h2>
                 <div class="padding">Share your interests and you might see more images with those subjects!</div>
-                <div class="new_interest text-center"><input autocapitalize="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
+                <div class="new_interest text-center"><input autocapitalize="off" autocorrect="off" autocomplete="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
                 <hr />
             </div>
 
@@ -137,7 +137,7 @@
 
             <div id="account" class="hidden">
                 <h2>Account</h2>
-                <div class="back_blue row"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
+                <div class="back_blue row row_link"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
                 <div id="account_info">
                     <div id="bookmarks">
                         <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
@@ -178,13 +178,13 @@
 
 <script id="template-account_update" type="text/x-jquery-tmpl">
     <div class="button">
-        <input type="text" autocapitalize="off" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
+        <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
     </div>
     <div class="button">
-        <input type="password" autocapitalize="off" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
+        <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
     </div>
     <div class="button">
-        <input type="email" autocapitalize="off" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
+        <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
     </div>
     <div class="button">
         <a href="#" id="btn_update" class="button login"><span>UPDATE</span></a>
@@ -192,7 +192,7 @@
 </script>
 
 <script id="template-word_screen" type="text/x-jquery-tmpl">
-    <div class="row back_dark_gray">
+    <div class="row back_dark_gray round_row">
         <div>
             <span class="round">ROUND <span>${current_level}</span></span>
             <div class="right header_scores">
