@@ -19,6 +19,7 @@ MG_GAME_ONEUP = function ($) {
         institution_id: null,
         back_location: null,
         toastStayTime: 9900,
+        socketDisconnect: null,
         toastBackgroundClass: 'popup_gradient',
         oneup_show_curtain: function () {
             // create functionality to show and hide the curtain
@@ -836,22 +837,23 @@ MG_GAME_ONEUP = function ($) {
                 $("#login #username").attr('value', '');
                 $("#login #password").attr('value', '');
 
-                MG_API.ajaxCall('/multiplayer/disconnect/gid/' + MG_GAME_API.settings.gid + '/uid/' + MG_GAME_ONEUP.user.id , function() {
-                    MG_API.ajaxCall('/user/logout' , function() {
-                        MG_API.settings.shared_secret = '';
-                        MG_API.ajaxCall('/user/sharedsecret', function (response) {
-                            if (MG_API.checkResponse(response)) {
-                                if (response.shared_secret !== undefined && response.shared_secret !== "") {
-                                    MG_API.settings.shared_secret = response.shared_secret;
-                                    MG_API.curtain.hide();
-                                    MG_GAME_ONEUP.setLoginScreen();
-                                } else {
-                                    throw "MG_API.init() can't retrieve shared secret";
-                                }
+                MG_API.ajaxCall('/user/logout' , function() {
+                    MG_GAME_ONEUP.socketDisconnect();
+
+                    MG_API.settings.shared_secret = '';
+                    MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                        if (MG_API.checkResponse(response)) {
+                            if (response.shared_secret !== undefined && response.shared_secret !== "") {
+                                MG_API.settings.shared_secret = response.shared_secret;
+                                MG_API.curtain.hide();
+                                MG_GAME_ONEUP.setLoginScreen();
+                            } else {
+                                throw "MG_API.init() can't retrieve shared secret";
                             }
-                        }, {async: false});
-                    });
+                        }
+                    }, {async: false});
                 });
+
                 break;
             case 'account':
                 $("#account_playlist").empty();
@@ -1280,9 +1282,28 @@ MG_GAME_ONEUP = function ($) {
             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
                 game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
 
+            MG_GAME_ONEUP.socketDisconnect = function () {
+                if(typeof(socket.disconnect) === "function") {
+                    if(!$.browser.webkit) {
+                        socket.disconnect();
+                    } else {
+                        socket.packet({ type: 'disconnect' });
+                        socket.$emit('disconnect');
+                    }
+
+                    socket = {};
+                    delete io.sockets[MG_INIT.nodeJSUrl];
+                    io.j = [];
+                }
+            };
+
             socket.on('reconnect', function () {
                 console_log('Reconnected to the server');
                 socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
+            });
+
+            socket.on('disconnect', function () {
+                console_log('DISCONNECT is fired!!! ');
             });
 
             socket.on('registerFailure', function(data) {
@@ -1607,9 +1628,9 @@ function onResize () {
 }
 
 function console_log (logged_text) {
-    if (Modernizr.development_mode) {
+//    if (Modernizr.development_mode) {
         console.log(logged_text);
-    }
+//    }
 }
 
 $.fn.isBound = function(type, fn) {
