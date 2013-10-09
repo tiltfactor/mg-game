@@ -189,7 +189,7 @@
 </script>
 
 <script id="template-word_screen" type="text/x-jquery-tmpl">
-    <div class="row back_dark_gray">
+    <div class="row back_dark_gray round_row">
         <div>
             <span class="round">ROUND <span>${current_level}</span></span>
             <div class="right header_scores">

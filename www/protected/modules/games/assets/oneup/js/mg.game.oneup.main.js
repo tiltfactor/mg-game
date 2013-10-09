@@ -755,10 +755,10 @@ MG_GAME_ONEUP = function ($) {
                     });
                     break;
                 case 'how_to':
-                    var swipe_img = $( "#image_gallery"),
+                    var swipe_img = $("#image_gallery"),
                         my_iter = 0, // zero based
                         next_iter,
-                        numb_img = $( "#image_gallery > div").length; // 10
+                        numb_img = $("#image_gallery > div").length; // 10
 
                     if ($( "#how_to div.row:eq('" + my_iter + "')").not(":visible")) {
                         $( "#how_to div.row").hide();
@@ -766,27 +766,27 @@ MG_GAME_ONEUP = function ($) {
                     }
 
                     if ($('body').hasClass('no-touch_device')) {
+                        console_log('no touch device');
                         Hammer(swipe_img).off('click').on('click', function(e) { // swiperight   $('#image_gallery')
                             e.stopPropagation();
                             next_iter = my_iter - 1;
                             if(next_iter < 0) {
                                 next_iter = numb_img - 1;
                             }
-                            // swipe_images_prev (my_iter, next_iter); // TODO to remove
-                            alert("you swiped right");
                             swipe_images(my_iter, next_iter, 'right');
                             my_iter = next_iter;
                         });
                     }
                     else  if ($('body').hasClass('touch_device')) {
+                        console_log('touch device');
                         Hammer(swipe_img).off('swipe').on("swipe", function(e) {
                             e.stopPropagation();
+                            console.log(e.gesture.direction);
                             if (e.gesture.direction === 'left') {
                                 next_iter = my_iter + 1;
                                 if(next_iter === numb_img ) {
                                     next_iter = 0;
                                 }
-                                alert("you swiped left"); // TODO to remove
                                 swipe_images(my_iter , next_iter , 'left');
                                 my_iter = next_iter;
                             } else if (e.gesture.direction === 'right') {
@@ -794,14 +794,13 @@ MG_GAME_ONEUP = function ($) {
                                 if(next_iter < 0) {
                                     next_iter = numb_img - 1;
                                 }
-                                alert("you swiped right"); // TODO to remove
                                 swipe_images(my_iter, next_iter, 'right');
                                 my_iter = next_iter;
                             }
                         });
                     }
 
-                function swipe_images (my_iter, next_iter, direction) { // pkostov
+                function swipe_images (my_iter, next_iter, direction) {
                     var afterDirection;
                     if(direction == 'left'){
                         afterDirection = 'right';
@@ -809,11 +808,10 @@ MG_GAME_ONEUP = function ($) {
                     else {
                         afterDirection = 'left';
                     }
-                    console_log("my_iter: ", my_iter);
-                    console_log("next_iter: ", next_iter);
-                    var images = $( "[data-number] > img");
-                    images.eq(my_iter).closest('div.row').hide('slide', {direction: direction, complete : function (){
-                        images.eq(next_iter).closest('div.row').show('slide', {direction: afterDirection}, 1000);
+                    var images = $("#image_gallery > div.row");
+                    console_log('Next image: ' + next_iter);
+                    images.eq(my_iter).hide('slide', {direction: direction, complete : function (){
+                        images.eq(next_iter).show('slide', {direction: afterDirection}, 1000);
                     }}, 1000 );
                 }
                     break;
