@@ -263,7 +263,7 @@ html.mm-right.mm-opening #mm-blocker {
 #content .small_row > div:first-of-type {
   font-size: 15px;
   padding-left: 22px;
-  padding-right: 50px;
+  padding-right: 15px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -283,6 +283,7 @@ html.mm-right.mm-opening #mm-blocker {
   margin-top: -28px;
   padding-right: 0s;
   padding-right: 10px;
+  cursor: pointer;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   #content .delete {
@@ -362,6 +363,9 @@ body .back_yellow div:first-of-type {
   color: #341d33 !important;
   text-decoration: none;
   cursor: pointer;
+}
+body #account_interest .row div:first-of-type {
+  cursor: auto;
 }
 body .back_gray,
 body .blank_bar {
@@ -684,7 +688,7 @@ body.retina .row a span,
 body.retina .row div,
 body.retina .row a div {
   line-height: 82px;
-  font-size: 50px;
+  font-size: 40px;
 }
 body.retina .row span.header_scores,
 body.retina .row a span.header_scores,
@@ -733,15 +737,15 @@ body.retina #content .padding {
 }
 body.retina #content .row,
 body.retina #content .small_row > div:first-of-type {
-  font-size: 50px !important;
+  font-size: 40px !important;
 }
 body.retina #content .row,
 body.retina #content .small_row > div:first-of-type {
-  padding-right: 65px;
+  padding-right: 55px;
 }
 body.retina #content .row > div:first-of-type,
 body.retina #content .small_row > div:first-of-type {
-  font-size: 50px;
+  font-size: 40px;
 }
 body.retina #content .header {
   height: 259px !important;

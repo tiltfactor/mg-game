@@ -307,7 +307,7 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
   .row > div:first-of-type, .small_row > div:first-of-type {
       font-size: 15px;
       padding-left: 22px;
-      padding-right: 50px;
+      padding-right: 15px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -325,6 +325,7 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
     margin-top: -28px;
     padding-right: 0s;
     padding-right: 10px;
+    cursor: pointer;
   }
 
   #list_institutions {
@@ -395,6 +396,10 @@ body {
       text-decoration: none;
       cursor: pointer;
     }
+  }
+
+  #account_interest .row div:first-of-type {
+    cursor: auto;
   }
 
   .back_gray, .blank_bar {
@@ -631,7 +636,7 @@ body.retina {
 
     span, div {
       line-height: 82px;
-      font-size: 50px;
+      font-size: 40px;
 
       &.header_scores {
         font-size: 37px !important;
@@ -682,15 +687,15 @@ body.retina {
     }
 
     .row, .small_row > div:first-of-type {
-      font-size: 50px !important;
+      font-size: 40px !important;
     }
 
     .row, .small_row > div:first-of-type {
-      padding-right: 65px;
+      padding-right: 55px;
     }
 
     .row > div:first-of-type, .small_row > div:first-of-type {
-      font-size: 50px;
+      font-size: 40px;
     }
 
     .header {
