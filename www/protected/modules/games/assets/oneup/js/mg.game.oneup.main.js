@@ -241,6 +241,7 @@ MG_GAME_ONEUP = function ($) {
                             counter_waiting_turns++;
                         }
                     }
+
                     MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                         challenges_response.your_turn = your_turn;
                         challenges_response.waiting_turn = waiting_turn;
@@ -813,27 +814,29 @@ MG_GAME_ONEUP = function ($) {
                     });
                 }
 
-            function swipe_images (my_iter, next_iter, direction) {
-                var afterDirection;
-                if(direction == 'left'){
-                    afterDirection = 'right';
+                function swipe_images (my_iter, next_iter, direction) {
+                    var afterDirection;
+                    if(direction == 'left'){
+                        afterDirection = 'right';
+                    }
+                    else {
+                        afterDirection = 'left';
+                    }
+                    var images = $("#image_gallery > div.row");
+                    console_log('Next image: ' + next_iter);
+                    images.eq(my_iter).hide('slide', {direction: direction, complete : function (){
+                        images.eq(next_iter).show('slide', {direction: afterDirection}, 1000);
+                    }}, 1000 );
                 }
-                else {
-                    afterDirection = 'left';
-                }
-                var images = $("#image_gallery > div.row");
-                console_log('Next image: ' + next_iter);
-                images.eq(my_iter).hide('slide', {direction: direction, complete : function (){
-                    images.eq(next_iter).show('slide', {direction: afterDirection}, 1000);
-                }}, 1000 );
-            }
                 break;
-                case 'learn_more':
-                    break;
-                case 'logout':
-                    MG_API.curtain.show();
-                    $("#login #username").attr('value', '');
-                    $("#login #password").attr('value', '');
+            case 'learn_more':
+                break;
+            case 'logout':
+                MG_API.curtain.show();
+                $("#login #username").attr('value', '');
+                $("#login #password").attr('value', '');
+
+                MG_API.ajaxCall('/multiplayer/disconnect/gid/' + MG_GAME_API.settings.gid + '/uid/' + MG_GAME_ONEUP.user.id , function() {
                     MG_API.ajaxCall('/user/logout' , function() {
                         MG_API.settings.shared_secret = '';
                         MG_API.ajaxCall('/user/sharedsecret', function (response) {
@@ -848,216 +851,217 @@ MG_GAME_ONEUP = function ($) {
                             }
                         }, {async: false});
                     });
-                    break;
-                case 'account':
-                    $("#account_playlist").empty();
-                    $("#account_interest").empty();
-                    $("#account_bookmark").empty();
-                    $("#header").find('.setting').show();
+                });
+                break;
+            case 'account':
+                $("#account_playlist").empty();
+                $("#account_interest").empty();
+                $("#account_bookmark").empty();
+                $("#header").find('.setting').show();
 
-                    $("#account .row_link").each(function () {
-                       $(this).unbind('click').click(function (e) {
-                           e.stopPropagation();
-                           $(this).find("a").click();
-                       });
-                    });
+                $("#account .row_link").each(function () {
+                   $(this).unbind('click').click(function (e) {
+                       e.stopPropagation();
+                       $(this).find("a").click();
+                   });
+                });
 
-                    //getBookmarks
-                    MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
-                        var json = {};
-                        json.bookmarked = account_bookmarks;
-                        $("#template-account_bookmark").tmpl(json).appendTo($("#account_bookmark")).after(function () {
-                            function Slider (container ) {
-                                this.container = container;
-                                this.imgs = container.find('img');
-                                this.myImg = container.find('#my_image');
-                                this.myImgPaddingLeftValue = parseInt(container.css('padding-left'), 10);
-                                if (this.imgs.length > 0) {
-                                    this.imgWidth = (this.imgs[0].width || 0) + (this.myImgPaddingLeftValue || 0);
-                                } else {
-                                    this.imgWidth = 0;
+                //getBookmarks
+                MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid , function(account_bookmarks) {
+                    var json = {};
+                    json.bookmarked = account_bookmarks;
+                    $("#template-account_bookmark").tmpl(json).appendTo($("#account_bookmark")).after(function () {
+                        function Slider (container ) {
+                            this.container = container;
+                            this.imgs = container.find('img');
+                            this.myImg = container.find('#my_image');
+                            this.myImgPaddingLeftValue = parseInt(container.css('padding-left'), 10);
+                            if (this.imgs.length > 0) {
+                                this.imgWidth = (this.imgs[0].width || 0) + (this.myImgPaddingLeftValue || 0);
+                            } else {
+                                this.imgWidth = 0;
+                            }
+                            this.windowWidth = $( window ).width();
+                            this.allImagesWidth = this.getAllImagesWidth();
+                            this.sliderMaxOffset = this.getSliderMaxOffset();
+                            this.sliderOffset = 0;
+
+                        };
+
+                        Slider.prototype.getAllImagesWidth = function() { // must be private
+                            var tmpSum = 0;
+                            var i = 0;
+                            for( i ; i<this.imgs.length; i++) {
+                                tmpSum += this.imgs[i].width;
+                            }
+                            return tmpSum;
+                        };
+
+
+                        Slider.prototype.getSliderMaxOffset = function() { // must be private
+                            var tmp = this.allImagesWidth/this.windowWidth;
+                            var offset = Math.floor(tmp);
+                            return offset;
+                        };
+
+                        Slider.prototype.transition = function (direction) {
+                            var unit;
+                            if(direction === "next" && !(mySlider.sliderOffset < mySlider.sliderMaxOffset)) { // no more images for slide right
+                                return;
+                            }
+                            if(direction !== "next" && !(mySlider.sliderOffset > 0)) { // no more images for slide left
+                                return;
+                            }
+                            if(this.windowWidth != 0) {
+                                if(direction === "next") { // clicked on the next button
+                                    unit = '-=';
+                                    this.sliderOffset++;
                                 }
-                                this.windowWidth = $( window ).width();
-                                this.allImagesWidth = this.getAllImagesWidth();
-                                this.sliderMaxOffset = this.getSliderMaxOffset();
-                                this.sliderOffset = 0;
-
-                            };
-
-                            Slider.prototype.getAllImagesWidth = function() { // must be private
-                                var tmpSum = 0;
-                                var i = 0;
-                                for( i ; i<this.imgs.length; i++) {
-                                    tmpSum += this.imgs[i].width;
+                                else {
+                                    unit = '+=';
+                                    this.sliderOffset--;
                                 }
-                                return tmpSum;
-                            };
+                            }
+                            this.container.animate (
+                                {'margin-left': unit ? (unit + this.windowWidth) : this.windowWidth}
+                            )
+                        };
 
+                        var container = $('#account .bookmark');
+                        var mySlider = new Slider(container);
 
-                            Slider.prototype.getSliderMaxOffset = function() { // must be private
-                                var tmp = this.allImagesWidth/this.windowWidth;
-                                var offset = Math.floor(tmp);
-                                return offset;
-                            };
-
-                            Slider.prototype.transition = function (direction) {
-                                var unit;
-                                if(direction === "next" && !(mySlider.sliderOffset < mySlider.sliderMaxOffset)) { // no more images for slide right
-                                    return;
-                                }
-                                if(direction !== "next" && !(mySlider.sliderOffset > 0)) { // no more images for slide left
-                                    return;
-                                }
-                                if(this.windowWidth != 0) {
-                                    if(direction === "next") { // clicked on the next button
-                                        unit = '-=';
-                                        this.sliderOffset++;
-                                    }
-                                    else {
-                                        unit = '+=';
-                                        this.sliderOffset--;
-                                    }
-                                }
-                                this.container.animate (
-                                    {'margin-left': unit ? (unit + this.windowWidth) : this.windowWidth}
-                                )
-                            };
-
-                            var container = $('#account .bookmark');
-                            var mySlider = new Slider(container);
-
-                            Hammer(container).off("swipeleft").on("swipeleft", function() { // swipeleft
-                                mySlider.transition('next');
-                            });
-
-                            Hammer(container).off("swiperight").on("swiperight", function() { // swiperight
-                                mySlider.transition( 'previous');
-                            });
-                            // add zoom to scaled and move swipe_left::swipe_right
+                        Hammer(container).off("swipeleft").on("swipeleft", function() { // swipeleft
+                            mySlider.transition('next');
                         });
-                    });
 
-                    // Interests
-                    MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_GAME_API.settings.gid , function(account_interest) {
-                        var json = {};
-                        json.interests = account_interest;
-                        $("#template-account_interest").tmpl(json).appendTo($("#account_interest")).after(function () {
-                            $("#account_interest .delete").each(function () {
-                                $(this).on('click', function (e) {
-                                    e.stopPropagation();
-                                    var row = $(this).closest('.row');
-                                    var row_id = row.attr('interest_id');
-                                    confirmPretty("Do you really want to remove the interest.", function () {
-                                        MG_API.ajaxCall('/multiplayer/removeInterest/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function(response) {
-                                            row.remove();
-                                        });
-                                    })
-                                });
-                            });
+                        Hammer(container).off("swiperight").on("swiperight", function() { // swiperight
+                            mySlider.transition( 'previous');
                         });
+                        // add zoom to scaled and move swipe_left::swipe_right
                     });
+                });
 
-                    // List of all institutions that are not banned yet
-                    MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_GAME_API.settings.gid , function(account_playlist) {
-                        var json = {};
-                        json.play_lists = account_playlist;
-                        $("#template-account_playlist").tmpl(json).appendTo($("#account_playlist")).after(function () {
-                            $("#account_playlist").find(".row").unbind('click').click(function (e) {
+                // Interests
+                MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_GAME_API.settings.gid , function(account_interest) {
+                    var json = {};
+                    json.interests = account_interest;
+                    $("#template-account_interest").tmpl(json).appendTo($("#account_interest")).after(function () {
+                        $("#account_interest .delete").each(function () {
+                            $(this).on('click', function (e) {
                                 e.stopPropagation();
-                                $(this).find(".institution").click();
-                            });
-
-                            // click on an institution
-                            $("#account_playlist .row .institution").each(function (event) {
-                                $(this).off('click').on('click', function (e) {
-                                    e.stopPropagation();
-                                    var row = $(this).closest(".row");
-                                    MG_GAME_ONEUP.institution_id = row.attr('institution_id');
-                                    MG_GAME_ONEUP.back_location = 'account';
-                                    // institution_info
-                                    MG_GAME_ONEUP.actions('institution_info', '');
-                                });
-
-                            });
-
-                            // delete
-                            $("#account_playlist .delete").each(function () {
-                               $(this).on('click', function (e) {
-                                   e.stopPropagation();
-                                   var row = $(this).closest('.row');
-                                   var row_id = row.attr('institution_id');
-                                   confirmPretty("Do you really want to disable medias from the institution.", function () {
-                                       MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function(response) {
-                                           row.remove();
-                                       });
-                                   })
-                               });
+                                var row = $(this).closest('.row');
+                                var row_id = row.attr('interest_id');
+                                confirmPretty("Do you really want to remove the interest.", function () {
+                                    MG_API.ajaxCall('/multiplayer/removeInterest/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function(response) {
+                                        row.remove();
+                                    });
+                                })
                             });
                         });
                     });
+                });
 
-                    break;
-                case 'find_opponent':
-                    $('#find_opponent input.opponent_name').unbind("keypress").keypress(function (e) {
-                        if (e.which == 13) {
-                            $('#find_opponent .play').click();
-                        }
-                    });
-                    break;
-                case 'institution_info':
-                    $("#institution_info").empty();
-                    $("#header").find('.setting').hide();
-                    $("#header").find('.back').show();
-                    MG_API.ajaxCall('/multiplayer/GetInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
-                        var inst_remove = '<div class="right top_btn favorite" type="remove">REMOVE FROM PLAYLIST</div>',
-                            inst_add = '<div class="right top_btn favorite" type="add">FAVORITE</div>';
+                // List of all institutions that are not banned yet
+                MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_GAME_API.settings.gid , function(account_playlist) {
+                    var json = {};
+                    json.play_lists = account_playlist;
+                    $("#template-account_playlist").tmpl(json).appendTo($("#account_playlist")).after(function () {
+                        $("#account_playlist").find(".row").unbind('click').click(function (e) {
+                            e.stopPropagation();
+                            $(this).find(".institution").click();
+                        });
 
-                        //show_institution
-                        $("#template-show_institution").tmpl(response).appendTo($("#institution_info")).after(function () {
+                        // click on an institution
+                        $("#account_playlist .row .institution").each(function (event) {
+                            $(this).off('click').on('click', function (e) {
+                                e.stopPropagation();
+                                var row = $(this).closest(".row");
+                                MG_GAME_ONEUP.institution_id = row.attr('institution_id');
+                                MG_GAME_ONEUP.back_location = 'account';
+                                // institution_info
+                                MG_GAME_ONEUP.actions('institution_info', '');
+                            });
 
                         });
-                        if (response[0].isBanned === false) {
-                            // Institution is in favorite list
-                            $("#header").append(inst_remove);
-                        } else {
-                            $("#header").append(inst_add);
-                        }
 
-                        addClickFav();
+                        // delete
+                        $("#account_playlist .delete").each(function () {
+                           $(this).on('click', function (e) {
+                               e.stopPropagation();
+                               var row = $(this).closest('.row');
+                               var row_id = row.attr('institution_id');
+                               confirmPretty("Do you really want to disable medias from the institution.", function () {
+                                   MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function(response) {
+                                       row.remove();
+                                   });
+                               })
+                           });
+                        });
+                    });
+                });
 
-                        function addClickFav () {
-                            $("#header").find('.favorite').off('click').on('click', function () {
-                                $("#header").find('.favorite').remove();
-                                if ($(this).attr('type') === 'remove') {
-                                    MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
-                                        setTimeout(function(){}, 3000);
-                                        $("#header").append(inst_add);
-                                        addClickFav();
-                                    });
-                                } else {
-                                    MG_API.ajaxCall('/multiplayer/unbanInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
-                                        setTimeout(function(){}, 3000);
-                                        $("#header").append(inst_remove);
-                                        addClickFav();
-                                    });
-                                }
-                            });
-                        }
+                break;
+            case 'find_opponent':
+                $('#find_opponent input.opponent_name').unbind("keypress").keypress(function (e) {
+                    if (e.which == 13) {
+                        $('#find_opponent .play').click();
+                    }
+                });
+                break;
+            case 'institution_info':
+                $("#institution_info").empty();
+                $("#header").find('.setting').hide();
+                $("#header").find('.back').show();
+                MG_API.ajaxCall('/multiplayer/GetInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
+                    var inst_remove = '<div class="right top_btn favorite" type="remove">REMOVE FROM PLAYLIST</div>',
+                        inst_add = '<div class="right top_btn favorite" type="add">FAVORITE</div>';
 
-                        $("#header").find('.back').off('click').on('click', function (e) {
-                            e.preventDefault();
-                            $("#header").find('.back').hide();
+                    //show_institution
+                    $("#template-show_institution").tmpl(response).appendTo($("#institution_info")).after(function () {
+
+                    });
+                    if (response[0].isBanned === false) {
+                        // Institution is in favorite list
+                        $("#header").append(inst_remove);
+                    } else {
+                        $("#header").append(inst_add);
+                    }
+
+                    addClickFav();
+
+                    function addClickFav () {
+                        $("#header").find('.favorite').off('click').on('click', function () {
                             $("#header").find('.favorite').remove();
-                            $("#header").find('.setting').show();
-                            click_parent = MG_GAME_ONEUP.back_location;
-                            $("a[location='" + MG_GAME_ONEUP.back_location + "']").click();
-                            return false;
+                            if ($(this).attr('type') === 'remove') {
+                                MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
+                                    setTimeout(function(){}, 3000);
+                                    $("#header").append(inst_add);
+                                    addClickFav();
+                                });
+                            } else {
+                                MG_API.ajaxCall('/multiplayer/unbanInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_GAME_ONEUP.institution_id + '/', function(response) {
+                                    setTimeout(function(){}, 3000);
+                                    $("#header").append(inst_remove);
+                                    addClickFav();
+                                });
+                            }
                         });
+                    }
+
+                    $("#header").find('.back').off('click').on('click', function (e) {
+                        e.preventDefault();
+                        $("#header").find('.back').hide();
+                        $("#header").find('.favorite').remove();
+                        $("#header").find('.setting').show();
+                        click_parent = MG_GAME_ONEUP.back_location;
+                        $("a[location='" + MG_GAME_ONEUP.back_location + "']").click();
+                        return false;
                     });
-                    break;
-                default:
-                    console_log('action is unknown');
-                    break;
+                });
+                break;
+            default:
+                console_log('action is unknown');
+                break;
             }
 
             if (click_parent === '') {
@@ -1106,34 +1110,36 @@ MG_GAME_ONEUP = function ($) {
                                     MG_GAME_ONEUP.endedGames = response;
                                 });
 
+                                // prevent bind events again after logout/login
+                                if ($("#main_screen").find(".username").html() === '') {
+                                    $("a[location='main_screen']").on('click', function (){
+                                        MG_GAME_ONEUP.actions('main_screen', 'menu');
+                                    });
+
+                                    $("a[location='game_customize']").on('click', function (){
+                                        MG_GAME_ONEUP.actions('game_customize', 'menu');
+                                    });
+
+                                    $("a[location='how_to']").on('click', function (){
+                                        MG_GAME_ONEUP.actions('how_to', 'menu');
+                                    });
+
+                                    $("a[location='learn_more']").on('click', function (){
+                                        MG_GAME_ONEUP.actions('learn_more', 'menu');
+                                    });
+
+                                    $("a[location='account']").on('click', function (){
+                                        MG_GAME_ONEUP.actions('account', 'menu');
+                                    });
+
+                                    $("a[location='logout']").on('click', function (){
+                                        MG_GAME_ONEUP.actions('logout', 'menu');
+                                    });
+                                }
+
                                 $("#main_screen").find(".username").html(response.user.username);
 
-                                $("a[location='main_screen']").on('click', function (){
-                                    MG_GAME_ONEUP.actions('main_screen', 'menu');
-                                });
-
-                                $("a[location='game_customize']").on('click', function (){
-                                    MG_GAME_ONEUP.actions('game_customize', 'menu');
-                                });
-
-                                $("a[location='how_to']").on('click', function (){
-                                    MG_GAME_ONEUP.actions('how_to', 'menu');
-                                });
-
-                                $("a[location='learn_more']").on('click', function (){
-                                    MG_GAME_ONEUP.actions('learn_more', 'menu');
-                                });
-
-                                $("a[location='account']").on('click', function (){
-                                    MG_GAME_ONEUP.actions('account', 'menu');
-                                });
-
-                                $("a[location='logout']").on('click', function (){
-                                    MG_GAME_ONEUP.actions('logout', 'menu');
-                                });
-
                                 $("a[location='main_screen']").click();
-
                             });
                         }
                     }
@@ -1605,3 +1611,13 @@ function console_log (logged_text) {
         console.log(logged_text);
     }
 }
+
+$.fn.isBound = function(type, fn) {
+    var data = this.data('events')[type];
+
+    if (data === undefined || data.length === 0) {
+        return false;
+    }
+
+    return (-1 !== $.inArray(fn, data));
+};
