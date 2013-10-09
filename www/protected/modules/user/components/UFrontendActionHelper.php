@@ -59,7 +59,7 @@ class UFrontendActionHelper extends CApplicationComponent {
           $controller->redirect(Yii::app()->controller->module->recoveryUrl);
         }
       
-      } else {
+      } else { 
         $valid = false;
 
         if(Yii::app()->getRequest()->getIsAjaxRequest()) { // NO

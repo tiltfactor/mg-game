@@ -121,7 +121,7 @@ MG_GAME_ONEUP = function ($) {
 
                     $('#register #btn_register').off('click').on('click', function (e) {
                         e.preventDefault();
-                        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #email").val().length < 5) {
+                        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val().length < 6 && $("#register #email").val().length < 5) { // addd verifyPassword here too
                             $().toastmessage("showToast", {
                                 text: 'All fields are required.',
                                 position: "tops-center",
@@ -150,7 +150,8 @@ MG_GAME_ONEUP = function ($) {
                                     data: {
                                         password: $("#register #password").val(),
                                         username: $("#register #username").val(),
-                                        email: $("#register #email").val()
+                                        email: $("#register #email").val(),
+                                        verifyPassword: $("#register #verifyPassword").val() 
                                     }
                                 }
                             );

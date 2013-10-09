@@ -4,7 +4,7 @@ class UserController extends ApiController {
 
     public function filters() {
         return array( // add blocked IP filter here
-            'throttle - login, sharedsecret, register , update, logout',
+            'throttle - login, sharedsecret, register , update, logout, recoverypassword',
             'IPBlock',
             'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage, ',
@@ -19,7 +19,7 @@ class UserController extends ApiController {
         return array(
             array('allow',
 
-                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', ),
+                'actions' => array('index', 'login', 'register', 'user', 'passwordrecovery', 'sharedsecret', 'sociallogin', 'recoverypassword'),
 
                 'users' => array('*'),
             ),
@@ -107,7 +107,7 @@ class UserController extends ApiController {
      * The currently logged in user will be logged out and the session destroyed
      *
      * JSON: it will return
-     * {status:'ok'} or throw an exception
+     * {status:'ok'} or {status:'error'}
      *
      * @return string JSON response
      *
@@ -130,29 +130,6 @@ class UserController extends ApiController {
         }
     }
 
-    /**
-     * This is the password recovery action action.
-     * It has to be called via a POST request.
-     *
-     * If receives a user name or email address in a field called "login_or_email". If either
-     * name or email are found an password reset email will be generated and send to the user.
-     *
-     * JSON: it will return either
-     * {status:'ok'} or HTTP status 400 and {"errors":{"field":["Error Message"]}}
-     *
-     * @return string JSON response
-     * @throws CHttpException if the request is not a POST request
-     */
-    public function actionPasswordRecovery() {
-        if (Yii::app()->getRequest()->getIsPostRequest()) {
-            Yii::import("application.modules.user.components.UFrontendActionHelper");
-            Yii::import("application.modules.user.models.UserRecoveryForm");
-            $frontendArctions = new UFrontendActionHelper;
-            $frontendArctions->passwordRecovery($this);
-        } else {
-            throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
-        }
-    }
 
     public function actionRegister() {
         Yii::import("application.modules.user.models.RegistrationForm"); // pkostov include the model
@@ -162,6 +139,17 @@ class UserController extends ApiController {
         $username = trim($_POST['username']);
         $password = trim($_POST['password']);
         $email = trim($_POST['email']);
+        $verifyPassword = trim($_POST['verifyPassword']);
+
+        if($password != $verifyPassword)
+        {
+            $data['status'] = "error";
+            $data['responseText'] = "Verify Password must be the same as Password! Please retype again.";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+
+
 
         $sanitized_mail = filter_var($email, FILTER_SANITIZE_EMAIL);
         if (!filter_var($sanitized_mail, FILTER_VALIDATE_EMAIL)) {
@@ -212,7 +200,7 @@ class UserController extends ApiController {
         $model->username = $username;
         $model->password = $password;
         $model->email = $email;
-        $model->verifyPassword = $password;
+        $model->verifyPassword = $verifyPassword;
 
         $profile = new Profile;
 
@@ -296,6 +284,13 @@ class UserController extends ApiController {
         }
     }
 
+    /**
+     * Update username, password or email.
+     *
+     * JSON: it will return
+     * {status:'ok'} or {status:'error'}
+     *
+     */
     public function actionUpdate ()
     {
         $data = array();
@@ -334,7 +329,7 @@ class UserController extends ApiController {
             catch (Exception $e)
             {
                 $data['status'] = "error";
-                $data['message'] = $e->getMessage();
+                $data['responseText'] = $e->getMessage();
                 $this->sendResponse($data);
             }
         }
@@ -342,6 +337,64 @@ class UserController extends ApiController {
         {
             $data['status'] = "error";
             $data['responseText'] =  "Validation did not pass. Existing username and/or email";
+            $this->sendResponse($data);
+        }
+    }
+    /**
+     * Send a recovery link to the user`s mail in order to change his password.
+     *
+     * JSON: it will return
+     * {status:'ok'} or {status:'error'}
+     *
+     */
+    public function actionRecoveryPassword()
+    {
+        $data = array();
+        $email = trim($_POST['email']);
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+        {
+            $data['status'] = "error";
+            $data['responseText'] = "Not a valid email address.";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+        $user = User::model()->notsafe()->findByAttributes(array('email'=>$email));
+        $activeKey = $user->activekey;
+        $activationURL = 'http://' . $_SERVER['HTTP_HOST'] . Yii::app()->getBaseUrl() . '/index.php/user/login/restore-password/activekey/' . $activeKey . '/email/' . urlencode($email);
+        if(empty($user))
+        {
+            $data['status'] = "error";
+            $data['responseText'] = "There is no user with this email.";
+            $this->sendResponse($data);
+            Yii::app()->end();
+        }
+
+        try
+        {
+            $message = new YiiMailMessage;
+            $message->view = 'userPasswordRestore';
+            $message->setSubject(UserModule::t("You have requested a password reset for {site_name}", array(
+                '{site_name}'=>Yii::app()->fbvStorage->get("settings.app_name"),)));
+
+            //userModel is passed to the view
+            $message->setBody(array(
+                'user' => $user,
+                'site_name' => Yii::app()->fbvStorage->get("settings.app_name"),
+                'activation_url' => $activationURL
+            ), 'text/html');
+
+            $message->addTo($user->email);
+            $message->from = Yii::app()->fbvStorage->get("settings.app_email");
+            Yii::app()->mail->send($message);
+
+            $data['status'] = "ok";
+            $data['responseText'] =  "Activation link has been sent. Please check your email.";
+            $this->sendResponse($data);
+        }
+        catch (Exception $e)
+        {
+            $data['status'] = "error";
+            $data['responseText'] = $e->getMessage();
             $this->sendResponse($data);
         }
     }

@@ -40,7 +40,10 @@
                     <input type="password" autocapitalize="off" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
                 </div>
                 <div class="button">
-                    <input type="email" autocapitalize="off" id="email" name="email" placeholder="Choose an e-mail" tabindex="3" value="" />
+                    <input type="password" autocapitalize="off" id="verifyPassword" name="verifyPassword" placeholder="Verify Password" value="" tabindex="3" />
+                </div>
+                <div class="button">
+                    <input type="email" autocapitalize="off" id="email" name="email" placeholder="Choose an e-mail" tabindex="4" value="" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>

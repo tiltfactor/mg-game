@@ -122,7 +122,7 @@ class HybridAuthIdentity extends CUserIdentity
 
         $identity->authenticate();
         if ($identity->errorCode == UserIdentity::ERROR_NONE) {
-            $duration=60;  // 60 sec
+            $duration=0;  // was 60 sec
             Yii::app()->user->login($identity, $duration);  // will create the session*/
         }
     }
