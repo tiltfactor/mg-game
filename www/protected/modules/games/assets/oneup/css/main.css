@@ -263,7 +263,7 @@ html.mm-right.mm-opening #mm-blocker {
 #content .small_row > div:first-of-type {
   font-size: 15px;
   padding-left: 22px;
-  padding-right: 15px;
+  padding-right: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

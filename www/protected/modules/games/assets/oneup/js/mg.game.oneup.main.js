@@ -255,7 +255,7 @@ MG_GAME_ONEUP = function ($) {
                                 var that;
                                 // add delete functionality
                                 $("#challenges_sent .delete").each(function () {
-                                    $this.off('click').on('click', function () {
+                                    $(this).off('click').on('click', function () {
                                         this_clicked = $(this);
                                         that = this_clicked.closest(".row");
                                         opponent_id = that.attr('opponent_id');
@@ -314,7 +314,8 @@ MG_GAME_ONEUP = function ($) {
                                 });
 
                                 $("#challenges_received .start_game").each(function () {
-                                    $(this).off('click').on('click', function () {
+                                    var that = $(this);
+                                    that.off('click').on('click', function () {
                                         var this_clicked = $(this),
                                             opponent_id = this_clicked.closest(".row").attr('opponent_id'),
                                             start_game = false;
@@ -855,7 +856,7 @@ MG_GAME_ONEUP = function ($) {
                     $("#header").find('.setting').show();
 
                     $("#account .row_link").each(function () {
-                       $this.unbind('click').click(function (e) {
+                       $(this).unbind('click').click(function (e) {
                            e.stopPropagation();
                            $(this).find("a").click();
                        });
