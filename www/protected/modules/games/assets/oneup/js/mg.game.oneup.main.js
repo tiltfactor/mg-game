@@ -384,9 +384,9 @@ MG_GAME_ONEUP = function ($) {
                                 that.empty();
                                 MG_GAME_ONEUP.playSound('select');
                                 if ($.browser.webkit) {
-                                    that.append('<div><form action="#" onsubmit="return false;"><input type="text" autocapitalize="off" placeholder="ADD A WORD" /></form></div>');
+                                    that.append('<div><form action="#" onsubmit="return false;"><input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="ADD A WORD" /></form></div>');
                                 } else {
-                                    that.append('<div><input class="add_word" type="text" autocapitalize="off" placeholder="ADD A WORD" /></div>');
+                                    that.append('<div><input class="add_word" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="ADD A WORD" /></div>');
                                 }
                                 that.find('input').focus();
                                 that.find('input').unbind("keypress").keypress(function (e) {
