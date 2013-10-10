@@ -445,7 +445,7 @@ MG_GAME_ONEUP = function ($) {
                                                         MG_GAME_ONEUP.playSound('feedbackoneupped');
                                                         // opponent need to get 1 extra point
                                                         var opponent_score_obj = $("#game_screen .opponent label");
-                                                        score_obj.html(parseInt(opponent_score_obj.text(), 10) + 1);
+                                                        opponent_score_obj.html(parseInt(opponent_score_obj.text(), 10) + 1);
                                                     } else if (parseInt(score, 10) >= 3) {
                                                         //html_class = 'bonus_bar';
                                                         MG_GAME_ONEUP.playSound('feedbacknormal');
