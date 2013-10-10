@@ -3,17 +3,17 @@ Yii::app()->clientScript->registerScript('combo', "
 var drop2 = $('select[name=\"Custom[collections]\"] option');
 $('select[name=\"Custom[institution]\"]').change(function () {
    var instID =  parseInt(this.value);
-   var cDrop = $('select[name=\"Custom[collections]\"]');
-   cDrop.empty();
-   for(opt in drop2){
-    cDrop.append(opt);
-   }
+   var cDrop = $('select[name=\"Custom[collections]\"] option');
 
-   cDrop.find('option').filter(function(){
-                        var id = this.attr('institution-id');
-                        if(this.value==0) return true
-                        else return (id == instID);
-                      }).remove();
+   cDrop.show();
+
+   cDrop.filter(function(){
+                        if(instID==0) return false;
+                        var id = $(this).attr('institution-id');
+                        if(this.value==0) return false;
+                        else if(id == instID) return false;
+                        else return true;
+                      }).hide();
 });
 ");
 ?>
