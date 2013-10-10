@@ -2,7 +2,7 @@
 <div class="container" id="page">
   <?php if(isset($this->breadcrumbs)):?>
     <?php $this->widget('zii.widgets.CBreadcrumbs', array(
-      'homeLink' =>CHtml::link(Yii::t('app', 'Arcade'), "/site/index"),
+      'homeLink' =>CHtml::link(Yii::t('app', 'Search'), "/search"),
       'links'=>$this->breadcrumbs,
     )); ?><!-- breadcrumbs -->
   <?php endif?>

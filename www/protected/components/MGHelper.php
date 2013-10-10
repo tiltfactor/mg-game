@@ -328,7 +328,7 @@ class MGHelper
                          * @var Institution $institution
                          */
                         $institution = $media->institution;
-                        $ips = explode(',', $institution->ip);
+                        $ips = explode(',', preg_replace('/\s+/', '', $institution->ip));
                         if ($ips) {
                             $c = count($ips);
                             for ($i = 0; $i < $c; $i++) {

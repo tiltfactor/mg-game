@@ -193,11 +193,11 @@
 
 <script id="template-word_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray round_row">
-        <div>
+        <div class="no_right_padding" style="white-space: auto !important;">
             <span class="round">ROUND <span>${current_level}</span></span>
             <div class="right header_scores">
-                <div class="you">You <span>${score}</span></div>
-                <div class="opponent">${opponentName} ${opponentScore}</div>
+                <div class="you"><span class="active_player">You</span> <label>${score}</label></div>
+                <div class="opponent">${opponentName} <label>${opponentScore}</label></div>
             </div>
         </div>
     </div>
@@ -210,12 +210,12 @@
 </script>
 
 <script id="template-final_screen" type="text/x-jquery-tmpl">
-    <div class="row back_dark_gray">
-        <div>
+    <div class="row back_dark_gray no_right_padding">
+        <div class="no_right_padding">
             <span class="round">${game_result}</span>
             <div class="right header_scores">
-                <div class="you">You <span>${score}</span></div>
-                <div class="opponent">${opponentName} ${opponentScore}</div>
+                <div class="you">You <label>${score}</label></div>
+                <div class="opponent">${opponentName} <label>${opponentScore}</label></div>
             </div>
         </div>
     </div>
@@ -227,9 +227,13 @@
     <br/>
     <br/>
 
-    <div class="text-center">
-        <img src="${media.thumbnail}" /> <br/><br/>
-        <span class="bookmark_image top_btn">Bookmark this image</span><br/><br/>
+    <div class="text-center group">
+        <div class="left">
+            <img src="${media.thumbnail}" class="left" />
+            <div>${media.licence.description}</div>
+            Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)
+            <input type="checkbox" /> <label class="bookmark_image top_btn">Bookmark this image</label>
+        </div>
     </div>
     <h3>${opponentName} SAID <span>ROUND 1</span></h3>
     {{html opponent.round_1}}
@@ -327,11 +331,11 @@
 </script>
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
-    <div class="row back_dark_gray">
-        <div><span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span></div>
+    <div class="row back_dark_gray no_right_padding">
+        <div class="no_right_padding"><span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span></div>
         <div class="right header_scores">
-            <div class="you">You <span>${turn.score}</span></div>
-            <div class="opponent">${opponentName} ${turn.opponentScore}</div>
+            <div class="you"><span class="active_player">You</span> <label>${turn.score}</label></div>
+            <div class="opponent"><span class="waiting_player">${opponentName}</span> <label>${turn.opponentScore}</label></div>
         </div>
     </div>
     <div class="main_gray">

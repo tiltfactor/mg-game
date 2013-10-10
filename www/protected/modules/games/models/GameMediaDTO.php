@@ -49,4 +49,13 @@ class GameMediaDTO
      * @var GameLicenceDTO
      */
     public $licence;
+
+    /**
+     * @var string
+     */
+    public $collection;
+    /**
+     * @var string
+     */
+    public $institution;
 }

@@ -225,6 +225,7 @@ MG_GAME_ONEUP = function ($) {
                     // Response sent is json encode of GameChallengesDTO
                     //http://localhost/mggameserver/index.php/api/multiplayer/getOfflineGames/gid/OneUp/
                     MG_API.ajaxCall('/multiplayer/getOfflineGames/gid/' + MG_GAME_API.settings.gid, function (offline_games) {
+
                         var length = offline_games.length,
                             your_turn = [],
                             waiting_turn = [],
@@ -247,7 +248,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
+                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
                             $("#challenges").remove();
@@ -432,7 +433,7 @@ MG_GAME_ONEUP = function ($) {
 
                                                     that.replaceWith(calculatedRow(response[0].tag, response[0].score, MG_GAME_ONEUP.opponent_name, response[0].type));
 
-                                                    var score = response[0].score,
+                                                    var score = parseInt(response[0].score, 10),
                                                         tag_type = response[0].type;
                                                     if (parseInt(score, 10) === 1 && tag_type === 'new') {
                                                         MG_GAME_ONEUP.playSound('feedbacknormal');
@@ -449,7 +450,7 @@ MG_GAME_ONEUP = function ($) {
 
                                                     that.off('click');
 
-                                                    var score_obj = $("#game_screen .you span");
+                                                    var score_obj = $("#game_screen .you label");
                                                     score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10, MG_GAME_ONEUP.opponent_name));
                                                 }, {
                                                     type: 'post',
@@ -781,19 +782,18 @@ MG_GAME_ONEUP = function ($) {
                         $( "#how_to div.row:eq('" + my_iter + "')").show();
                     }
 
-                    if ($('body').hasClass('no-touch_device')) {
+                    if ($('body').hasClass('no-touch_device') || ($('body').hasClass('touch_device') && BrowserDetect.browser === 'Other')) {
                         console_log('no touch device');
                         Hammer(swipe_img).off('click').on('click', function(e) { // swiperight   $('#image_gallery')
                             e.stopPropagation();
-                            next_iter = my_iter - 1;
-                            if(next_iter < 0) {
-                                next_iter = numb_img - 1;
+                            next_iter = my_iter + 1;
+                            if(next_iter === numb_img ) {
+                                next_iter = 0;
                             }
-                            swipe_images(my_iter, next_iter, 'right');
+                            swipe_images(my_iter, next_iter, 'left');
                             my_iter = next_iter;
                         });
-                    }
-                    else  if ($('body').hasClass('touch_device')) {
+                    } else  if ($('body').hasClass('touch_device')) {
                         console_log('touch device');
                         Hammer(swipe_img).off('swipe').on("swipe", function(e) {
                             e.stopPropagation();
@@ -838,7 +838,7 @@ MG_GAME_ONEUP = function ($) {
                     $("#login #username").attr('value', '');
                     $("#login #password").attr('value', '');
 
-                    MG_API.ajaxCall('/user/logout' , function() {
+                    MG_API.ajaxCall('/user/logout', function() {
                         MG_GAME_ONEUP.socketDisconnect();
 
                         MG_API.settings.shared_secret = '';
@@ -852,7 +852,7 @@ MG_GAME_ONEUP = function ($) {
                                     throw "MG_API.init() can't retrieve shared secret";
                                 }
                             }
-                        }, {async: false});
+                        });
                     });
 
                     break;
@@ -950,7 +950,7 @@ MG_GAME_ONEUP = function ($) {
                         json.interests = account_interest;
                         $("#template-account_interest").tmpl(json).appendTo($("#account_interest")).after(function () {
                             $("#account_interest .delete").each(function () {
-                                $(this).on('click', function (e) {
+                                $(this).off('click').on('click', function (e) {
                                     e.stopPropagation();
                                     var row = $(this).closest('.row');
                                     var row_id = row.attr('interest_id');
@@ -989,7 +989,7 @@ MG_GAME_ONEUP = function ($) {
 
                             // delete
                             $("#account_playlist .delete").each(function () {
-                                $(this).on('click', function (e) {
+                                $(this).off('click').on('click', function (e) {
                                     e.stopPropagation();
                                     var row = $(this).closest('.row');
                                     var row_id = row.attr('institution_id');
@@ -1091,63 +1091,85 @@ MG_GAME_ONEUP = function ($) {
         },
         validUser: function () {
             MG_API.curtain.show();
-            yepnope([
-                {
-                    load: [
-                        MG_INIT.nodeJSUrl + '/socket.io/socket.io.js'
-                    ],
-                    complete: function(){
-                        if (typeof io === 'undefined') {
-                            alert('Contact Administrator. Error node.');
-                        } else {
-                            MG_API.curtain.hide();
-                            $("#menu-right").css('visibility', 'visible');
-                            MG_GAME_ONEUP.nodeInit();
-                            $("#header .setting").show();
-                            // Called just after sharedSecret is triggered
-                            ///api/multiplayer/register/gid/OneUp/
-                            MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid , function(response) {
-                                MG_GAME_ONEUP.user = response.user;
-
-                                MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
-                                    MG_GAME_ONEUP.endedGames = response;
-                                });
-
-                                // prevent bind events again after logout/login
-                                if ($("#main_screen").find(".username").html() === '') {
-                                    $("a[location='main_screen']").on('click', function (){
-                                        MG_GAME_ONEUP.actions('main_screen', 'menu');
-                                    });
-
-                                    $("a[location='game_customize']").on('click', function (){
-                                        MG_GAME_ONEUP.actions('game_customize', 'menu');
-                                    });
-
-                                    $("a[location='how_to']").on('click', function (){
-                                        MG_GAME_ONEUP.actions('how_to', 'menu');
-                                    });
-
-                                    $("a[location='learn_more']").on('click', function (){
-                                        MG_GAME_ONEUP.actions('learn_more', 'menu');
-                                    });
-
-                                    $("a[location='account']").on('click', function (){
-                                        MG_GAME_ONEUP.actions('account', 'menu');
-                                    });
-
-                                    $("a[location='logout']").on('click', function (){
-                                        MG_GAME_ONEUP.actions('logout', 'menu');
-                                    });
-                                }
-
-                                $("#main_screen").find(".username").html(response.user.username);
-
-                                $("a[location='main_screen']").click();
-                            });
+            if (typeof io !== 'undefined') {
+                console_log('Socket is already running.');
+                validUser ();
+            } else {
+                yepnope([
+                    {
+                        load: [
+                            MG_INIT.nodeJSUrl + '/socket.io/socket.io.js'
+                        ],
+                        complete: function(){
+                            if (typeof io === 'undefined') {
+                                alert('Contact Administrator. Error in the server node.');
+                            } else {
+                                validUser ();
+                            }
                         }
                     }
-                }
-            ]);
+                ]);
+            }
+
+            function validUser () {
+                $("#menu-right").css('visibility', 'visible');
+                MG_GAME_ONEUP.nodeInit();
+                $("#header .setting").show();
+                // Called just after sharedSecret is triggered
+                ///api/multiplayer/register/gid/OneUp/
+                MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid , function(response) {
+                    MG_GAME_ONEUP.user = response.user;
+
+                    MG_API.ajaxCall('/multiplayer/getEndedGames/gid/' + MG_GAME_API.settings.gid , function(response) {
+                        MG_GAME_ONEUP.endedGames = response;
+                    });
+
+                    // prevent bind events again after logout/login
+                    if ($("#main_screen").find(".username").html() === '') {
+                        $("a[location='main_screen']").on('click', function (e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            MG_GAME_ONEUP.actions('main_screen', 'menu');
+                        });
+
+                        $("a[location='game_customize']").on('click', function (e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            MG_GAME_ONEUP.actions('game_customize', 'menu');
+                        });
+
+                        $("a[location='how_to']").on('click', function (e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            MG_GAME_ONEUP.actions('how_to', 'menu');
+                        });
+
+                        $("a[location='learn_more']").on('click', function (e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            MG_GAME_ONEUP.actions('learn_more', 'menu');
+                        });
+
+                        $("a[location='account']").on('click', function (e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            MG_GAME_ONEUP.actions('account', 'menu');
+                        });
+
+                        $("a[location='logout']").on('click', function (e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            MG_GAME_ONEUP.actions('logout', 'menu');
+                        });
+                    }
+
+                    $("#main_screen").find(".username").html(response.user.username);
+
+                    $("a[location='main_screen']").click();
+
+                    MG_API.curtain.hide();
+                });
+            }
         },
         ajaxCall: function (path, callback, options, doNotSaveLastCallTime) {
             var secretHeader = ('X_' + MG_API.settings.app_id + '_SHARED_SECRET').replace(/\_/g, "-");
@@ -1276,7 +1298,7 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_API.curtain.hide();
         },
         playSound: function (index) {
-            console_log(index);
+            console_log("Play sound: " + index);
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit: function () {
@@ -1426,10 +1448,13 @@ MG_GAME_ONEUP = function ($) {
                         stayTime: MG_GAME_ONEUP.toastStayTime,
                         addClass: MG_GAME_ONEUP.toastBackgroundClass
                     });
-                    var current_points = parseInt($("#game_screen .you span").text(), 10);
-                    $("#game_screen .you span").html((current_points - 1));
+                    /*
+                    // no need here its handled from response
+                    var current_points = parseInt($("#game_screen .you label").text(), 10);
+                    $("#game_screen .you label").html((current_points - 1));
                     MG_GAME_ONEUP.playSound('feedbackoneupped');
                     $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
+                    */
                 }
             });
 
@@ -1450,8 +1475,9 @@ MG_GAME_ONEUP = function ($) {
                 });
 
                 if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
-                    var current_points = parseInt($("#game_screen .you span").text(), 10);
-                    $("#game_screen .you span").html((current_points + 1));
+                    var current_points = parseInt($("#game_screen .you label").text(), 10);
+
+                    $("#game_screen .you label").html((current_points + 1));
                     MG_GAME_ONEUP.playSound('feedbackbonus');
                     $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
                 }
@@ -1597,27 +1623,32 @@ function calculatedRow (tag, score, opponent_name, tag_type) {
         new_html = '<span>+1</span><span class="tag">' + tag + '</span>';
     } else if (parseInt(score, 10) === 1) {
         html_class = 'up_bar';
-        new_html = '<span>+1</span><span class="tag">' + tag + '</span><span class="bar_right">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
+        new_html = '<span>+1</span><span class="tag">' + tag + '</span>';
     } else if (score === -1) {
         html_class = 'upped_bar';
-        new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+        new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+    }  else if (parseInt(score, 10) === 2) {
+        html_class = 'bonus_bar';
+        new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
     } else if (parseInt(score, 10) >= 3) {
         html_class = 'bonus_bar';
-        new_html = '<span>+3</span><span class="tag">' + tag + '</span><span class="bar_right" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
-    } else if (parseInt(score, 10) === 2) {
-        html_class = 'bonus_bar';
-        new_html = '<span>+2</span><span class="tag">' + tag + '</span>';
-    } else {
+        new_html = '<span>+' + parseInt(score, 10) + '</span><span class="tag">' + tag + '</span><span class="bar_right lines_2" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+    }else {
         html_class = 'standard_bar';
         new_html = '<span>' + score + '</span><span class="tag">' + tag + '</span>';
     }
 
-    return '<div class="small_row ' + html_class + '" tag="' + tag + '"><div>' + new_html + '</div></div>';
+    return '<div class="small_row ' + html_class + '" tag="' + tag + '"><div class="no_right_padding">' + new_html + '</div></div>';
 }
 
 function onResize () {
     var max_height,
         gamearea = $("#gamearea");
+
+    // this is for apps image should not resize
+    if (BrowserDetect.browser === 'Other' && is_touch_device) {
+        return true;
+    }
 
     if (is_touch_device) {
         max_height = $(window).height() - $("#content header").height() - $("#content footer").height() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
