@@ -38,6 +38,7 @@ return array(
     'api',
     'games',
 	'ws',
+	'search'
   ),
 
   // application components
