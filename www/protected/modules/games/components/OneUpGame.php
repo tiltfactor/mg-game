@@ -95,6 +95,7 @@ class OneUpGame extends MGMultiPlayer
                             $payload['playedGameId'] = $this->playedGame->id;
 
                             $this->pushMessage($this->userOnline->user_id, MGMultiPlayer::PUSH_PENALTY, json_encode($payload));
+                            $this->updateSubmitToBonus($submits, $row);
                             if ($opponentOnline) {
                                 $payload = array();
                                 $payload['tag'] = $tag;
@@ -353,5 +354,29 @@ class OneUpGame extends MGMultiPlayer
             }
         }
         return $result;
+    }
+
+    /**
+     * @param GameSubmission[] $submits
+     * @param GameTagDTO $tag
+     */
+    private function updateSubmitToBonus($submits, $tag)
+    {
+        foreach ($submits as $submit) {
+            $tagsArr = json_decode($submit->submission, true);
+            $tmpTags = GameTagDTO::createFromArray($tagsArr);
+            foreach ($tmpTags as &$tt) {
+                if ($tt->tag == $tag->tag) {
+                    $tt->type = "bonus";
+                    $tt->score += 1;
+
+                    $tagsArr = GameTagDTO::convertToArray($tmpTags);
+                    $submit->submission = json_encode($tagsArr);
+
+                    $submit->update();
+                    return;
+                }
+            }
+        }
     }
 }
