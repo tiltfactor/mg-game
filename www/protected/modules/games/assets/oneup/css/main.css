@@ -277,6 +277,11 @@ html.mm-right.mm-opening #mm-blocker {
 #content #game_screen #words .small_row > div {
   padding-right: 10px;
 }
+#content .bookmark_img {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+}
 #content .delete {
   background-image: url('../images/delete.png');
   background-repeat: 'no-repeat';
@@ -506,7 +511,7 @@ body .up_bar {
 body .bar_right {
   display: block;
   font-size: 9px;
-  font-weight: bold;
+  letter-spacing: 1px;
   line-height: 10px;
   margin-top: -32px;
   padding-right: 10px;
@@ -524,6 +529,9 @@ body .standard_bar span:nth-of-type(2),
 body .up_bar span:nth-of-type(2),
 body .bonus_bar span:nth-of-type(2) {
   color: white;
+}
+body .bonus_bar span.lines_2 {
+  color: #46a5c4;
 }
 body .upped_bar span:first-of-type {
   color: #f8f400;
@@ -622,6 +630,10 @@ body #oneUp_curtain {
   background: url(../images/ajax-loader.gif) center center no-repeat #000000 !important;
   z-index: 9000;
   position: absolute;
+}
+body .checkbox {
+  width: 16px;
+  height: 16px;
 }
 body.retina .no_value {
   font-size: 37px;
@@ -832,6 +844,10 @@ body.retina #header .setting {
 }
 body.retina #header .back {
   padding-left: 5px;
+}
+body.retina .checkbox {
+  width: 32px;
+  height: 32px;
 }
 .no_margin {
   margin-top: 0 !important;

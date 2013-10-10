@@ -227,12 +227,13 @@
     <br/>
     <br/>
 
-    <div class="text-center group">
-        <div class="left">
-            <img src="${media.thumbnail}" class="left" />
-            <div>${media.licence.description}</div>
-            Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)
-            <input type="checkbox" /> <label class="bookmark_image top_btn">Bookmark this image</label>
+    <div class="group">
+        <div class="bookmark_img">
+            <div class="left" style="padding: 0 10px 10px 0;"><img src="${media.thumbnail}" class="left" /></div>
+            <div>This image provided by ${media.collection} at ${media.institution}</div>
+            <!--Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)-->
+            <br /><br />
+            <input type="checkbox" id="bookmark_image" class="checkbox" /> <label for="bookmark_image" class="bookmark_image top_btn">Bookmark this image</label>
         </div>
     </div>
     <h3>${opponentName} SAID <span>ROUND 1</span></h3>
