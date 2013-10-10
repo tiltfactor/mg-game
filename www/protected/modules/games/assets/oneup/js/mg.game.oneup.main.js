@@ -443,6 +443,9 @@ MG_GAME_ONEUP = function ($) {
                                                     } else if (score === -1) {
                                                         //html_class = 'upped_bar';
                                                         MG_GAME_ONEUP.playSound('feedbackoneupped');
+                                                        // opponent need to get 1 extra point
+                                                        var opponent_score_obj = $("#game_screen .opponent label");
+                                                        score_obj.html(parseInt(opponent_score_obj.text(), 10) + 1);
                                                     } else if (parseInt(score, 10) >= 3) {
                                                         //html_class = 'bonus_bar';
                                                         MG_GAME_ONEUP.playSound('feedbacknormal');
@@ -451,7 +454,7 @@ MG_GAME_ONEUP = function ($) {
                                                     that.off('click');
 
                                                     var score_obj = $("#game_screen .you label");
-                                                    score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10, MG_GAME_ONEUP.opponent_name));
+                                                    score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10));
                                                 }, {
                                                     type: 'post',
                                                     data: {
@@ -1448,13 +1451,7 @@ MG_GAME_ONEUP = function ($) {
                         stayTime: MG_GAME_ONEUP.toastStayTime,
                         addClass: MG_GAME_ONEUP.toastBackgroundClass
                     });
-                    /*
-                    // no need here its handled from response
-                    var current_points = parseInt($("#game_screen .you label").text(), 10);
-                    $("#game_screen .you label").html((current_points - 1));
-                    MG_GAME_ONEUP.playSound('feedbackoneupped');
-                    $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
-                    */
+                    // no more actions needed it's handled from response
                 }
             });
 
