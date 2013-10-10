@@ -461,7 +461,8 @@ body .bonus_bar {
   
   }
 }
-body .back_black {
+body .back_black,
+body .standard_bar {
   background-image: url('../images/back_black.png');
   background-repeat: 'repeat-x';
   width: auto;
@@ -470,7 +471,8 @@ body .back_black {
   color: white !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  body .back_black {
+  body .back_black,
+  body .standard_bar {
     background-image: url('../images/back_black@2x.png');
     background-repeat: 'repeat-x';
     /*    width: @w_retina;
@@ -478,13 +480,14 @@ body .back_black {
   
   }
 }
-body .back_black a {
+body .back_black a,
+body .standard_bar a {
   color: white !important;
   text-decoration: none;
   cursor: pointer;
 }
-body .standard_bar {
-  background-image: url('../images/back_standard.png');
+body .up_bar {
+  background-image: url('../images/back_blue.png');
   background-repeat: 'repeat-x';
   width: auto;
   height: auto;
@@ -492,18 +495,13 @@ body .standard_bar {
   color: white !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  body .standard_bar {
-    background-image: url('../images/back_standard@2x.png');
+  body .up_bar {
+    background-image: url('../images/back_blue@2x.png');
     background-repeat: 'repeat-x';
     /*    width: @w_retina;
       height: @h_retina;*/
   
   }
-}
-body .standard_bar a,
-body .standard_bar div {
-  color: white !important;
-  text-decoration: none;
 }
 body .bar_right {
   display: block;

@@ -227,9 +227,13 @@
     <br/>
     <br/>
 
-    <div class="text-center">
-        <img src="${media.thumbnail}" /> <br/><br/>
-        <span class="bookmark_image top_btn">Bookmark this image</span><br/><br/>
+    <div class="text-center group">
+        <div class="left">
+            <img src="${media.thumbnail}" class="left" />
+            <div>${media.licence.description}</div>
+            Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)
+            <input type="checkbox" /> <label class="bookmark_image top_btn">Bookmark this image</label>
+        </div>
     </div>
     <h3>${opponentName} SAID <span>ROUND 1</span></h3>
     {{html opponent.round_1}}

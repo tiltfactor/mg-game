@@ -853,7 +853,7 @@ MG_GAME_ONEUP = function ($) {
                                     throw "MG_API.init() can't retrieve shared secret";
                                 }
                             }
-                        }, {async: false});
+                        });
                     });
 
                     break;
