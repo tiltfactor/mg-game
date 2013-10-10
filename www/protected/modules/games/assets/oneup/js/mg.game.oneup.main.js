@@ -248,7 +248,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
+                            MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
                             $("#challenges").remove();
@@ -626,8 +626,8 @@ MG_GAME_ONEUP = function ($) {
                         }
 
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
-                            $("#final_screen .bookmark_image").off('click').on('click', function () {
-                                //http://localhost/mggameserver/index.php/api/multiplayer/bookmark/gid/OneUp/mediaId/1/playedId/1/
+                            $("#final_screen #bookmark_image").off('click').on('click', function () {
+                                $(this).attr("disabled", true);
                                 MG_API.ajaxCall('/multiplayer/bookmark/gid/' + MG_GAME_API.settings.gid + '/mediaId/' + json.media.id + '/playedId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
                                     $().toastmessage("showToast", {
                                         text: 'You bookmarked this image. Checked already bookmarked in your profile.',
