@@ -248,7 +248,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
+                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
                             $("#challenges").remove();
