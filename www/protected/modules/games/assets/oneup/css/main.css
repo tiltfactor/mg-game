@@ -81,6 +81,9 @@ input {
 :-ms-input-placeholder {
   color: white;
 }
+input.add_word {
+  color: #f6f6f6;
+}
 input.add_word::-webkit-input-placeholder {
   color: white;
   font-size: 25px;
@@ -254,10 +257,6 @@ html.mm-right.mm-opening #mm-blocker {
 }
 #content .header_scores div.opponent {
   color: #f7f200;
-}
-#content #word_screen .header_scores,
-#content #final_screen .header_scores {
-  margin-right: -50px;
 }
 #content .row > div:first-of-type,
 #content .small_row > div:first-of-type {
@@ -506,6 +505,7 @@ body .bar_right {
   font-weight: bold;
   line-height: 10px;
   margin-top: -32px;
+  padding-right: 10px;
   right: 0;
   text-align: right;
   text-transform: uppercase;
@@ -700,10 +700,10 @@ body.retina .row span.round,
 body.retina .row a span.round,
 body.retina .row div.round,
 body.retina .row a div.round,
-body.retina .row spanround span,
-body.retina .row a spanround span,
-body.retina .row divround span,
-body.retina .row a divround span {
+body.retina .row span.round span,
+body.retina .row a span.round span,
+body.retina .row div.round span,
+body.retina .row a div.round span {
   font-size: 70px !important;
 }
 body.retina .row_round {
@@ -720,16 +720,20 @@ body.retina .small_row div {
   line-height: 70px;
 }
 body.retina .small_row div span {
-  font-size: 45px !important;
+  font-size: 45px;
 }
 body.retina .small_row input {
   height: 70px;
   font-size: 60px;
 }
 body.retina .bar_right {
-  font-size: 20px;
+  font-size: 20px !important;
   line-height: 22px;
-  margin-top: -67px;
+  margin-top: -68px;
+  padding-right: 10px;
+}
+body.retina .bar_right.lines_2 {
+  margin-top: -62px;
 }
 body.retina #content .padding {
   padding-left: 20px;
@@ -737,7 +741,7 @@ body.retina #content .padding {
 }
 body.retina #content .row,
 body.retina #content .small_row > div:first-of-type {
-  font-size: 40px !important;
+  font-size: 60px !important;
 }
 body.retina #content .row,
 body.retina #content .small_row > div:first-of-type {
@@ -762,13 +766,9 @@ body.retina #content .header_scores div {
 }
 body.retina #content #game_screen .header_scores {
   margin-top: -100px;
-  margin-right: -50px;
-  padding-right: 0;
 }
 body.retina #content #word_screen .header_scores {
   margin-top: -18px;
-  margin-right: -50px;
-  padding-right: 0;
 }
 body.retina #content #word_screen .header_scores div,
 body.retina #content #word_screen .header_scores span {
@@ -803,7 +803,7 @@ body.retina #content .delete {
   width: 62px;
   height: 44px;
   margin-top: -62px;
-  margin-right: -60px;
+  margin-right: -55px;
 }
 body.retina #content #list_institutions {
   padding-top: 25px;
@@ -812,6 +812,9 @@ body.retina #content #list_institutions {
 body.retina #content .institution_logo {
   width: 280px;
   height: 280px;
+}
+body.retina #header {
+  padding: 10px 5px;
 }
 body.retina #header .setting {
   width: 68px;
@@ -835,4 +838,7 @@ body.retina #header .back {
 }
 .username {
   font-weight: bolder !important;
+}
+.no_right_padding {
+  padding-right: 0px !important;
 }

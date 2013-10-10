@@ -193,7 +193,7 @@
 
 <script id="template-word_screen" type="text/x-jquery-tmpl">
     <div class="row back_dark_gray round_row">
-        <div>
+        <div class="no_right_padding" style="white-space: auto !important;">
             <span class="round">ROUND <span>${current_level}</span></span>
             <div class="right header_scores">
                 <div class="you">You <span>${score}</span></div>
@@ -210,8 +210,8 @@
 </script>
 
 <script id="template-final_screen" type="text/x-jquery-tmpl">
-    <div class="row back_dark_gray">
-        <div>
+    <div class="row back_dark_gray no_right_padding">
+        <div class="no_right_padding">
             <span class="round">${game_result}</span>
             <div class="right header_scores">
                 <div class="you">You <span>${score}</span></div>
@@ -327,8 +327,8 @@
 </script>
 
 <script id="template-game_screen" type="text/x-jquery-tmpl">
-    <div class="row back_dark_gray">
-        <div><span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span></div>
+    <div class="row back_dark_gray no_right_padding">
+        <div class="no_right_padding"><span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span></div>
         <div class="right header_scores">
             <div class="you">You <span>${turn.score}</span></div>
             <div class="opponent">${opponentName} ${turn.opponentScore}</div>
