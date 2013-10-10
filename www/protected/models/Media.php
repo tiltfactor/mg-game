@@ -36,8 +36,11 @@ class Media extends BaseMedia
      *
      * @return object CActiveDataProvider the dataprovider
      */
-    public function search()
+    public function search($tagRequired=false)
     {
+        if($tagRequired && !isset($_GET["Custom"])){
+            return new CActiveDataProvider($this,array('criteria'=>array('condition'=>'name=\'impossible___request___\'',)));
+        }
         $criteria = new CDbCriteria;
         $criteria->alias = 't';
         // TODO: we want to show the tag count for each media.
@@ -111,7 +114,6 @@ class Media extends BaseMedia
         }
 
         if (isset($_GET['Media']['tag_count'])) {
-
 
             // as YII does not support a $criteria->compare on a HAVING clause
             // we have to extract magic helpers hourselves

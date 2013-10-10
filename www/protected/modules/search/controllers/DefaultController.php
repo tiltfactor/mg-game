@@ -22,6 +22,7 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
+        $institutions = Institution::model()->with('collections')->findAll('status=1');
 
         $model = new Media('search');
         $model->unsetAttributes();
@@ -39,6 +40,7 @@ class DefaultController extends Controller
         $this->render('index',
             array(
                 'model' => $model,
+                'institutions' =>  $institutions
             )
         );
     }

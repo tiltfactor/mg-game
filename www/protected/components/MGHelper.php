@@ -134,17 +134,19 @@ class MGHelper
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
         if (!isset(Yii::app()->session[$api_id . '_SHARED_SECRET'])) {
             Yii::app()->session[$api_id . '_SHARED_SECRET'] = uniqid($api_id) . substr(Yii::app()->session->sessionID, 0, 5);
-        }else{
-            $session = Session::model()->find('shared_secret=:sharedSecret',array(':sharedSecret'=>Yii::app()->session[$api_id . '_SHARED_SECRET']));
-            $session->username = $user_name;
-            $session->user_id = $user_id;
+        } else {
+            $session = Session::model()->find('shared_secret=:sharedSecret', array(':sharedSecret' => Yii::app()->session[$api_id . '_SHARED_SECRET']));
+            if ($session) {
+                $session->username = $user_name;
+                $session->user_id = $user_id;
 
-            if ($session->validate()) {
-                $session->update();
-            } else {
-                throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+                if ($session->validate()) {
+                    $session->update();
+                } else {
+                    throw new CHttpException(500, Yii::t('app', 'Internal Server Error.'));
+                }
+                $refresh = false;
             }
-            $refresh=false;
         }
         if (!isset(Yii::app()->session[$api_id . '_SESSION_ID']) || $refresh) {
             $session = new Session;

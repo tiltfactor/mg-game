@@ -1,24 +1,9 @@
-<?php
 
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('media-grid', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-?>
-
-<?php echo GxHtml::link(Yii::t('app', 'Advanced Search'), '#', array('class' => 'search-button')); ?>
-<div class="search-form">
+<div class="search-form" style="display: block;">
     <?php $this->renderPartial('_search', array(
     'model' => $model,
+    'institutions' => $institutions
 )); ?>
 </div><!-- search-form -->
 
@@ -28,14 +13,15 @@ $tagDialog = $this->widget('MGTagJuiDialog');
 // Maximum number of tags to show in the 'Top Tags' column.
 $max_toptags = 15;
 
-function generateImage($data) {
-    $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url,$data->mime_type,$data->name),$data->name) . " <span>" . $data->name . "</span>";
+function generateImage($data)
+{
+    $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url, $data->mime_type, $data->name), $data->name) . " <span>" . $data->name . "</span>";
     return $media;
 }
 
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'media-grid',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model->search(true),
     'filter' => $model,
     'cssFile' => Yii::app()->request->baseUrl . "/css/yii/gridview/styles.css",
     'pager' => array('cssFile' => Yii::app()->request->baseUrl . "/css/yii/pager.css"),
@@ -68,7 +54,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'type' => 'html',
             'value' => '$data->institution->name',
         ),
-       ),
+    ),
 ));
 echo CHtml::endForm();
 
