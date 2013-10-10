@@ -248,7 +248,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"139","opponentId":9,"opponentName":"test","turnUserId":0}');
+                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"139","opponentId":9,"opponentName":"test","turnUserId":0}');
                             //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
@@ -434,7 +434,7 @@ MG_GAME_ONEUP = function ($) {
 
                                                     that.replaceWith(calculatedRow(response[0].tag, response[0].score, MG_GAME_ONEUP.opponent_name, response[0].type));
 
-                                                    var score = response[0].score,
+                                                    var score = parseInt(response[0].score, 10),
                                                         tag_type = response[0].type;
                                                     if (parseInt(score, 10) === 1 && tag_type === 'new') {
                                                         MG_GAME_ONEUP.playSound('feedbacknormal');
@@ -451,7 +451,7 @@ MG_GAME_ONEUP = function ($) {
 
                                                     that.off('click');
 
-                                                    var score_obj = $("#game_screen .you span");
+                                                    var score_obj = $("#game_screen .you label");
                                                     score_obj.html(parseInt(score_obj.text(), 10) + parseInt(response[0].score, 10, MG_GAME_ONEUP.opponent_name));
                                                 }, {
                                                     type: 'post',
@@ -1299,7 +1299,7 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_API.curtain.hide();
         },
         playSound: function (index) {
-            console_log(index);
+            console_log("Play sound: " + index);
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit: function () {
@@ -1449,10 +1449,13 @@ MG_GAME_ONEUP = function ($) {
                         stayTime: MG_GAME_ONEUP.toastStayTime,
                         addClass: MG_GAME_ONEUP.toastBackgroundClass
                     });
+                    /*
+                    // no need here its handled from response
                     var current_points = parseInt($("#game_screen .you label").text(), 10);
                     $("#game_screen .you label").html((current_points - 1));
                     MG_GAME_ONEUP.playSound('feedbackoneupped');
                     $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
+                    */
                 }
             });
 
@@ -1474,6 +1477,7 @@ MG_GAME_ONEUP = function ($) {
 
                 if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                     var current_points = parseInt($("#game_screen .you label").text(), 10);
+
                     $("#game_screen .you label").html((current_points + 1));
                     MG_GAME_ONEUP.playSound('feedbackbonus');
                     $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
@@ -1626,7 +1630,7 @@ function calculatedRow (tag, score, opponent_name, tag_type) {
         new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
     } else if (parseInt(score, 10) >= 3) {
         html_class = 'bonus_bar';
-        new_html = '<span>+3</span><span class="tag">' + tag + '</span><span class="bar_right lines_2" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
+        new_html = '<span>+' + parseInt(score, 10) + '</span><span class="tag">' + tag + '</span><span class="bar_right lines_2" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
     } else if (parseInt(score, 10) === 2) {
         html_class = 'bonus_bar';
         new_html = '<span>+2</span><span class="tag">' + tag + '</span>';
