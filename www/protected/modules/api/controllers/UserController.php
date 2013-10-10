@@ -8,7 +8,7 @@ class UserController extends ApiController {
             'IPBlock',
             'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
             'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage, ',
-            'sharedSecret - sharedSecret ', // the API is protected by a shared secret this filter ensures that it is regarded
+            'sharedSecret - sharedSecret, login ', // the API is protected by a shared secret this filter ensures that it is regarded
         );
     }
 
@@ -77,21 +77,19 @@ class UserController extends ApiController {
             // collect user input data
             Yii::import("application.modules.user.components.UserIdentity");
             Yii::import("application.modules.user.models.UserLogin");
-
             $model = new UserLogin;
             $model->username = $_POST['login'];
             $model->password = $_POST['password'];
             $model->rememberMe = false;
-
             $data = array();
             // validate user input and redirect to previous page if valid
             if ($model->validate()) { // validate mean the user's credentials where correct
                 $model->setLastVisit();
-                $data = array();
+               // $data = array();
                 $data['status'] = "ok";
                 $this->sendResponse($data);
             } else {
-                $data = array();
+              //  $data = array();
                 $data['status'] = "error";
                 $data['errors'] = $model->getErrors();
                 $this->sendResponse($data, 403);
