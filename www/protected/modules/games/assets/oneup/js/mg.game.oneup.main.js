@@ -248,8 +248,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"139","opponentId":9,"opponentName":"test","turnUserId":0}');
-                            //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
+                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
                             $("#challenges").remove();
@@ -1624,17 +1623,17 @@ function calculatedRow (tag, score, opponent_name, tag_type) {
         new_html = '<span>+1</span><span class="tag">' + tag + '</span>';
     } else if (parseInt(score, 10) === 1) {
         html_class = 'up_bar';
-        new_html = '<span>+1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
+        new_html = '<span>+1</span><span class="tag">' + tag + '</span>';
     } else if (score === -1) {
         html_class = 'upped_bar';
         new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
+    }  else if (parseInt(score, 10) === 2) {
+        html_class = 'bonus_bar';
+        new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
     } else if (parseInt(score, 10) >= 3) {
         html_class = 'bonus_bar';
         new_html = '<span>+' + parseInt(score, 10) + '</span><span class="tag">' + tag + '</span><span class="bar_right lines_2" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
-    } else if (parseInt(score, 10) === 2) {
-        html_class = 'bonus_bar';
-        new_html = '<span>+2</span><span class="tag">' + tag + '</span>';
-    } else {
+    }else {
         html_class = 'standard_bar';
         new_html = '<span>' + score + '</span><span class="tag">' + tag + '</span>';
     }
