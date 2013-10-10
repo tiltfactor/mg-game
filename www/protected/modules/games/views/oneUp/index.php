@@ -236,12 +236,15 @@
             <input type="checkbox" id="bookmark_image" class="checkbox" /> <label for="bookmark_image" class="bookmark_image top_btn">Bookmark this image</label>
         </div>
     </div>
+    <div class="fade">
     <h3>${opponentName} SAID <span>ROUND 1</span></h3>
     {{html opponent.round_1}}
     <h3><span>ROUND 2</span></h3>
     {{html opponent.round_2}}
     <h3><span>ROUND 3</span></h3>
     {{html opponent.round_3}}
+    </div>
+    <div id='overlay'></div>
     <h3>YOU SAID <span>ROUND 1</span></h3>
     {{html you.round_1}}
     <h3><span>ROUND 2</span></h3>

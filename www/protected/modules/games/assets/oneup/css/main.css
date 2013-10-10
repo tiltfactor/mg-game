@@ -189,6 +189,14 @@ html.mm-right.mm-opening #mm-blocker {
 #content.hide_content {
   margin: 0 48px 0 0 !important;
 }
+#content #overlay {
+  position: absolute;
+  background: white;
+  left: 0;
+  z-index: 900;
+  width: 100%;
+  opacity: 0.3;
+}
 #content .padding {
   padding-left: 25px;
   padding-right: 25px;
@@ -230,6 +238,7 @@ html.mm-right.mm-opening #mm-blocker {
   padding-left: 15px;
   padding-right: 15px;
   margin-top: 20px;
+  text-transform: uppercase;
 }
 #content h4 {
   color: #a3a3a3;

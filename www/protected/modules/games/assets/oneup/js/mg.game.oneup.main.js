@@ -248,7 +248,8 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"142","opponentId":2,"opponentName":"alabala","turnUserId":0}');
+                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"144","opponentId":2,"opponentName":"alabala","turnUserId":0}');
+                            ////[{"playedGameId":"144","opponentId":3,"opponentName":"alabala","turnUserId":0}]
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
                             $("#challenges").remove();
@@ -626,6 +627,13 @@ MG_GAME_ONEUP = function ($) {
                         }
 
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
+                            var scrollTop     = $(window).scrollTop(),
+                                elementOffset = $("#final_screen .fade").offset().top,
+                                overlay_top      = (elementOffset - scrollTop),
+                                overlay_height = $("#final_screen .fade").height();
+
+                            $("#overlay").css({'height': overlay_height, 'top': overlay_top});
+
                             $("#final_screen #bookmark_image").off('click').on('click', function () {
                                 $(this).attr("disabled", true);
                                 MG_API.ajaxCall('/multiplayer/bookmark/gid/' + MG_GAME_API.settings.gid + '/mediaId/' + json.media.id + '/playedId/' + MG_GAME_ONEUP.pass_game_id , function(turn_response) {
