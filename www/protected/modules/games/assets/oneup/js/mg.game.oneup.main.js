@@ -248,7 +248,7 @@ MG_GAME_ONEUP = function ($) {
                         MG_API.ajaxCall('/multiplayer/getChallenges/gid/' + MG_GAME_API.settings.gid, function (challenges_response) {
                             challenges_response.your_turn = your_turn;
                             challenges_response.waiting_turn = waiting_turn;
-                            //MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"139","opponentId":9,"opponentName":"test","turnUserId":0}');
+                            MG_GAME_ONEUP.endedGames[0] = JSON.parse('{"playedGameId":"139","opponentId":9,"opponentName":"test","turnUserId":0}');
                             //[{"playedGameId":"48","opponentId":3,"opponentName":"alabala","turnUserId":0}]
                             challenges_response.finished_games = MG_GAME_ONEUP.endedGames;
 
@@ -783,19 +783,18 @@ MG_GAME_ONEUP = function ($) {
                         $( "#how_to div.row:eq('" + my_iter + "')").show();
                     }
 
-                    if ($('body').hasClass('no-touch_device')) {
+                    if ($('body').hasClass('no-touch_device') || ($('body').hasClass('touch_device') && BrowserDetect.browser === 'Other')) {
                         console_log('no touch device');
                         Hammer(swipe_img).off('click').on('click', function(e) { // swiperight   $('#image_gallery')
                             e.stopPropagation();
-                            next_iter = my_iter - 1;
-                            if(next_iter < 0) {
-                                next_iter = numb_img - 1;
+                            next_iter = my_iter + 1;
+                            if(next_iter === numb_img ) {
+                                next_iter = 0;
                             }
-                            swipe_images(my_iter, next_iter, 'right');
+                            swipe_images(my_iter, next_iter, 'left');
                             my_iter = next_iter;
                         });
-                    }
-                    else  if ($('body').hasClass('touch_device')) {
+                    } else  if ($('body').hasClass('touch_device')) {
                         console_log('touch device');
                         Hammer(swipe_img).off('swipe').on("swipe", function(e) {
                             e.stopPropagation();
@@ -1450,8 +1449,8 @@ MG_GAME_ONEUP = function ($) {
                         stayTime: MG_GAME_ONEUP.toastStayTime,
                         addClass: MG_GAME_ONEUP.toastBackgroundClass
                     });
-                    var current_points = parseInt($("#game_screen .you span").text(), 10);
-                    $("#game_screen .you span").html((current_points - 1));
+                    var current_points = parseInt($("#game_screen .you label").text(), 10);
+                    $("#game_screen .you label").html((current_points - 1));
                     MG_GAME_ONEUP.playSound('feedbackoneupped');
                     $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
                 }
@@ -1474,8 +1473,8 @@ MG_GAME_ONEUP = function ($) {
                 });
 
                 if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
-                    var current_points = parseInt($("#game_screen .you span").text(), 10);
-                    $("#game_screen .you span").html((current_points + 1));
+                    var current_points = parseInt($("#game_screen .you label").text(), 10);
+                    $("#game_screen .you label").html((current_points + 1));
                     MG_GAME_ONEUP.playSound('feedbackbonus');
                     $("#game_screen .words").find("div[tag='" + response.tag.tag + "']").replaceWith(calculatedRow (response.tag.tag, response.tag.score, MG_GAME_ONEUP.opponent_name, ''));
                 }

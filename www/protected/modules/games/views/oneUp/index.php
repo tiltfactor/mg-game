@@ -196,8 +196,8 @@
         <div class="no_right_padding" style="white-space: auto !important;">
             <span class="round">ROUND <span>${current_level}</span></span>
             <div class="right header_scores">
-                <div class="you">You <span>${score}</span></div>
-                <div class="opponent">${opponentName} ${opponentScore}</div>
+                <div class="you"><span class="active_player">You</span> <label>${score}</label></div>
+                <div class="opponent">${opponentName} <label>${opponentScore}</label></div>
             </div>
         </div>
     </div>
@@ -214,8 +214,8 @@
         <div class="no_right_padding">
             <span class="round">${game_result}</span>
             <div class="right header_scores">
-                <div class="you">You <span>${score}</span></div>
-                <div class="opponent">${opponentName} ${opponentScore}</div>
+                <div class="you">You <label>${score}</label></div>
+                <div class="opponent">${opponentName} <label>${opponentScore}</label></div>
             </div>
         </div>
     </div>
@@ -330,8 +330,8 @@
     <div class="row back_dark_gray no_right_padding">
         <div class="no_right_padding"><span class="round" status="playing" opponent="${opponentStatus}">ROUND ${current_level}</span></div>
         <div class="right header_scores">
-            <div class="you">You <span>${turn.score}</span></div>
-            <div class="opponent">${opponentName} ${turn.opponentScore}</div>
+            <div class="you"><span class="active_player">You</span> <label>${turn.score}</label></div>
+            <div class="opponent"><span class="waiting_player">${opponentName}</span> <label>${turn.opponentScore}</label></div>
         </div>
     </div>
     <div class="main_gray">

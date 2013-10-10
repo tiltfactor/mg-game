@@ -293,11 +293,19 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
 
     div {
       height: 15px;
-      &.you {
-        color: #a3a3a3;
+
+      &.you, &.opponent {
+        text-transform: capitalize;
       }
-      &.opponent {
-        color: #f7f200;
+
+      label {
+        text-align: left;
+        width: 20px;
+        display: inline-flex;
+      }
+
+      .active_player {
+        color: #f7f200 !important;
       }
     }
   }
@@ -639,6 +647,10 @@ body.retina {
 
       &.header_scores {
         font-size: 37px !important;
+
+        label {
+          width: 40px;
+        }
       }
 
       &.round, &.round span {

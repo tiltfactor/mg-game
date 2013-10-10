@@ -252,11 +252,17 @@ html.mm-right.mm-opening #mm-blocker {
 #content .header_scores div {
   height: 15px;
 }
-#content .header_scores div.you {
-  color: #a3a3a3;
-}
+#content .header_scores div.you,
 #content .header_scores div.opponent {
-  color: #f7f200;
+  text-transform: capitalize;
+}
+#content .header_scores div label {
+  text-align: left;
+  width: 20px;
+  display: inline-flex;
+}
+#content .header_scores div .active_player {
+  color: #f7f200 !important;
 }
 #content .row > div:first-of-type,
 #content .small_row > div:first-of-type {
@@ -695,6 +701,12 @@ body.retina .row a span.header_scores,
 body.retina .row div.header_scores,
 body.retina .row a div.header_scores {
   font-size: 37px !important;
+}
+body.retina .row span.header_scores label,
+body.retina .row a span.header_scores label,
+body.retina .row div.header_scores label,
+body.retina .row a div.header_scores label {
+  width: 40px;
 }
 body.retina .row span.round,
 body.retina .row a span.round,
