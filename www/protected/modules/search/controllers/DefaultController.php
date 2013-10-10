@@ -14,7 +14,7 @@ class DefaultController extends Controller
     {
         return array(
             array('allow',
-                'users'=>array('*'),
+                'users' => array('*'),
             ),
             array('deny'),
         );
@@ -23,9 +23,22 @@ class DefaultController extends Controller
     public function actionIndex()
     {
 
+        $model = new Media('search');
+        $model->unsetAttributes();
+
+        if (isset($_GET['Media']))
+            $model->setAttributes($_GET['Media']);
+
+        $user = User::loadUser(Yii::app()->user->id);
+        if ($user && $user->role == INSTITUTION) {
+            $institutions = Institution::model()->find('user_id=' . Yii::app()->user->Id);
+            $model->setAttribute('institution_id', $institutions->id);
+        }
+
+
         $this->render('index',
             array(
-
+                'model' => $model,
             )
         );
     }
