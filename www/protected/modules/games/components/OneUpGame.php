@@ -87,45 +87,49 @@ class OneUpGame extends MGMultiPlayer
                 $prvTurn = $this->gameTurn->turn - 1;
                 $penalty = false;
                 if ($prvTurn > 0) {
-                    foreach ($opponentTagDTOs[$prvTurn] as $row) {
-                        if ($row->tag == $tag->tag) {
-                            $tag->score = -1;
-                            $payload = array();
-                            $payload['tag'] = $tag;
-                            $payload['playedGameId'] = $this->playedGame->id;
-
-                            $this->pushMessage($this->userOnline->user_id, MGMultiPlayer::PUSH_PENALTY, json_encode($payload));
-                            $this->updateSubmitToBonus($submits, $row);
-                            if ($opponentOnline) {
+                    for ($i = 1; $i <= $prvTurn; $i++) {
+                        foreach ($opponentTagDTOs[$prvTurn] as $row) {
+                            if ($row->tag == $tag->tag) {
+                                $tag->score = -1;
                                 $payload = array();
                                 $payload['tag'] = $tag;
-                                $payload['tag']->score = 1;
                                 $payload['playedGameId'] = $this->playedGame->id;
-                                $payload['opponentName'] = $this->userOnline->session->username;
-                                $this->pushMessage($opponentId, MGMultiPlayer::PUSH_BONUS, json_encode($payload));
-                            }
-                            $tag->score = -1;
 
-                            //Player notified of penalty
-                            //Opponent receives OneUp bonus and notification
-                            if ($this->playedGame->session_id_1 == $this->sessionId) {
-                                $this->playedGame->score_2 += 1;
-                            } else {
-                                $this->playedGame->score_1 += 1;
-                            }
-                            if (!$this->playedGame->update()) {
-                                $message = "";
-                                $errors = $this->playedGame->getErrors();
-                                if (is_array($errors)) {
-                                    foreach ($errors as $field => $error) {
-                                        $message .= $error[0] . ";";
-                                    }
+                                $this->pushMessage($this->userOnline->user_id, MGMultiPlayer::PUSH_PENALTY, json_encode($payload));
+                                $this->updateSubmitToBonus($submits, $row);
+                                if ($opponentOnline) {
+                                    $payload = array();
+                                    $payload['tag'] = $tag;
+                                    $payload['tag']->score = 1;
+                                    $payload['playedGameId'] = $this->playedGame->id;
+                                    $payload['opponentName'] = $this->userOnline->session->username;
+                                    $this->pushMessage($opponentId, MGMultiPlayer::PUSH_BONUS, json_encode($payload));
                                 }
-                                throw new CHttpException(400, Yii::t('app', $message));
+                                $tag->score = -1;
+
+                                //Player notified of penalty
+                                //Opponent receives OneUp bonus and notification
+                                if ($this->playedGame->session_id_1 == $this->sessionId) {
+                                    $this->playedGame->score_2 += 1;
+                                } else {
+                                    $this->playedGame->score_1 += 1;
+                                }
+                                if (!$this->playedGame->update()) {
+                                    $message = "";
+                                    $errors = $this->playedGame->getErrors();
+                                    if (is_array($errors)) {
+                                        foreach ($errors as $field => $error) {
+                                            $message .= $error[0] . ";";
+                                        }
+                                    }
+                                    throw new CHttpException(400, Yii::t('app', $message));
+                                }
+                                $penalty = true;
+                                $tag->type = "penalty";
+
+                                $i = $prvTurn + 1;
+                                break;
                             }
-                            $penalty = true;
-                            $tag->type = "penalty";
-                            break;
                         }
                     }
                 }
