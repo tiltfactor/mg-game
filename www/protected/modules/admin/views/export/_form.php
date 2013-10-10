@@ -10,7 +10,7 @@
   <?php if ($count_affected_medias > 0) : ?>
   <div class="row">
       <h4><span><b><?php print $count_affected_medias; ?></b> medias found for export</span>
-      <?php echo CHtml::button(Yii::t('app', 'Export Medias'), array('id' => 'buttonExport')); ?></h4>
+      <?php echo CHtml::button(Yii::t('app', 'Export Media'), array('id' => 'buttonExport')); ?></h4>
   </div>
   <?php endif; ?>
   
@@ -201,7 +201,7 @@
   var onexport = function() {
     if (!active) {
       $(window).bind('beforeunload', function () {return 'Leaving the page might disturb the exporting process.';});
-      MG_API.popup('<h1>Processing Export</h1><p><span id="found">' + medias_total + '</span> medias, <span id="processed">0</span> processed, <span id="left">0</span> left</p><p>Please do not leave the page or close the browser\'s tab, or window.', {
+      MG_API.popup('<h1>Processing Export</h1><p><span id="found">' + medias_total + '</span> media, <span id="processed">0</span> processed, <span id="left">0</span> left</p><p>Please do not leave the page or close the browser\'s tab, or window.', {
         showCloseButton : false,
         onClosed : function () {active = false;$(window).unbind('beforeunload');}
       })

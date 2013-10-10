@@ -55,7 +55,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 		array(
       'cssClassExpression' => "'top-medias'",
-      'header' => Yii::t('app', 'Top Medias'),
+      'header' => Yii::t('app', 'Top Media'),
       'type' => 'html',
       'value'=>'$data->getTopMedias(5)',
     ),
