@@ -36,10 +36,10 @@ class Media extends BaseMedia
      *
      * @return object CActiveDataProvider the dataprovider
      */
-    public function search($tagRequired=false)
+    public function search($tagRequired = false)
     {
-        if($tagRequired && !isset($_GET["Custom"])){
-            return new CActiveDataProvider($this,array('criteria'=>array('condition'=>'name=\'impossible___request___\'',)));
+        if ($tagRequired && !isset($_GET["Custom"])) {
+            return new CActiveDataProvider($this, array('criteria' => array('condition' => 'name=\'impossible___request___\'',)));
         }
         $criteria = new CDbCriteria;
         $criteria->alias = 't';
@@ -96,9 +96,18 @@ class Media extends BaseMedia
                 }
             }
 
+            if (isset($_GET["Custom"]["institutions"]) && is_array($_GET["Custom"]["institutions"])) {
+                $criteria->join .= ' LEFT JOIN {{institution}} inst ON inst.id=t.institution_id';
+                $criteria->addInCondition('inst.id', array_values($_GET["Custom"]["institutions"]));
+            }
+
             if (isset($_GET["Custom"]["collections"]) && is_array($_GET["Custom"]["collections"])) {
                 $criteria->join .= ' LEFT JOIN {{collection_to_media}} isi ON isi.media_id=t.id';
                 $criteria->addInCondition('isi.collection_id', array_values($_GET["Custom"]["collections"]));
+            }
+
+            if (isset($_GET["Custom"]["media_types"]) && is_array($_GET["Custom"]["media_types"])) {
+                $criteria->addInCondition('LEFT(t.mime_type, 5)', array_values($_GET["Custom"]["media_types"]));
             }
 
             if (isset($_GET["Custom"]["username"]) && trim($_GET["Custom"]["username"]) != "") {
@@ -276,7 +285,7 @@ class Media extends BaseMedia
             'id' => 'id',
             'sort' => array(
                 'attributes' => array(
-                    'id', 'name', 'counted', 'mime_type','url'
+                    'id', 'name', 'counted', 'mime_type', 'url'
                 ),
             ),
             'pagination' => array(

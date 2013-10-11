@@ -1,23 +1,3 @@
-<?php
-Yii::app()->clientScript->registerScript('combo', "
-var drop2 = $('select[name=\"Custom[collections]\"] option');
-$('select[name=\"Custom[institution]\"]').change(function () {
-   var instID =  parseInt(this.value);
-   var cDrop = $('select[name=\"Custom[collections]\"] option');
-
-   cDrop.show();
-
-   cDrop.filter(function(){
-                        if(instID==0) return false;
-                        var id = $(this).attr('institution-id');
-                        if(this.value==0) return false;
-                        else if(id == instID) return false;
-                        else return true;
-                      }).hide();
-});
-");
-?>
-
 <div class="wide form">
 
     <?php $form = $this->beginWidget('GxActiveForm', array(
@@ -49,26 +29,28 @@ $('select[name=\"Custom[institution]\"]').change(function () {
         <?php echo Yii::t('app', "(show medias that have at least one (OR) or all (AND) of the given tags)"); ?>
     </div>
     <!-- row -->
-
     <div class="row">
-        <select id="institutionCombo" name="Custom[institution]">
-            <option value="0">All</option>
-            <?php
-            foreach ($institutions as $ins)
-                echo '<option value="' . $ins->id . '" data-shown="0,2">' . $ins->name . '</option>';
-            ?>
-        </select>
-        <select id="collectionCombo" name="Custom[collections]">
-            <option value="0" data-shown="0,0">All</option>
-            <?php
-            foreach ($institutions as $ins) {
-                foreach ($ins->collections as $coll) {
-                    echo '<option value="' . $coll->id . '" institution-id="' . $ins->id . '">' . $coll->name . '</option>';
-                }
-            }
-
-            ?>
-        </select>
+        <?php echo CHtml::label(Yii::t('app', "Institution(s)"), "Custom_institutions") ?>
+        <?php echo CHtml::checkBoxList("Custom[institutions]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["institutions"])) ? $_GET["Custom"]["institutions"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Institution::model()->findAllAttributes(null, true)), false, true), array(
+        'template' => '<div class="checkbox">{input} {label}</div>',
+        'separator' => '',
+    )); ?>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <?php echo CHtml::label(Yii::t('app', "Collection(s)"), "Custom_collections") ?>
+        <?php echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"])) ? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Collection::model()->findAllAttributes(null, true)), false, true), array(
+        'template' => '<div class="checkbox">{input} {label}</div>',
+        'separator' => '',
+    )); ?>
+    </div>
+    <!-- row -->
+    <div class="row">
+        <?php echo CHtml::label(Yii::t('app', "Media type(s)"), "Custom_media_type") ?>
+        <?php echo CHtml::checkBoxList("Custom[media_types]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["media_types"])) ? $_GET["Custom"]["media_types"] : ''), GxHtml::encodeEx(array('image'=>'image','video'=>'video','audio'=>'audio'), false, true), array(
+        'template' => '<div class="checkbox">{input} {label}</div>',
+        'separator' => '',
+    )); ?>
     </div>
     <!-- row -->
 
