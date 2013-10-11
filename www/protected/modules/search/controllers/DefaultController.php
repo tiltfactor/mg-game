@@ -22,6 +22,11 @@ class DefaultController extends Controller
 
     public function actionIndex()
     {
+        $cs = Yii::app()->clientScript;
+        $cs->registerCoreScript('jquery');
+        $cs->registerCssFile(SearchModule::getAssetsUrl() . '/css/main.css');
+        $cs->registerScriptFile(SearchModule::getAssetsUrl() . '/js/search.js', CClientScript::POS_END);
+
         $institutions = Institution::model()->with('collections')->findAll('status=1');
 
         $model = new Media('search');
