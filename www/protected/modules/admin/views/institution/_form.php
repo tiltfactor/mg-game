@@ -25,6 +25,11 @@
     <?php echo $form->error($model,'url'); ?>
     </div><!-- row -->
     <div class="row">
+        <?php echo $form->labelEx($model,'website'); ?>
+        <?php echo $form->textField($model, 'website', array('maxlength' => 255)); ?>
+        <?php echo $form->error($model,'website'); ?>
+    </div><!-- row -->
+    <div class="row">
     <?php echo $form->labelEx($model,'token'); ?>
     <?php echo $form->textField($model, 'token', array('maxlength' => 128)); ?>
     <?php echo $form->error($model,'token'); ?>

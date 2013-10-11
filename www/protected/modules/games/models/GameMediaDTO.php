@@ -58,4 +58,8 @@ class GameMediaDTO
      * @var string
      */
     public $institution;
+    /**
+     * @var string
+     */
+    public $instWebsite;
 }

@@ -439,7 +439,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where[] = $where_add;
             }
             $result = Yii::app()->db->createCommand()
-                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token,inst.name as instName,is.name as collName')
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token,inst.website as instWebsite,inst.name as instName,is.name as collName')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
                 ->join('{{collection}} is', 'is.id=is2i.collection_id')
@@ -467,7 +467,7 @@ abstract class MGMultiPlayer extends CComponent
                 $where[] = $where_add;
             }
             $result = Yii::app()->db->createCommand()
-                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id,(i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token,inst.name as instName,is.name as collName')
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id,(i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token,inst.website as instWebsite,inst.name as instName,is.name as collName')
                 ->from('{{collection_to_media}} is2i')
                 ->join('{{media}} i', 'i.id=is2i.media_id')
                 ->join('{{collection}} is', 'is.id=is2i.collection_id')
@@ -497,6 +497,7 @@ abstract class MGMultiPlayer extends CComponent
                     $mediaDTO->mimeType = $media["mime_type"];
                     $mediaDTO->collection = $media["collName"];
                     $mediaDTO->institution = $media["instName"];
+                    $mediaDTO->instWebsite = $media["instWebsite"];
                     $mediaDTO->licence = $this->getLicenceInfo($media['licence_id']);
 
                     if ($mediaType === "image") {
@@ -517,9 +518,9 @@ abstract class MGMultiPlayer extends CComponent
                 }
             }
 
-            if(!$secondAttempt){
+            if (!$secondAttempt) {
                 return $this->getMedia(true);
-            }else{
+            } else {
                 return null;
             }
         } else {

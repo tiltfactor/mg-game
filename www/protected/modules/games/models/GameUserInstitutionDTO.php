@@ -19,6 +19,10 @@ class GameUserInstitutionDTO
      */
     public $logo;
     /**
+     * @var string
+     */
+    public $website;
+    /**
      * @var  boolean
      */
     public $isBanned;

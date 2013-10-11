@@ -59,6 +59,7 @@ class ContentController extends CController
                 $institution->user_id = $user->id;
                 $institution->token = md5($institution->name . "_" . $institution->url);
                 $institution->ip = $institutionDto->ip;
+                $institution->website = $institutionDto->website;
                 $institution->created = date('Y-m-d H:i:s');
 
                 if ($institution->save()) {
@@ -108,6 +109,7 @@ class ContentController extends CController
                 $institution->logo_url = $institutionDto->logoUrl;
                 $institution->description = $institutionDto->description;
                 $institution->ip = $institutionDto->ip;
+                $institution->website = $institutionDto->website;
                 $institution->token = md5($institution->name . "_" . $institution->url);
                 if ($institution->save()) {
                     $res = new RegisterResult();

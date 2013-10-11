@@ -60,6 +60,7 @@ class MGUserInstitution extends CComponent
                 $inst->description = $row->description;
                 $inst->logo = $row->logo_url;
                 $inst->name = $row->name;
+                $inst->website = $row->website;
                 $inst->isBanned = false;
                 array_push($result, $inst);
             }
@@ -100,6 +101,7 @@ class MGUserInstitution extends CComponent
                 $inst->description = $row->description;
                 $inst->logo = $row->logo_url;
                 $inst->name = $row->name;
+                $inst->website = $row->website;
                 $inst->isBanned = false;
                 array_push($result, $inst);
             }

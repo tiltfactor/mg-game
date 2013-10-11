@@ -51,4 +51,9 @@ class InstitutionDTO {
      */
     public $ip;
 
+    /**
+     * @var string
+     * @soap
+     */
+    public $website;
 }

@@ -13,6 +13,7 @@
  * @property string $name
  * @property string $description
  * @property string $url
+ * @property string $website
  * @property string $logo_url
  * @property string $token
  * @property integer $status
@@ -46,13 +47,12 @@ abstract class BaseInstitution extends GxActiveRecord {
 
 	public function rules() {
 		return array(
-			array('name, description, url, logo_url, token, created, ip', 'required'),
+			array('name, description, url, website, logo_url, token, created, ip', 'required'),
 			array('status, user_id', 'numerical', 'integerOnly'=>true),
 			array('name, url, logo_url, token', 'length', 'max'=>128),
-			array('description', 'length', 'max'=>255),
-			array('ip', 'length', 'max'=>255),
+			array('description, website, ip', 'length', 'max'=>255),
 			array('status, user_id', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('id, name, description, url, logo_url, token, status, created, user_id, ip', 'safe', 'on'=>'search'),
+			array('id, name, description, url, website, logo_url, token, status, created, user_id, ip', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,6 +77,7 @@ abstract class BaseInstitution extends GxActiveRecord {
 			'name' => Yii::t('app', 'Name'),
 			'description' => Yii::t('app', 'Description'),
 			'url' => Yii::t('app', 'Url'),
+			'website' => Yii::t('app', 'Website'),
 			'logo_url' => Yii::t('app', 'Logo Url'),
 			'token' => Yii::t('app', 'Token'),
 			'status' => Yii::t('app', 'Status'),
@@ -98,6 +99,7 @@ abstract class BaseInstitution extends GxActiveRecord {
 		$criteria->compare('name', $this->name, true);
 		$criteria->compare('description', $this->description, true);
 		$criteria->compare('url', $this->url, true);
+		$criteria->compare('website', $this->website, true);
 		$criteria->compare('logo_url', $this->logo_url, true);
 		$criteria->compare('token', $this->token, true);
 		$criteria->compare('status', $this->status);
