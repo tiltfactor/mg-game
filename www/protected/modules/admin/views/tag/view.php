@@ -34,7 +34,7 @@ $this->widget('zii.widgets.CDetailView', array(
       'value' => $tagUseInfo["use_count"],
     ),
     array(
-      'name' => Yii::t('app', 'Tagged Medias'),
+      'name' => Yii::t('app', 'Tagged Media'),
       'type' => 'html',
       'value' => $tagUseInfo["media_count"],
     ),
@@ -76,7 +76,7 @@ $this->widget('zii.widgets.CListView', array(
 </div>
 
 <div class="span-16 last clearfix">
-  <h2><?php echo Yii::t('app', 'Tagged Medias'); ?></h2>
+  <h2><?php echo Yii::t('app', 'Tagged Media'); ?></h2>
   <p><b><?php echo Yii::t('app', 'MEDIA NAME (TIMES TAGGED/BY NUMBER OF USERS)'); ?></b></p>
 <?php
 

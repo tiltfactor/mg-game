@@ -102,7 +102,7 @@ if ($profileFields) {
 </div>
 
 <div class="span-16 last clearfix">
-    <h2><?php echo Yii::t('app', 'Tagged Medias'); ?></h2>
+    <h2><?php echo Yii::t('app', 'Tagged Media'); ?></h2>
 
     <p><b><?php echo Yii::t('app', 'MEDIA NAME (TIMES TAGGED BY USER/WITH NUMBER OF DIFFERENT TAGS)'); ?></b></p>
     <?php

@@ -64,7 +64,7 @@ class MediasExportPlugin extends MGExportPlugin
     function form(&$form, &$model)
     {
         $legend = CHtml::tag("legend", array(),
-            Yii::t('app', 'Plugin: Medias Export'));
+            Yii::t('app', 'Plugin: Media Export'));
 
         $value = $this->is_active() ? 1 : 0;
         $label = CHtml::label(Yii::t('app', 'Active'),
@@ -82,7 +82,7 @@ class MediasExportPlugin extends MGExportPlugin
                 '<div class="row">' . $label . $buttons .
                 '<div class="description">' .
                 Yii::t('app',
-                    "Export medias in a zipped-up directory.") .
+                    "Export media in a zipped-up directory.") .
                 '</div></div>');
     }
 

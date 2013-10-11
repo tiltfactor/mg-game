@@ -76,7 +76,7 @@ class ExportController extends GxController {
         }
     
         if ($count_affected_medias == 0) {
-            $model->addError('all', Yii::t('app', 'No medias found. Please change the form settings and try again.'));
+            $model->addError('all', Yii::t('app', 'No media found. Please change the form settings and try again.'));
         }
     
         $this->render('admin', array(

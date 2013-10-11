@@ -10,9 +10,9 @@ $this->menu = array(
   );
 ?>
 
-<h1><?php echo Yii::t('app', 'Export Tags, Tag Uses, or Medias'); ?></h1>
+<h1><?php echo Yii::t('app', 'Export Tags, Tag Uses, or Media'); ?></h1>
 
-<p>Please define export file name and the medias and their information that should be exported with help of the form below</p>
+<p>Please define export file name and the media and their information that should be exported with help of the form below</p>
 
 <div class="export-form show">
 <?php $this->renderPartial('_form', array(
