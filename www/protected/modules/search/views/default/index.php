@@ -43,7 +43,9 @@ $this->widget('zii.widgets.CListView', array(
 
 ));
 echo CHtml::endForm();
-echo  'Your search ' . "<div id=\"searchedValue\"> </div>" . 'returned ' . totalItemsFind($model->search(true)). ' results';
+$itemsFound =  totalItemsFind($model->search(true));
+if($itemsFound != 0) echo  'Your search ' . "<div id=\"searchedValue\"> </div>" . 'returned ' . totalItemsFind($model->search(true)). ' results';
+
 
 
 ?>
