@@ -44,6 +44,10 @@ $this->widget('zii.widgets.CListView', array(
 ));
 echo CHtml::endForm();
 echo  'Your search ' . "<div id=\"searchedValue\"> </div>" . 'returned ' . totalItemsFind($model->search(true)). ' results';
-
-
 ?>
+
+<script id="template-description" type="text/x-jquery-tmpl">
+    <div style="text-align:center">
+        <img src="${result[0].img}" />
+    </div>
+</script>
