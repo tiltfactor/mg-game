@@ -2,7 +2,7 @@
 echo "<div class = \"imageInside\"><a href='#stayhere' class='image_hover'>";
 echo generateImage($data);
 //TODO NEED to be dynamic info from image
-echo '<div class="image_description">{Collection name} Collection {Institution name}</div>';
+echo '<div class="image_description">{Collection Name} Collection '.stripcslashes($data['institution']->name).'</div>';
 echo '<div class="hidden json" style="display: none;">';
 ?>
 {

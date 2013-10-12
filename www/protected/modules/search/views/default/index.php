@@ -18,8 +18,13 @@ function generateImage($data)
     $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url, $data->mime_type, $data->name), $data->name);
     return $media;
 }
+function generateImageURL ($data)
+{
+    $url = MGHelper::getMediaThumb($data->institution->url, $data->mime_type, $data->name);
+    return $url;
+}
 
-function totalItemsFind($provider)
+function totalItemsFound($provider)
 {
     $iterator = new CDataProviderIterator($provider);
     $i = 0;
@@ -43,7 +48,9 @@ $this->widget('zii.widgets.CListView', array(
 
 ));
 echo CHtml::endForm();
-echo  'Your search ' . "<div id=\"searchedValue\"> </div>" . 'returned ' . totalItemsFind($model->search(true)). ' results';
+
+$itemsFound =  totalItemsFound($model->search(true));
+if($itemsFound != 0) echo  'Your search ' . "<div id=\"searchedValue\"> </div>" . 'returned ' . $itemsFound . ' results.';
 ?>
 
 <script id="template-description" type="text/x-jquery-tmpl">
