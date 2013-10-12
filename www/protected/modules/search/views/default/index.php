@@ -19,6 +19,18 @@ function generateImage($data)
     return $media;
 }
 
+function totalItemsFind($provider)
+{
+    $iterator = new CDataProviderIterator($provider);
+    $i = 0;
+    foreach($iterator as $tmp) {
+        $i++;
+    }
+    return $i;
+}
+
+
+
 $this->widget('zii.widgets.CListView', array(
     'dataProvider'=>$model->search(true),
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
@@ -27,6 +39,7 @@ $this->widget('zii.widgets.CListView', array(
     ),
     'enablePagination'=>true,
     'template'=>"{summary}\n{sorter}\n{pager}\n{items}\n{sorter}\n{pager}", //pager on top
+    'summaryText'=>"Your search " . "<div id=\"searchedValue\"></div>" ." returned " . totalItemsFind($model->search(true)) . " results",
 ));
 echo CHtml::endForm();
 

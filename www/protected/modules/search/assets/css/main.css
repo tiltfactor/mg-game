@@ -1,0 +1,18 @@
+div.search-form
+{
+    background-color:white; /*for test*/
+}
+#advancedButton , #searchedValue
+{
+    display: inline-block;
+}
+#searchedValue
+{
+    font-weight:bold;
+}
+.items .imageInside
+{
+    display: inline-block;
+    margin: 5px;
+}
+
