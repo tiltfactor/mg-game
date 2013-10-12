@@ -39,7 +39,7 @@ $this->widget('zii.widgets.CListView', array(
     ),
     'enablePagination'=>true,
     'template'=>"{summary}\n{sorter}\n{pager}\n{items}\n{sorter}\n{pager}", //pager on top
-    'summaryText'=>"Your search " . "<div id=\"searchedValue\"></div>" ." returned " . totalItemsFind($model->search(true)) . " results",
+    'summaryText'=>"Your search " . "<div id=\"searchedValue\"> </div>" ." returned " . totalItemsFind($model->search(true)) . " results",
 ));
 echo CHtml::endForm();
 
