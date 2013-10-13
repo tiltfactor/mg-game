@@ -25,6 +25,8 @@ class DefaultController extends Controller
         $cs = Yii::app()->clientScript;
         $cs->registerCoreScript('jquery');
         $cs->registerCssFile(SearchModule::getAssetsUrl() . '/css/main.css');
+        $cs->registerCssFile(Yii::app()->baseUrl . '/css/normalize.css');
+        $cs->registerScriptFile(Yii::app()->baseUrl . '/js/modernizr.custom.js', CClientScript::POS_HEAD);
         $cs->registerScriptFile(SearchModule::getAssetsUrl() . '/js/search.js', CClientScript::POS_END);
 
         $institutions = Institution::model()->with('collections')->findAll('status=1');
@@ -45,7 +47,8 @@ class DefaultController extends Controller
         $this->render('index',
             array(
                 'model' => $model,
-                'institutions' =>  $institutions
+                'institutions' =>  $institutions,
+                'assets_url' => SearchModule::getAssetsUrl()
             )
         );
     }
