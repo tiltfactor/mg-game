@@ -34,23 +34,41 @@ function totalItemsFound($provider)
     return $i;
 }
 
-echo '<div class="group">
+echo '<div class="group" style="background-color: #E3E3E3;">
     <div class="menu">
         Refine
-        <div id="by_institution">
+        <div id="by_institution" class="group">
             <div class="separator"></div>
             <div>By Institution</div>
-            <div class="menu_item"></div>
+            <div class="menu_item">';
+echo CHtml::checkBoxList("Custom[institutions]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["institutions"])) ? $_GET["Custom"]["institutions"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Institution::model()->findAllAttributes(null, true)), false, true), array(
+    'template' => '{input} {label}',
+    'separator' => '<br />',
+));
+echo        '</div>
         </div>
-        <div id="by_collection">
+        <div id="by_collection" class="group">
             <div class="separator"></div>
             <div>By Collection</div>
-            <div class="menu_item"></div>
+            <div class="menu_item">';
+echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"])) ? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Collection::model()->findAllAttributes(null, true)), false, true), array(
+    'template' => '{input} {label}',
+    'separator' => '<br />',
+));
+echo '
+            </div>
         </div>
-        <div id="by_format">
+        <div id="by_format" class="group">
             <div class="separator"></div>
             <div>By Format</div>
-            <div class="menu_item"></div>
+            <div class="menu_item">';
+        echo CHtml::checkBoxList("Custom[media_types]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["media_types"])) ? $_GET["Custom"]["media_types"] : ''), GxHtml::encodeEx(array('image'=>'image','video'=>'video','audio'=>'audio'), false, true), array(
+        'template' => '{input} {label}',
+        'separator' => '<br />',
+    ));
+
+echo '
+            </div>
         </div>
     </div>
     <div class="main_content">';

@@ -123,22 +123,23 @@ a.image_hover:hover > .image_description {
 }
 
 .menu {
-    width: 200px;
+    width: 180px;
     float: left;
-    margin-top: 50px;
+    margin-top: 23px;
     padding: 0 10px;
 }
 
-.menu > div {
-
-}
-
 .menu .separator {
-    height: 10px;
+    height: 7px;
     background-color: #505050;
+    margin: 10px 0;
 }
 
 .main_content {
     float: left;
     width: 1000px;
+}
+
+input[type="checkbox"] {
+    vertical-align: middle !important;
 }
