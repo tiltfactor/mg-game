@@ -1,5 +1,3 @@
-
-
 <div class="search-form" style="display: block;">
     <?php $this->renderPartial('_search', array(
         'model' => $model,
@@ -50,6 +48,7 @@ $this->widget('zii.widgets.CListView', array(
     'sortableAttributes' => array(
         'name' => Yii::t('app', 'Name'),
     ),
+    'ajaxUpdate'=>false,
     'enablePagination'=>true,
     'template'=>"{summary}\n{sorter}\n{pager}\n{items}\n{sorter}\n{pager}", //pager on top
     'summaryText'=>" ",
@@ -71,9 +70,10 @@ echo "</div>";
         <img src="${imageFullSize}" />
     </div>
     <div class="group text_descr">
-        <div><strong>${imageFullSize}</strong></div>
+        <!--<div><strong>${imageFullSize}</strong></div> --> <!-- pkostov do we need that? It must be description NOT img path ?-->
         <br />
-        <div><strong>${collection} Collection</strong></div>
+
+        <div><strong> ${collection} </strong></div>
         <div><a href="${instWebsite}" target="_new"><strong>${institution}</strong></a></div>
 
         <div>Other media that may interest you:</div>
