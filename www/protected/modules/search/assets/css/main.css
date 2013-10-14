@@ -2,6 +2,7 @@ div.search-form
 {
     background-color:white; /*for test*/
 }
+
 #advancedButton , #searchedValue
 {
     display: inline-block;
@@ -142,4 +143,29 @@ a.image_hover:hover > .image_description {
 
 input[type="checkbox"] {
     vertical-align: middle !important;
+}
+/*new style*/
+#totalItemsFound {
+    position: absolute;
+    top: 18%;
+    width: 100%;
+}
+
+
+.main_content {
+/* TODO to fix
+  display: inline-block;
+    float: left;
+    left: 30%;
+    position: absolute;
+    top: 30%;
+    width: 900px;*/
+
+display: inline-block;
+    float: left;
+
+    margin: -37% -37% -37% 20%;
+
+
+    width: 900px;
 }
