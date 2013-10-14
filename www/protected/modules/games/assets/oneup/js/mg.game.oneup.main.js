@@ -542,7 +542,7 @@ MG_GAME_ONEUP = function ($) {
                                         looped_tag = turns[i].tags[j].tag;
                                         if (tag.toLowerCase() === looped_tag.toLowerCase()) {
                                             console_log(j + ' -- ' + turns[i].tags[j].tag);
-                                            return_result = 'Tag already in use.';
+                                            return_result = 'You already said that!';
                                         }
                                     }
                                 }
@@ -550,7 +550,7 @@ MG_GAME_ONEUP = function ($) {
 
                             $("#game_screen .words div .tag").each(function () {
                                 if (tag.toLowerCase() == $(this).text().toLowerCase()) {
-                                    return_result = 'Tag already in use.';
+                                    return_result = 'You already said that!';
                                 }
                             });
 
