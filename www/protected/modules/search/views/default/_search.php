@@ -29,7 +29,7 @@
 
 <?php
 
-    echo '<div class="group" style="background-color:white/* #E3E3E3*/;">
+    echo '<div class="group refine" style="background-color:white/* #E3E3E3*/;">
     <div class="menu">
         Refine
         <div id="or_and" class="group">

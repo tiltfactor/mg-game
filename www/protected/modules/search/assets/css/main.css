@@ -151,21 +151,12 @@ input[type="checkbox"] {
     width: 100%;
 }
 
-
 .main_content {
-/* TODO to fix
-  display: inline-block;
-    float: left;
-    left: 30%;
-    position: absolute;
-    top: 30%;
-    width: 900px;*/
-
-display: inline-block;
-    float: left;
-
-    margin: -37% -37% -37% 20%;
-
-
+    background-color:white;
+    display: inline-block;
     width: 900px;
+}
+
+.refine {
+    float: left;
 }

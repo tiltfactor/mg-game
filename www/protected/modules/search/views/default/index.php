@@ -41,7 +41,7 @@ function totalItemsFound($provider)
 echo '
 
 
-    <div class="main_content">';
+    <div class="main_content box">';
 
 
 $this->widget('zii.widgets.CListView', array(
