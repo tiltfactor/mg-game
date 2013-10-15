@@ -254,7 +254,7 @@ MG_GAME_ONEUP = function ($) {
 
                             $("#challenges").remove();
                             $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
-                                if (challenges_response.sent!== undefined && (challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
+                                if (challenges_response.sent !== undefined && (challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
                                     $("#challenges_sent").find(".no_value").show();
                                 } else {
                                     var that;
@@ -1512,7 +1512,7 @@ MG_GAME_ONEUP = function ($) {
                         addClass:MG_GAME_ONEUP.toastBackgroundClass
                     });
                     $("a[location='main_screen']").click();
-                } else if ($("#game_screen").is(":visible")) {
+                } else if ($("#game_screen").is(":visible") || $("#word_screen").is(":visible")) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         $().toastmessage("showToast", {
                             text:game_title + ' ' + response.username + " finished his turn.",
