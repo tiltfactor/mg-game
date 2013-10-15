@@ -171,6 +171,22 @@ abstract class MGMultiPlayer extends CComponent
     }
 
     /**
+     * Retrieves the active media sets for the current game.
+     * In future this method could be expanded to disable one or more of the
+     * active media set by dynamic criteria (e.g. the users ip address range)
+     *
+     * @return Array the ids of the active media sets
+     */
+    protected function getCollections()
+    {
+        $collections = array();
+        foreach ($this->game->collections as $collection) {
+            $collections[] = $collection->id;
+        }
+        return $collections;
+    }
+
+    /**
      * @return GameDTO
      */
     public function getGameInfo()
@@ -423,7 +439,7 @@ abstract class MGMultiPlayer extends CComponent
         $usedMedias = $this->getUsedMedias();
 
         if (Yii::app()->user->isGuest) {
-            $where = array('and', 'i.locked=1', '(inst.status=1 or i.institution_id is null)', array('not in', 'i.id', $usedMedias));
+            $where = array('and', 'i.locked=1', '(inst.status=1 or i.institution_id is null)',array('in', 'is2i.collection_id', $this->getCollections()), array('not in', 'i.id', $usedMedias));
             if (is_array($this->mediaTypes) && count($this->mediaTypes) > 0) {
                 $where_add = '(';
                 $num_types = count($this->mediaTypes);
@@ -450,7 +466,7 @@ abstract class MGMultiPlayer extends CComponent
                 ->queryAll();
         } else {
             // if a player is logged in the medias should be weight by interest
-            $where = array('and', '(usm.user_id IS NULL OR usm.user_id=:userID)', 'i.locked=1', '(inst.status=1 or i.institution_id is null)', array('not in', 'i.id', $usedMedias));
+            $where = array('and', '(usm.user_id IS NULL OR usm.user_id=:userID)', 'i.locked=1', '(inst.status=1 or i.institution_id is null)',array('in', 'is2i.collection_id', $this->getCollections()), array('not in', 'i.id', $usedMedias));
 
             if (is_array($this->mediaTypes) && count($this->mediaTypes) > 0) {
                 $where_add = '(';
