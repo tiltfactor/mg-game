@@ -74,7 +74,7 @@ echo "</div>";
         <br />
 
         <div><strong> ${collection} </strong></div>
-        <div><a href="${instWebsite}" target="_new"><strong>${institution}</strong></a></div>
+        <div><strong>${institution}</strong></a></div>
 
         <div>Other media that may interest you:</div>
         <div id="related_items" class="group">

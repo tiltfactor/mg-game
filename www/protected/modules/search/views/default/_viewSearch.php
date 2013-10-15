@@ -18,8 +18,8 @@ echo '<div class="hidden json" style="display: none;">';
     "audioMp3": "",
     "audioOgg": "",
     "licence": {
-    "id": 1,
-    "name": "",
+    "id": "<?php echo $data->id ?>",
+    "name": "<?php echo $data->name ?>",
     "description": ""
     },
     "collection": "<?php echo $data->listCollectionsText() ?>",
@@ -29,7 +29,7 @@ echo '<div class="hidden json" style="display: none;">';
     {"tag": ""},
     {"tag": ""}
     ],
-    "mimeType": "image",
+    "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
     "related": [
     {
     "id": 12,
