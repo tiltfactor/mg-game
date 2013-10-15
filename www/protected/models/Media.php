@@ -341,6 +341,17 @@ class Media extends BaseMedia
         return implode(", ", $out);
     }
 
+    public function listCollectionsText()
+    {
+        $out = array();
+        if (count($this->collections) > 0) {
+            foreach ($this->collections as $collection) {
+                $out[] = (GxHtml::encode($collection->name));
+            }
+        }
+        return implode(", ", $out);
+    }
+
     /**
      * Updates the last_access time of each media identified by the ids in the passed array.
      *

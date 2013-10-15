@@ -22,13 +22,14 @@ div.search-form
     display: inline-block;
     margin: 4px;
     border: 1px solid #f3f3f3;
-    width: 190px;
-    height: 100px;
+    width: 160px;
+    height: 120px;
 }
 
 .imageInside img {
-    width: 190px; /*  160*/
-    height: 100px; /* 120*/
+    width: 160px;
+    height: 120px;
+
 }
 
 a:link, a:visited, a:hover {
@@ -36,7 +37,7 @@ a:link, a:visited, a:hover {
 }
 
 .image_description {
-    width: 170px;
+    width: 140px;
     height: 40px;
     overflow-x: hidden;
     overflow-y: hidden;
