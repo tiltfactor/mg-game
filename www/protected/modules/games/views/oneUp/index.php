@@ -126,16 +126,16 @@
             <div id="how_to" class="hidden">
                 <h2>How to Play</h2>
                 <div id="image_gallery">
-                    <div number="1" data-number = "1" class="row text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_1.jpg" /></div>
-                    <div number="2" data-number = "2" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_2.jpg" width="320" height="502" /></div>
-                    <div number="3" data-number = "3" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_3.jpg" width="320" height="502" /></div>
-                    <div number="4" data-number = "4" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_4.jpg" width="320" height="502" /></div>
-                    <div number="5" data-number = "5" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_5.jpg" width="320" height="502" /></div>
-                    <div number="6" data-number = "6" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_6.jpg" width="320" height="502" /></div>
-                    <div number="7" data-number = "7" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_7.jpg" width="320" height="502" /></div>
-                    <div number="8" data-number = "8" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_8.jpg" width="320" height="502" /></div>
-                    <div number="9" data-number = "9" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_9.jpg" width="320" height="502" /></div>
-                    <div number="10" data-number = "10" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_10.jpg" width="320" height="502" /></div>
+                    <div number="1" data-number = "1" class="row text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_1.jpg" width="320" height="455"/></div>
+                    <div number="2" data-number = "2" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_2.jpg" width="320" height="455" /></div>
+                    <div number="3" data-number = "3" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_3.jpg" width="320" height="455" /></div>
+                    <div number="4" data-number = "4" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_4.jpg" width="320" height="455" /></div>
+                    <div number="5" data-number = "5" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_5.jpg" width="320" height="455" /></div>
+                    <div number="6" data-number = "6" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_6.jpg" width="320" height="455" /></div>
+                    <div number="7" data-number = "7" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_7.jpg" width="320" height="455" /></div>
+                    <div number="8" data-number = "8" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_8.jpg" width="320" height="455" /></div>
+                    <div number="9" data-number = "9" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_9.jpg" width="320" height="455" /></div>
+                    <div number="10" data-number = "10" class="row hidden text-center"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/help/help_10.jpg" width="320" height="455" /></div>
                 </div>
             </div>
 

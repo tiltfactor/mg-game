@@ -793,7 +793,7 @@ MG_GAME_ONEUP = function ($) {
                         $("#how_to div.row:eq('" + my_iter + "')").show();
                     }
 
-                    if ($('body').hasClass('no-touch_device') || ($('body').hasClass('touch_device') && BrowserDetect.browser === 'Other')) {
+                    if ($('body').hasClass('no-touch_device')) {
                         console_log('no touch device');
                         Hammer(swipe_img).off('click').on('click', function (e) { // swiperight   $('#image_gallery')
                             e.stopPropagation();
@@ -1589,6 +1589,8 @@ function confirmPretty(text, onOk) {
     $("<div title='Confirmation'>" + text + "</div>").dialog({
         modal:true,
         dialogClass:'no-title',
+        minWidth:450,
+        maxWidth:600,
         buttons:[
             {
                 text:"Cancel",
