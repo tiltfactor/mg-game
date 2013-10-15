@@ -233,7 +233,7 @@
 
     <div class="group">
         <div class="bookmark_img">
-            <div class="left" style="padding: 0 10px 10px 0;"><img src="${media.thumbnail}" class="left" /></div>
+            <div class="left" style="padding: 0 10px 10px 0;"><img src="${media.imageScaled}" class="left" /></div>
             <div>This image provided by ${media.collection} at ${media.institution}</div>
             <!--Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)-->
             <br /><br />

@@ -629,7 +629,7 @@ MG_GAME_ONEUP = function ($) {
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
                             var scrollTop = $(window).scrollTop(),
                                 elementOffset = $("#final_screen .fade").offset().top,
-                                overlay_top = (elementOffset - scrollTop),
+                                overlay_top = 535,//(elementOffset - scrollTop),
                                 overlay_height = $("#final_screen .fade").height();
 
                             $("#overlay").css({'height':overlay_height, 'top':overlay_top});

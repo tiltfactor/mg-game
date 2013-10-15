@@ -519,6 +519,7 @@ abstract class MGMultiPlayer extends CComponent
                     if ($mediaType === "image") {
                         $mediaDTO->thumbnail = $path . "/thumbs/" . $media["name"];
                         $mediaDTO->imageFullSize = $path . "/images/" . $media["name"];
+                        $mediaDTO->imageScaled = MGHelper::getScaledMediaUrl($media["name"], $this->game->image_width, $this->game->image_height, $media["token"], $media["url"]);
                         //$scaled = $final_screen = $path . "/images/". urlencode($medias[$i]["name"]);
                     } else if ($mediaType === "video") {
                         $mediaDTO->thumbnail = $path . "/videos/" . urlencode(substr($media["name"], 0, -4) . "jpeg");
