@@ -88,7 +88,7 @@ class OneUpGame extends MGMultiPlayer
                 $penalty = false;
                 if ($prvTurn > 0) {
                     for ($i = 1; $i <= $prvTurn; $i++) {
-                        foreach ($opponentTagDTOs[$prvTurn] as $row) {
+                        foreach ($opponentTagDTOs[$i] as $row) {
                             if ($row->tag == $tag->tag) {
                                 $tag->score = -1;
                                 $payload = array();
