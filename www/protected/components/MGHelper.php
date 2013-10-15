@@ -263,11 +263,7 @@ class MGHelper
         }
     }
 
-    /*Example URL call
-   * localhost/mgg/www/index.php/site/login/provider/facebook?backUrl=localhost%2Fmgg%2Fwww%2Findex.php%2Fsite%2Fcontact
-   * Note there should be '?' before the 'backUrl' key
-   * */
-    public static function SocialLogin($provider, $backUrl) // pkostov
+    public static function SocialLogin($provider, $backUrl)
     {
         if (empty($provider)) {
 
@@ -288,10 +284,10 @@ class MGHelper
             $haComp->adapter = $haComp->hybridAuth->authenticate($provider);
 
 
-            $haComp->userProfile = $haComp->adapter->getUserProfile(); // <------------Here to Auth
+            $haComp->userProfile = $haComp->adapter->getUserProfile();
 
 
-            $haComp->processLogin($haComp); //<---- Here to hybridAuthIdentity
+            $haComp->processLogin($haComp);
 
             header("Location: {$backUrl}");
             return;

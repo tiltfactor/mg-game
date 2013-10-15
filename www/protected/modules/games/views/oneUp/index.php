@@ -20,6 +20,10 @@
                     <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" />
                 </div>
                 <div class="button">
+                    <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px;">
+                    <label for="rememberMe">Remember me next time</label>
+                </div>
+                <div class="button">
                     <a href="#" id="btn_login" class="button login"><span>LOGIN</span></a>
                 </div>
                 <div class="button">

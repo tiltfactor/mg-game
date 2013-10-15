@@ -254,7 +254,7 @@ MG_GAME_ONEUP = function ($) {
 
                             $("#challenges").remove();
                             $("#template-challenges").tmpl(challenges_response).appendTo($("#main_screen")).after(function () {
-                                if ((challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
+                                if (challenges_response.sent!== undefined && (challenges_response.sent.length + challenges_response.waiting_turn.length) === 0) {
                                     $("#challenges_sent").find(".no_value").show();
                                 } else {
                                     var that;
@@ -1293,7 +1293,8 @@ MG_GAME_ONEUP = function ($) {
                             type:'post',
                             data:{
                                 password:jQuery.trim($("#login #password").val()),
-                                login:jQuery.trim($("#login #username").val())
+                                login:jQuery.trim($("#login #username").val()),
+                                rememberMe:jQuery.trim($("#login #rememberMe").prop('checked'))
                             }
                         }
                     );
