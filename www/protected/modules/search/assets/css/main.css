@@ -67,7 +67,12 @@ a.image_hover:hover > .image_description {
 }
 
 .text_descr {
-    display: flex-box; float: left; color: white; width: 390px; padding: 0 0 20px 0;
+    display: flex-box;
+    float: left;
+    color: white;
+    width: 375px;
+    margin-left: 15px;
+    padding: 0 0 20px 0;
 }
 
 #related_items {
@@ -83,11 +88,14 @@ a.image_hover:hover > .image_description {
 }
 
 .image_div {
-    display: flex-box; float: left; padding: 10px 20px;
+    display: flex-box;
+    float: left;
+    /*padding: 10px 20px;*/
 }
 
 .image_div > img {
-    max-width: 600px; max-height: 380px;
+    max-width: 500px;
+    max-height: 380px;
 }
 
 .text_descr > div {
@@ -163,4 +171,28 @@ input[type="checkbox"] {
 .pager
 {
     background-color:#E3E3E3;
+}
+
+#metadatagameslogo
+{
+    float:left;
+    margin-bottom: -50px;
+    margin-left: -220px;
+}
+
+div.wide.form .row {
+
+    margin-left: 360px;
+}
+
+.row > label
+{
+    margin-top: 15px;
+}
+#Custom_tags
+{
+    -webkit-border-radius: 5px; /*For Safari, etc.*/
+    -moz-border-radius: 5px; /* For Mozilla, etc.*/
+    border-radius: 5px; /*CSS3 Feature*/
+
 }

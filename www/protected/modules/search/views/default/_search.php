@@ -5,7 +5,7 @@
     'method' => 'get',
 )); ?>
     <div id="metadatagameslogo">
-        <!--TODO Insert image here   [Yii::app()->theme->baseUrl]-->
+        <img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/metadatagamesLogo.png" alt="MetaDataGames Logo"/>
     </div>
     <div class="row"> <!-- ROW 1 [Tags, Search, Advanced Search]-->
         <?php echo CHtml::label(Yii::t('app', "Tag(s)"), "Custom_tags") ?>
@@ -19,13 +19,15 @@
             ),
         ));
         ?>
-        <?php echo GxHtml::submitButton(Yii::t('app', 'Search')); ?>
-<!--        <div id="advancedButton">
-        <?php /*echo CHtml::link('Advanced search'); */?>
-        </div>-->
-    </div> <!--End ROW 1-->
+        <?php
 
-    <!--<div id="advancedSearch">-->  <!--advancedSearch-->
+        //echo GxHtml::submitButton(Yii::t('app', 'Search'));
+        echo CHtml::imageButton(SearchModule::getAssetsUrl() . "/images/search_small.png", $htmlOptions=array());
+        ?>
+
+    </div>
+
+
 
 <?php
 

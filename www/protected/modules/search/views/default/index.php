@@ -73,7 +73,8 @@ echo "</div>";
         <!--<div><strong>${imageFullSize}</strong></div> --> <!-- pkostov do we need that? It must be description NOT img path ?-->
         <br />
 
-        <div><strong> ${collection} </strong></div>
+
+        <div><strong>${collection} </strong></div>
         <div><strong>${institution}</strong></a></div>
 
         <div>Other media that may interest you:</div>
