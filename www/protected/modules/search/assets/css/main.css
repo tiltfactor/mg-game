@@ -1,6 +1,6 @@
 div.search-form
 {
-    background-color:white; /*for test*/
+    background-color:white;
 }
 
 #advancedButton , #searchedValue
@@ -15,6 +15,7 @@ div.search-form
 .items {
     display: flex-box;
     float: left;
+    margin-top: 15px;
 }
 
 .imageInside
@@ -147,8 +148,6 @@ input[type="checkbox"] {
 }
 /*new style*/
 #totalItemsFound {
-    position: absolute;
-    top: 18%;
     width: 100%;
 }
 
@@ -160,4 +159,8 @@ input[type="checkbox"] {
 
 .refine {
     float: left;
+}
+.pager
+{
+    background-color:#E3E3E3;
 }

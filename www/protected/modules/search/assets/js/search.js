@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+    $('#totalItemsFound').insertBefore('div.sorter:first');
     setImageClick ();
 });
 
