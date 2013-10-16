@@ -233,9 +233,9 @@
 
     <div class="group" style="max-height:250px;">
         <div class="bookmark_img">
-            <div class="left" style="padding: 0 10px 10px 10px;"><img src="${media.imageScaled}" class="left" style="max-width:250px;"/></div>
-            <div>This image provided by ${media.collection} at ${media.institution}</div>
-            <!--Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)-->
+            <div class="left" style="padding: 0 10px 10px 10px;"><img src="${media.imageScaled}" class="left" style="max-width:250px;" id="mediaImg"/></div>
+            <div style="color:#9FA1A4;">This image provided by ${media.collection} at ${media.institution}</div>
+            <div style="margin-top:25px;"><a href="${media.instWebsite}" target="_blank" style="color:#9FA1A4;"> Learn more about the collection (...)</a></div>
 
             <div style="clear:both;">
                 <input type="checkbox" id="bookmark_image" class="checkbox" /> <label for="bookmark_image" class="bookmark_image top_btn">Bookmark this image</label>

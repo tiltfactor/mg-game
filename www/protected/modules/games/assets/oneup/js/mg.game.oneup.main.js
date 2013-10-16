@@ -627,6 +627,9 @@ MG_GAME_ONEUP = function ($) {
                         }
 
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
+                            if($(window).width()<400 && !(window.devicePixelRatio >= 2)){
+                                $("#mediaImg").css({'max-width':180});
+                            }
                             var scrollTop = $(window).scrollTop(),
                                 elementOffset = $("#final_screen .fade").offset().bottom,
                                 overlay_top = (elementOffset - scrollTop),
