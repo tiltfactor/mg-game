@@ -805,6 +805,13 @@ body.retina #content #word_screen .header_scores div,
 body.retina #content #word_screen .header_scores span {
   font-size: 35px !important;
 }
+
+body.retina #content #final_screen .header_scores {
+    text-align: right;
+    margin-top: -23px;
+    padding-right: 12px;
+}
+
 body.retina #content .big_button {
   font-size: 50px;
 }

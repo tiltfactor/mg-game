@@ -223,7 +223,7 @@
             </div>
         </div>
     </div>
-    <h4 class="text-center">${congratulation_text}</h4>
+    <h4 class="text-center" style="padding-left:5px;padding-right:5px;">${congratulation_text}</h4>
     <br/>
     <div>
         <a href="#" opponent="${opponentName}" class="big_button rematch"><span>REMATCH</span></a>
@@ -231,30 +231,32 @@
     <br/>
     <br/>
 
-    <div class="group">
+    <div class="group" style="max-height:250px;">
         <div class="bookmark_img">
-            <div class="left" style="padding: 0 10px 10px 0;"><img src="${media.imageScaled}" class="left" /></div>
+            <div class="left" style="padding: 0 10px 10px 10px;"><img src="${media.imageScaled}" class="left" style="max-width:250px;"/></div>
             <div>This image provided by ${media.collection} at ${media.institution}</div>
             <!--Learn more about the collection (<a href="${learn_more}" target="_new">...</a>)-->
-            <br /><br />
-            <input type="checkbox" id="bookmark_image" class="checkbox" /> <label for="bookmark_image" class="bookmark_image top_btn">Bookmark this image</label>
+
+            <div style="clear:both;">
+                <input type="checkbox" id="bookmark_image" class="checkbox" /> <label for="bookmark_image" class="bookmark_image top_btn">Bookmark this image</label>
+            </div>
         </div>
     </div>
-    <div class="fade">
-    <h3>${opponentName} SAID <span>ROUND 1</span></h3>
-    {{html opponent.round_1}}
-    <h3><span>ROUND 2</span></h3>
-    {{html opponent.round_2}}
-    <h3><span>ROUND 3</span></h3>
-    {{html opponent.round_3}}
-    </div>
-    <div id='overlay'></div>
     <h3>YOU SAID <span>ROUND 1</span></h3>
     {{html you.round_1}}
     <h3><span>ROUND 2</span></h3>
     {{html you.round_2}}
     <h3><span>ROUND 3</span></h3>
     {{html you.round_3}}
+    <div id='overlay'></div>
+    <div class="fade">
+        <h3>${opponentName} SAID <span>ROUND 1</span></h3>
+        {{html opponent.round_1}}
+        <h3><span>ROUND 2</span></h3>
+        {{html opponent.round_2}}
+        <h3><span>ROUND 3</span></h3>
+        {{html opponent.round_3}}
+    </div>
 </script>
 
 <script id="template-show_institution" type="text/x-jquery-tmpl">
