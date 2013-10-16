@@ -3,7 +3,7 @@ div.search-form
     background-color:white;
 }
 
-#advancedButton , #searchedValue
+#searchedValue, #putFor
 {
     display: inline-block;
 }
@@ -138,7 +138,7 @@ a.image_hover:hover > .image_description {
 .menu {
     width: 180px;
     float: left;
-    margin-top: 23px;
+    margin-top: 110px; /* was 23px*/
     padding: 0 10px;
 }
 
@@ -170,10 +170,17 @@ input[type="checkbox"] {
 .refine {
     float: left;
 }
-.pager
-{
-    background-color:#E3E3E3;
+
+.pager {
+    background-color: #E3E3E3;
+    display: inline;
+    float: right;
+    height: 40px;
+    padding-bottom: 0;
+    text-align: end;
+    width: 125%;
 }
+
 #imageButton {
     height: 30px;
     margin-bottom: 14px;
@@ -232,4 +239,9 @@ div.search-form {
 
 #searchHeader {
     margin-bottom: 2%;
+}
+
+
+.delete.right {
+    cursor: pointer;
 }

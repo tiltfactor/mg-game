@@ -27,8 +27,6 @@
     </div>
         </div>
 
-
-
 <?php
 
     echo '<div class="group refine" style="background-color:white/* #E3E3E3*/;">

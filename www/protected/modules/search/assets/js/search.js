@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $("#totalItemsFound").insertAfter('#searchHeader');
-    $('#imageButton').off('click').on('click', function () {
-        var searched = $('#Custom_tags').value();
+        var searched = $('#Custom_tags').val();
         if (searched !== '') {
+            $('#putFor').text("for");
             $('#searchedValue').text(searched);
         }
-    });
+
     setImageClick();
 });
 

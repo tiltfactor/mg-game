@@ -1,3 +1,32 @@
+<?php
+Yii::import('zii.widgets.CListView');
+class ListView extends CListView
+{
+    public $sortCriteria = array();
+
+    /**
+     * Renders the sorter.
+     */
+    public function renderSorter()
+    {
+        $controller     =       $this->getController();
+        $url    =       $controller->createUrl($controller->getRoute());
+        if($this->dataProvider->getItemCount()<=0 || !$this->enableSorting)
+        {
+            return;
+        }
+        echo CHtml::openTag('div',array('class'=>$this->sorterCssClass))."\n";
+        echo $this->sorterHeader===null ? Yii::t('zii','Sort by: ') : $this->sorterHeader;
+        echo CHtml::dropDownList(null,null,array(''=>'Select')+$this->sortCriteria,array(
+            'id'=>'sortBy',
+            'onchange'=>"$.fn.yiiListView.update('yw0',{ url:'".$url."?".ucfirst($controller->id)."_sort='+$('#sortBy').val()})"));
+
+        echo $this->sorterFooter;
+        echo CHtml::closeTag('div');
+    }
+}
+?>
+
 <div class="search-form" style="display: block;">
     <?php $this->renderPartial('_search', array(
         'model' => $model,
@@ -36,21 +65,26 @@ function totalItemsFound($provider)
 
 
 
+
 echo '
 
 
     <div class="main_content box">';
 
 
-$this->widget('zii.widgets.CListView', array(
+$this->widget('ListView', array(
     'dataProvider'=>$model->search(true),
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
-    'sortableAttributes' => array(
-        'name' => Yii::t('app', 'Name'),
-    ),
+    /*    'sortableAttributes' => array(
+            'name' => Yii::t('app', 'Name'),
+        ),*/
+    'sortCriteria'=>array(
+        'name'=>'Relevance   ',
+        'name.desc'=>'A-Z   ',
+        'name.asc'=>'Z-A    '),
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
-    'template'=>"{summary}\n{sorter}\n{pager}\n{items}\n{sorter}\n{pager}", //pager on top
+    'template'=>"{summary}<div>{sorter}\n{pager}</div>{items}\n<div>{sorter}\n{pager}</div>", //pager on top
     'summaryText'=>" ",
 
 ));
@@ -60,7 +94,7 @@ echo CHtml::endForm();
 
 echo "<div id=\"totalItemsFound\">";
 $itemsFound =  totalItemsFound($model->search(true));
-if($itemsFound != 0) echo  'Your search ' . "<div id=\"searchedValue\"> </div>" . 'returned ' . $itemsFound . ' results.';
+if($itemsFound != 0) echo  'Your search ' .   "<div id=\"putFor\"> </div>"  .' '. "<div id=\"searchedValue\"> </div>" . ' returned ' . $itemsFound . ' results.';
 echo "</div>";
 ?>
 
