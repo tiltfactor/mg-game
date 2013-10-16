@@ -4,11 +4,12 @@
     'action' => Yii::app()->createUrl($this->route),
     'method' => 'get',
 )); ?>
+    <div id="searchHeader">
     <div id="metadatagameslogo">
         <img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/metadatagamesLogo.png" alt="MetaDataGames Logo"/>
     </div>
-    <div class="row"> <!-- ROW 1 [Tags, Search, Advanced Search]-->
-        <?php echo CHtml::label(Yii::t('app', "Tag(s)"), "Custom_tags") ?>
+
+    <div class="row" id="searchRow"> <!-- ROW 1 [Tags, Search]-->
         <?php
         $this->widget('MGJuiAutoCompleteMultiple', array(
             'name' => 'Custom[tags]',
@@ -20,12 +21,11 @@
         ));
         ?>
         <?php
-
-        //echo GxHtml::submitButton(Yii::t('app', 'Search'));
-        echo CHtml::imageButton(SearchModule::getAssetsUrl() . "/images/search_small.png", $htmlOptions=array());
+        echo CHtml::imageButton(SearchModule::getAssetsUrl() . "/images/search_small.png", $htmlOptions=array('id' => 'imageButton'));
         ?>
-
+        <div id="playTagConnect">Play. Tag. Connect. </div>
     </div>
+        </div>
 
 
 

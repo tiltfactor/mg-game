@@ -1,6 +1,12 @@
-$( document ).ready(function() {
-    $('#totalItemsFound').insertBefore('div.sorter:first');
-    setImageClick ();
+$(document).ready(function () {
+    $("#totalItemsFound").insertAfter('#searchHeader');
+    $('#imageButton').off('click').on('click', function () {
+        var searched = $('#Custom_tags').value();
+        if (searched !== '') {
+            $('#searchedValue').text(searched);
+        }
+    });
+    setImageClick();
 });
 
 function setImageClick () {
