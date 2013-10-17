@@ -60,7 +60,8 @@ class Media extends BaseMedia
         $criteria->compare('created', $this->created, true);
         $criteria->compare('modified', $this->modified, true);
         $criteria->compare('institution_id', $this->institution_id);
-
+        $pageSize = Yii::app()->fbvStorage->get("settings.pagination_size");
+        $criteria->order = 'name ASC';
         if (isset($_GET["Custom"])) {
 
             if (isset($_GET["Custom"]["tags"])) {
@@ -94,6 +95,17 @@ class Media extends BaseMedia
                         $criteria->addInCondition('t.id', array(0));
                     }
                 }
+            }
+
+            if(isset($_GET['Custom']['items_per_page']))
+            {
+                $pageSize = $_GET['Custom']['items_per_page'];
+            }
+            if(isset($_GET['Custom']['alphabetical_sort']))
+            {
+                $alphaSort = $_GET['Custom']['alphabetical_sort'];
+                if($alphaSort == 'a_z') $criteria->order = 'name ASC';
+                if($alphaSort == 'z_a') $criteria->order = 'name DESC';
             }
 
             if (isset($_GET["Custom"]["institutions"]) && is_array($_GET["Custom"]["institutions"])) {
@@ -149,7 +161,7 @@ class Media extends BaseMedia
         }
 
         if (!Yii::app()->request->isAjaxRequest)
-            $criteria->order = 'name ASC';
+            //$criteria->order = 'name ASC';
 
         $sort = new CSort;
         $sort->attributes = array(
@@ -163,7 +175,7 @@ class Media extends BaseMedia
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array(
-                'pageSize' => Yii::app()->fbvStorage->get("settings.pagination_size"),
+                'pageSize' => $pageSize,
             ),
             'sort' => $sort,
         ));

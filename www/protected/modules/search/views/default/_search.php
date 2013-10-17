@@ -1,9 +1,6 @@
 <div class="wide form">
 
-    <?php $form = $this->beginWidget('GxActiveForm', array(
-    'action' => Yii::app()->createUrl($this->route),
-    'method' => 'get',
-)); ?>
+
     <div id="searchHeader">
     <div id="metadatagameslogo">
         <img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/metadatagamesLogo.png" alt="MetaDataGames Logo"/>
@@ -79,7 +76,7 @@
 
 ?>
 
-    <?php $this->endWidget();
+    <?php
     echo '
             </div>
         </div>

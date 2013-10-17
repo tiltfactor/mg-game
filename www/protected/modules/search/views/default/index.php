@@ -1,31 +1,8 @@
 <?php
-Yii::import('zii.widgets.CListView');
-class ListView extends CListView
-{
-    public $sortCriteria = array();
-
-    /**
-     * Renders the sorter.
-     */
-    public function renderSorter()
-    {
-        $controller     =       $this->getController();
-        $url    =       $controller->createUrl($controller->getRoute());
-        if($this->dataProvider->getItemCount()<=0 || !$this->enableSorting)
-        {
-            return;
-        }
-        echo CHtml::openTag('div',array('class'=>$this->sorterCssClass))."\n";
-        echo $this->sorterHeader===null ? Yii::t('zii','Sort by: ') : $this->sorterHeader;
-        echo CHtml::dropDownList(null,null,array(''=>'Select')+$this->sortCriteria,array(
-            'id'=>'sortBy',
-            'onchange'=>"$.fn.yiiListView.update('yw0',{ url:'".$url."?".ucfirst($controller->id)."_sort='+$('#sortBy').val()})"));
-
-        echo $this->sorterFooter;
-        echo CHtml::closeTag('div');
-    }
-}
-?>
+    $form = $this->beginWidget('GxActiveForm', array(
+    'action' => Yii::app()->createUrl($this->route),
+    'method' => 'get',
+)); ?>
 
 <div class="search-form" style="display: block;">
     <?php $this->renderPartial('_search', array(
@@ -35,12 +12,7 @@ class ListView extends CListView
 </div><!-- search-form -->
 
 
-
-<?php echo CHtml::beginForm('', 'post', array('id' => 'media-form'));
-$tagDialog = $this->widget('MGTagJuiDialog');
-
-// Maximum number of tags to show in the 'Top Tags' column.
-$max_toptags = 15;
+<?php
 
 function generateImage($data)
 {
@@ -63,35 +35,24 @@ function totalItemsFound($provider)
     return $i;
 }
 
-
-
-
 echo '
 
 
     <div class="main_content box">';
 $options = array ('10' => '10', '15' => '15', '20'=>'20', '25'=>'25' );
-
-$this->widget('ListView', array(
+$sorterOptions = array('relevance' => 'Relevance', 'a_z' => 'A-Z', 'z_a'=>'Z-A');
+$this->widget('zii.widgets.CListView', array(
     'dataProvider'=>$model->search(true),
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
-    /*    'sortableAttributes' => array(
-            'name' => Yii::t('app', 'Name'),
-        ),*/
-    'sortCriteria'=>array(
-        'name'=>'Relevance   ',
-        'name.desc'=>'A-Z   ',
-        'name.asc'=>'Z-A    '),
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
    // 'template'=>"{summary}<div>{sorter}\n{pager}</div>{items}\n<div>{sorter}\n{pager}</div>", //pager on top
-    'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('selectItemsPerPage', 'itemsPerPage', $options) . "</div>" . "{sorter}{pager}</div>{items}", //pager on top
+    'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('Custom[items_per_page]', $setItemsPerPage, $options) . "</div>" . 'Sort by: ' . CHtml::dropDownList('Custom[alphabetical_sort]', $setAlphabeticalOrder, $sorterOptions) ."{pager}</div>{items}", //pager on top
     'summaryText'=>" ",
 
 ));
-
-echo '</div></div>';
-echo CHtml::endForm();
+echo '</div>';
+$this->endWidget();
 
 echo "<div id=\"totalItemsFound\">";
 $itemsFound =  totalItemsFound($model->search(true));
@@ -105,7 +66,7 @@ echo "</div>";
         <img src="${imageFullSize}" />
     </div>
     <div class="group text_descr">
-        <!--<div><strong>${imageFullSize}</strong></div> --> <!-- pkostov do we need that? It must be description NOT img path ?-->
+        <!--<div><strong>${imageFullSize}</strong></div> <!-- pkostov do we need that? It must be description NOT img path ?-->
         <br />
 
 
@@ -121,9 +82,10 @@ echo "</div>";
             {{/each}}
         </div>
         <div id="tags">
-            {{each tags}}
-            ${tag},
-            {{/each}}
+            <!--{{each tags}}
+            ${tag}
+            {{/each}}-->
+            ${tags}
         </div>
     </div>
 </script>

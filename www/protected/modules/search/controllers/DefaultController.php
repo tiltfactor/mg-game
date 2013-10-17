@@ -28,6 +28,7 @@ class DefaultController extends Controller
         $cs->registerCssFile(Yii::app()->baseUrl . '/css/normalize.css');
         $cs->registerScriptFile(Yii::app()->baseUrl . '/js/modernizr.custom.js', CClientScript::POS_HEAD);
         $cs->registerScriptFile(SearchModule::getAssetsUrl() . '/js/search.js', CClientScript::POS_END);
+        $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_HEAD);
 
         $institutions = Institution::model()->with('collections')->findAll('status=1');
 
@@ -47,6 +48,8 @@ class DefaultController extends Controller
         $this->render('index',
             array(
                 'model' => $model,
+                'setAlphabeticalOrder' => isset( $_GET['Custom']['alphabetical_sort'])  ? $_GET['Custom']['alphabetical_sort'] : 'relevance',
+                'setItemsPerPage' => isset( $_GET['Custom']['items_per_page']) ? $_GET['Custom']['items_per_page'] : 25,
                 'institutions' =>  $institutions,
                 'assets_url' => SearchModule::getAssetsUrl()
             )
