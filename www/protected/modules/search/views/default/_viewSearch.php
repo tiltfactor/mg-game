@@ -29,7 +29,7 @@ echo '<div class="hidden json" style="display: none;">';
     },
     "collection": "<?php echo $data->listCollectionsText() ?>",
     "institution": "<?php echo $data->institution->name?>",
-    "instWebsite": "<?php echo $data->institution->url ?>",
+    "instWebsite": "<?php echo $data->institution->website ?>",
     "tags": " <?php echo $tagsString; ?>",
     "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
     "related": [

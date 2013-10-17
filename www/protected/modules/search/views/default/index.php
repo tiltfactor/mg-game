@@ -71,8 +71,7 @@ echo "</div>";
 
 
         <div><strong>${collection} </strong></div>
-        <div><strong>${institution}</strong></a></div>
-
+        <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
         <div>Other media that may interest you:</div>
         <div id="related_items" class="group">
             {{each related}}
