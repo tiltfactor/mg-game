@@ -171,7 +171,7 @@ input[type="checkbox"] {
     float: left;
 }
 
-.pager {
+/*.pager {
     background-color: #E3E3E3;
     display: inline;
     float: right;
@@ -179,14 +179,14 @@ input[type="checkbox"] {
     padding-bottom: 0;
     text-align: end;
     width: 125%;
-}
+}*/
 
 #imageButton {
     height: 30px;
     margin-bottom: 14px;
 }
 
-#Custom_tags
+#Custom_tags,
 {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -194,6 +194,24 @@ input[type="checkbox"] {
     height: 23px;
     width: 330px;
 
+}
+
+#selectItemsPerPage
+{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    height: 23px;
+    width: 50px;
+}
+
+#sortBy
+{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    height: 23px;
+    width: 150px;
 }
 
 #playTagConnect {
@@ -244,4 +262,40 @@ div.search-form {
 
 .delete.right {
     cursor: pointer;
+}
+
+ /*>>>*/
+
+.itemsPerPage, .sorter {
+    display: inline;
+}
+
+
+
+#levelOneHolder {
+    background: none repeat scroll 0 0 #E3E3E3;
+    float: right;
+    width: 124%;
+}
+
+.menu {
+    float: left;
+    margin-top: 90px;
+    padding: 0 10px;
+    width: 180px;
+}
+
+.pager {
+
+    display: inline;
+    float: right;
+    height: 40px;
+    padding-bottom: 0;
+    text-align: end;
+    width: 55%;
+}
+
+.itemsPerPage {
+    margin-left: 1%;
+    margin-right: 1%;
 }

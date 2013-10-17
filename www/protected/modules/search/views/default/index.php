@@ -70,7 +70,7 @@ echo '
 
 
     <div class="main_content box">';
-
+$options = array ('10' => '10', '15' => '15', '20'=>'20', '25'=>'25' );
 
 $this->widget('ListView', array(
     'dataProvider'=>$model->search(true),
@@ -84,7 +84,8 @@ $this->widget('ListView', array(
         'name.asc'=>'Z-A    '),
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
-    'template'=>"{summary}<div>{sorter}\n{pager}</div>{items}\n<div>{sorter}\n{pager}</div>", //pager on top
+   // 'template'=>"{summary}<div>{sorter}\n{pager}</div>{items}\n<div>{sorter}\n{pager}</div>", //pager on top
+    'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('selectItemsPerPage', 'itemsPerPage', $options) . "</div>" . "{sorter}{pager}</div>{items}", //pager on top
     'summaryText'=>" ",
 
 ));
