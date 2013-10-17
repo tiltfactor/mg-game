@@ -21,6 +21,7 @@ MG_GAME_ONEUP = function ($) {
         toastStayTime:9900,
         socketDisconnect:null,
         toastBackgroundClass:'popup_gradient',
+        isDisconnected:false,
         oneup_show_curtain:function () {
             // create functionality to show and hide the curtain
             var game_curtainDiv = $('<div id="oneUp_curtain"/>');
@@ -1343,9 +1344,16 @@ MG_GAME_ONEUP = function ($) {
             socket.on('reconnect', function () {
                 console_log('Reconnected to the server');
                 socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
+                if(this.isDisconnected){
+                    MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid, function (response) {
+                        MG_GAME_ONEUP.user = response.user;
+                    });
+                    this.isDisconnected = false;
+                }
             });
 
             socket.on('disconnect', function () {
+                this.isDisconnected = true;
                 console_log('DISCONNECT is fired!!! ');
             });
 
