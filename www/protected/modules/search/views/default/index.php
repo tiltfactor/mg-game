@@ -35,6 +35,22 @@ function totalItemsFound($provider)
     return $i;
 }
 
+$mediaResults = $model->search(true);
+$total = count($mediaResults->getData());
+$items = $mediaResults->getData();
+global $relatedMedia;
+$relatedMedia = array();
+foreach($items as $key=>&$data){
+    $relatedMedia[$data->id] = array();
+    $index = $key+1;
+    if($index>$total) $index = 0;
+    for($i=0;$i<6;$i++){
+        array_push($relatedMedia[$data->id],MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
+        $index++;
+        if($index>$total) $index = 0;
+    }
+}
+
 echo '
 
 
@@ -42,7 +58,7 @@ echo '
 $options = array ('10' => '10', '15' => '15', '20'=>'20', '25'=>'25' );
 $sorterOptions = array('relevance' => 'Relevance', 'a_z' => 'A-Z', 'z_a'=>'Z-A');
 $this->widget('zii.widgets.CListView', array(
-    'dataProvider'=>$model->search(true),
+    'dataProvider'=>$mediaResults,
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
@@ -55,7 +71,7 @@ echo '</div>';
 $this->endWidget();
 
 echo "<div id=\"totalItemsFound\">";
-$itemsFound =  totalItemsFound($model->search(true));
+$itemsFound =  totalItemsFound($mediaResults);
 if($itemsFound != 0) echo  'Your search ' .   "<div id=\"putFor\"> </div>"  .' '. "<div id=\"searchedValue\"> </div>" . ' returned ' . $itemsFound . ' results.';
 echo "</div>";
 ?>

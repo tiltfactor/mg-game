@@ -1,4 +1,6 @@
 <?php
+
+global $relatedMedia;
 $tagsString = "";
 foreach ($data->tagUses as $currentTag)
 {
@@ -34,45 +36,34 @@ echo '<div class="hidden json" style="display: none;">';
     "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
     "related": [
     {
-    "id": 12,
     "imageFullSize": "",
     "imageScaled": "",
-    "thumbnail":  ""
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][0] ?>"
     },
     {
     "imageFullSize": "",
     "imageScaled": "",
-    "thumbnail":  ""
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][1] ?>"
     },
     {
     "imageFullSize": "",
     "imageScaled": "",
-    "thumbnail":  ""
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][2] ?>"
     },
     {
     "imageFullSize": "",
     "imageScaled": "",
-    "thumbnail":  ""
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][3] ?>"
     },
     {
     "imageFullSize": "",
     "imageScaled": "",
-    "thumbnail":  ""
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][4] ?>"
     },
     {
     "imageFullSize": "",
     "imageScaled": "",
-    "thumbnail":  ""
-    },
-    {
-    "imageFullSize": "",
-    "imageScaled": "",
-    "thumbnail":  ""
-    },
-    {
-    "imageFullSize": "",
-    "imageScaled": "",
-    "thumbnail":  ""
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][5] ?>"
     }
     ]
     }]
