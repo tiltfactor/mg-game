@@ -44,7 +44,7 @@ foreach($items as $key=>&$data){
     $relatedMedia[$data->id] = array();
     $index = $key+1;
     if($index>$total) $index = 0;
-    for($i=0;$i<6;$i++){
+    for($i=0;$i<8;$i++){
         array_push($relatedMedia[$data->id],MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
         $index++;
         if($index>$total) $index = 0;

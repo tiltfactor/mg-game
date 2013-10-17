@@ -64,6 +64,16 @@ echo '<div class="hidden json" style="display: none;">';
     "imageFullSize": "",
     "imageScaled": "",
     "thumbnail":  "<?php echo  $relatedMedia[$data->id][5] ?>"
+    },
+    {
+    "imageFullSize": "",
+    "imageScaled": "",
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][6] ?>"
+    },
+    {
+    "imageFullSize": "",
+    "imageScaled": "",
+    "thumbnail":  "<?php echo  $relatedMedia[$data->id][7] ?>"
     }
     ]
     }]
