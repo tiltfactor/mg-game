@@ -45,15 +45,15 @@ foreach($items as $key=>&$data){
     $index = $key+1;
     if($index>$total) $index = 0;
     for($i=0;$i<8;$i++){
-        array_push($relatedMedia[$data->id],MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
+        $relate = array("id"=>$items[$index]->id,
+                        "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
+        array_push($relatedMedia[$data->id],$relate);
         $index++;
         if($index>$total) $index = 0;
     }
 }
 
 echo '
-
-
     <div class="main_content box">';
 $options = array ('10' => '10', '15' => '15', '20'=>'20', '25'=>'25' );
 $sorterOptions = array('relevance' => 'Relevance', 'a_z' => 'A-Z', 'z_a'=>'Z-A');
@@ -78,21 +78,17 @@ echo "</div>";
 
 <script id="template-image_description" type="text/x-jquery-tmpl">
     <div class="delete right">X</div>
-    <div class="image_div">
+    <div class="image_div" >
         <img src="${imageFullSize}" />
     </div>
     <div class="group text_descr">
-        <!--<div><strong>${imageFullSize}</strong></div> <!-- pkostov do we need that? It must be description NOT img path ?-->
-        <br />
-
-
-        <div><strong>${collection} </strong></div>
+       <div><strong>${collection} </strong></div>
         <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
         <div>Other media that may interest you:</div>
         <div id="related_items" class="group">
             {{each related}}
-            <div interest_id="${id}" class="item">
-                <img src="${thumbnail}" />
+            <div class="item">
+                <img src="${thumbnail}" onclick="$('#${id}').trigger('click');" style="cursor: pointer;"/>
             </div>
             {{/each}}
         </div>
@@ -106,18 +102,58 @@ echo "</div>";
 </script>
 
 <script id="template-video_description" type="text/x-jquery-tmpl">
-    <div style="display: flex-box; float: left; padding: 10px 20px;">
-        <video class="video" controls preload poster="' . $url_poster . '">
-            <source src="${url_mp4}"></source>
-            <source src="${url_webm}"></source>
+    <div class="delete right">X</div>
+    <div class="image_div">
+        <video class="video" controls preload poster="${videoPoster}" width="480" height="320">
+            <source src="${videoWebm}"></source>
+            <source src="${videoMp4}"></source>
         </video>
+    </div>
+    <div class="group text_descr">
+        <br />
+        <div><strong>${collection} </strong></div>
+        <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
+        <div>Other media that may interest you:</div>
+        <div id="related_items" class="group">
+            {{each related}}
+            <div class="item">
+                <img src="${thumbnail}" onclick="$('#${id}').trigger('click');" style="cursor: pointer;"/>
+            </div>
+            {{/each}}
+        </div>
+        <div id="tags">
+            <!--{{each tags}}
+            ${tag}
+            {{/each}}-->
+            ${tags}
+        </div>
     </div>
 </script>
 <script id="template-audio_description" type="text/x-jquery-tmpl">
-    <div style="display: flex-box; float: left; padding: 10px 20px;">
+    <div class="delete right">X</div>
+    <div class="image_div">
         <audio class="audio" controls preload>
-            <source src="${url_mp3}"></source>
-            <source src="${url_ogg}"></source>
+            <source src="${audioMp3}"></source>
+            <source src="${audioOgg}"></source>
         </audio>
+    </div>
+    <div class="group text_descr">
+        <br />
+        <div><strong>${collection} </strong></div>
+        <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
+        <div>Other media that may interest you:</div>
+        <div id="related_items" class="group">
+            {{each related}}
+            <div class="item" >
+                <img src="${thumbnail}" onclick="$('#${id}').trigger('click');" style="cursor: pointer;"/>
+            </div>
+            {{/each}}
+        </div>
+        <div id="tags">
+            <!--{{each tags}}
+            ${tag}
+            {{/each}}-->
+            ${tags}
+        </div>
     </div>
 </script>
