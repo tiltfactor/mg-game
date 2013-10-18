@@ -61,7 +61,7 @@ class Media extends BaseMedia
         $criteria->compare('modified', $this->modified, true);
         $criteria->compare('institution_id', $this->institution_id);
         $pageSize = Yii::app()->fbvStorage->get("settings.pagination_size");
-        $criteria->order = 'name ASC';
+
         if (isset($_GET["Custom"])) {
 
             if (isset($_GET["Custom"]["tags"])) {
@@ -161,7 +161,7 @@ class Media extends BaseMedia
         }
 
         if (!Yii::app()->request->isAjaxRequest)
-            //$criteria->order = 'name ASC';
+            $criteria->order = 'name ASC';
 
         $sort = new CSort;
         $sort->attributes = array(
