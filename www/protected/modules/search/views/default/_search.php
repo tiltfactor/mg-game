@@ -20,7 +20,7 @@
         <?php
         echo CHtml::imageButton(SearchModule::getAssetsUrl() . "/images/search_small.png", $htmlOptions=array('id' => 'imageButton'));
         ?>
-        <div id="playTagConnect">Play. Tag. Connect. </div>
+        <div id="playTagConnect"><img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/playTagConnectLogo.png" alt="MetaDataGames Logo"/></div>
     </div>
         </div>
 
