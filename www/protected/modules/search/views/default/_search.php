@@ -2,29 +2,46 @@
 
 
     <div id="searchHeader">
-    <div id="metadatagameslogo">
-        <img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/metadatagamesLogo.png" alt="MetaDataGames Logo"/>
-    </div>
-
-    <div class="row" id="searchRow"> <!-- ROW 1 [Tags, Search]-->
-        <?php
-        $this->widget('MGJuiAutoCompleteMultiple', array(
-            'name' => 'Custom[tags]',
-            'value' => ((isset($_GET["Custom"]) && isset($_GET["Custom"]["tags"])) ? $_GET["Custom"]["tags"] : ''),
-            'source' => $this->createUrl('/admin/tag/searchTags'),
-            'options' => array(
-                'showAnim' => 'fold',
-            ),
-        ));
-        ?>
-        <?php
-        echo CHtml::imageButton(SearchModule::getAssetsUrl() . "/images/search_small.png", $htmlOptions=array('id' => 'imageButton'));
-        ?>
-        <div id="playTagConnect"><img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/playTagConnectLogo.png" alt="MetaDataGames Logo"/></div>
-    </div>
+        <div id="metadatagameslogo">
+            <img src="<?php echo SearchModule::getAssetsUrl(); ?>/images/metadatagamesLogo.png" alt="MetaDataGames Logo"/>
         </div>
 
-<?php
+        <div class="row" id="searchRow"> <!-- ROW 1 [Tags, Search]-->
+            <?php
+            $this->widget('MGJuiAutoCompleteMultiple', array(
+                'name' => 'Custom[tags]',
+                'value' => ((isset($_GET["Custom"]) && isset($_GET["Custom"]["tags"])) ? $_GET["Custom"]["tags"] : ''),
+                'source' => $this->createUrl('/admin/tag/searchTags'),
+                'options' => array(
+                    'showAnim' => 'fold',
+                ),
+            ));
+            ?>
+            <?php
+            echo CHtml::imageButton(SearchModule::getAssetsUrl() . "/images/search_small.png", $htmlOptions=array('id' => 'imageButton'));
+            ?>
+            <div id="playTagConnect">Play. Tag. Connect. </div>
+        </div>
+    </div>
+
+    <?php
+
+    $institutions = Institution::model()->findAll();
+    $collections = array();
+    $myInstitutions = array();
+    foreach($institutions as $row){
+        $collections = array_merge($collections,$row->collections);
+        $myInstitutions [$row->id] = $row->name;
+    }
+    //print_r($myInstitutions);
+    $colls = Collection::model()->findAll();
+    $myCollections = array();
+    foreach($colls as $row)
+    {
+        $myCollections = array_merge($myCollections,array(array('id'=>$row->id,'name'=> $row->name,'institution_id'=>$row->institution_id)));
+    }
+    echo '<div id="collectionToInstitution" class="hidden json" style="display: none;">' . json_encode($myCollections) .  '</div>';
+
 
     echo '<div class="group refine" style="background-color:white/* #E3E3E3*/;">
     <div class="menu">
@@ -37,7 +54,6 @@
         'template' => '<div class="inline-radio">{input} {label}</div>',
         'separator' => '',
     ));
-
     echo '
             </div>
         </div>
@@ -46,7 +62,7 @@
             <div>By Institution</div>
             </br>
             <div class="menu_item">';
-    echo CHtml::checkBoxList("Custom[institutions]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["institutions"])) ? $_GET["Custom"]["institutions"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Institution::model()->findAllAttributes(null, true)), false, true), array(
+    echo CHtml::checkBoxList("Custom[institutions]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["institutions"])) ? $_GET["Custom"]["institutions"] : ''), GxHtml::encodeEx(GxHtml::listDataEx($institutions), false, true), array(
         'template' => '{input} {label}',
         'separator' => '<br />',
     ));
@@ -57,9 +73,9 @@
             <div class="separator"></div>
             <div>By Collection</div>
             <div class="menu_item">';
-    echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"])) ? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx(Collection::model()->findAllAttributes(null, true)), false, true), array(
+    echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"])) ? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx($collections), false, true), array(
         'template' => '{input} {label}',
-        'separator' => '<br />',
+        'separator' => '<br /><br />',
     ));
     echo '
             </div>
@@ -74,7 +90,7 @@
     ));
 
 
-?>
+    ?>
 
     <?php
     echo '
@@ -83,4 +99,4 @@
     </div>';
     ?>
 
-<!--</div>--><!-- search-form -->
+    <!--</div>--><!-- search-form -->

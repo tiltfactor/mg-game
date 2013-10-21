@@ -1,13 +1,59 @@
 $(document).ready(function () {
     $("#totalItemsFound").insertAfter('#searchHeader');
-        var searched = $('#Custom_tags').val();
-        if (searched !== '') {
-            $('#putFor').text("for");
-            $('#searchedValue').text(searched);
-        }
-
+    var searched = $('#Custom_tags').val();
+    if (searched !== '') {
+        $('#putFor').text("for");
+        $('#searchedValue').text(searched);
+    }
+    checkInstitutionsCollections();
     setImageClick();
 });
+
+
+function checkInstitutionsCollections(){
+    $('#Custom_institutions input').off('click').on('click', function () {
+        var checkedInstitutions = [];
+        $('#Custom_institutions input').each(function (i, item) {
+            if( this.checked == true) {
+                checkedInstitutions.push($(this).attr("value"))
+            }
+        });
+
+        var instId = parseInt($(this).attr( 'value'),10) ;
+        var colToInst = $.parseJSON($('#collectionToInstitution').text());
+        var collectionsToBeUnSelectable = [];
+        var collectionsToBeSelectable = [];
+
+        $.each(checkedInstitutions, function(key, value) {
+            $.each(colToInst, function(i, item) {
+                if(parseInt(item['institution_id'],10) !== parseInt(value,10)) {
+                    collectionsToBeUnSelectable.push(item['id']);
+                }
+                if(parseInt(item['institution_id'],10) === parseInt(value,10)) {
+                    console.log("value in selectable: ",value);
+                    collectionsToBeSelectable.push(item['id']);
+                }
+            });
+        });
+
+        $.each(collectionsToBeUnSelectable, function(i, item) {
+            $("#Custom_collections [value = " + item + "]").attr("checked", false);
+            $("#Custom_collections [value = " + item + "]").attr("disabled", true);
+        });
+        $.each(collectionsToBeSelectable, function(i, item) {
+            $("#Custom_collections [value = " + item + "]").attr("disabled", false);
+        });
+        if(collectionsToBeSelectable.length === 0) {
+            console.log("Nothing selected");
+            $('#Custom_collections input').each(function (i, item) {
+                $(this).attr("disabled", false);
+
+            });
+        }
+    });
+
+}
+
 
 function setImageClick () {
     $(".imageInside").each(function () {

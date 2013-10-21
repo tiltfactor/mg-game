@@ -44,7 +44,7 @@ foreach($items as $key=>&$data){
     $relatedMedia[$data->id] = array();
     $index = $key+1;
     if($index>$total) $index = 0;
-    for($i=0;$i<8;$i++){
+    for($i=0;$i<$total;$i++){
         $relate = array("id"=>$items[$index]->id,
                         "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
         array_push($relatedMedia[$data->id],$relate);
@@ -62,10 +62,8 @@ $this->widget('zii.widgets.CListView', array(
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
-   // 'template'=>"{summary}<div>{sorter}\n{pager}</div>{items}\n<div>{sorter}\n{pager}</div>", //pager on top
     'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('Custom[items_per_page]', $setItemsPerPage, $options) . "</div>" . 'Sort by: ' . CHtml::dropDownList('Custom[alphabetical_sort]', $setAlphabeticalOrder, $sorterOptions) ."{pager}</div>{items}", //pager on top
     'summaryText'=>" ",
-
 ));
 echo '</div>';
 $this->endWidget();
