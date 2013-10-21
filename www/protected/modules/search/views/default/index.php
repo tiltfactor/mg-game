@@ -62,7 +62,6 @@ $this->widget('zii.widgets.CListView', array(
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
-   // 'template'=>"{summary}<div>{sorter}\n{pager}</div>{items}\n<div>{sorter}\n{pager}</div>", //pager on top
     'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('Custom[items_per_page]', $setItemsPerPage, $options) . "</div>" . 'Sort by: ' . CHtml::dropDownList('Custom[alphabetical_sort]', $setAlphabeticalOrder, $sorterOptions) ."{pager}</div>{items}", //pager on top
     'summaryText'=>" ",
 

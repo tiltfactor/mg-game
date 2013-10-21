@@ -1,5 +1,4 @@
 <?php
-
 global $relatedMedia;
 $tagsString = "";
 foreach ($data->tagUses as $currentTag) {
