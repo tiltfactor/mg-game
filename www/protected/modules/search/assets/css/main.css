@@ -230,10 +230,14 @@ div.search-form {
 }
 
 #playTagConnect {
-    font-family: cursive;
+/*     font-family: cursive; */
     font-size: 142%;
     padding-left: 134px;
     position: relative;
+}
+
+#playTagConnect img {
+    vertical-align: bottom;
 }
 
 
