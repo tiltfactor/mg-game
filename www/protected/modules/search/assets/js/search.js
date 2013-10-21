@@ -37,6 +37,7 @@ function checkInstitutionsCollections(){
         });
 
         $.each(collectionsToBeUnSelectable, function(i, item) {
+            $("#Custom_collections [value = " + item + "]").attr("checked", false);
             $("#Custom_collections [value = " + item + "]").attr("disabled", true);
         });
         $.each(collectionsToBeSelectable, function(i, item) {
