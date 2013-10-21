@@ -53,13 +53,15 @@ function Countdown() {
 	};
 	$.extend(this._defaults, this.regional['']);
 	this._serverSyncs = [];
+	var now = (typeof Date.now == 'function' ? Date.now :
+		function() { return new Date().getTime(); });
+	var perfAvail = (window.performance && typeof window.performance.now == 'function');
 	// Shared timer for all countdowns
 	function timerCallBack(timestamp) {
 		var drawStart = (timestamp < 1e12 ? // New HTML5 high resolution timer
-			(drawStart = performance.now ?
-			(performance.now() + performance.timing.navigationStart) : Date.now()) :
+			(perfAvail ? (performance.now() + performance.timing.navigationStart) : now()) :
 			// Integer milliseconds since unix epoch
-			timestamp || new Date().getTime());
+			timestamp || now());
 		if (drawStart - animationStartTime >= 1000) {
 			plugin._updateTargets();
 			animationStartTime = drawStart;
@@ -78,7 +80,7 @@ function Countdown() {
 	else {
 		animationStartTime = window.animationStartTime ||
 			window.webkitAnimationStartTime || window.mozAnimationStartTime ||
-			window.oAnimationStartTime || window.msAnimationStartTime || new Date().getTime();
+			window.oAnimationStartTime || window.msAnimationStartTime || now();
 		requestAnimationFrame(timerCallBack);
 	}
 }
@@ -230,6 +232,9 @@ $.extend(Countdown.prototype, {
 			var name = options;
 			options = {};
 			options[name] = value;
+		}
+		if (options.layout) {
+			options.layout = options.layout.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 		}
 		this._resetExtraLabels(inst.options, options);
 		var timezoneChanged = (inst.options.timezone != options.timezone);
