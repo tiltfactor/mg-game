@@ -15,7 +15,7 @@ function checkInstitutionsCollections(){
         var checkedInstitutions = [];
         $('#Custom_institutions input').each(function (i, item) {
             if( this.checked == true) {
-                checkedInstitutions.push($(this).attr("value"))
+                checkedInstitutions.push($(this).attr("value"));
             }
         });
 
@@ -23,20 +23,25 @@ function checkInstitutionsCollections(){
         var colToInst = $.parseJSON($('#collectionToInstitution').text());
         var collectionsToBeUnSelectable = [];
         var collectionsToBeSelectable = [];
-
+        var distinctCollectionsToBeUnSelectable = [];
+        var i = 0;
         $.each(checkedInstitutions, function(key, value) {
             $.each(colToInst, function(i, item) {
                 if(parseInt(item['institution_id'],10) !== parseInt(value,10)) {
                     collectionsToBeUnSelectable.push(item['id']);
                 }
                 if(parseInt(item['institution_id'],10) === parseInt(value,10)) {
-                    console.log("value in selectable: ",value);
                     collectionsToBeSelectable.push(item['id']);
                 }
             });
         });
 
-        $.each(collectionsToBeUnSelectable, function(i, item) {
+        $.grep(collectionsToBeUnSelectable, function(el) {
+            if ($.inArray(el, collectionsToBeSelectable) == -1) distinctCollectionsToBeUnSelectable.push(el);
+            i++;
+        });
+
+        $.each(distinctCollectionsToBeUnSelectable, function(i, item) {
             $("#Custom_collections [value = " + item + "]").attr("checked", false);
             $("#Custom_collections [value = " + item + "]").attr("disabled", true);
         });
@@ -44,14 +49,11 @@ function checkInstitutionsCollections(){
             $("#Custom_collections [value = " + item + "]").attr("disabled", false);
         });
         if(collectionsToBeSelectable.length === 0) {
-            console.log("Nothing selected");
             $('#Custom_collections input').each(function (i, item) {
                 $(this).attr("disabled", false);
-
             });
         }
     });
-
 }
 
 
