@@ -63,7 +63,6 @@ class Media extends BaseMedia
         $pageSize = Yii::app()->fbvStorage->get("settings.pagination_size");
 
         if (isset($_GET["Custom"])) {
-
             if (isset($_GET["Custom"]["tags"])) {
                 $parsed_tags = MGTags::parseTags($_GET["Custom"]["tags"]);
                 if (count($parsed_tags) > 0) {
@@ -107,9 +106,9 @@ class Media extends BaseMedia
                 if($alphaSort == 'a_z') $criteria->order = 'name ASC';
                 if($alphaSort == 'z_a') $criteria->order = 'name DESC';
             }
-
+            $criteria->join .= ' LEFT JOIN {{institution}} inst ON inst.id=t.institution_id';
+            $criteria->addInCondition('inst.status', array(1));
             if (isset($_GET["Custom"]["institutions"]) && is_array($_GET["Custom"]["institutions"])) {
-                $criteria->join .= ' LEFT JOIN {{institution}} inst ON inst.id=t.institution_id';
                 $criteria->addInCondition('inst.id', array_values($_GET["Custom"]["institutions"]));
             }
 
