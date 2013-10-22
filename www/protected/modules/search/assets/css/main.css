@@ -60,10 +60,10 @@ a.image_hover:hover > .image_description {
 
 .media_full_description {
     width: 100%;
-    min-height: 400px;
     background-color: black;
     margin: 10px 0;
     display: none;
+    padding-bottom: 10px;
 }
 
 .text_descr {

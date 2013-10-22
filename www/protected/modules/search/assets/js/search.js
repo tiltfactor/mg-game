@@ -108,7 +108,7 @@ function setImageClick () {
         function add_delete () {
             $("#media_full_description").find(".delete").unbind('click').click(function () {
                 $(this).closest('.media_full_description').remove();
-                $(".arrow").is(":visible").hide();
+                $(".arrow:visible").hide();
             });
         }
     });
