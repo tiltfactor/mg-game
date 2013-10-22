@@ -35,14 +35,11 @@ function checkInstitutionsCollections(){
                 }
             });
         });
-        //console.log('collectionsToBeUnSelectable', collectionsToBeUnSelectable);//pkostov
-        //console.log('collectionsToBeSelectable', collectionsToBeSelectable);//pkostov
 
         $.grep(collectionsToBeUnSelectable, function(el) {
             if ($.inArray(el, collectionsToBeSelectable) == -1) distinctCollectionsToBeUnSelectable.push(el);
             i++;
         });
-
 
         $.each(distinctCollectionsToBeUnSelectable, function(i, item) {
             $("#Custom_collections [value = " + item + "]").attr("checked", false);
