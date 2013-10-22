@@ -1,15 +1,15 @@
 @font-face {
-  font-family: Museo;
+  font-family: Afbatterse;
   font-weight: normal;
-  src: url("Museo100-Regular.otf") format("opentype");
+  src: url("afbatterse.otf") format("opentype");
 }
 @font-face {
-  font-family: Museo;
+  font-family: Afbatterse;
   font-weight: bold;
-  src: url("Museo500-Regular.otf") format("opentype");
+  src: url("afbattersebold.otf") format("opentype");
 }
 body {
-  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
+  font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
   color: black;
   text-align: center;
   list-style: none;
@@ -21,6 +21,25 @@ body {
 @media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body {
     background-image: url('../images/pyramid-background@2x.jpg');
+    background-repeat: repeat;
+  }
+}
+#header {
+  padding: 5px;
+  background-color: #030104;
+  height: auto;
+}
+#header .setting {
+  display: block;
+  background-image: url('../images/settings.png');
+  background-repeat: repeat;
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 22px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #header .setting {
+    background-image: url('../images/settings@2x.png');
     background-repeat: repeat;
   }
 }
@@ -85,7 +104,7 @@ body p,
 body div,
 body li,
 body input {
-  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
+  font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
   color: #36454c;
   font-size: 14px;
 }
@@ -188,7 +207,7 @@ body #content footer {
   margin: 0 auto;
   height: 115px;
   background-repeat: repeat-x;
-  font-family: Museo;
+  font-family: Afbatterse;
 }
 body #content footer.footer_level_1 {
   background-image: url('../images/level_1.png');
@@ -285,7 +304,7 @@ body #content footer div {
   top: 40px;
   font-size: 40px;
   margin-top: 0;
-  font-family: Museo;
+  font-family: Afbatterse;
   text-shadow: 1px 1px 1px #fff, 3px 3px 5px #464a4d;
   color: #464a4d;
 }
@@ -500,15 +519,6 @@ body .pyramid.level_9 {
     background-repeat: repeat;
   }
 }
-
-#splash_title {
-  width: 615px;
-	height: 162px;
-  background-image: url('../images/splash_logo.png');
-  background-repeat: no-repeat;
-  margin: 0 auto 0 auto;  
-}
-
 #content,
 #header {
   padding: 0;
@@ -542,8 +552,12 @@ body .pyramid.level_9 {
 #gamearea {
   padding: 41px 0;
 }
-#stage {
-  display: none;
+/*#stage {
+  display:none;
+}*/
+.right {
+  left: auto;
+  float: right;
 }
 #image_to_tag {
   max-width: 90%;
@@ -585,10 +599,8 @@ body .pyramid.level_9 {
 .countdown_amount {
   font-size: 30px;
   color: #000000;
-/* 
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: #ff5b13;
- */
   text-shadow: 1px 0 0 #ff5b13, -1px 0 0 #ff5b13, 0 0px 0 #ff5b13, 0 -1px 0 #ff5b13, 0px 0px #ff5b13, -1px -1px 0 #ff5b13, 1px -1px 0 #ff5b13, -1px 1px 0 #ff5b13;
 }
 .hasCountdown {
@@ -711,10 +723,10 @@ input#word.level_9 {
   padding: 0px !important;
 }
 .spacial_font {
-  font-family: Museo;
+  font-family: Afbatterse;
 }
 .spacial_font.size_20 {
-  font-size: 16px;
+  font-size: 20px;
 }
 .spacial_font.with_borders {
   color: #000000;
@@ -948,19 +960,7 @@ input#word.level_9 {
 }
 /* iPhone 4 - 4S  in portrait & landscape */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  #splash_title {
-		width: 315px;
-		height: 81px;
-		background-image: url('../images/splash_logo@2x.png')!important;
-		background-repeat: no-repeat;
-		margin: 0 auto 0 auto;  
-	}
-}
-/* iPhone 4 - 4s in landscape */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (orientation:landscape) {
-	#splash_home {
-		top: 20px;
-	}
+  /* STYLES GO HERE */
 }
 body.touch_device html {
   overflow: hidden;
@@ -1113,11 +1113,9 @@ body.touch_device #sidepanel {
     position: relative;
     height: 30px;
   }
-/* 
   .spacial_font.size_20 {
     font-size: 17px;
   }
- */
   .spacial_font.logo_text {
     font-size: 62px;
     white-space: nowrap;
@@ -1139,7 +1137,7 @@ body.touch_device #sidepanel {
     line-height: 25px;
   }
   .spacial_font.size_20 {
-    font-size: 16px;
+    font-size: 20px;
   }
   .spacial_font.logo_text {
     font-size: 62px;
@@ -1166,13 +1164,6 @@ body.touch_device #sidepanel {
   #fieldholder .final {
     font-size: 20px !important;
   }
-  #splash_title {
-  width: 315px;
-	height: 81px;
-  background-image: url('../images/splash_logo.png');
-  background-repeat: no-repeat;
-  margin: 0 auto 0 auto;  
-	}
 }
 /*.touch_device {
   .touch_devices();
@@ -1184,17 +1175,22 @@ body.touch_device #sidepanel {
   min-height: 150px;
 }
 #splash_home {
-  position: absolute;
-  bottom: 0px;
+  /*  position: absolute;
+  bottom: 0px;*/
+
   width: 100%;
 }
 .text_left {
   text-align: left;
+}
+.row a:link {
+  color: white !important;
+  text-decoration: none;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   /* Safari only override */
   :i-block-chrome.level_1,
   input.level_1 {
     background: url('../images/underscore_1@2x.png') !important;
-  } 
+  }
 }

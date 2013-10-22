@@ -39,6 +39,20 @@ body {
   width: 100%;
 }
 
+#header {
+  padding: 5px;
+  background-color: #030104;
+  height: auto;
+
+  .setting {
+    display: block;
+    .at2x('../images/settings.png', 'no-repeat');
+    background-repeat: no-repeat;
+    width: 35px;
+    height: 22px;
+  }
+}
+
 body {
   height: 100%;
 
@@ -345,8 +359,13 @@ body {
   padding: 41px 0;
 }
 
-#stage {
+/*#stage {
   display:none;
+}*/
+
+.right {
+  left: auto;
+  float: right;
 }
 
 #image_to_tag {
@@ -979,13 +998,20 @@ only screen and (              min-resolution: 192dpi) and (orientation: portrai
 }
 
 #splash_home {
-  position: absolute;
-  bottom: 0px;
+/*  position: absolute;
+  bottom: 0px;*/
   width: 100%;
 }
 
 .text_left {
   text-align: left;
+}
+
+.row {
+  a:link {
+    color: white !important;
+    text-decoration: none;
+  }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {

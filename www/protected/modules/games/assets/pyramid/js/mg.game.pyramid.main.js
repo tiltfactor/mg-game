@@ -1,3 +1,88 @@
+var actions = function (action, click_parent) {
+    $("#" + action).removeClass('hidden');
+    var continue_action = '';
+
+    console_log('call for ' + action + " - click from: " + click_parent);
+    //MG_GAME.oneup_hide_curtain();
+
+    /*
+     $("#header .words").hide();
+     $("#header .back").hide();
+     */
+    switch (action) {
+        case 'main_screen':
+
+            break;
+        case 'game_screen':
+
+            break;
+        case 'login':
+//TODO
+            break;
+        case 'register':
+//TODO
+            break;
+        case 'learn_more':
+            break;
+        case 'how_to':
+            break;
+        default:
+            console_log('action is unknown');
+            break;
+    }
+
+    if (click_parent === '') {
+        $("#content div:visible:eq(0)").hide();
+        $("#" + action).slideUp().show();
+    }
+}
+
+var setClick = function () {
+    $("li.row div").click(function (e) {
+        e.stopPropagation();
+        $(this).find("a").click();
+    });
+
+    $("#content a[href='#']").off('click').on('click', function (e) {
+        e.preventDefault();
+        var location = $(this).attr('location');
+        if (location != undefined) {
+            var location = $(this).attr('location');
+            $("#content div:visible:eq(0)").hide();
+            actions(location, '');
+        }
+        return false;
+    });
+}
+
+var setMenuClick = function () {
+    $("a[location='main_screen']").on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        actions('main_screen', 'menu');
+    });
+    $("a[location='how_to']").on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        actions('how_to', 'menu');
+    });
+    $("a[location='login']").on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        actions('login', 'menu');
+    });
+    $("a[location='register']").on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        actions('register', 'menu');
+    });
+    $("a[location='learn_more']").on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        actions('learn_more', 'menu');
+    });
+}
+
 var device_ratio = 1,
     is_touch_device = is_touch_device();
 
@@ -5,6 +90,30 @@ if (is_touch_device) {
     device_ratio = window.devicePixelRatio;
 }
 
+function is_touch_device() {
+    return !!('ontouchstart' in window) // works on most browsers
+        || !!('onmsgesturechange' in window); // works on ie10
+};
+
+function console_log(logged_text) {
+    console.log(logged_text);
+}
+
+$( document ).ready(function() {
+    if ($("body").hasClass("touch_device")) {
+        $('nav#menu-left').mmenu();
+        $('nav#menu-right').mmenu({
+            position:'right',
+            counters:true
+        });
+        setClick();
+        setMenuClick();
+    } else {
+        $("#header").hide();
+    }
+});
+
+/*
 $( document ).ready(function() {
     if (is_touch_device) {
         $("body").addClass('touch_device');
@@ -79,31 +188,4 @@ var BrowserDetect = {
 
 };
 
-$.fn.centerVertival = function () {
-    this.css("position", "absolute");
-    if (this.outerWidth() < $(window).width()) {
-        this.css("top", (($(window).height() - this.outerHeight()) / 2) + $(window).scrollTop() + "px");
-        return this;
-    }
-};
-
-function is_touch_device() {
-    return !!('ontouchstart' in window) // works on most browsers
-        || !!('onmsgesturechange' in window); // works on ie10
-};
-
-$.fn.centerHorizontal = function () {
-    this.css("position", "absolute");
-    if (this.outerWidth() < $(window).width()) {
-        this.css("left", (($(window).width() - this.outerWidth()) / 2) + $(window).scrollLeft() + "px");
-        return this;
-    }
-};
-
-$.fn.centerVertival = function () {
-    this.css("position", "absolute");
-    if (this.outerWidth() < $(window).width()) {
-        this.css("top", (($(window).height() - this.outerHeight()) / 2) + $(window).scrollTop() + "px");
-        return this;
-    }
-};
+*/

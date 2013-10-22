@@ -25,10 +25,13 @@ $( document ).ready(function() {
         window.location.href = that.prop('href');
     });
 });
+
 $(window).resize(function() {
     onResize ();
 });
+
 function onResize () {
     $("#splash_home .middle_height").css("max-height", $(window).height() / 3);
     $("#splash_logo").centerVertival();
+    $("#main_screen .top").css('height', (($(window).height() / 3)));
 }

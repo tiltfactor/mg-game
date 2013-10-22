@@ -1,43 +1,102 @@
-<!-- The bounding-box around the text input and the button -->
-<input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
-<div class="wrap group">
-    <header>
-        <div class="center" align="center">
-            <!-- The bounding-box around the text input and the button -->
-           <span id="input_area">
-                <form action="javascript: return false;">
-                    <!-- user text field -->
-                    <input type="text" name="word" id="word" autocapitalize="off" autocorrect="off" autocomplete="off" class="level_1" placeholder="Enter a 4 letter word"/>
-                    <a href="#" id="button-play" class="ir hidden"></a>
-                </form>
-            </span>
-            <span id="countdown" class="countdown_amount"></span>
-        </div>
-    </header>
+<div>
+    <!-- The bounding-box around the text input and the button -->
+    <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
+    <div id="header" class="group">
+        <a href="#menu-left" class="header_mm_left">
+            <span class="words hidden top_btn">Words</span>
+            <span class="back hidden"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/oneup/images/back.png" /></span>
+        </a>
+        <a href="#menu-right" class="right setting"></a>
+    </div>
+    <div class="content" id="content">
 
-    <div id="gamearea" class="group">
-        <div id="pass" class="level_1">Pass!</div>
-        <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your
-            browser.
+        <div id="game_screen">
+            <div class="wrap group">
+                <header>
+                    <div class="center" align="center">
+                        <!-- The bounding-box around the text input and the button -->
+               <span id="input_area">
+                    <form action="javascript: return false;">
+                        <!-- user text field -->
+                        <input type="text" name="word" id="word" autocapitalize="off" autocorrect="off" autocomplete="off" class="level_1" placeholder="Enter a 4 letter word"/>
+                        <a href="#" id="button-play" class="ir hidden"></a>
+                    </form>
+                </span>
+                        <span id="countdown" class="countdown_amount"></span>
+                    </div>
+                </header>
+
+                <div id="gamearea" class="group">
+                    <div id="pass" class="level_1">Pass!</div>
+                    <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your
+                        browser.
+                    </div>
+                    <!-- Images from the database appear here -->
+                    <div id="stage">
+                        <div id="holder">
+                            <div id="image_container"></div>
+                        </div>
+                    </div>
+                    <div id="new_image" class="level_1">New Image!</div>
+                </div>
+                <div id="fieldholder" class="group">
+                </div>
+
+            </div>
+
+            <footer class="group footer_level_1">
+                <div>
+                    What's in this image?
+                </div>
+            </footer>
         </div>
-        <!-- Images from the database appear here -->
-        <div id="stage">
-            <div id="holder">
-                <div id="image_container"></div>
+
+        <div id="how_to" class="hidden">
+            <h2>HOW TO PLAY</h2>
+            <div class="padding">
+                This is just a custom text that need to be verified.
             </div>
         </div>
-        <div id="new_image" class="level_1">New Image!</div>
-    </div>
-    <div id="fieldholder" class="group">
-    </div>
 
+        <div id="learn_more" class="hidden">
+            <h2>Learn More</h2>
+            <div class="padding">One Up is part of a suite of games from the
+                Metadata Games project. Metadata Games is a
+                Free and Open Source (FOSS) online game
+                system for gathering useful data on photo,
+                audio, and moving image artifacts. By playing,
+                you have a direct impact on the preservation
+                and accessibility of vital cultural heritage
+                collections for future generations.</div>
+            <div class="padding">
+                Metadata Games is created by the Tiltfactor
+                Laboratory at Dartmouth College, with support
+                from the National Endowment for the
+                Humanities (NEH) and the American Council of
+                Learned Societies (ACLS).
+            </div>
+            <h3 class="padding">METADATAGAMES</h3>
+            <div>
+                <span class="tiltfactor_logo" />
+                <span class="dartmouth_logo" />
+                <span class="neh_logo" />
+            </div>
+
+        </div>
+    </div>
+    <nav id="menu-left">
+    </nav>
+    <nav id="menu-right" style="visibility: hidden;">
+        <ul>
+            <li class="back_blue row"><div><a href="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/" location="main_screen"><span>HOME</span></a></div></li>
+            <li class="back_blue row"><div><a href="#" location="game_screen"><span>PLAY</span></a></div></li>
+            <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
+            <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
+        </ul>
+    </nav>
 </div>
 
-<footer class="group footer_level_1">
-    <div>
-        What's in this image?
-    </div>
-</footer>
+
 <div style="height: 0px; padding: 0; margin: 0; overflow:scroll;">
 
     <script id="template-licence" type="text/x-jquery-tmpl">

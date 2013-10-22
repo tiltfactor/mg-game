@@ -65,12 +65,15 @@ class PyramidController extends GxController
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/modernizr.custom.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/retina.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid.main.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid_splash.js', CClientScript::POS_END);
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
@@ -80,11 +83,14 @@ class PyramidController extends GxController
             $js = "";
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
-            if ($game->play_once_and_move_on == 1) {
+/*            if ($game->play_once_and_move_on == 1) {
                 $this->layout = '//layouts/main_no_menu';
             } else {
                 $this->layout = '//layouts/column1';
-            }
+            }*/
+
+            $this->layout = '//layouts/mobile';
+
             $this->render('index', array(
                 'game' => $game,
                 'asset_url' => GamesModule::getAssetsUrl()."/pyramid",
@@ -112,9 +118,13 @@ class PyramidController extends GxController
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/modernizr.custom.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/retina.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.js', CClientScript::POS_END);
@@ -140,11 +150,14 @@ class PyramidController extends GxController
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
-            if ($game->play_once_and_move_on == 1) {
+/*            if ($game->play_once_and_move_on == 1) {
                 $this->layout = '//layouts/main_no_menu';
             } else {
                 $this->layout = '//layouts/column1';
-            }
+            }*/
+
+            $this->layout = '//layouts/mobile';
+
             $this->render('play', array(
                 'game' => $game,
                 'asset_url' => GamesModule::getAssetsUrl()."/pyramid",
