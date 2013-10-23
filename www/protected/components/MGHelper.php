@@ -61,7 +61,7 @@ class MGHelper
     public static function getScaledMediaUrl($name, $width, $height, $institutionToken, $institutionUrl)
     {
         $token = md5($institutionToken . "_" . $width . "_" . $height . "_" . $name);
-        return $institutionUrl . "index.php/image/scale/token/" . $token . "/name/" . urlencode($name) . "/width/" . $width . "/height/" . $height . "/";
+        return rtrim($institutionUrl, "/") . "/index.php/image/scale/token/" . $token . "/name/" . urlencode($name) . "/width/" . $width . "/height/" . $height . "/";
     }
 
     public static function getMediaThumb($url, $mimeType, $mediaName)
