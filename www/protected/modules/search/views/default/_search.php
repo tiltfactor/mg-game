@@ -25,16 +25,14 @@
     </div>
 
     <?php
-
-    $institutions = Institution::model()->findAll();
+    $institutions = Institution::model()->findAll('status=1');
     $collections = array();
     $myInstitutions = array();
     foreach($institutions as $row){
         $collections = array_merge($collections,$row->collections);
         $myInstitutions [$row->id] = $row->name;
     }
-    //print_r($myInstitutions);
-    $colls = Collection::model()->findAll();
+    $colls = Collection::model()->with('institution')->findAll('status=1');
     $myCollections = array();
     foreach($colls as $row)
     {

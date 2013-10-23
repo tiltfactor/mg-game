@@ -49,7 +49,7 @@ foreach($items as $key=>&$data){
                         "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
         array_push($relatedMedia[$data->id],$relate);
         $index++;
-        if($index>$total) $index = 0;
+        if($index>=$total) $index = 0;
     }
 }
 
@@ -82,11 +82,11 @@ echo "</div>";
     <div class="group text_descr">
        <div><strong>${collection} </strong></div>
         <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
-        <div>Other media that may interest you:</div>
+        <div class="otherMediaInterests">Other media that may interest you:</div>
         <div id="related_items" class="group">
             {{each related}}
             <div class="item">
-                <img src="${thumbnail}" onclick="$('#${id}').trigger('click');" style="cursor: pointer;"/>
+                <img class="thumbnails" src="${thumbnail}" onclick="$('#${id}').trigger('click');" style="cursor: pointer;"  <?php echo 'test=mytest';?>/>
             </div>
             {{/each}}
         </div>

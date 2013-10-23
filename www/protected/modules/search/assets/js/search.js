@@ -7,6 +7,7 @@ $(document).ready(function () {
     }
     checkInstitutionsCollections();
     setImageClick();
+
 });
 
 
@@ -99,8 +100,27 @@ function setImageClick () {
                         add_delete ();
                     });
                 }
+                var thumbnails = $('.thumbnails');
+                var imagesWithoutSource = 0;
+                $.each(thumbnails, function( index, value ) {
+                    if($(value).attr('src') == '')
+                    {
+                        $(value).css('visibility' , 'hidden');
+                        $(value).remove();
+                        imagesWithoutSource++
+                    }
+
+                });
+                console.log("imagesWithoutSource: ",imagesWithoutSource);
+                if(imagesWithoutSource == 8 ) $('.otherMediaInterests').remove();
             });
+
+
+
+
+
         });
+
 
         function add_delete () {
             $("#media_full_description").find(".delete").unbind('click').click(function () {
@@ -109,4 +129,7 @@ function setImageClick () {
             });
         }
     });
+
+
+
 }
