@@ -41,8 +41,11 @@
 	font-size: 75%;
 	text-align: center;
 }
-.countdown_amount, #word {
-	font-size: 40px;
+body .countdown_amount, body #word {
+	font-size: 30px;
+}
+body.retina .countdown_amount, body.retina #word {
+    font-size: 40px;
 }
 .countdown_descr {
 	display: block;

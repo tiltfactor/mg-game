@@ -1,15 +1,15 @@
 @font-face {
-  font-family: Afbatterse;
+  font-family: Museo;
   font-weight: normal;
-  src: url("afbatterse.otf") format("opentype");
+  src: url("Museo100-Regular.otf") format("opentype");
 }
 @font-face {
-  font-family: Afbatterse;
+  font-family: Museo;
   font-weight: bold;
-  src: url("afbattersebold.otf") format("opentype");
+  src: url("Museo100-Regular.otf") format("opentype");
 }
 body {
-  font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
   color: black;
   text-align: center;
   list-style: none;
@@ -18,29 +18,13 @@ body {
   background-repeat: repeat;
   width: 100%;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body {
     background-image: url('../images/pyramid-background@2x.jpg');
     background-repeat: repeat;
-  }
-}
-#header {
-  padding: 5px;
-  background-color: #030104;
-  height: auto;
-}
-#header .setting {
-  display: block;
-  background-image: url('../images/settings.png');
-  background-repeat: repeat;
-  background-repeat: no-repeat;
-  width: 35px;
-  height: 22px;
-}
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
-  #header .setting {
-    background-image: url('../images/settings@2x.png');
-    background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body {
@@ -104,7 +88,7 @@ body p,
 body div,
 body li,
 body input {
-  font-family: Afbatterse, Helvetica, Verdana, Arial, Sans-Serif;
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
   color: #36454c;
   font-size: 14px;
 }
@@ -164,13 +148,13 @@ body header {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#e7e7e8', GradientType=0);
   /* IE6-8 */
 
-  height: 131px;
+  height: 61px;
   width: 100%;
 }
 body header .center {
   display: block;
   position: relative;
-  top: 35px;
+  top: 10px;
   margin: 0 auto;
   width: 500px;
 }
@@ -205,106 +189,133 @@ body .gradient_container {
 }
 body #content footer {
   margin: 0 auto;
-  height: 115px;
+  height: 85px;
   background-repeat: repeat-x;
-  font-family: Afbatterse;
+  font-family: Museo;
 }
 body #content footer.footer_level_1 {
   background-image: url('../images/level_1.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_1 {
     background-image: url('../images/level_1@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_2 {
   background-image: url('../images/level_2.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_2 {
     background-image: url('../images/level_2@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_3 {
   background-image: url('../images/level_3.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_3 {
     background-image: url('../images/level_3@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_4 {
   background-image: url('../images/level_4.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_4 {
     background-image: url('../images/level_4@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_5 {
   background-image: url('../images/level_5.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_5 {
     background-image: url('../images/level_5@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_6 {
   background-image: url('../images/level_6.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_6 {
     background-image: url('../images/level_6@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_7 {
   background-image: url('../images/level_7.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_7 {
     background-image: url('../images/level_7@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_8 {
   background-image: url('../images/level_8.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_8 {
     background-image: url('../images/level_8@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer.footer_level_9 {
   background-image: url('../images/level_9.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body #content footer.footer_level_9 {
     background-image: url('../images/level_9@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body #content footer div {
   position: relative;
-  top: 40px;
+  top: 25px;
   font-size: 40px;
   margin-top: 0;
-  font-family: Afbatterse;
+  font-family: Museo;
   text-shadow: 1px 1px 1px #fff, 3px 3px 5px #464a4d;
   color: #464a4d;
 }
@@ -318,211 +329,298 @@ body .pyramid {
 body .pyramid.word_level_1 {
   background-image: url('../images/pyramid_1.png');
   background-repeat: repeat;
-  height: 144px;
+  height: 71px;
   line-height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_1 {
     background-image: url('../images/pyramid_1@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_2 {
   background-image: url('../images/pyramid_2.png');
   background-repeat: repeat;
-  height: 70px;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_2 {
     background-image: url('../images/pyramid_2@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_3 {
   background-image: url('../images/pyramid_3.png');
   background-repeat: repeat;
-  height: 71px;
-  line-height: 71px;
+  line-height: 36px;
+  height: 36px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_3 {
     background-image: url('../images/pyramid_3@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_4 {
   background-image: url('../images/pyramid_4.png');
   background-repeat: repeat;
-  height: 70px;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_4 {
     background-image: url('../images/pyramid_4@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_5 {
   background-image: url('../images/pyramid_5.png');
   background-repeat: repeat;
-  height: 68px;
-  line-height: 68px;
+  line-height: 34px;
+  height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_5 {
     background-image: url('../images/pyramid_5@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_6 {
   background-image: url('../images/pyramid_6.png');
   background-repeat: repeat;
-  line-height: 71px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_6 {
     background-image: url('../images/pyramid_6@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_7 {
   background-image: url('../images/pyramid_7.png');
   background-repeat: repeat;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_7 {
     background-image: url('../images/pyramid_7@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_8 {
   background-image: url('../images/pyramid_8.png');
   background-repeat: repeat;
-  line-height: 67px;
+  line-height: 34px;
+  height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_8 {
     background-image: url('../images/pyramid_8@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.word_level_9 {
   background-image: url('../images/pyramid_9.png');
   background-repeat: repeat;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.word_level_9 {
     background-image: url('../images/pyramid_9@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_1 {
   background-image: url('../images/pyramid_1.png');
   background-repeat: repeat;
-  height: 144px;
-  line-height: 70px;
+  height: 72px;
+  line-height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_1 {
     background-image: url('../images/pyramid_1@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_2 {
   background-image: url('../images/pyramid_NA_2.png');
   background-repeat: repeat;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_2 {
     background-image: url('../images/pyramid_NA_2@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_3 {
   background-image: url('../images/pyramid_NA_3.png');
   background-repeat: repeat;
-  line-height: 71px;
+  line-height: 36px;
+  height: 36px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_3 {
     background-image: url('../images/pyramid_NA_3@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_4 {
   background-image: url('../images/pyramid_NA_4.png');
   background-repeat: repeat;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_4 {
     background-image: url('../images/pyramid_NA_4@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_5 {
   background-image: url('../images/pyramid_NA_5.png');
   background-repeat: repeat;
-  line-height: 68px;
+  line-height: 34px;
+  height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_5 {
     background-image: url('../images/pyramid_NA_5@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_6 {
   background-image: url('../images/pyramid_NA_6.png');
   background-repeat: repeat;
-  line-height: 71px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_6 {
     background-image: url('../images/pyramid_NA_6@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_7 {
   background-image: url('../images/pyramid_NA_7.png');
   background-repeat: repeat;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_7 {
     background-image: url('../images/pyramid_NA_7@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_8 {
   background-image: url('../images/pyramid_NA_8.png');
   background-repeat: repeat;
-  line-height: 68px;
+  line-height: 34px;
+  height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_8 {
     background-image: url('../images/pyramid_NA_8@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 body .pyramid.level_9 {
   background-image: url('../images/pyramid_NA_9.png');
   background-repeat: repeat;
-  line-height: 70px;
+  line-height: 35px;
+  height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   body .pyramid.level_9 {
     background-image: url('../images/pyramid_NA_9@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
-#content,
-#header {
+#content {
   padding: 0;
   margin: 0;
+}
+#header {
+  padding: 5px;
+  background-color: #030104;
+  height: auto;
+}
+#header .setting {
+  display: block;
+  background-image: url('../images/settings.png');
+  background-repeat: repeat;
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 22px;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  #header .setting {
+    background-image: url('../images/settings@2x.png');
+    background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
+  }
 }
 .container {
   width: 100%;
@@ -599,12 +697,13 @@ body .pyramid.level_9 {
 .countdown_amount {
   font-size: 30px;
   color: #000000;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: #ff5b13;
+  /*  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #ff5b13;*/
+
   text-shadow: 1px 0 0 #ff5b13, -1px 0 0 #ff5b13, 0 0px 0 #ff5b13, 0 -1px 0 #ff5b13, 0px 0px #ff5b13, -1px -1px 0 #ff5b13, 1px -1px 0 #ff5b13, -1px 1px 0 #ff5b13;
 }
 .hasCountdown {
-  width: 120px;
+  width: 70px;
 }
 input:-ms-input-placeholder {
   font-style: italic;
@@ -612,98 +711,123 @@ input:-ms-input-placeholder {
 }
 input#word {
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 40px;
-  letter-spacing: 7px;
   background: 0px 0px no-repeat transparent;
 }
 input#word.level_1 {
   background-image: url('../images/underscore_1.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_1 {
     background-image: url('../images/underscore_1@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_2 {
   background-image: url('../images/underscore_2.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_2 {
     background-image: url('../images/underscore_2@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_3 {
   background-image: url('../images/underscore_3.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_3 {
     background-image: url('../images/underscore_3@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_4 {
   background-image: url('../images/underscore_4.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_4 {
     background-image: url('../images/underscore_4@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_5 {
   background-image: url('../images/underscore_5.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_5 {
     background-image: url('../images/underscore_5@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_6 {
   background-image: url('../images/underscore_6.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_6 {
     background-image: url('../images/underscore_6@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_7 {
   background-image: url('../images/underscore_7.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_7 {
     background-image: url('../images/underscore_7@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_8 {
   background-image: url('../images/underscore_8.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_8 {
     background-image: url('../images/underscore_8@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 input#word.level_9 {
   background-image: url('../images/underscore_9.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   input#word.level_9 {
     background-image: url('../images/underscore_9@2x.png');
     background-repeat: no-repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 #input_area {
@@ -711,22 +835,20 @@ input#word.level_9 {
 }
 /* Style the Text Field inside the fieldholder DIV */
 #input_area input {
-  max-width: 350px;
-  /* 550 - 20px margin */
-
-  height: 48px;
-  /* Should be 40px, but seems to be taller than the form? */
-
   border: none;
   background: transparent;
-  margin: 3px 0px 0px 20px;
   padding: 0px !important;
+  margin: 3px 0px 0 0px;
+  min-width: 220px !important;
+  height: 30px;
+  font-size: 25px;
+  letter-spacing: 1px;
 }
 .spacial_font {
-  font-family: Afbatterse;
+  font-family: Museo;
 }
 .spacial_font.size_20 {
-  font-size: 20px;
+  font-size: 16px;
 }
 .spacial_font.with_borders {
   color: #000000;
@@ -749,6 +871,13 @@ input#word.level_9 {
   padding-bottom: 35px;
   margin: auto 0;
 }
+/*#splash_title {
+  width: 615px;
+  height: 162px;
+  background-image: url('../images/splash_logo.png');
+  background-repeat: no-repeat;
+  margin: 0 auto 0 auto;
+}*/
 #footer {
   margin: 0;
   padding: 0 !important;
@@ -760,13 +889,13 @@ input#word.level_9 {
   text-align: center;
 }
 #button-play-again {
+  line-height: 67px;
   width: 220px;
-  line-height: 167px;
   margin: 0 auto;
 }
 #button-play-again span {
-  line-height: 167px;
-  height: 167px;
+  line-height: 67px;
+  height: 67px;
   display: block;
 }
 #scores {
@@ -816,26 +945,28 @@ input#word.level_9 {
   margin-bottom: 10px;
 }
 #fieldholder .final {
-  font-size: 35px;
+  font-size: 20px;
+  line-height: 25px;
   color: #464a4d;
-  line-height: 46px;
   background-color: #ebebeb;
   margin: 0px;
   border: 1px solid #EBEBEB;
-  width: 99.9%;
 }
 .new_game {
   background-image: url('../images/new_game.png');
   background-repeat: repeat;
   background-repeat: no-repeat !important;
   background-position: center;
-  height: 167px;
+  height: 80px;
   margin-left: 0px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   .new_game {
     background-image: url('../images/new_game@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 .new_game:hover,
@@ -843,21 +974,27 @@ input#word.level_9 {
   background-image: url('../images/new_game_on.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   .new_game:hover,
   .new_game:focus {
     background-image: url('../images/new_game_on@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 .new_game:active {
   background-image: url('../images/new_game_on.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   .new_game:active {
     background-image: url('../images/new_game_on@2x.png');
     background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
   }
 }
 .toast-item-image,
@@ -968,202 +1105,237 @@ body.touch_device html {
 body.touch_device body {
   overflow: hidden;
 }
-body.touch_device #header {
-  display: none;
-}
 body.touch_device #sidepanel {
   display: none;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min--moz-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (-o-max-device-pixel-ratio: 2/1) and (max-height: 620px), only screen and (min-device-pixel-ratio: 1.5) and (max-height: 620px), only screen and (min-resolution: 192dpi) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (max-height: 620px), only screen and (min-resolution: 2dppx) and (pointer: coarse), only screen and (min-resolution: 192dpi) and (orientation: portrait) {
-  body header {
-    height: 61px;
-  }
-  body header .center {
-    top: 0;
-    width: 320px;
-  }
-  body #content footer {
-    height: 85px;
-  }
-  body #content footer div {
-    top: 25px;
-    font-size: 30px;
-  }
-  body .pyramid {
-    font-size: 20px;
-  }
-  body .pyramid.word_level_1 {
-    height: 71px;
-    line-height: 35px;
-  }
-  body .pyramid.word_level_2 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.word_level_3 {
-    line-height: 36px;
-    height: 36px;
-  }
-  body .pyramid.word_level_4 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.word_level_5 {
-    line-height: 34px;
-    height: 34px;
-  }
-  body .pyramid.word_level_6 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.word_level_7 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.word_level_8 {
-    line-height: 34px;
-    height: 34px;
-  }
-  body .pyramid.word_level_9 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.level_1 {
-    height: 72px;
-    line-height: 35px;
-  }
-  body .pyramid.level_2 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.level_3 {
-    line-height: 36px;
-    height: 36px;
-  }
-  body .pyramid.level_4 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.level_5 {
-    line-height: 34px;
-    height: 34px;
-  }
-  body .pyramid.level_6 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.level_7 {
-    line-height: 35px;
-    height: 35px;
-  }
-  body .pyramid.level_8 {
-    line-height: 34px;
-    height: 34px;
-  }
-  body .pyramid.level_9 {
-    line-height: 35px;
-    height: 35px;
-  }
-  #header {
-    display: none;
-  }
-  #button-play-again {
-    line-height: 67px;
-  }
-  #button-play-again span {
-    line-height: 67px;
-    height: 67px;
-  }
-  #input_area input {
-    margin: 3px 0px 0 0px;
-    min-width: 220px !important;
-    height: 30px;
-    font-size: 25px;
-    letter-spacing: 5px;
-  }
-  ::-webkit-input-placeholder {
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-  :-moz-placeholder {
-    /* Firefox 18- */
-  
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-  ::-moz-placeholder {
-    /* Firefox 19+ */
-  
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-  :-ms-input-placeholder {
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-  .hasCountdown {
-    width: 70px !important;
-  }
-  #countdown {
-    font-size: 25px ;
-  }
-  #countdown,
-  #input_area {
-    top: 10px;
-    position: relative;
-    height: 30px;
-  }
-  .spacial_font.size_20 {
-    font-size: 17px;
-  }
-  .spacial_font.logo_text {
-    font-size: 62px;
-    white-space: nowrap;
-    margin-bottom: -17px;
-  }
-  .spacial_font.logo_subtext {
-    width: 284px;
-    text-align: justify;
-  }
-  .splash_logo {
-    padding-bottom: 10px;
-  }
-  .new_game {
-    height: 84px;
-    margin-left: 1px;
-  }
-  #fieldholder .final {
-    font-size: 20px !important;
-    line-height: 25px;
-  }
-  .spacial_font.size_20 {
-    font-size: 20px;
-  }
-  .spacial_font.logo_text {
-    font-size: 62px;
-    white-space: nowrap;
-    margin-bottom: -17px;
-  }
-  .spacial_font.logo_subtext {
-    width: 300px;
-  }
-  .splash_logo {
-    padding-bottom: 10px;
-  }
-  #content footer {
-    height: 85px !important;
-  }
-  #content footer div {
-    position: relative;
-    top: 40px;
-    font-size: 20px;
-  }
-  #gamearea {
-    padding: 20px 0;
-  }
-  #fieldholder .final {
-    font-size: 20px !important;
-  }
+body.retina header {
+  height: 131px;
+}
+body.retina header .center {
+  top: 35px;
+  width: 320px;
+}
+body.retina input#word {
+  font-size: 40px;
+  letter-spacing: 7px;
+}
+body.retina .mm-menu.mm-right .mm-inner {
+  padding: 0 0 0 76px;
+}
+body.retina .row,
+body.retina .row a {
+  height: 82px !important;
+  line-height: 82px;
+  font-size: 37px;
+}
+body.retina .row span,
+body.retina .row a span,
+body.retina .row div,
+body.retina .row a div {
+  line-height: 82px;
+  font-size: 40px;
+}
+body.retina .row span.header_scores,
+body.retina .row a span.header_scores,
+body.retina .row div.header_scores,
+body.retina .row a div.header_scores {
+  font-size: 37px !important;
+}
+body.retina .row span.header_scores label,
+body.retina .row a span.header_scores label,
+body.retina .row div.header_scores label,
+body.retina .row a div.header_scores label {
+  width: 40px;
+}
+body.retina .row span.round,
+body.retina .row a span.round,
+body.retina .row div.round,
+body.retina .row a div.round,
+body.retina .row span.round span,
+body.retina .row a span.round span,
+body.retina .row div.round span,
+body.retina .row a div.round span {
+  font-size: 70px !important;
+}
+body.retina #header {
+  padding: 10px 5px;
+}
+body.retina #header .setting {
+  width: 68px;
+  height: 42px;
+}
+body.retina #content footer {
+  height: 115px;
+}
+body.retina #content footer div {
+  top: 47px;
+  font-size: 40px;
+}
+body.retina .pyramid {
+  font-size: 20px;
+}
+body.retina .pyramid.word_level_1 {
+  height: 144px;
+  line-height: 35px;
+}
+body.retina .pyramid.word_level_2 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.word_level_3 {
+  height: 71px;
+  line-height: 71px;
+}
+body.retina .pyramid.word_level_4 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.word_level_5 {
+  height: 68px;
+  line-height: 68px;
+}
+body.retina .pyramid.word_level_6 {
+  height: 71px;
+  line-height: 71px;
+}
+body.retina .pyramid.word_level_7 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.word_level_8 {
+  height: 67px;
+  line-height: 67px;
+}
+body.retina .pyramid.word_level_9 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.level_1 {
+  height: 144px;
+  line-height: 70px;
+}
+body.retina .pyramid.level_2 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.level_3 {
+  height: 71px;
+  line-height: 71px;
+}
+body.retina .pyramid.level_4 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.level_5 {
+  height: 68px;
+  line-height: 68px;
+}
+body.retina .pyramid.level_6 {
+  height: 71px;
+  line-height: 71px;
+}
+body.retina .pyramid.level_7 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina .pyramid.level_8 {
+  height: 68px;
+  line-height: 68px;
+}
+body.retina .pyramid.level_9 {
+  height: 70px;
+  line-height: 70px;
+}
+body.retina #button-play-again {
+  width: 220px;
+  line-height: 167px;
+}
+body.retina #button-play-again span {
+  line-height: 167px;
+  height: 167px;
+}
+body.retina #input_area input {
+  max-width: 350px;
+  /* 550 - 20px margin */
+
+  height: 48px;
+  /* Should be 40px, but seems to be taller than the form? */
+
+  border: none;
+  margin: 3px 0px 0px 20px;
+  padding: 0px !important;
+}
+body.retina ::-webkit-input-placeholder {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+body.retina :-moz-placeholder {
+  /* Firefox 18- */
+
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+body.retina ::-moz-placeholder {
+  /* Firefox 19+ */
+
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+body.retina :-ms-input-placeholder {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+body.retina .hasCountdown {
+  width: 120px !important;
+}
+body.retina #countdown {
+  font-size: 40px ;
+}
+body.retina #countdown,
+body.retina #input_area {
+  top: 10px;
+  position: relative;
+  height: 30px;
+}
+body.retina .spacial_font.size_20 {
+  font-size: 17px;
+}
+body.retina .spacial_font.logo_text {
+  font-size: 62px;
+  white-space: nowrap;
+  margin-bottom: -17px;
+}
+body.retina .spacial_font.logo_subtext {
+  width: 284px;
+  text-align: justify;
+}
+body.retina .splash_logo {
+  padding-bottom: 10px;
+}
+body.retina .new_game {
+  height: 164px;
+  margin-left: 1px;
+}
+body.retina #fieldholder .final {
+  font-size: 35px !important;
+  line-height: 46px;
+}
+body.retina .spacial_font.size_20 {
+  font-size: 16px;
+}
+body.retina .spacial_font.logo_text {
+  font-size: 62px;
+  white-space: nowrap;
+  margin-bottom: -17px;
+}
+body.retina .spacial_font.logo_subtext {
+  width: 300px;
+}
+body.retina .splash_logo {
+  padding-bottom: 10px;
+}
+body.retina #gamearea {
+  padding: 20px 0;
 }
 /*.touch_device {
   .touch_devices();
@@ -1183,14 +1355,31 @@ body.touch_device #sidepanel {
 .text_left {
   text-align: left;
 }
+.row {
+  line-height: 41px;
+  font-size: 25px;
+}
 .row a:link {
   color: white !important;
   text-decoration: none;
+}
+.mm-menu {
+  width: auto !important;
 }
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   /* Safari only override */
   :i-block-chrome.level_1,
   input.level_1 {
     background: url('../images/underscore_1@2x.png') !important;
+  }
+}
+html.mm-right.mm-opening .mm-page,
+html.mm-right.mm-opening #mm-blocker {
+  margin: 0 -44px 0 0;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  html.mm-right.mm-opening .mm-page,
+  html.mm-right.mm-opening #mm-blocker {
+    margin: 0 -77px 0 0 !important;
   }
 }
