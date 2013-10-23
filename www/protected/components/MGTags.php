@@ -373,13 +373,20 @@ class MGTags
         return $tags;
     }
 
-    public static function isExisting($mediaId, $tag)
+    public static function isExisting($mediaId, $tag,$started=null)
     {
+        $whereQr =  'tu.media_id=:id and t.tag=:tag';
+        $whereParams =  array(':id' => $mediaId, ':tag' => strtolower($tag));
+        if($started!=null){
+            $whereQr .= ' and tu.created < :dateStarted';
+            $whereParams['dateStarted'] = $started;
+        }
+
         $usedTag = Yii::app()->db->createCommand()
             ->select('t.tag')
             ->from('{{tag_use}} tu')
             ->leftJoin('{{tag}} t', 't.id = tu.tag_id')
-            ->where('tu.media_id=:id and t.tag=:tag', array(':id' => $mediaId, ':tag' => strtolower($tag)))
+            ->where($whereQr,$whereParams)
             ->group('tag_id')
             ->limit(1)
             ->queryAll();

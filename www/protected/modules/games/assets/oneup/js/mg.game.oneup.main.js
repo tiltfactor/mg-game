@@ -99,6 +99,8 @@ MG_GAME_ONEUP = function ($) {
 
             $("#header .words").hide();
             $("#header .back").hide();
+
+            if(action=='game_screen') action = 'final_screen';
             switch (action) {
                 case 'login':
                     $("#register").hide();
@@ -573,7 +575,8 @@ MG_GAME_ONEUP = function ($) {
                 case 'final_screen':
                     MG_GAME_ONEUP.oneup_hide_curtain();
                     $("#final_screen").empty();
-                    MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function (turn_response) {
+                    //MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function (turn_response) {
+                    MG_API.ajaxCall('/multiplayer/getOfflineGameState/gid/OneUp/playedGameId/29', function (turn_response) {
                         var json = {};
                         json.you = {};
                         json.you.round_1 = '';
