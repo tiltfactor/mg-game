@@ -50,7 +50,9 @@ MG_GAME_PYRAMID = function ($) {
 
             $("#new_image").click(function (event) {
                 event.preventDefault();
-                location.reload();
+                $('#countdown').countdown('destroy');
+                $('#countdown').countdown({until: '+1s', layout: '{mnn}{sep}{snn}', onExpiry: MG_GAME_PYRAMID.liftOff});
+                //location.reload();
             });
 
             $("footer").click(function () {
@@ -545,24 +547,26 @@ function onResize () {
         gamearea = $("#gamearea");
 
     //$("#content header div").css("left", 0);
-    $("#input_area input").css("width", $(window).width()-195 );
+//    $("#input_area input").css("width", $(window).width()-195 );
     //$("#input_area input").css('cssText', "width: " + $(window).width()-150 + "px !important, border: 1px solid pink !important" );
-    $("#content").css("min-height", device_ratio*($(window).height() + 20 - ($("#header").height() + $("#content footer").height())));
+    $("#content").css("min-height", device_ratio*($(window).height() + 20 - ($("#header").outerHeight() + $("#content footer").outerHeight())));
 
     $("#container").css("height", device_ratio*($(window).height() - 190));
-    if (is_touch_device) {
-        max_height = $(window).height() - $("#content header").height() - $("#content footer").height() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
+    if ($("body").hasClass("retina")) {
+        max_height = $(window).height() - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
+        if (max_height < 200) max_height = 200;
         $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 35});
         $("#gamearea").css("height", max_height);
     } else {
-        max_height = $(window).height() - $("#header").height() -1 - $("#content header").height() - $("#content footer").height() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
-        $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 35});
+        max_height = $(window).height() - $("#header").outerHeight() - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
+        if (max_height < 200) max_height = 200;
+        $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 45});
         $("#gamearea").css("height", max_height);
     }
 
     //$("#content header div").centerHorizontal();
     $("#content header div").css("width", parseInt($("#input_area").css("width"), 10) + parseInt($("#countdown").css("width") +15, 10));
-    //alert('aham');
+    $("nav .mm-inner").css('width', $(window).width());
 }
 
 (function($){

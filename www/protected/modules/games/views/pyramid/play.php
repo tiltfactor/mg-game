@@ -37,7 +37,7 @@
                             <div id="image_container"></div>
                         </div>
                     </div>
-                    <div id="new_image" class="level_1">New Image!</div>
+                    <div id="new_image" class="level_1">Quit</div>
                 </div>
                 <div id="fieldholder" class="group">
                 </div>

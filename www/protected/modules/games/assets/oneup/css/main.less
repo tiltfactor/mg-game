@@ -302,8 +302,11 @@ only screen and (              min-resolution: 1.5dppx) and (orientation: portra
 
   .header_scores {
     text-align: right;
+    right: 0;
+    float: right;
     margin-top: -43px;
     padding-right: 12px;
+    position: absolute;
 
     div {
       height: 15px;
@@ -862,4 +865,18 @@ body.retina {
 
 .no_right_padding {
   padding-right: 0px !important;
+}
+
+body.retina #content #final_screen .header_scores {
+  text-align: right;
+  margin-top: -23px;
+  padding-right: 12px;
+  position: relative;
+}
+
+body.FF.retina #content #final_screen .header_scores {
+  text-align: right;
+  margin-top: -100px;
+  padding-right: 12px;
+  position: relative;
 }

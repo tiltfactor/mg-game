@@ -100,7 +100,7 @@ function console_log(logged_text) {
 }
 
 $( document ).ready(function() {
-    if ($("body").hasClass("touch_device")) {
+//    if ($("body").hasClass("no-touch_device")) {
         $('nav#menu-left').mmenu();
         $('nav#menu-right').mmenu({
             position:'right',
@@ -108,9 +108,9 @@ $( document ).ready(function() {
         });
         setClick();
         setMenuClick();
-    } else {
+/*    } else {
         $("#header").hide();
-    }
+    }*/
 });
 
 /*
