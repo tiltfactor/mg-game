@@ -1,5 +1,4 @@
 $(window).resize(function() {
-    alert('resize');
     onResize ();
 });
 
