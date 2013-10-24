@@ -1,4 +1,5 @@
 <?php
+global $currentUserRole;
 global $relatedMedia;
 $tagsString = "";
 foreach ($data->tagUses as $currentTag) {
@@ -42,15 +43,17 @@ echo '<div class="hidden json" style="display: none;">';
 "videoPoster": "<?php echo $src;?>",
 "audioMp3": "<?php echo $urlMp3;?>",
 "audioOgg": "<?php echo $urlOgg;?>",
-"licence": {
-"id": "<?php echo $data->id ?>",
-"name": "<?php echo $data->name ?>",
-"description": ""
-},
+"licence":  "<?php echo getLicenceName($data->institution_id); ?>",
 "collection": "<?php echo $data->listCollectionsText() ?>",
 "institution": "<?php echo $data->institution->name ?>",
-"instWebsite": "<?php echo $data->institution->website ?>",
-"tags": " <?php echo $tagsString; ?>",
+"instWebsite": "<?php
+                if(startsWith($data->institution->website, 'http://')) echo $data->institution->website;
+                else echo 'http://' . $data->institution->website
+    ?>",
+"tags": " <?php
+                if($currentUserRole == 'gameadmin' || $currentUserRole == 'researcher' || $currentUserRole == 'institution') echo $tagsString;
+                else echo '';
+            ?>",
 "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
 "related": [
 {

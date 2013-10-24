@@ -180,6 +180,21 @@ class Media extends BaseMedia
         ));
     }
 
+    protected function getLicenceInfo($id)
+    {
+        $data = Yii::app()->db->createCommand()
+            ->selectDistinct('l.id, l.name, l.description')
+            ->from('{{licence}} l')
+            ->where('l.id=:id', array(':id' => $id))
+            ->queryAll();
+
+        $licence = new GameLicenceDTO();
+        $licence->id = $data[0]['id'];
+        $licence->name = $data[0]['name'];
+        $licence->description = $data[0]['description'];
+        return $licence;
+    }
+
     /**
      * Provides a CActiveDataProvider. Lists all medias that are not processed via the import tool
      *
