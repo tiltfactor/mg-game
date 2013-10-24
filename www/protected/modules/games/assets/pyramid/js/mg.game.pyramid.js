@@ -50,7 +50,9 @@ MG_GAME_PYRAMID = function ($) {
 
             $("#new_image").click(function (event) {
                 event.preventDefault();
-                location.reload();
+                $('#countdown').countdown('destroy');
+                $('#countdown').countdown({until: '+1s', layout: '{mnn}{sep}{snn}', onExpiry: MG_GAME_PYRAMID.liftOff});
+                //location.reload();
             });
 
             $("footer").click(function () {
