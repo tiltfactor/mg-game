@@ -1,7 +1,6 @@
 $(window).resize(function() {
     onResize ();
 });
-
 $( document ).ready(function() {
     onResize();
     $("#footer").hide();

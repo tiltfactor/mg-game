@@ -64,24 +64,37 @@ class PyramidController extends GxController
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.css');
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/modernizr.custom.js', CClientScript::POS_HEAD);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/retina.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/retina.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu.css');
-            //$cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid.main.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid_splash.js', CClientScript::POS_END);
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
+           if (Yii::app()->user->isGuest) {
+                $isLogged = 'false';
+            } else {
+                $isLogged = 'true';
+            };
 
-            $js = "";
-            Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
+            $js = <<<EOD
+MG_PYRAMID = {};
+MG_PYRAMID.api_url = '{$game->api_base_url}';
+MG_PYRAMID.isLogged = '{$isLogged}';
+MG_PYRAMID.gid = 'Pyramid';
+MG_PYRAMID.game_base_url = '{$game->game_base_url}';
+MG_PYRAMID.arcade_url = '$arcade_url';
+
+EOD;
+            Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_HEAD);
 
             /*            if ($game->play_once_and_move_on == 1) {
                             $this->layout = '//layouts/main_no_menu';
@@ -116,14 +129,15 @@ class PyramidController extends GxController
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/pyramid/css/style.css');
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.css');
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/modernizr.custom.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/retina.js', CClientScript::POS_HEAD);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu.css');
+            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.js', CClientScript::POS_END);
@@ -133,6 +147,11 @@ class PyramidController extends GxController
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
             $asset_url = Yii::app()->baseUrl;
             $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
+            if (Yii::app()->user->isGuest) {
+                $isLogged = 'false';
+            } else {
+                $isLogged = 'true';
+            };
 
             $js = <<<EOD
     MG_GAME_PYRAMID.init({
@@ -147,6 +166,16 @@ class PyramidController extends GxController
         throttleInterval : $throttleInterval
       });
 EOD;
+            $jsInit = <<<EOD
+MG_PYRAMID = {};
+MG_PYRAMID.api_url = '{$game->api_base_url}';
+MG_PYRAMID.isLogged = '{$isLogged}';
+MG_PYRAMID.gid = 'Pyramid';
+MG_PYRAMID.game_base_url = '{$game->game_base_url}';
+MG_PYRAMID.arcade_url = '$arcade_url';
+
+EOD;
+            Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $jsInit, CClientScript::POS_HEAD);
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
             /*            if ($game->play_once_and_move_on == 1) {

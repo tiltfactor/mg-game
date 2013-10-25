@@ -13,9 +13,9 @@
                 <div class="top"></div>
                 <div class="splash_logo">
                     <!-- Replace text with logo graphic -->
-                    <img src="<?php echo $asset_url; ?>/images/splash_logo.png" />
-                    <!--<div class="spacial_font with_borders logo_text">PYRAMID TAG</div>-->
-
+                    <!--
+                        <div class="spacial_font with_borders logo_text">PYRAMID TAG</div>
+                    -->
                     <div id="splash_title">
                     </div>
                     <div class="spacial_font size_20 div_center logo_subtext text_left">We showed this image to our panel of experts and had each of them describe it in one word.  How many of our experts' words can you match in 2 minutes?!</div>
@@ -111,10 +111,12 @@
         <nav id="menu-right" style="visibility: hidden;">
             <ul>
                 <li class="back_blue row"><div><a href="#" location="main_screen"><span>HOME</span></a></div></li>
-                <li class="back_blue row"><div><a href="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/play/"><span>PLAY</span></a></div></li>
+                <li class="back_blue row hidden" id="mmenuPlay"><div><a href="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/play/"><span>PLAY</span></a></div></li>
+                <li class="back_blue row" id="mmenuRegister"><div><a href="#" location="register"><span>REGISTER</span></a></div></li>
+                <li class="back_blue row" id="mmenuLogin"><div><a  href="#" location="login"><span>LOGIN</span></a></div></li>
                 <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
                 <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
-                <!--<li class="back_blue row"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>-->
+                <li class="back_blue row hidden" id="mmenuLogout"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
             </ul>
         </nav>
     </div>

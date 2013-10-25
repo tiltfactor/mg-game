@@ -1,8 +1,37 @@
+MG_GAME_PYRAMID = function ($) {
+    return $.extend(MG_GAME_API, { // TODO make the extension work or remove
+        toastStayTime:9900,
+        toastBackgroundClass:'popup_gradient',
+        //api_url : MG_PYRAMID.api_url,
+        setLoginScreen:function(){
+            // MG_API.curtain.hide();
+            $("#login").show();
+            $("#header .setting").hide();
+
+            $("#facebook").off('click').on('click', function () {
+                //  MG_API.curtain.show();
+                //alert(MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid));
+                //TODO fix   window.location.href = MG_GAME_PYRAMID.settings.arcade_url + "/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_PYRAMID.settings.game_base_url + '/' + MG_GAME_PYRAMID.settings.gid);
+            });
+
+            $('#login input#password').unbind("keypress").keypress(function (e) {
+                if (e.which == 13) {
+                    $("#btn_login").click();
+                }
+            });
+
+        } // end set login screen
+      // end ajaxCall
+
+    })
+};
+
 var actions = function (action, click_parent) {
     $("#" + action).removeClass('hidden');
     var continue_action = '';
 
     console_log('call for ' + action + " - click from: " + click_parent);
+   // MG_API.settings.api_url = MG_PYRAMID.api_url; // <--------------------------------------------we use it here
     //MG_GAME.oneup_hide_curtain();
 
     /*
@@ -17,12 +46,47 @@ var actions = function (action, click_parent) {
 
             break;
         case 'login':
-//TODO
+            MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                if (MG_API.checkResponse(response)) {
+                    if (response.shared_secret !== undefined && response.shared_secret !== "") {
+                        MG_API.settings.shared_secret = response.shared_secret;
+                        // MG_API.curtain.hide();
+                        // MG_GAME_ONEUP.setLoginScreen();
+                    } else {
+                        throw "MG_API.init() can't retrieve shared secret";
+                    }
+                }
+            });
             break;
         case 'register':
-//TODO
+            MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                if(response.status === 'ok') {
+                    MG_API.settings.shared_secret = response.shared_secret;
+                }
+                else {
+                    throw "MG_API.init() can't retrieve shared secret";
+                }
+            });
             break;
         case 'learn_more':
+            break;
+        case 'logout':
+            MG_API.ajaxCall('/user/logout', function () {
+                MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                    if (MG_API.checkResponse(response)) {
+                        if (response.shared_secret !== undefined && response.shared_secret !== "") {
+                            MG_API.settings.shared_secret = response.shared_secret;
+                            $('#mmenuLogin').removeClass('hidden');
+                            $('#mmenuRegister').removeClass('hidden');
+                            $('#mmenuLogout').addClass('hidden');
+                            $('#mmenuPlay').addClass('hidden');
+                            $("a[location='main_screen']").click();
+                        } else {
+                            throw "MG_API.init() can't retrieve shared secret";
+                        }
+                    }
+                });
+            });
             break;
         case 'how_to':
             break;
@@ -81,6 +145,11 @@ var setMenuClick = function () {
         e.preventDefault();
         actions('learn_more', 'menu');
     });
+    $("a[location='logout']").on('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        actions('logout', 'menu');
+    });
 }
 
 var device_ratio = 1,
@@ -99,18 +168,142 @@ function console_log(logged_text) {
     console.log(logged_text);
 }
 
-$( document ).ready(function() {
-//    if ($("body").hasClass("no-touch_device")) {
-        $('nav#menu-left').mmenu();
-        $('nav#menu-right').mmenu({
-            position:'right',
-            counters:true
+var isLoggedUser = function() {
+    if(MG_PYRAMID.isLogged == 'true'){
+        MG_API.ajaxCall('/user/sharedsecret', function (response) {
+            if(response.status === 'ok') {
+                MG_API.settings.shared_secret = response.shared_secret;
+            }
+            else {
+                throw "MG_API.init() can't retrieve shared secret";
+            }
         });
-        setClick();
-        setMenuClick();
-/*    } else {
-        $("#header").hide();
-    }*/
+        $('#mmenuLogin').addClass('hidden');
+        $('#mmenuRegister').addClass('hidden');
+        $('#mmenuLogout').removeClass('hidden');
+        $('#mmenuPlay').removeClass('hidden');
+    }
+}
+
+$( document ).ready(function() {
+    MG_API.settings.api_url = MG_PYRAMID.api_url;
+    //if ($("body").hasClass("touch_device")) {
+    $('nav#menu-left').mmenu();
+    $('nav#menu-right').mmenu({
+        position:'right',
+        counters:true
+    });
+    setClick();
+    setMenuClick();
+    isLoggedUser();
+
+    $('.text_left .hover_btn ').off('click').on('click', function (e) {
+        if(MG_PYRAMID.isLogged == 'false') {
+            e.preventDefault();
+            $().toastmessage("showToast", {
+                text:'You must be logged in to play.',
+                position:"tops-center",
+                type:"notice",
+                background:"white",
+                color:"black",
+                stayTime:MG_GAME_PYRAMID.toastStayTime,
+                addClass:MG_GAME_PYRAMID.toastBackgroundClass
+            });
+            return false;
+        }
+    });
+
+    $("#btn_login").off('click').on('click', function (e) {
+        e.preventDefault();
+        if ((jQuery.trim($("#login #username").val()).length + jQuery.trim($("#login #password").val()).length) < 1) {
+            $().toastmessage("showToast", {
+                text:"Username and passwords are required!",
+                position:"tops-center",
+                type:"notice",
+                background:"white",
+                color:"black",
+                stayTime:MG_GAME_PYRAMID.toastStayTime,
+                addClass:MG_GAME_PYRAMID.toastBackgroundClass
+            });
+        } else {
+            MG_API.ajaxCall('/user/login', function (response) {
+                    if (response.status === 'ok') {
+                        $('#mmenuLogin').addClass('hidden');
+                        $('#mmenuRegister').addClass('hidden');
+                        $('#mmenuLogout').removeClass('hidden');
+                        $('#mmenuPlay').removeClass('hidden');
+                        $("a[location='main_screen']").click();
+                    } else {
+                        $().toastmessage("showToast", {
+                            text:'Wrong username or password.',
+                            position:"tops-center",
+                            type:"notice",
+                            background:"white",
+                            color:"black",
+                            stayTime:MG_GAME_PYRAMID.toastStayTime,
+                            addClass:MG_GAME_PYRAMID.toastBackgroundClass
+                        });
+                    }
+                }, {
+                    type:'post',
+                    data:{
+                        password:jQuery.trim($("#login #password").val()),
+                        login:jQuery.trim($("#login #username").val()),
+                        rememberMe:jQuery.trim($("#login #rememberMe").prop('checked'))
+                    }
+                }
+            );
+        }
+        return false;
+    });
+
+    $('#register #btn_register').off('click').on('click', function (e) {
+        e.preventDefault();
+        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val() < 6 && $("#register #email").val().length < 5) {
+            $().toastmessage("showToast", {
+                text:'All fields are required.',
+                position:"tops-center",
+                type:"notice",
+                background:"white",
+                color:"black",
+                stayTime:MG_GAME_PYRAMID.toastStayTime,
+                addClass:MG_GAME_PYRAMID.toastBackgroundClass
+            });
+        } else {
+            MG_API.ajaxCall('/user/register', function (response) {
+                if (response.status === 'ok') {
+                    $("a[location='main_screen']").click();
+                }
+                $().toastmessage("showToast", {
+                    text:response.responseText,
+                    position:"tops-center",
+                    type:"notice",
+                    background:"white",
+                    color:"black",
+                    stayTime:MG_GAME_PYRAMID.toastStayTime,
+                    addClass:MG_GAME_PYRAMID.toastBackgroundClass
+                });
+            }, {
+                type:'post',
+                data:{
+                    password:$("#register #password").val(),
+                    username:$("#register #username").val(),
+                    email:$("#register #email").val(),
+                    verifyPassword:$("#register #verifyPassword").val()
+                }
+            });
+        }
+    });
+
+    $("#facebook").off('click').on('click', function () {
+        window.location.href = MG_PYRAMID.arcade_url + "/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_PYRAMID.game_base_url + '/' + MG_PYRAMID.gid);
+    });
+
+
+
+    /*    } else {
+     $("#header").hide();
+     }*/
 });
 
 /*

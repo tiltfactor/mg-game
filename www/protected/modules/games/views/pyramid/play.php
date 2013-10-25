@@ -89,9 +89,12 @@
     <nav id="menu-right" style="visibility: hidden;">
         <ul>
             <li class="back_blue row"><div><a href="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/" location="main_screen"><span>HOME</span></a></div></li>
-            <li class="back_blue row"><div><a href="#" location="game_screen"><span>PLAY</span></a></div></li>
+            <li class="back_blue row hidden" id="mmenuPlay"><div><a href="#" location="game_screen"><span>PLAY</span></a></div></li>
+            <li class="back_blue row" id="mmenuRegister"><div><a href="#" location="register"><span>REGISTER</span></a></div></li>
+            <li class="back_blue row" id="mmenuLogin"><div><a  href="#" location="login"><span>LOGIN</span></a></div></li>
             <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
             <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
+            <li class="back_blue row hidden" id="mmenuLogout"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
         </ul>
     </nav>
 </div>
