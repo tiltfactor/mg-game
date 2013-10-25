@@ -111,7 +111,6 @@ function setImageClick () {
                     }
 
                 });
-                console.log("imagesWithoutSource: ",imagesWithoutSource);
                 if(imagesWithoutSource == 8 ) $('.otherMediaInterests').remove();
             });
 

@@ -83,11 +83,11 @@ class PyramidController extends GxController
             $js = "";
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
-/*            if ($game->play_once_and_move_on == 1) {
-                $this->layout = '//layouts/main_no_menu';
-            } else {
-                $this->layout = '//layouts/column1';
-            }*/
+            /*            if ($game->play_once_and_move_on == 1) {
+                            $this->layout = '//layouts/main_no_menu';
+                        } else {
+                            $this->layout = '//layouts/column1';
+                        }*/
 
             $this->layout = '//layouts/mobile';
 
@@ -149,11 +149,11 @@ class PyramidController extends GxController
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
-/*            if ($game->play_once_and_move_on == 1) {
-                $this->layout = '//layouts/main_no_menu';
-            } else {
-                $this->layout = '//layouts/column1';
-            }*/
+            /*            if ($game->play_once_and_move_on == 1) {
+                            $this->layout = '//layouts/main_no_menu';
+                        } else {
+                            $this->layout = '//layouts/column1';
+                        }*/
 
             $this->layout = '//layouts/mobile';
 

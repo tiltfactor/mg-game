@@ -35,21 +35,30 @@ function totalItemsFound($provider)
     return $i;
 }
 
+function startsWith($haystack, $needle)
+{
+    $length = strlen($needle);
+    return (substr($haystack, 0, $length) === $needle);
+};
+
 $mediaResults = $model->search(true);
 $total = count($mediaResults->getData());
 $items = $mediaResults->getData();
+global $currentUserRole;
+$currentUserRole = $userRole;
 global $relatedMedia;
 $relatedMedia = array();
 foreach($items as $key=>&$data){
     $relatedMedia[$data->id] = array();
     $index = $key+1;
-    if($index>$total) $index = 0;
+    if($index>=$total) $index = 0;
+    if($total<8) $index = $index +1;
     for($i=0;$i<$total;$i++){
         $relate = array("id"=>$items[$index]->id,
                         "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
         array_push($relatedMedia[$data->id],$relate);
         $index++;
-        if($index>=$total) $index = 0;
+        if($index>=$total ) $index = 0;
     }
 }
 
@@ -81,7 +90,8 @@ echo "</div>";
     </div>
     <div class="group text_descr">
        <div><strong>${collection} </strong></div>
-        <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
+        <div><strong><a class="institutionWebsite" href='${instWebsite}' target="_blank">${institution}</strong></a></div>
+        <div class="licence">${licence}</div>
         <div class="otherMediaInterests">Other media that may interest you:</div>
         <div id="related_items" class="group">
             {{each related}}
@@ -110,7 +120,7 @@ echo "</div>";
     <div class="group text_descr">
         <br />
         <div><strong>${collection} </strong></div>
-        <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
+        <div><strong><a class="institutionWebsite" href= ${instWebsite} target="_blank">${institution} </strong></a></div>
         <div>Other media that may interest you:</div>
         <div id="related_items" class="group">
             {{each related}}
@@ -138,7 +148,7 @@ echo "</div>";
     <div class="group text_descr">
         <br />
         <div><strong>${collection} </strong></div>
-        <div><strong><a href=${instWebsite} target="_blank">${institution}</strong></a></div>
+        <div><strong><a class="institutionWebsite" href=${instWebsite} target="_blank">${institution}</strong></a></div>
         <div>Other media that may interest you:</div>
         <div id="related_items" class="group">
             {{each related}}

@@ -51,7 +51,8 @@ class DefaultController extends Controller
                 'setAlphabeticalOrder' => isset( $_GET['Custom']['alphabetical_sort'])  ? $_GET['Custom']['alphabetical_sort'] : 'relevance',
                 'setItemsPerPage' => isset( $_GET['Custom']['items_per_page']) ? $_GET['Custom']['items_per_page'] : 25,
                 'institutions' =>  $institutions,
-                'assets_url' => SearchModule::getAssetsUrl()
+                'assets_url' => SearchModule::getAssetsUrl(),
+                'userRole'=> $user->role,
             )
         );
     }

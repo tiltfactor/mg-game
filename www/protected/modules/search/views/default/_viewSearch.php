@@ -1,4 +1,5 @@
 <?php
+global $currentUserRole;
 global $relatedMedia;
 $tagsString = "";
 foreach ($data->tagUses as $currentTag) {
@@ -22,6 +23,13 @@ if($mediaType == 'image'){
     $urlOgg = $data->institution->url . UPLOAD_PATH . '/audios/' . urlencode(substr($data->name, 0, -3) . "ogg");
 }
 
+$licences = array();
+foreach($data->collections as $col){
+    if(!in_array($col->licence->name,$licences)){
+        array_push($licences,$col->licence->name);
+    }
+}
+$licenceStr = 'copyright ' .  implode(',',$licences);
 
 echo "<div class = \"imageInside\" id=\"".$data->id."\"><a href='#stayhere' class='image_hover'>";
 echo "<img src = " . $src . " >";
@@ -29,6 +37,8 @@ echo "<img src = " . $src . " >";
 echo '<div class="image_description"> ' . $data->listCollectionsText() . '</br>' . stripcslashes($data['institution']->name) . '</div>';
 echo '<div class="center arrow"><img src="' . SearchModule::getAssetsUrl() . '/images/arrow.png" style="display: block;" /></div>';
 echo '<div class="hidden json" style="display: none;">';
+
+
 
 ?>
 {
@@ -42,15 +52,17 @@ echo '<div class="hidden json" style="display: none;">';
 "videoPoster": "<?php echo $src;?>",
 "audioMp3": "<?php echo $urlMp3;?>",
 "audioOgg": "<?php echo $urlOgg;?>",
-"licence": {
-"id": "<?php echo $data->id ?>",
-"name": "<?php echo $data->name ?>",
-"description": ""
-},
+"licence":  "<?php echo $licenceStr; ?>",
 "collection": "<?php echo $data->listCollectionsText() ?>",
 "institution": "<?php echo $data->institution->name ?>",
-"instWebsite": "<?php echo $data->institution->website ?>",
-"tags": " <?php echo $tagsString; ?>",
+"instWebsite": "<?php
+                if(startsWith($data->institution->website, 'http://')) echo $data->institution->website;
+                else echo 'http://' . $data->institution->website
+    ?>",
+"tags": " <?php
+                if($currentUserRole == ADMIN || $currentUserRole == EDITOR || $currentUserRole == INSTITUTION) echo $tagsString;
+                else echo '';
+            ?>",
 "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
 "related": [
 {
