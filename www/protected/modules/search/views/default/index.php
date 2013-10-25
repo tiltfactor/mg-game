@@ -35,20 +35,6 @@ function totalItemsFound($provider)
     return $i;
 }
 
-function getLicenceName($institution_id)
-{
-    $criteria = new CDbCriteria(array(
-        "select" => "name",
-        "condition" => "institution_id=:media_institution_id",
-        "limit" => 1,
-        'params' => array(':media_institution_id'=>$institution_id),
-    ));
-    $licence = Licence::model()->findAll($criteria);
-    if($licence[0]->name != "") return 'copyright ' .  $licence[0]->name;
-    else return $licence[0]->name;
-
-};
-
 function startsWith($haystack, $needle)
 {
     $length = strlen($needle);
