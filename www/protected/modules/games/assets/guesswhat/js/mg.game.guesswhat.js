@@ -197,7 +197,6 @@ MG_GAME_GUESSWHAT = function ($) {
          * renders a guess turn
          */
         renderGuessTurn: function (response, score_info, turn_info, licence_info, more_info) {
-            console.log('GUESS TURN');
             clearTimeout(setTimeout_1);
             $("#stage").hide();
 
@@ -327,39 +326,37 @@ MG_GAME_GUESSWHAT = function ($) {
         // places, so it would be ideal to refactor those locations to
         // make this shared code.
         updateScore: function () {
-            /*      var current_turn = MG_GAME_GUESSWHAT.turns[MG_GAME_GUESSWHAT.turn-1];
+            var current_turn = MG_GAME_GUESSWHAT.turns[MG_GAME_GUESSWHAT.turn - 1];
 
-             var score_info = {
-             user_name : MG_GAME_GUESSWHAT.game.user_name,
-             game_partner_name : MG_GAME_GUESSWHAT.game.game_partner_name,
-             user_score : MG_GAME_GUESSWHAT.game.user_score,
-             current_score : current_turn.score,
-             user_num_played : MG_GAME_GUESSWHAT.game.user_num_played,
-             turns : MG_GAME_GUESSWHAT.game.turns,
-             current_turn : MG_GAME_GUESSWHAT.turn,
-             guess: current_turn.guesses.length,
-             max_guesses : MG_GAME_GUESSWHAT.game.number_guesses,
-             num_guesses_left : MG_GAME_GUESSWHAT.game.number_guesses - current_turn.guesses.length,
-             max_hints : MG_GAME_GUESSWHAT.game.number_hints + MG_GAME_GUESSWHAT.game.number_guesses ,
-             num_hints_left : MG_GAME_GUESSWHAT.game.number_hints*1 + MG_GAME_GUESSWHAT.game.number_guesses*1 - current_turn.hints.length
-             };
+            var score_info = {
+                user_name: MG_GAME_GUESSWHAT.game.user_name,
+                game_partner_name: MG_GAME_GUESSWHAT.game.game_partner_name,
+                user_score: MG_GAME_GUESSWHAT.game.user_score,
+                current_score: current_turn.score,
+                user_num_played: MG_GAME_GUESSWHAT.game.user_num_played,
+                turns: MG_GAME_GUESSWHAT.game.turns,
+                current_turn: MG_GAME_GUESSWHAT.turn,
+                guess: current_turn.guesses.length,
+                max_guesses: MG_GAME_GUESSWHAT.game.number_guesses,
+                num_guesses_left: MG_GAME_GUESSWHAT.game.number_guesses - current_turn.guesses.length,
+                max_hints: MG_GAME_GUESSWHAT.game.number_hints + MG_GAME_GUESSWHAT.game.number_guesses,
+                num_hints_left: MG_GAME_GUESSWHAT.game.number_hints * 1 + MG_GAME_GUESSWHAT.game.number_guesses * 1 - current_turn.hints.length
+            };
 
-             $("#scores").html("");
-             $("#template-scores").tmpl(score_info ).appendTo($("#scores"));
-             if (!MG_GAME_GUESSWHAT.game.user_authenticated) {
-             $("#scores .total_score").remove();
-             }*/
+            $("#scores").html("");
+            $("#template-scores").tmpl(score_info).appendTo($("#scores"));
+            if (!MG_GAME_GUESSWHAT.game.user_authenticated) {
+                $("#scores .total_score").remove();
+            }
         },
 
         /*
          * the post request to the /api/games/play/ action has send an response.
-         * here the response will be evailuated
+         * here the response will be evaluated
          */
         onresponse: function (response) {
             MG_GAME_GUESSWHAT.doQueryMessages = false;
-            console.log('onresponse & status is: ' + response.status);
             if (response.status == "wait") { // wait for the second player to respond
-                console.log('Status WAIT');
                 MG_GAME_GUESSWHAT.doQueryMessages = true;
                 MG_GAME_GUESSWHAT.queryMessages();
 
@@ -374,7 +371,6 @@ MG_GAME_GUESSWHAT = function ($) {
 
             } else if (response.status == "retry") { // wait a bit longer for a second player
                 // no partner available
-                console.log('Status is RETRY');
                 $("#info-modal").html("");
                 $("#template-info-modal-wait-for-partner").tmpl({
                     seconds: Math.round(MG_GAME_API.settings.partner_wait_threshold - MG_GAME_API.settings.partner_waiting_time),
@@ -541,7 +537,6 @@ MG_GAME_GUESSWHAT = function ($) {
                     }
 
                     if (MG_GAME_GUESSWHAT.turn > 1 && !MG_GAME_GUESSWHAT.game.played_against_computer) {
-                        console.log("MODE = " + MG_GAME_GUESSWHAT.turns[0].mode);
                         // user plays against other human
                         // to distinguish whether a user should describe or guess
                         // look back to first turn and figure out what the actual turn should be
@@ -829,7 +824,7 @@ MG_GAME_GUESSWHAT = function ($) {
 
                     if (MG_GAME_GUESSWHAT.turns[MG_GAME_GUESSWHAT.turn - 1].mode == 'describe')
                         tags = hints;
-console.log('TADA');
+
                     MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
                         if (MG_API.checkResponse(response)) {
                             MG_GAME_GUESSWHAT.onresponse(response);
@@ -875,9 +870,10 @@ console.log('TADA');
                 MG_AUDIO.play("select");
                 MG_GAME_API.curtain.show();
                 $("#partner-waiting").hide();
+                // waiting opponent to guess an image
+                // if time passed need stop this
                 setTimeout_2 = setTimeout(function () {
                     MG_GAME_GUESSWHAT.evaluateGuess(guessedImageId);
-                    clearTimeout(setTimeout_2);
                 }, 1000);
             }
 
@@ -965,6 +961,10 @@ console.log('TADA');
             // If we're on our last guess...
             if (current_turn.guesses.length >=
                 MG_GAME_GUESSWHAT.game.number_guesses) {
+
+                if (current_turn.mode == "describe") {
+                    clearInterval(setTimeout_1);
+                }
                 // If we got a correct guess...
                 if (secret_media.media_id == guessedImageID) {
                     MG_AUDIO.play("success");
@@ -977,15 +977,15 @@ console.log('TADA');
                     if (current_turn.mode == "describe") {
                         licence_info = MG_GAME_GUESSWHAT.extractImageLicenceInfo(current_turn.licences, secret_media);
                         var media_info = {
-                            game_partner_name: MG_GAME_GUESSWHAT.game.game_partner_name,
+                            game_partner_name: MG_GAME_GUESSWHAT.game.game_partner_name
                         }
 
                         MG_API.popup($("#template-partner-failed-to-guess").tmpl(media_info),
                             { modal: true,
                                 onComplete: function () {
                                     $('#loadNextTurn').click(function () {
-                                        $.fancybox.close();
                                         MG_GAME_GUESSWHAT.onsubmitTurn();
+                                        $.fancybox.close();
                                     });
                                 }});
                     } else {
@@ -1005,7 +1005,6 @@ console.log('TADA');
                                     });
                                 }});
                     }
-
                 }
                 return false;
             }
@@ -1062,6 +1061,9 @@ console.log('TADA');
 
 
             } else {
+                // opponent was waiting you to guess an image
+                // you made a guess so timeout stops
+                clearInterval(setTimeout_2);
                 // If this player has found the correct media...
                 if (secret_media.media_id == guessedImageID) {
                     MG_AUDIO.play("success");
@@ -1081,7 +1083,6 @@ console.log('TADA');
                             MG_GAME_API.curtain.hide();
                             MG_GAME_GUESSWHAT.sendHintRequest();
                         }, 500);
-                        clearTimeout(setTimeout_4);
                     } else {
                         // So what happens if there are no more hints to show?
                         // At this point we should only go into 'waiting for
