@@ -7,8 +7,8 @@ class GamesController extends ApiController {
         'throttle - messages, abort, abortpartnersearch, postmessage, play',
         'IPBlock',
         'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
-        'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
-        'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded 
+        'accessControl - messages, abort, abortpartnersearch, gameApi, postmessage',
+        'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded
     );
   }
   
@@ -18,7 +18,7 @@ class GamesController extends ApiController {
   public function accessRules() {
     return array(
       array('allow',
-        'actions'=>array('index', 'scores', 'play', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameapi', 'postmessage'),
+        'actions'=>array('index', 'scores', 'play', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
         'users'=>array('*'),
         ),
       array('deny', 
