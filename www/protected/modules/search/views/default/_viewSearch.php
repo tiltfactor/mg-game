@@ -60,7 +60,7 @@ echo '<div class="hidden json" style="display: none;">';
                 else echo 'http://' . $data->institution->website
     ?>",
 "tags": " <?php
-                if($currentUserRole == 'gameadmin' || $currentUserRole == 'researcher' || $currentUserRole == 'institution') echo $tagsString;
+                if($currentUserRole == ADMIN || $currentUserRole == EDITOR || $currentUserRole == INSTITUTION) echo $tagsString;
                 else echo '';
             ?>",
 "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
