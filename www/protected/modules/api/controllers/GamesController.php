@@ -4,11 +4,11 @@ class GamesController extends ApiController {
   
   public function filters() {
     return array( // add blocked IP filter here
-        'throttle - messages, abort, abortpartnersearch, postmessage, play',
+        'throttle - messages, abort, abortpartnersearch, postmessage, play, gameApi',
         'IPBlock',
         'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
-        'accessControl - messages, abort, abortpartnersearch, gameapi, postmessage',
-        'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded 
+        'accessControl - messages, abort, abortpartnersearch, gameApi, postmessage',
+        'sharedSecret', // the API is protected by a shared secret this filter ensures that it is regarded
     );
   }
   
@@ -18,7 +18,7 @@ class GamesController extends ApiController {
   public function accessRules() {
     return array(
       array('allow',
-        'actions'=>array('index', 'scores', 'play', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameapi', 'postmessage'),
+        'actions'=>array('index', 'scores', 'play', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
         'users'=>array('*'),
         ),
       array('deny', 
@@ -327,7 +327,7 @@ class GamesController extends ApiController {
   public function actionPlay($gid) {
     $game = GamesModule::loadGame($gid);
     $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-    
+
     if($game && $game->game_model) {
       $game_engine = GamesModule::getGameEngine($gid);
       if (is_null($game_engine)) {
@@ -457,6 +457,8 @@ class GamesController extends ApiController {
       }
     
     } else {
+        var_dump($game);
+        var_dump($game->game_model);
       throw new CHttpException(400, Yii::t('app', 'Your request is invalid.'));
     }
   }
