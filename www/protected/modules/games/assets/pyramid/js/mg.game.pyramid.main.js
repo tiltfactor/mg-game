@@ -152,69 +152,10 @@ var setMenuClick = function () {
     });
 }
 
-var device_ratio = 1,
-    is_touch_device = is_touch_device();
-
-if (is_touch_device) {
-    device_ratio = window.devicePixelRatio;
-}
-
-function is_touch_device() {
-    return !!('ontouchstart' in window) // works on most browsers
-        || !!('onmsgesturechange' in window); // works on ie10
-};
-
-function console_log(logged_text) {
-    console.log(logged_text);
-}
-
-var isLoggedUser = function() {
-    if(MG_PYRAMID.isLogged == 'true'){
-        MG_API.ajaxCall('/user/sharedsecret', function (response) {
-            if(response.status === 'ok') {
-                MG_API.settings.shared_secret = response.shared_secret;
-            }
-            else {
-                throw "MG_API.init() can't retrieve shared secret";
-            }
-        });
-        $('#mmenuLogin').addClass('hidden');
-        $('#mmenuRegister').addClass('hidden');
-        $('#mmenuLogout').removeClass('hidden');
-        $('#mmenuPlay').removeClass('hidden');
-    }
-}
-
-$( document ).ready(function() {
-    MG_API.settings.api_url = MG_PYRAMID.api_url;
-    //if ($("body").hasClass("touch_device")) {
-    $('nav#menu-left').mmenu();
-    $('nav#menu-right').mmenu({
-        position:'right',
-        counters:true
-    });
-    setClick();
-    setMenuClick();
-    isLoggedUser();
-
-    $('.text_left .hover_btn ').off('click').on('click', function (e) {
-        if(MG_PYRAMID.isLogged == 'false') {
-            e.preventDefault();
-            $().toastmessage("showToast", {
-                text:'You must be logged in to play.',
-                position:"tops-center",
-                type:"notice",
-                background:"white",
-                color:"black",
-                stayTime:MG_GAME_PYRAMID.toastStayTime,
-                addClass:MG_GAME_PYRAMID.toastBackgroundClass
-            });
-            return false;
-        }
-    });
-
+var setAuthentication = function () {
     $("#btn_login").off('click').on('click', function (e) {
         e.preventDefault();
+
         if ((jQuery.trim($("#login #username").val()).length + jQuery.trim($("#login #password").val()).length) < 1) {
             $().toastmessage("showToast", {
                 text:"Username and passwords are required!",
@@ -298,87 +239,55 @@ $( document ).ready(function() {
     $("#facebook").off('click').on('click', function () {
         window.location.href = MG_PYRAMID.arcade_url + "/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_PYRAMID.game_base_url + '/' + MG_PYRAMID.gid);
     });
+}
 
+var device_ratio = 1,
+    is_touch_device = is_touch_device();
 
+if (is_touch_device) {
+    device_ratio = window.devicePixelRatio;
+}
 
-    /*    } else {
-     $("#header").hide();
-     }*/
+function is_touch_device() {
+    return !!('ontouchstart' in window) // works on most browsers
+        || !!('onmsgesturechange' in window); // works on ie10
+};
+
+function console_log(logged_text) {
+    console.log(logged_text);
+}
+
+var isLoggedUser = function() {
+    if(MG_PYRAMID.isLogged == 'true'){
+        MG_API.ajaxCall('/user/sharedsecret', function (response) {
+            if(response.status === 'ok') {
+                MG_API.settings.shared_secret = response.shared_secret;
+            }
+            else {
+                throw "MG_API.init() can't retrieve shared secret";
+            }
+        });
+        $('#mmenuLogin').addClass('hidden');
+        $('#mmenuRegister').addClass('hidden');
+        $('#mmenuLogout').removeClass('hidden');
+        $('#mmenuPlay').removeClass('hidden');
+    }
+}
+
+$(document).ready(function() {
+    MG_API.settings.api_url = MG_PYRAMID.api_url;
+    if ($("body").hasClass("touch_device")) {
+        $('nav#menu-left').mmenu();
+        $('nav#menu-right').mmenu({
+            position:'right',
+            counters:true
+        });
+        setAuthentication();
+        setClick();
+        setMenuClick();
+        isLoggedUser();
+    } else {
+        $("#header").hide();
+        $('nav#menu-right').remove();
+    }
 });
-
-/*
- $( document ).ready(function() {
- if (is_touch_device) {
- $("body").addClass('touch_device');
- }
-
- if (Modernizr.highres) {
- $("body").addClass('retina');
- }
-
- BrowserDetect.init();
- $("body").addClass(BrowserDetect.browser);
- })
-
- Modernizr.addTest('highres', function() {
-
- // for opera
- var ratio = '2.99/2';
- // for webkit
- var num = '1.499';
- var mqs = [
- 'only screen and (-o-min-device-pixel-ratio:' + ratio + ')',
- 'only screen and (min--moz-device-pixel-ratio:' + ratio + ')',
- 'only screen and (-webkit-min-device-pixel-ratio:' + num + ')',
- 'only screen and (min-device-pixel-ratio:' + num + ')'
- ];
- var isHighRes = false;
-
- // loop through vendors, checking non-prefixed first
- for (var i = mqs.length - 1; i >= 0; i--) {
- isHighRes = Modernizr.mq( mqs[i] );
- // if found one, return early
- if ( isHighRes ) {
- return isHighRes;
- }
- }
- // not highres
- return isHighRes;
-
- });
-
- var BrowserDetect = {
- init: function () {
- this.browser = this.searchString(this.dataBrowser) || "Other";
- this.version = this.searchVersion(navigator.userAgent) ||       this.searchVersion(navigator.appVersion) || "Unknown";
- },
-
- searchString: function (data) {
- for (var i=0 ; i < data.length ; i++) {
- var dataString = data[i].string;
- this.versionSearchString = data[i].subString;
-
- if (dataString.indexOf(data[i].subString) != -1) {
- return data[i].identity;
- }
- }
- },
-
- searchVersion: function (dataString) {
- var index = dataString.indexOf(this.versionSearchString);
- if (index == -1) return;
- return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
- },
-
- dataBrowser:
- [
- { string: navigator.userAgent, subString: "Chrome",  identity: "Chrome" },
- { string: navigator.userAgent, subString: "MSIE",    identity: "IE" },
- { string: navigator.userAgent, subString: "Firefox", identity: "FF" },
- { string: navigator.userAgent, subString: "Safari",  identity: "Safari" },
- { string: navigator.userAgent, subString: "Opera",   identity: "Opera" }
- ]
-
- };
-
- */

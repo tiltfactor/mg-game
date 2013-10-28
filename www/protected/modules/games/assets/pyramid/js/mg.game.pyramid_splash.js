@@ -14,18 +14,32 @@ $( document ).ready(function() {
         }, function() {
             var img_obj = $(this).find('img:eq(0)'),
                 src = img_obj.attr('src'),
-                new_src = src.replace("_off","_on");
+                new_src = src.replace("_on","_off");
 
             img_obj.attr('src', new_src);
         }
     );
 
     $(".hover_btn").click(function (e) {
-        var that = $(this);
+        var that = $(this),
+            img_obj = that.find('img:eq(0)'),
+            src = img_obj.attr('src');
         e.preventDefault();
-        that.find('img:eq(0)').hide();
-        that.find('img:eq(1)').closest('span').show();
-        window.location.href = that.prop('href');
+
+        if(MG_PYRAMID.isLogged == 'false' && $("body").hasClass("touch_device")) {
+            $().toastmessage("showToast", {
+                text:'You must be logged in to play.',
+                position:"tops-center",
+                type:"notice",
+                background:"white",
+                color:"black",
+                stayTime:MG_GAME_PYRAMID.toastStayTime,
+                addClass:MG_GAME_PYRAMID.toastBackgroundClass
+            });
+            img_obj.attr('src', src.replace("_on","_off"));
+        } else {
+            window.location.href = that.prop('href');
+        }
     });
 });
 

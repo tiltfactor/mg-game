@@ -120,6 +120,49 @@ body :-ms-input-placeholder {
   font-size: 11px;
   letter-spacing: 1px;
 }
+body input.input {
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  width: 90%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 0px;
+  background-color: gray;
+  color: black;
+  height: 22px;
+  line-height: 22px;
+  font-size: 22px;
+  color: #ffffff;
+}
+body input.input::-webkit-input-placeholder {
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
+  font-size: 22px;
+  color: #ffffff;
+}
+body input.input:-moz-placeholder {
+  /* Firefox 18- */
+
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
+  font-size: 22px;
+  color: #ffffff;
+}
+body input.input::-moz-placeholder {
+  /* Firefox 19+ */
+
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
+  font-size: 22px;
+  color: #ffffff;
+}
+body input.input:-ms-input-placeholder {
+  font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
+  font-size: 22px;
+  color: #ffffff;
+}
+body #register .button,
+body #login .button {
+  margin-top: 15px;
+}
 body header {
   background: #fefefe;
   /* Old browsers */
@@ -868,8 +911,28 @@ input#word.level_9 {
   margin: 0 auto;
 }
 .splash_logo {
-  padding-bottom: 35px;
+  padding-bottom: 5px;
   margin: auto 0;
+}
+a.button {
+  background-color: #41474b;
+  border: 1px solid #FFFFFF;
+  border-radius: 7px 7px 7px 7px;
+  color: #FFFFFF;
+  padding: 3px 8px;
+  text-decoration: none;
+  line-height: 27px;
+  font-size: 15px;
+}
+a:hover.button {
+  background-color: #ff8100;
+  border: 1px solid #FFFFFF;
+  border-radius: 7px 7px 7px 7px;
+  color: #FFFFFF;
+  padding: 3px 8px;
+  text-decoration: none;
+  line-height: 27px;
+  font-size: 15px;
 }
 /*#splash_title {
   width: 615px;
@@ -1344,7 +1407,6 @@ body.retina #gamearea {
   background-color: #eaeaea;
   background-image: url('../images/splash_bg.png');
   background-repeat: repeat-x;
-  min-height: 150px;
 }
 #splash_home {
   /*  position: absolute;

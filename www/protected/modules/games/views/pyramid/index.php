@@ -29,15 +29,15 @@
             </div>
 
             <div id="login" class="text-center index_screen hidden">
-                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/logo.png" /></div>
+                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/splash_logo.png" /></div>
                 <div class="button">
-                    <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" />
+                    <input class="input" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" tabindex="1" />
                 </div>
                 <div class="button">
-                    <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" />
+                    <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" tabindex="2" />
                 </div>
                 <div class="button">
-                    <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px;">
+                    <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px; height: 20px;" tabindex="3">
                     <label for="rememberMe">Remember me next time</label>
                 </div>
                 <div class="button">
@@ -54,18 +54,18 @@
             </div>
 
             <div id="register" class="text-center index_screen hidden">
-                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/logo.png" /></div>
+                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/splash_logo.png" /></div>
                 <div class="button">
-                    <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Choose a username" value="" tabindex="1" />
+                    <input class="input" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Choose Username" value="" tabindex="1" />
                 </div>
                 <div class="button">
-                    <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Choose a password" value="" tabindex="2" />
+                    <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Choose Password" value="" tabindex="2" />
                 </div>
                 <div class="button">
-                    <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="verifyPassword" name="verifyPassword" placeholder="Verify Password" value="" tabindex="3" />
+                    <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="verifyPassword" name="verifyPassword" placeholder="Verify Password" value="" tabindex="3" />
                 </div>
                 <div class="button">
-                    <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Choose an e-mail" tabindex="4" value="" />
+                    <input class="input" type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Choose E-mail" tabindex="4" value="" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
@@ -112,11 +112,11 @@
             <ul>
                 <li class="back_blue row"><div><a href="#" location="main_screen"><span>HOME</span></a></div></li>
                 <li class="back_blue row hidden" id="mmenuPlay"><div><a href="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/play/"><span>PLAY</span></a></div></li>
-                <li class="back_blue row" id="mmenuRegister"><div><a href="#" location="register"><span>REGISTER</span></a></div></li>
-                <li class="back_blue row" id="mmenuLogin"><div><a  href="#" location="login"><span>LOGIN</span></a></div></li>
+                <li class="back_blue row touch" id="mmenuRegister"><div><a href="#" location="register"><span>REGISTER</span></a></div></li>
+                <li class="back_blue row touch" id="mmenuLogin"><div><a  href="#" location="login"><span>LOGIN</span></a></div></li>
                 <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
                 <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
-                <li class="back_blue row hidden" id="mmenuLogout"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
+                <li class="back_blue row hidden touch" id="mmenuLogout"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
             </ul>
         </nav>
     </div>
