@@ -52,7 +52,7 @@ foreach($items as $key=>&$data){
     $relatedMedia[$data->id] = array();
     $index = $key+1;
     if($index>=$total) $index = 0;
-    if($total<8) $index = 1;
+    if($total<8) $index = $key+1;
     for($i=0;$i<$total;$i++){
         $relate = array("id"=>$items[$index]->id,
                         "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));

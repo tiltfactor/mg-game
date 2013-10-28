@@ -5,6 +5,11 @@ $tagsString = "";
 foreach ($data->tagUses as $currentTag) {
     $tagsString .= $currentTag->tag->tag . ", ";
 }
+$separateTags = explode(', ', $tagsString);
+$removedDuplicateTags = array_unique($separateTags);
+$distinctTags = implode(", ", $removedDuplicateTags);
+$distinctTags = substr_replace($distinctTags, "", -2);
+
 $mediaType = substr($data->mime_type, 0, 5);
 $src = "";
 $urlWebm ="";
@@ -60,7 +65,7 @@ echo '<div class="hidden json" style="display: none;">';
                 else echo 'http://' . $data->institution->website
     ?>",
 "tags": " <?php
-                if($currentUserRole == ADMIN || $currentUserRole == EDITOR || $currentUserRole == INSTITUTION) echo $tagsString;
+                if($currentUserRole == ADMIN || $currentUserRole == EDITOR || $currentUserRole == INSTITUTION) echo $distinctTags;
                 else echo '';
             ?>",
 "mimeType": "<?php echo substr($data->mime_type, 0, 5); ?>",
