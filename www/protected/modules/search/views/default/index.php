@@ -56,9 +56,10 @@ foreach($items as $key=>&$data){
     for($i=0;$i<$total;$i++){
         $relate = array("id"=>$items[$index]->id,
                         "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
-        array_push($relatedMedia[$data->id],$relate);
         $index++;
-        if($index>=$total ) $index = 0;
+        if(($key + 1) == $index && $total<8) continue;
+        array_push($relatedMedia[$data->id],$relate);
+        if($index>=$total) $index = 0;
     }
 }
 
