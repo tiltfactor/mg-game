@@ -64,10 +64,11 @@ class PyramidController extends GxController
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.css');
             $cs->registerCssFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/css/jquery.toastmessage-min.css');
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/modernizr.custom.js', CClientScript::POS_HEAD);
-            $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/retina.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/retina.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.mmenu.js', CClientScript::POS_HEAD);
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu.css');
-            $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
+            //$cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
