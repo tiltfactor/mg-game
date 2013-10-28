@@ -52,7 +52,7 @@ foreach($items as $key=>&$data){
     $relatedMedia[$data->id] = array();
     $index = $key+1;
     if($index>=$total) $index = 0;
-    if($total<8) $index = $index +1;
+    if($total<8) $index = $key+1;
     for($i=0;$i<$total;$i++){
         $relate = array("id"=>$items[$index]->id,
                         "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
@@ -89,10 +89,12 @@ echo "</div>";
         <img src="${imageFullSize}" />
     </div>
     <div class="group text_descr">
-       <div><strong>${collection} </strong></div>
-        <div><strong><a class="institutionWebsite" href='${instWebsite}' target="_blank">${institution}</strong></a></div>
-        <div class="licence">${licence}</div>
-        <div class="otherMediaInterests">Other media that may interest you:</div>
+        <div class="mediaDescription">
+           <div class="collection"><strong>${collection} </strong></div>
+            <div><strong><a class="institutionWebsite" href='${instWebsite}' target="_blank">${institution}</strong></a></div>
+            <div class="licence">${licence}</div>
+            <div class="otherMediaInterests">Other media that may interest you:</div>
+       </div>
         <div id="related_items" class="group">
             {{each related}}
             <div class="item">
@@ -119,9 +121,12 @@ echo "</div>";
     </div>
     <div class="group text_descr">
         <br />
-        <div><strong>${collection} </strong></div>
+      <div class="mediaDescription">
+        <div class="collection"><strong>${collection} </strong></div>
         <div><strong><a class="institutionWebsite" href= ${instWebsite} target="_blank">${institution} </strong></a></div>
-        <div>Other media that may interest you:</div>
+        <div class="licence">${licence}</div>
+        <div class="otherMediaInterests">Other media that may interest you:</div>
+       </div>
         <div id="related_items" class="group">
             {{each related}}
             <div class="item">
@@ -147,9 +152,12 @@ echo "</div>";
     </div>
     <div class="group text_descr">
         <br />
-        <div><strong>${collection} </strong></div>
+     <div class="mediaDescription">
+        <div class="collection"><strong>${collection} </strong></div>
         <div><strong><a class="institutionWebsite" href=${instWebsite} target="_blank">${institution}</strong></a></div>
-        <div>Other media that may interest you:</div>
+        <div class="licence">${licence}</div>
+        <div class="otherMediaInterests">Other media that may interest you:</div>
+     </div>
         <div id="related_items" class="group">
             {{each related}}
             <div class="item" >

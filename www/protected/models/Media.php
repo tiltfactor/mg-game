@@ -78,6 +78,7 @@ class Media extends BaseMedia
                     } else {
                         $tags = $cmd->selectDistinct('tu.media_id, COUNT(DISTINCT tu.tag_id) as counted')
                             ->from('{{tag_use}} tu')
+                            ->join('{{tag}} tag', 'tu.tag_id = tag.id')
                             ->where(array('and', 'tu.weight > 0', array('in', 'tag.tag', array_values($parsed_tags))))
                             ->group('tu.media_id')
                             ->having('counted = :counted', array(':counted' => count($parsed_tags)))

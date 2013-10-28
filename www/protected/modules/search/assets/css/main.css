@@ -303,8 +303,27 @@ div.search-form {
     margin: 280px;
     font-size: 110%;
 }
-
+ /*--*/
 .institutionWebsite
 {
     color: white;
+    padding-left: 8%;
+}
+
+.otherMediaInterests {
+    padding-left: 8%;
+    padding-top: 2%;
+}
+
+.licence {
+    padding-left: 8%;
+    padding-top: 4%;
+}
+
+.collection > strong {
+    padding-left: 8%;
+}
+
+#tags {
+    padding-left: 8%;
 }
