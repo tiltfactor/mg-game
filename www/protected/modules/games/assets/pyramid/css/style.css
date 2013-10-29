@@ -914,7 +914,8 @@ input#word.level_9 {
   padding-bottom: 5px;
   margin: auto 0;
 }
-a.button {
+a.button,
+span.button {
   background-color: #41474b;
   border: 1px solid #FFFFFF;
   border-radius: 7px 7px 7px 7px;
@@ -924,7 +925,8 @@ a.button {
   line-height: 27px;
   font-size: 15px;
 }
-a:hover.button {
+a:hover.button,
+span:hover.button {
   background-color: #ff8100;
   border: 1px solid #FFFFFF;
   border-radius: 7px 7px 7px 7px;

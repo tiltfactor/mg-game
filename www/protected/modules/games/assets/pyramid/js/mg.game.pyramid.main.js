@@ -155,7 +155,6 @@ var setMenuClick = function () {
 var setAuthentication = function () {
     $("#btn_login").off('click').on('click', function (e) {
         e.preventDefault();
-
         if ((jQuery.trim($("#login #username").val()).length + jQuery.trim($("#login #password").val()).length) < 1) {
             $().toastmessage("showToast", {
                 text:"Username and passwords are required!",

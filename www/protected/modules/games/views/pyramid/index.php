@@ -41,14 +41,13 @@
                     <label for="rememberMe">Remember me next time</label>
                 </div>
                 <div class="button">
-                    <a href="#" id="btn_login" class="button login"><span>LOGIN</span></a>
+                    <span id="btn_login" class="button login"><span>LOGIN</span></span>
                 </div>
                 <div class="button">
                     or
                 </div>
                 <div class="button">
                     <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
-                    <span class="hidden"><a href=""></a></span>
                 </div>
                 <div id="facebook"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/facebook.png" /></div>
             </div>
