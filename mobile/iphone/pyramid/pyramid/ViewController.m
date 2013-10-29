@@ -19,9 +19,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+- (void) viewWillAppear:(BOOL)animated {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://10.15.20.108/mgg/www/index.php/games/Pyramid"]];
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://10.15.20.154/mgg_test/www/index.php/games/Pyramid"]];
+    
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    
+    NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval: 10.0];
+    [requestObj setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     
     [customWebView loadRequest:requestObj];
     customWebView.delegate =self;
@@ -31,7 +37,6 @@
     [spinner setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"darkGrey_background.png"]]];
     [customWebView addSubview:spinner];
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

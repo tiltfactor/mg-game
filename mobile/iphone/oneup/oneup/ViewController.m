@@ -19,19 +19,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://10.15.20.154/mgg_test/www/index.php/games/OneUp"]];
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://10.15.20.108/mgg/www/index.php/games/OneUp"]];
-    NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    
+    NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval: 10.0];
+    [requestObj setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     
     [customWebView loadRequest:requestObj];
-     customWebView.delegate =self;
+    customWebView.delegate =self;
+    
     
     spinner= [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [spinner setFrame:CGRectMake(self.view.bounds.size.width/2.0-25, self.view.bounds.size.height/2.0-25, 50, 50)];
     [spinner setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"darkGrey_background.png"]]];
     [customWebView addSubview:spinner];
 }
-
+- (void)viewWillDisappear:(BOOL)animated {
+    
+     [[NSURLCache sharedURLCache] removeAllCachedResponses];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
