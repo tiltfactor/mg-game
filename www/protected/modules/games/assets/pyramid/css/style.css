@@ -1188,38 +1188,49 @@ body.retina .mm-menu.mm-right .mm-inner {
   padding: 0 0 0 76px;
 }
 body.retina .row,
-body.retina .row a {
+body.retina .row a:link,
+body.retina .row a:visited {
   height: 82px !important;
   line-height: 82px;
   font-size: 37px;
 }
 body.retina .row span,
-body.retina .row a span,
+body.retina .row a:link span,
+body.retina .row a:visited span,
 body.retina .row div,
-body.retina .row a div {
+body.retina .row a:link div,
+body.retina .row a:visited div {
   line-height: 82px;
   font-size: 40px;
 }
 body.retina .row span.header_scores,
-body.retina .row a span.header_scores,
+body.retina .row a:link span.header_scores,
+body.retina .row a:visited span.header_scores,
 body.retina .row div.header_scores,
-body.retina .row a div.header_scores {
+body.retina .row a:link div.header_scores,
+body.retina .row a:visited div.header_scores {
   font-size: 37px !important;
 }
 body.retina .row span.header_scores label,
-body.retina .row a span.header_scores label,
+body.retina .row a:link span.header_scores label,
+body.retina .row a:visited span.header_scores label,
 body.retina .row div.header_scores label,
-body.retina .row a div.header_scores label {
+body.retina .row a:link div.header_scores label,
+body.retina .row a:visited div.header_scores label {
   width: 40px;
 }
 body.retina .row span.round,
-body.retina .row a span.round,
+body.retina .row a:link span.round,
+body.retina .row a:visited span.round,
 body.retina .row div.round,
-body.retina .row a div.round,
+body.retina .row a:link div.round,
+body.retina .row a:visited div.round,
 body.retina .row span.round span,
-body.retina .row a span.round span,
+body.retina .row a:link span.round span,
+body.retina .row a:visited span.round span,
 body.retina .row div.round span,
-body.retina .row a div.round span {
+body.retina .row a:link div.round span,
+body.retina .row a:visited div.round span {
   font-size: 70px !important;
 }
 body.retina #header {
@@ -1423,7 +1434,8 @@ body.retina #gamearea {
   line-height: 41px;
   font-size: 25px;
 }
-.row a:link {
+.row a:link,
+.row a:visited {
   color: white !important;
   text-decoration: none;
 }

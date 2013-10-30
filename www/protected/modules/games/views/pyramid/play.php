@@ -126,6 +126,7 @@
             <div class="button">
                 <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
             </div>
+        </div>
     </div>
     <nav id="menu-left">
     </nav>

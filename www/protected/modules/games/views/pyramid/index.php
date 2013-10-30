@@ -28,28 +28,71 @@
                 </div>
             </div>
 
+            <div id="game_screen">
+                <div class="wrap group">
+                    <header>
+                        <div class="center" align="center">
+                            <!-- The bounding-box around the text input and the button -->
+               <span id="input_area">
+                    <form action="javascript: return false;">
+                        <!-- user text field -->
+                        <input type="text" name="word" id="word" autocapitalize="off" autocorrect="off" autocomplete="off" class="level_1" placeholder="Enter a 4 letter word"/>
+                        <a href="#" id="button-play" class="ir hidden"></a>
+                    </form>
+                </span>
+                            <span id="countdown" class="countdown_amount"></span>
+                        </div>
+                    </header>
+
+                    <div id="gamearea" class="group">
+                        <div id="pass" class="level_1">Pass!</div>
+                        <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your
+                            browser.
+                        </div>
+                        <!-- Images from the database appear here -->
+                        <div id="stage">
+                            <div id="holder">
+                                <div id="image_container"></div>
+                            </div>
+                        </div>
+                        <div id="new_image" class="level_1">Quit</div>
+                    </div>
+                    <div id="fieldholder" class="group">
+                    </div>
+
+                </div>
+
+                <footer class="group footer_level_1">
+                    <div>
+                        What's in this image?
+                    </div>
+                </footer>
+            </div>
+
             <div id="login" class="text-center index_screen hidden">
-                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/splash_logo.png" /></div>
-                <div class="button">
-                    <input class="input" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" tabindex="1" />
-                </div>
-                <div class="button">
-                    <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" tabindex="2" />
-                </div>
-                <div class="button">
-                    <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px; height: 20px;" tabindex="3">
-                    <label for="rememberMe">Remember me next time</label>
-                </div>
-                <div class="button">
-                    <span id="btn_login" class="button login"><span>LOGIN</span></span>
-                </div>
-                <div class="button">
-                    or
-                </div>
-                <div class="button">
-                    <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
-                </div>
-                <div id="facebook"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/facebook.png" /></div>
+                <form name="login">
+                    <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/splash_logo.png" /></div>
+                    <div class="button">
+                        <input class="input" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" tabindex="1" />
+                    </div>
+                    <div class="button">
+                        <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" tabindex="2" />
+                    </div>
+                    <div class="button">
+                        <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px; height: 20px;" tabindex="3">
+                        <label for="rememberMe">Remember me next time</label>
+                    </div>
+                    <div class="button">
+                        <span id="btn_login" class="button login"><span>LOGIN</span></span>
+                    </div>
+                    <div class="button">
+                        or
+                    </div>
+                    <div class="button">
+                        <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
+                    </div>
+                    <div id="facebook"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/facebook.png" /></div>
+                </form>
             </div>
 
             <div id="register" class="text-center index_screen hidden">
