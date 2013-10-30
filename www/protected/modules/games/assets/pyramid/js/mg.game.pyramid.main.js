@@ -72,6 +72,7 @@ var actions = function (action, click_parent) {
             break;
         case 'logout':
             MG_API.ajaxCall('/user/logout', function () {
+                MG_PYRAMID.isLogged = false;
                 MG_API.ajaxCall('/user/sharedsecret', function (response) {
                     if (MG_API.checkResponse(response)) {
                         if (response.shared_secret !== undefined && response.shared_secret !== "") {
@@ -80,7 +81,7 @@ var actions = function (action, click_parent) {
                             $('#mmenuRegister').removeClass('hidden');
                             $('#mmenuLogout').addClass('hidden');
                             $('#mmenuPlay').addClass('hidden');
-                            $("a[location='main_screen']").click();
+                            $("#menu-right a[location='main_screen']").click();
                         } else {
                             throw "MG_API.init() can't retrieve shared secret";
                         }
@@ -168,6 +169,7 @@ var setAuthentication = function () {
         } else {
             MG_API.ajaxCall('/user/login', function (response) {
                     if (response.status === 'ok') {
+                        MG_PYRAMID.isLogged = true;
                         $('#mmenuLogin').addClass('hidden');
                         $('#mmenuRegister').addClass('hidden');
                         $('#mmenuLogout').removeClass('hidden');
