@@ -148,6 +148,12 @@ class MGHelper
                 $refresh = false;
             }
         }
+
+        if(isset(Yii::app()->session[$api_id . '_SESSION_ID'])){
+            $sess = Session::model()->findByPk((int)Yii::app()->session[$api_id . '_SESSION_ID']);
+            if($sess == null) $refresh=true;
+        }
+
         if (!isset(Yii::app()->session[$api_id . '_SESSION_ID']) || $refresh) {
             $session = new Session;
             $session->username = $user_name;
