@@ -70,6 +70,7 @@ class PyramidController extends GxController
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu.css');
             //$cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.hammer.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
@@ -85,6 +86,18 @@ class PyramidController extends GxController
             } else {
                 $isLogged = 'true';
             };
+            $currentUser = User::model()->notsafe()->findbyPk(Yii::app()->user->id);
+            if($currentUser != null)
+            {
+                $currentUserUsername = $currentUser->username;
+                $currentUserEmail = $currentUser->email;
+            }
+            else
+            {
+                $currentUserUsername = "";
+                $currentUserEmail = "";
+            };
+
 
             $js = <<<EOD
 MG_PYRAMID = {};
@@ -93,6 +106,8 @@ MG_PYRAMID.isLogged = '{$isLogged}';
 MG_PYRAMID.gid = 'Pyramid';
 MG_PYRAMID.game_base_url = '{$game->game_base_url}';
 MG_PYRAMID.arcade_url = '$arcade_url';
+MG_PYRAMID.username = '{$currentUserUsername}';
+MG_PYRAMID.email = '{$currentUserEmail}';
 
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_HEAD);
@@ -141,6 +156,7 @@ EOD;
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/mmenu-positioning.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.hammer.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.countdown/jquery.countdown.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid.js', CClientScript::POS_END);
@@ -153,6 +169,18 @@ EOD;
             } else {
                 $isLogged = 'true';
             };
+            $currentUser = User::model()->notsafe()->findbyPk(Yii::app()->user->id);
+            if($currentUser != null)
+            {
+                $currentUserUsername = $currentUser->username;
+                $currentUserEmail = $currentUser->email;
+            }
+            else
+            {
+                $currentUserUsername = "";
+                $currentUserEmail = "";
+            };
+
 
             $js = <<<EOD
     MG_GAME_PYRAMID.init({
@@ -174,6 +202,8 @@ MG_PYRAMID.isLogged = '{$isLogged}';
 MG_PYRAMID.gid = 'Pyramid';
 MG_PYRAMID.game_base_url = '{$game->game_base_url}';
 MG_PYRAMID.arcade_url = '$arcade_url';
+MG_PYRAMID.username = '{$currentUserUsername}';
+MG_PYRAMID.email = '{$currentUserEmail}';
 
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $jsInit, CClientScript::POS_HEAD);
