@@ -159,6 +159,10 @@ body input.input:-ms-input-placeholder {
   font-size: 22px;
   color: #ffffff;
 }
+body input.checkbox {
+  width: 20px;
+  height: 20px;
+}
 body #register .button,
 body #login .button {
   margin-top: 15px;
@@ -933,8 +937,6 @@ span:hover.button {
   color: #FFFFFF;
   padding: 3px 8px;
   text-decoration: none;
-  line-height: 27px;
-  font-size: 15px;
 }
 /*#splash_title {
   width: 615px;
@@ -1180,9 +1182,49 @@ body.retina header .center {
   top: 35px;
   width: 320px;
 }
+body.retina #register .button,
+body.retina #login .button {
+  margin-top: 30px;
+}
+body.retina label[for="rememberMe"] {
+  font-size: 30px;
+}
+body.retina #facebook {
+  padding-top: 20px;
+}
+body.retina a.button,
+body.retina span.button {
+  line-height: 40px;
+  font-size: 40px;
+}
 body.retina input#word {
   font-size: 40px;
   letter-spacing: 7px;
+}
+body.retina input.input {
+  height: 42px;
+  line-height: 42px;
+  font-size: 42px;
+}
+body.retina input.input::-webkit-input-placeholder {
+  font-size: 42px;
+}
+body.retina input.input:-moz-placeholder {
+  /* Firefox 18- */
+
+  font-size: 42px;
+}
+body.retina input.input::-moz-placeholder {
+  /* Firefox 19+ */
+
+  font-size: 42px;
+}
+body.retina input.input:-ms-input-placeholder {
+  font-size: 42px;
+}
+body.retina input.checkbox {
+  width: 40px;
+  height: 40px;
 }
 body.retina .mm-menu.mm-right .mm-inner {
   padding: 0 0 0 76px;

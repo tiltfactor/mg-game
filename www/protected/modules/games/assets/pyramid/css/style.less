@@ -165,6 +165,11 @@ body {
     color: #ffffff;
   }
 
+  input.checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
   #register .button, #login .button {
     margin-top: 15px;
   }
@@ -590,8 +595,6 @@ a:hover.button, span:hover.button {
   color: #FFFFFF;
   padding: 3px 8px;
   text-decoration: none;
-  line-height: 27px;
-  font-size: 15px;
 }
 
 /*#splash_title {
@@ -831,9 +834,53 @@ body.touch_device {
       }
     }
 
+    #register .button, #login .button {
+      margin-top: 30px;
+    }
+
+    label[for="rememberMe"] {
+      font-size: 30px;
+    }
+
+    #facebook {
+      padding-top: 20px;
+    }
+
+    a.button, span.button {
+      line-height: 40px;
+      font-size: 40px;
+    }
+
     input#word {
       font-size: 40px;
       letter-spacing: 7px;
+    }
+
+    input.input {
+      height: 42px;
+      line-height: 42px;
+      font-size: 42px;
+    }
+
+    input.input::-webkit-input-placeholder {
+      font-size: 42px;
+    }
+
+    input.input:-moz-placeholder { /* Firefox 18- */
+      font-size: 42px;
+    }
+
+    input.input::-moz-placeholder {  /* Firefox 19+ */
+      font-size: 42px;
+    }
+
+    input.input:-ms-input-placeholder {
+      font-size: 42px;
+    }
+
+    input.checkbox {
+      width: 40px;
+      height: 40px;
     }
 
     .mm-menu.mm-right .mm-inner {

@@ -38,7 +38,7 @@
                         <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" tabindex="2" />
                     </div>
                     <div class="button">
-                        <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px; height: 20px;" tabindex="3">
+                        <input id="rememberMe" type="checkbox" value="1" name="rememberMe" class="checkbox" tabindex="3">
                         <label for="rememberMe">Remember me next time</label>
                     </div>
                     <div class="button">
