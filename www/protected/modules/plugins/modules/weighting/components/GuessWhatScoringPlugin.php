@@ -53,7 +53,9 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
     $model = new GuessWhatScoring;
     $model->fbvLoad();
     $game = func_get_arg(3);
-    foreach ($game && $game->request->submissions as $submission) {
+
+//    foreach ($game && $game->request->submissions as $submission) {
+    foreach ($game->request->submissions as $submission) {
       if (!$game->played_against_computer && $submission['mode'] == 'describe') { 
         // the user has described an image this turn and becomes thus poins for new tags
         foreach ($tags as $image_id => $image_tags) {

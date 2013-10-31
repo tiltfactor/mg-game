@@ -75,7 +75,6 @@ class PyramidController extends GxController
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.toastmessage/jquery.toastmessage-min.js', CClientScript::POS_END);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.deviceTest.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid.main.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/pyramid/js/mg.game.pyramid_splash.js', CClientScript::POS_END);
             $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
@@ -111,12 +110,6 @@ MG_PYRAMID.email = '{$currentUserEmail}';
 
 EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_HEAD);
-
-            /*            if ($game->play_once_and_move_on == 1) {
-                            $this->layout = '//layouts/main_no_menu';
-                        } else {
-                            $this->layout = '//layouts/column1';
-                        }*/
 
             $this->layout = '//layouts/mobile';
 

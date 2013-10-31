@@ -122,9 +122,9 @@ MG_GAME_PYRAMID = function ($) {
                         type:"notice",
                         background: "white"
                     });
-                    
+
                     MG_GAME_PYRAMID.playSound('fail_sound');
-                    
+
                 }
             });
 

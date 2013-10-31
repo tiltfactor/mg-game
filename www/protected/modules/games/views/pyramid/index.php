@@ -29,27 +29,29 @@
             </div>
 
             <div id="login" class="text-center index_screen hidden">
-                <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/splash_logo.png" /></div>
-                <div class="button">
-                    <input class="input" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" tabindex="1" />
-                </div>
-                <div class="button">
-                    <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" tabindex="2" />
-                </div>
-                <div class="button">
-                    <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px; height: 20px;" tabindex="3">
-                    <label for="rememberMe">Remember me next time</label>
-                </div>
-                <div class="button">
-                    <span id="btn_login" class="button login"><span>LOGIN</span></span>
-                </div>
-                <div class="button">
-                    or
-                </div>
-                <div class="button">
-                    <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
-                </div>
-                <div id="facebook"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/facebook.png" /></div>
+                <form>
+                    <div class="logo"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/splash_logo.png" /></div>
+                    <div class="button">
+                        <input class="input" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Username" tabindex="1" />
+                    </div>
+                    <div class="button">
+                        <input class="input" type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Password" tabindex="2" />
+                    </div>
+                    <div class="button">
+                        <input id="rememberMe" type="checkbox" value="1" name="rememberMe" style="width:20px; height: 20px;" tabindex="3">
+                        <label for="rememberMe">Remember me next time</label>
+                    </div>
+                    <div class="button">
+                        <span id="btn_login" class="button login"><span>LOGIN</span></span>
+                    </div>
+                    <div class="button">
+                        or
+                    </div>
+                    <div class="button">
+                        <a href="#" location="register" class="button new_user"><span>GET A USERNAME</span></a>
+                    </div>
+                    <div id="facebook"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/pyramid/images/facebook.png" /></div>
+                </form>
             </div>
 
             <div id="register" class="text-center index_screen hidden">
