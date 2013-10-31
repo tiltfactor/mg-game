@@ -8,10 +8,23 @@
 // ----------------------------------------------------------------------------------------
 //	HybridAuth Config file: http://hybridauth.sourceforge.net/userguide/Configuration.html
 // ----------------------------------------------------------------------------------------
-
+function startsWith($haystack, $needle)
+{
+    return $needle === "" || strpos($haystack, $needle) === 0;
+}
+$baseUrl = Yii::app()->getBaseUrl(true);
+$res = startsWith($baseUrl, 'https');
+if($res == 1)
+{
+    $start = "https://";
+}
+else
+{
+    $start = "http://";
+}
 return 
 	array(
-		"base_url" => "http://localhost/hybridauth-git/hybridauth/", 
+		"base_url" => $start . $_SERVER['SERVER_NAME'].  "/hybridauth-git/hybridauth/",
 
 		"providers" => array ( 
 			// openid providers
