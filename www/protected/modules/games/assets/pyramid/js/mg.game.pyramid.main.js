@@ -271,7 +271,7 @@ var isLoggedUser = function() {
         $('#mmenuLogin').addClass('hidden');
         $('#mmenuRegister').addClass('hidden');
         $('#mmenuLogout').removeClass('hidden');
-        $('#mmenuPlay').removeClass('hidden');
+        //$('#mmenuPlay').removeClass('hidden');
     }
 }
 

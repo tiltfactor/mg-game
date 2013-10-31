@@ -26,7 +26,7 @@ $( document ).ready(function() {
             src = img_obj.attr('src');
         e.preventDefault();
 
-        if(MG_PYRAMID.isLogged == 'false' && $("body").hasClass("touch_device")) {
+/*        if(MG_PYRAMID.isLogged == 'false' && $("body").hasClass("touch_device")) {
             $().toastmessage("showToast", {
                 text:'You must be logged in to play.',
                 position:"tops-center",
@@ -40,6 +40,8 @@ $( document ).ready(function() {
         } else {
             window.location.href = that.prop('href');
         }
+*/
+        window.location.href = that.prop('href');
     });
 });
 
