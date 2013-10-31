@@ -50,12 +50,43 @@
                 </div>
             </footer>
         </div>
+        <div id="account_update" class="hidden text-center">
 
+        </div>
         <div id="how_to" class="hidden">
             <h2>HOW TO PLAY</h2>
             <div class="padding">
                 This is just a custom text that need to be verified.
             </div>
+        </div>
+
+        <div id="account" class="hidden">
+            <h2>Account</h2>
+            <div class="back_blue row row_link"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
+            <div id="account_info">
+                <div id="bookmarks">
+                    <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
+                    <div id="account_bookmark" class="group">
+                    </div>
+                </div>
+
+                <div id="play_lists">
+                    <h3>YOUR PLAYLIST</h3>
+                    <div id="account_playlist" class="group"></div>
+                </div>
+
+                <div id="interests">
+                    <h3>YOUR INTERESTS</h3>
+                    <div id="account_interest" class="group"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="game_customize" class="hidden">
+            <h2>CUSTOMIZE YOUR GAME</h2>
+            <div class="padding">Share your interests and you might see more images with those subjects!</div>
+            <div class="new_interest text-center"><input autocapitalize="off" autocorrect="off" autocomplete="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
+            <hr />
         </div>
 
         <div id="learn_more" class="hidden">
@@ -81,6 +112,10 @@
                 <span class="dartmouth_logo" />
                 <span class="neh_logo" />
             </div>
+
+        </div>
+
+        <div id="institution_info" class="hidden">
 
         </div>
 
@@ -134,9 +169,11 @@
         <ul>
             <li class="back_blue row"><div><a href="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/" location="main_screen"><span>HOME</span></a></div></li>
             <li class="back_blue row" id="mmenuPlay"><div><a href="#" location="game_screen"><span>PLAY</span></a></div></li>
+            <li class="back_blue row hidden" id="mmenuCustomize"><div><a href="#" location="game_customize"><span>CUSTOMIZE</span></a></div></li>
             <li class="back_blue row touch" id="mmenuLogin"><div><a  href="#" location="login"><span>LOGIN</span></a></div></li>
             <li class="back_blue row"><div><a href="#" location="how_to"><span>HOW TO PLAY</span></a></div></li>
             <li class="back_blue row"><div><a href="#" location="learn_more"><span>LEARN MORE</span></a></div></li>
+            <li class="back_blue row hidden" id="mmenuAccount"><div><a href="#" location="account"><span>ACCOUNT</span></a></div></li>
             <li class="back_blue row hidden touch" id="mmenuLogout"><div><a href="#" location="logout"><span>LOGOUT</span></a></div></li>
         </ul>
     </nav>
@@ -157,6 +194,73 @@
             <source src="${mp3_path}" type="audio/mpeg">
         </audio>
     </script>
+
+    <script id="template-account_bookmark" type="text/x-jquery-tmpl">
+        <div class="bookmark">
+            {{each bookmarked}}
+            <img src="${thumbnail}" class="show_big" scaled="${scaled}" />
+            {{/each}}
+        </div>
+    </script>
+
+    <script id="template-account_interest" type="text/x-jquery-tmpl">
+        {{each interests}}
+        <div interest_id="${id}" class="back_yellow row">
+            <div>${interest}</div>
+            <div class="delete right"></div>
+        </div>
+        {{/each}}
+    </script>
+
+    <script id="template-account_playlist" type="text/x-jquery-tmpl">
+        {{each play_lists}}
+        {{if isBanned != true}}
+        <div institution_id="${id}" class="back_yellow row">
+            <div><span class="institution">${name}</span></div>
+            <div class="delete right"></div>
+        </div>
+        {{/if}}
+        {{/each}}
+    </script>
+
+    <script id="template-account_update" type="text/x-jquery-tmpl">
+        <div class="button">
+            <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
+        </div>
+        <div class="button">
+            <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
+        </div>
+        <div class="button">
+            <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
+        </div>
+        <div class="button">
+            <a href="#" id="btn_update" class="button login"><span>UPDATE</span></a>
+        </div>
+    </script>
+
+    <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
+        <div id="listing">
+            <div class="padding">When you add an archive to your favorites, you will see more images from that archive when you play.</div>
+            <div id="favorite_institutions"  class="padding" align="center">
+                <div id="list_institutions" class="group">
+                    {{each all_institution}}
+                    <div institution_id="${id}" class="institution left right_padding">
+                        <a href="" title="${name}"><img class="institution_logo" src="${logo}" width="70" height="70" /></a>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="template-show_institution" type="text/x-jquery-tmpl">
+        <div class="padding" style="width: 320px;">
+            <div class="text-center"><img src="${logo}" /></div>
+            <h4>${name}</h4>
+            <div>${description}</div>
+        </div>
+    </script>
+
     <script id="template-turn" type="text/x-jquery-tmpl">
         <div style="text-align:center">
             <img src="${url}" alt="game image" id="image_to_tag" style="width: auto !important; height: auto !important; "/>
