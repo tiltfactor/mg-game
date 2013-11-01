@@ -425,7 +425,14 @@ MG_GAME_ONEUP = function ($) {
                                                 // Work-around - Push service is fired before ajax is complete
                                                 if (tag_count === 3) {
                                                     $("#game_screen .round").attr('status', 'waiting').html('WAITING ...');
-                                                    MG_GAME_ONEUP.oneup_show_curtain();
+                                                    $().toastmessage("showToast", {
+                                                        text: 'Waiting for ' + MG_GAME_ONEUP.opponent_name,
+                                                        position:"tops-center",
+                                                        type:"notice",
+                                                        background:"white",
+                                                        color:"black"
+                                                    });
+                                                    //MG_GAME_ONEUP.oneup_show_curtain();
                                                 }
 
                                                 MG_API.ajaxCall('/multiplayer/submit/gid/' + MG_GAME_API.settings.gid + '/playedGameId/' + MG_GAME_ONEUP.pass_game_id, function (response) {
