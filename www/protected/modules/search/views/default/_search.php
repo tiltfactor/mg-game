@@ -73,7 +73,7 @@
             <div class="menu_item">';
     echo CHtml::checkBoxList("Custom[collections]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["collections"])) ? $_GET["Custom"]["collections"] : ''), GxHtml::encodeEx(GxHtml::listDataEx($collections), false, true), array(
         'template' => '{input} {label}',
-        'separator' => '<br /><br />',
+        'separator' => '<br />',
     ));
     echo '
             </div>
