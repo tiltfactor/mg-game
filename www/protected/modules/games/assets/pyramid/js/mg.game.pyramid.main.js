@@ -625,3 +625,30 @@ $(document).ready(function() {
         $('nav#menu-right').remove();
     }*/
 });
+
+
+function confirmPretty(text, onOk) {
+    $("<div title='Confirmation'>" + text + "</div>").dialog({
+        modal:true,
+        dialogClass:'no-title',
+        minWidth:450,
+        maxWidth:600,
+        buttons:[
+            {
+                text:"Cancel",
+                id:"confirm_no",
+                click:function () {
+                    $(this).dialog('destroy').remove();
+                }
+            },
+            {
+                text:"Ok",
+                id:"confirm_yes",
+                click:function () {
+                    onOk();
+                    $(this).dialog('destroy').remove();
+                }
+            }
+        ]
+    });
+}

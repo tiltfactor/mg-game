@@ -30,6 +30,43 @@ body {
 body {
   height: 100%;
 }
+body h2,
+body h3 {
+  background-color: #EBEBEB;
+  text-transform: uppercase;
+  line-height: 40px;
+}
+body .left {
+  float: left;
+}
+body .back_blue {
+  cursor: pointer;
+  background-color: #333333;
+}
+body .back_yellow {
+  background-color: #ffffff;
+  border-bottom: 1px solid #333333;
+}
+body .delete {
+  background-image: url('../images/delete.png');
+  background-repeat: repeat;
+  background-repeat: no-repeat;
+  width: 31px;
+  height: 22px;
+  margin-top: -28px;
+  padding-right: 0s;
+  padding-right: 10px;
+  cursor: pointer;
+}
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+  body .delete {
+    background-image: url('../images/delete@2x.png');
+    background-repeat: repeat;
+    /*    width: @w_retina;
+          height: @h_retina;*/
+  
+  }
+}
 body #pass,
 body #new_image {
   width: auto;
@@ -135,6 +172,20 @@ body input.input {
   font-size: 22px;
   color: #ffffff;
 }
+body .div_text {
+  background-color: #ffffff;
+  text-align: left;
+  padding: 10px;
+}
+body .new_interest {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+body #favorite_institutions {
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
 body input.input::-webkit-input-placeholder {
   font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
   font-size: 22px;
@@ -164,7 +215,8 @@ body input.checkbox {
   height: 20px;
 }
 body #register .button,
-body #login .button {
+body #login .button,
+body #account_update .button {
   margin-top: 15px;
 }
 body header {
@@ -642,6 +694,12 @@ body .pyramid.level_9 {
           height: @h_retina;*/
   
   }
+}
+body .back {
+  padding-left: 25px;
+}
+body .header_mm_left {
+  float: left;
 }
 #content {
   padding: 0;
@@ -1166,6 +1224,16 @@ span:hover.button {
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   /* STYLES GO HERE */
 }
+.no-title .ui-dialog-titlebar {
+  display: none;
+}
+.no-title .ui-dialog-buttonpane {
+  border: 0px !important;
+}
+.no-title .ui-dialog-buttonset {
+  width: 100%;
+  text-align: center;
+}
 body.touch_device html {
   overflow: hidden;
 }
@@ -1175,6 +1243,17 @@ body.touch_device body {
 body.touch_device #sidepanel {
   display: none;
 }
+body.retina p,
+body.retina li,
+body.retina div {
+  font-size: 30px;
+}
+body.retina .delete {
+  width: 62px;
+  height: 44px;
+  margin-top: -62px;
+  margin-right: -55px;
+}
 body.retina header {
   height: 131px;
 }
@@ -1182,8 +1261,15 @@ body.retina header .center {
   top: 35px;
   width: 320px;
 }
+body.retina #pass,
+body.retina #new_image {
+  height: 40px;
+  line-height: 40px;
+  font-size: 30px;
+}
 body.retina #register .button,
-body.retina #login .button {
+body.retina #login .button,
+body.retina #account_update .button {
   margin-top: 30px;
 }
 body.retina label[for="rememberMe"] {
@@ -1290,11 +1376,11 @@ body.retina #content footer div {
   font-size: 40px;
 }
 body.retina .pyramid {
-  font-size: 20px;
+  font-size: 40px;
 }
 body.retina .pyramid.word_level_1 {
   height: 144px;
-  line-height: 35px;
+  line-height: 70px;
 }
 body.retina .pyramid.word_level_2 {
   height: 70px;
@@ -1416,7 +1502,7 @@ body.retina #input_area {
   height: 30px;
 }
 body.retina .spacial_font.size_20 {
-  font-size: 17px;
+  font-size: 32px;
 }
 body.retina .spacial_font.logo_text {
   font-size: 62px;
@@ -1424,7 +1510,7 @@ body.retina .spacial_font.logo_text {
   margin-bottom: -17px;
 }
 body.retina .spacial_font.logo_subtext {
-  width: 284px;
+  width: 560px;
   text-align: justify;
 }
 body.retina .splash_logo {
@@ -1437,17 +1523,6 @@ body.retina .new_game {
 body.retina #fieldholder .final {
   font-size: 35px !important;
   line-height: 46px;
-}
-body.retina .spacial_font.size_20 {
-  font-size: 16px;
-}
-body.retina .spacial_font.logo_text {
-  font-size: 62px;
-  white-space: nowrap;
-  margin-bottom: -17px;
-}
-body.retina .spacial_font.logo_subtext {
-  width: 300px;
 }
 body.retina .splash_logo {
   padding-bottom: 10px;

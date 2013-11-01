@@ -75,14 +75,14 @@
 
             <div id="how_to" class="hidden">
                 <h2>HOW TO PLAY</h2>
-                <div class="padding">
+                <div class="padding div_text">
                     This is just a custom text that need to be verified.
                 </div>
             </div>
 
             <div id="learn_more" class="hidden">
                 <h2>Learn More</h2>
-                <div class="padding">One Up is part of a suite of games from the
+                <div class="padding div_text">One Up is part of a suite of games from the
                     Metadata Games project. Metadata Games is a
                     Free and Open Source (FOSS) online game
                     system for gathering useful data on photo,
@@ -90,7 +90,7 @@
                     you have a direct impact on the preservation
                     and accessibility of vital cultural heritage
                     collections for future generations.</div>
-                <div class="padding">
+                <div class="padding div_text">
                     Metadata Games is created by the Tiltfactor
                     Laboratory at Dartmouth College, with support
                     from the National Endowment for the

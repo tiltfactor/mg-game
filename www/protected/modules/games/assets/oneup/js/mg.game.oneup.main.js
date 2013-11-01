@@ -1185,7 +1185,7 @@ MG_GAME_ONEUP = function ($) {
 
                     $("#main_screen").find(".username").html(response.user.username);
 
-                    $("a[location='main_screen']").click();
+                    $("#menu-right a[location='main_screen']").click();
 
                     MG_API.curtain.hide();
                 });
@@ -1379,7 +1379,7 @@ MG_GAME_ONEUP = function ($) {
                     addClass:MG_GAME_ONEUP.toastBackgroundClass
                 });
                 if ($("#main_screen").is(":visible")) {
-                    $("a[location='main_screen']").click();
+                    $("#menu-right a[location='main_screen']").click();
                 }
             });
 
@@ -1398,7 +1398,7 @@ MG_GAME_ONEUP = function ($) {
                     addClass:MG_GAME_ONEUP.toastBackgroundClass
                 });
                 if ($("#main_screen").is(":visible")) {
-                    $("a[location='main_screen']").click();
+                    $("#menu-right a[location='main_screen']").click();
                 }
             });
 
@@ -1418,7 +1418,7 @@ MG_GAME_ONEUP = function ($) {
                     }
                 } else if ($(".index_screen").not(":visible")) {
                     if ($("#main_screen").is(":visible")) {
-                        $("a[location='main_screen']").click();
+                        $("#menu-right a[location='main_screen']").click();
                     }
                     $().toastmessage("showToast", {
                         text:game_title + " It's your turn!",
@@ -1455,7 +1455,7 @@ MG_GAME_ONEUP = function ($) {
                     MG_GAME_ONEUP.endedGames[counter].turnUserId = 0;
 
                     if ($("#main_screen").is(":visible")) {
-                        $("a[location='main_screen']").click();
+                        $("#menu-right a[location='main_screen']").click();
                     }
                 }
             });
@@ -1522,7 +1522,7 @@ MG_GAME_ONEUP = function ($) {
                         stayTime:MG_GAME_ONEUP.toastStayTime,
                         addClass:MG_GAME_ONEUP.toastBackgroundClass
                     });
-                    $("a[location='main_screen']").click();
+                    $("#menu-right a[location='main_screen']").click();
                 } else if ($("#game_screen").is(":visible") || $("#word_screen").is(":visible")) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         $().toastmessage("showToast", {
