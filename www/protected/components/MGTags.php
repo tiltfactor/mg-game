@@ -297,15 +297,21 @@ class MGTags
     public static function parseTags($tags)
     {
         if (!is_array($tags)) {
-            if(strstr($tags, '"') != false)
+            $tags = trim($tags);
+            if(strstr($tags, '" ') != false)
             {
                 $tags = strtr($tags, array ('" ' => '", '));
             }
+            elseif (strstr($tags, ' "') != false)
+            {
+                $tags = strtr($tags, array (' "' => ' ,"'));
+            }
             else
             {
-                $tags = strtr($tags, array (' ' => ', '));
+              if(strstr($tags, '"') == false)  $tags = strtr($tags, array (' ' => ', ')); // no multiWords
             }
-
+           // print_r($tags);
+            //die();//pkostov
             $tags = explode('"', trim(strip_tags($tags), ' ,'));
 
             $tmp = array(); // elements in ""
