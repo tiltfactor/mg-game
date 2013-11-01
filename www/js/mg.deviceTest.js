@@ -1,66 +1,3 @@
-/**
- * Required modernizr lib
- */
-if ( $.browser.webkit ) {
-    var width = window.innerWidth;
-    if (width < screen.width) {
-        width = screen.width;
-    }
-    // fix for Iphone app
-    var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
-    var mw = parseInt($(window).width(), 10) * parseInt(window.devicePixelRatio, 10); // min width of site
-    var ratio =  1 / parseInt(window.devicePixelRatio, 10); //ww / ww*window.devicePixelRatio; //calculate ratio
-    if( ww < mw){ //smaller than minimum size
-        $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww*window.devicePixelRatio);
-    }else{ //regular size
-        $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
-    }
-    $("body").css('width', width + 'px');
-}
-
-if(/Android|webOS/i.test(navigator.userAgent) ) {
-    var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
-    var ratio =  1 / parseInt(window.devicePixelRatio, 10);
-
-    $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=1, user-scalable=yes, width=' + ww);
-}
-
-/*if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
- var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
- var mw = 480; // min width of site
- var ratio =  ww / mw; //calculate ratio
- if( ww < mw){ //smaller than minimum size
- $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
- }else{ //regular size
- $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
- }
- }*/
-
-var device_ratio = 1;
-
-$( document ).ready(function() {
-    if (Modernizr.touch_device) {
-        $("body").addClass('touch_device');
-        is_touch_device = true;
-        device_ratio = window.devicePixelRatio;
-    } else {
-        $("body").addClass('no-touch_device');
-        is_touch_device = false;
-    }
-
-    if (Modernizr.retina_resolution) {
-        $("body").addClass('retina');
-    } else {
-        $("body").addClass('no-retina');
-    }
-
-    BrowserDetect.init();
-    $("body").addClass(BrowserDetect.browser);
-
-})
-
-
-
 /*
  USE
  if (Modernizr.retina_resolution) {
@@ -80,6 +17,75 @@ Modernizr.addTest('retina_resolution', function() {
         return false;
     }
 });
+
+/**
+ * Required modernizr lib
+ */
+
+var ratio;
+
+if (Modernizr.retina_resolution) {
+    ratio = 0.5;
+} else {
+    ratio = 1;
+}
+
+device_ratio = ratio;
+
+if ( $.browser.webkit ) {
+    var width = window.innerWidth;
+    if (width < screen.width) {
+        width = screen.width;
+    }
+
+    // fix for Iphone app
+    var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
+    var mw = parseInt($(window).width(), 10) * parseInt(window.devicePixelRatio, 10); // min width of site
+
+    //var ratio =  1 / parseInt(window.devicePixelRatio, 10); //ww / ww*window.devicePixelRatio; //calculate ratio
+    if( ww < mw || device_ratio === 0.5){ //smaller than minimum size
+        $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww*2);
+    } else{ //regular size
+        alert('there');
+        $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+    }
+    $("body").css('width', width + 'px');
+} else if(/Android|webOS/i.test(navigator.userAgent) ) {
+    var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
+    //var ratio =  1 / parseInt(window.devicePixelRatio, 10);
+    $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=1, user-scalable=yes, width=' + ww);
+}
+
+/*if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+ var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
+ var mw = 480; // min width of site
+ var ratio =  ww / mw; //calculate ratio
+ if( ww < mw){ //smaller than minimum size
+ $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww);
+ }else{ //regular size
+ $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+ }
+ }*/
+
+$( document ).ready(function() {
+    if (Modernizr.touch_device) {
+        $("body").addClass('touch_device');
+        is_touch_device = true;
+    } else {
+        $("body").addClass('no-touch_device');
+        is_touch_device = false;
+    }
+
+    if (Modernizr.retina_resolution) {
+        $("body").addClass('retina');
+    } else {
+        $("body").addClass('no-retina');
+    }
+
+    BrowserDetect.init();
+    $("body").addClass(BrowserDetect.browser);
+
+})
 
 /*
  USE
