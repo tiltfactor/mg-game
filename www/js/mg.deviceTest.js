@@ -22,12 +22,15 @@ Modernizr.addTest('retina_resolution', function() {
  * Required modernizr lib
  */
 
-var ratio;
+var ratio,
+    multiply_width;
 
 if (Modernizr.retina_resolution) {
     ratio = 0.5;
+    multiply_width = 2;
 } else {
     ratio = 1;
+    multiply_width = 1;
 }
 
 device_ratio = ratio;
@@ -44,7 +47,7 @@ if ( $.browser.webkit ) {
 
     //var ratio =  1 / parseInt(window.devicePixelRatio, 10); //ww / ww*window.devicePixelRatio; //calculate ratio
     if( ww < mw || device_ratio === 0.5){ //smaller than minimum size
-        $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww*2);
+        $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww*multiply_width);
     } else{ //regular size
         alert('there');
         $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
@@ -55,6 +58,10 @@ if ( $.browser.webkit ) {
     //var ratio =  1 / parseInt(window.devicePixelRatio, 10);
     $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=1, user-scalable=yes, width=' + ww);
 }
+
+$(window).resize(function() {
+
+});
 
 /*if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
  var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
