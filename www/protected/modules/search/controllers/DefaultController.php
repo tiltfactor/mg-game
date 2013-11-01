@@ -44,11 +44,10 @@ class DefaultController extends Controller
             $model->setAttribute('institution_id', $institutions->id);
         }
 
-
         $this->render('index',
             array(
                 'model' => $model,
-                'setAlphabeticalOrder' => isset( $_GET['Custom']['alphabetical_sort'])  ? $_GET['Custom']['alphabetical_sort'] : 'relevance',
+                'setTypeOrder' => isset( $_GET['Custom']['type_sort'])  ? $_GET['Custom']['type_sort'] : 'relevance',
                 'setItemsPerPage' => isset( $_GET['Custom']['items_per_page']) ? $_GET['Custom']['items_per_page'] : 25,
                 'institutions' =>  $institutions,
                 'assets_url' => SearchModule::getAssetsUrl(),
