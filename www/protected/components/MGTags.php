@@ -297,9 +297,30 @@ class MGTags
     public static function parseTags($tags)
     {
         if (!is_array($tags)) {
-            $tags = explode(',', trim(strip_tags($tags), ' ,'));
-        }
+            $tags = strtr($tags, array ('" ' => '", '));
 
+            $tags = explode('"', trim(strip_tags($tags), ' ,'));
+
+            $tmp = array(); // elements in ""
+            foreach($tags as $myKey => $myValue)
+            {
+                if($myValue != "") $tmp[] = $myValue;
+            }
+            $tmp2 = array();
+            $tmpMulti = array();
+            foreach($tmp as $myKey => $myValue)
+            {
+                if(strstr($myValue, ",") != false) $tmp2[] =$myValue ;
+                else $tmpMulti[] =$myValue ;
+
+            }
+            $tmp3 = array(); // elements with , separation only
+            foreach($tmp2 as $myKey => $myValue)
+            {
+                $tmp3 = explode(' ', trim(strip_tags($myValue), ' ,'));
+            }
+            $tags = $output = array_merge($tmpMulti, $tmp3);
+        }
         array_walk($tags, array("MGTags", "trim"));
 
         foreach ($tags as $key => $value) {
