@@ -1,5 +1,6 @@
 <div>
     <!-- The bounding-box around the text input and the button -->
+    <input type="hidden" id="game_uri" value="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/" />
     <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
     <div id="header" class="group">
         <a href="#menu-left" class="header_mm_left">
@@ -55,7 +56,7 @@
         </div>
         <div id="how_to" class="hidden">
             <h2>HOW TO PLAY</h2>
-            <div class="padding">
+            <div class="padding div_text">
                 This is just a custom text that need to be verified.
             </div>
         </div>
@@ -64,16 +65,16 @@
             <h2>Account</h2>
             <div class="back_blue row row_link"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
             <div id="account_info">
-                <div id="bookmarks">
+<!--                <div id="bookmarks">
                     <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
                     <div id="account_bookmark" class="group">
                     </div>
-                </div>
+                </div>-->
 
-                <div id="play_lists">
+<!--                <div id="play_lists">
                     <h3>YOUR PLAYLIST</h3>
                     <div id="account_playlist" class="group"></div>
-                </div>
+                </div>-->
 
                 <div id="interests">
                     <h3>YOUR INTERESTS</h3>
@@ -84,14 +85,13 @@
 
         <div id="game_customize" class="hidden">
             <h2>CUSTOMIZE YOUR GAME</h2>
-            <div class="padding">Share your interests and you might see more images with those subjects!</div>
-            <div class="new_interest text-center"><input autocapitalize="off" autocorrect="off" autocomplete="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
-            <hr />
+            <div class="padding div_text">Share your interests and you might see more images with those subjects!</div>
+            <div class="new_interest text-center"><input class="input" autocapitalize="off" autocorrect="off" autocomplete="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
         </div>
 
         <div id="learn_more" class="hidden">
             <h2>Learn More</h2>
-            <div class="padding">One Up is part of a suite of games from the
+            <div class="padding div_text">One Up is part of a suite of games from the
                 Metadata Games project. Metadata Games is a
                 Free and Open Source (FOSS) online game
                 system for gathering useful data on photo,
@@ -99,7 +99,7 @@
                 you have a direct impact on the preservation
                 and accessibility of vital cultural heritage
                 collections for future generations.</div>
-            <div class="padding">
+            <div class="padding div_text">
                 Metadata Games is created by the Tiltfactor
                 Laboratory at Dartmouth College, with support
                 from the National Endowment for the
@@ -225,22 +225,22 @@
 
     <script id="template-account_update" type="text/x-jquery-tmpl">
         <div class="button">
-            <input type="text" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
+            <input type="text" class="input" autocapitalize="off" autocorrect="off" autocomplete="off" id="username" name="username" placeholder="Change username" value="${username}" tabindex="1" />
         </div>
         <div class="button">
-            <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
+            <input type="password" class="input" autocapitalize="off" autocorrect="off" autocomplete="off" id="password" name="password" placeholder="Change password" value="" tabindex="2" />
         </div>
         <div class="button">
-            <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
+            <input type="email" class="input" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Change e-mail" value="${email}" tabindex="3" value="" />
         </div>
         <div class="button">
             <a href="#" id="btn_update" class="button login"><span>UPDATE</span></a>
         </div>
     </script>
 
-    <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
+<!--    <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
         <div id="listing">
-            <div class="padding">When you add an archive to your favorites, you will see more images from that archive when you play.</div>
+            <div class="padding div_text">When you add an archive to your favorites, you will see more images from that archive when you play.</div>
             <div id="favorite_institutions"  class="padding" align="center">
                 <div id="list_institutions" class="group">
                     {{each all_institution}}
@@ -251,6 +251,9 @@
                 </div>
             </div>
         </div>
+    </script>-->
+
+    <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
     </script>
 
     <script id="template-show_institution" type="text/x-jquery-tmpl">

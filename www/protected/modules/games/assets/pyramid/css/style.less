@@ -44,6 +44,37 @@ body {
 body {
   height: 100%;
 
+  h2, h3 {
+    background-color: #EBEBEB;
+    text-transform: uppercase;
+    line-height: 40px;
+  }
+
+  .left {
+    float: left;
+  }
+
+  .back_blue {
+    cursor: pointer;
+    background-color: #333333;
+  }
+
+  .back_yellow {
+    background-color: #ffffff;
+    border-bottom: 1px solid #333333;
+  }
+
+  .delete {
+    .at2x('../images/delete.png', 'no-repeat');
+    background-repeat: no-repeat;
+    width: 31px;
+    height: 22px;
+    margin-top: -28px;
+    padding-right: 0s;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+
   #pass, #new_image {
     width: auto;
     background: #ffce13;
@@ -141,6 +172,23 @@ body {
     color: #ffffff;
   }
 
+  .div_text {
+    background-color: #ffffff;
+    text-align: left;
+    padding: 10px;
+  }
+
+  .new_interest {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  #favorite_institutions {
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   input.input::-webkit-input-placeholder {
     font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif;
     font-size: 22px;
@@ -170,7 +218,7 @@ body {
     height: 20px;
   }
 
-  #register .button, #login .button {
+  #register .button, #login .button, #account_update .button {
     margin-top: 15px;
   }
 
@@ -369,6 +417,14 @@ body {
       line-height: 35px;
       height: 35px;
     }
+  }
+
+  .back {
+    padding-left: 25px;
+  }
+
+  .header_mm_left {
+    float: left;
   }
 }
 
@@ -815,6 +871,21 @@ and (max-device-width : 480px) {
   
 }
 
+.no-title {
+  .ui-dialog-titlebar {
+    display: none;
+  }
+
+  .ui-dialog-buttonpane {
+    border: 0px !important;
+  }
+
+  .ui-dialog-buttonset {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 body.touch_device {
   html { overflow:hidden; }
   body { overflow:hidden; }
@@ -825,6 +896,17 @@ body.touch_device {
 }
 
   body.retina {
+    p, li, div {
+      font-size: 30px;
+    }
+
+    .delete {
+      width: 62px;
+      height: 44px;
+      margin-top: -62px;
+      margin-right: -55px;
+    }
+
     header {
       height: 131px;
 
@@ -834,7 +916,13 @@ body.touch_device {
       }
     }
 
-    #register .button, #login .button {
+    #pass, #new_image {
+      height: 40px;
+      line-height: 40px;
+      font-size: 30px;
+    }
+
+    #register .button, #login .button, #account_update .button {
       margin-top: 30px;
     }
 
@@ -929,11 +1017,11 @@ body.touch_device {
     }
 
     .pyramid {
-      font-size: 20px;
+      font-size: 40px;
 
       &.word_level_1 {
         height: 144px;
-        line-height: 35px;
+        line-height: 70px;
       }
 
       &.word_level_2 {
@@ -1078,7 +1166,7 @@ body.retina {
 
   .spacial_font {
     &.size_20 {
-      font-size: 17px;
+      font-size: 32px;
     }
 
     &.logo_text {
@@ -1088,7 +1176,7 @@ body.retina {
     }
 
     &.logo_subtext {
-      width: 284px;
+      width: 560px;
       text-align: justify;
     }
   }
@@ -1105,22 +1193,6 @@ body.retina {
   #fieldholder .final {
     font-size: 35px !important;
     line-height: 46px;
-  }
-
-  .spacial_font {
-    &.size_20 {
-      font-size: 16px;
-    }
-
-    &.logo_text {
-      font-size: 62px;
-      white-space: nowrap;
-      margin-bottom: -17px;
-    }
-
-    &.logo_subtext {
-      width: 300px;
-    }
   }
 
   .splash_logo {

@@ -53,7 +53,7 @@ var actions = function (action, click_parent) {
                         array = string.split(','),
                         counter_i = 0;
                     for (var i = 0; i < array.length; i++) {
-                        MG_API.ajaxCall('/multiplayer/addInterest/gid/' + MG_GAME_API.settings.gid + '/interest/' + encodeURIComponent($.trim(array[i])), function (institution_response) {
+                        MG_API.ajaxCall('/multiplayer/addInterest/gid/' + MG_PYRAMID.gid + '/interest/' + encodeURIComponent($.trim(array[i])), function (institution_response) {
                             counter_i++;
                             if (i === counter_i) {
                                 $('#new_interest').attr('value', '');
@@ -65,7 +65,7 @@ var actions = function (action, click_parent) {
                 }
             });
             //http://localhost/mggameserver/index.php/api/multiplayer/getInstitutions/gid/OneUp/
-            MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_GAME_API.settings.gid, function (institution_response) {
+            MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_PYRAMID.gid, function (institution_response) {
                 var json = {};
                 json.all_institution = institution_response;
                 $("#template-favorite_institutions").tmpl(json).appendTo($("#game_customize")).after(function () {
@@ -73,12 +73,10 @@ var actions = function (action, click_parent) {
                     // click on an institution
                     $("#list_institutions .institution").off('click').on('click', function (e) {
                         e.preventDefault();
-                        console.log('we clicked on institutionAAAAAAAAAA');
                         var row = $(this);
                         MG_PYRAMID.institution_id = row.attr('institution_id');
                         MG_PYRAMID.back_location = 'game_customize';
                         // institution_info
-                        console.log("we are about to call actions(institution_info) from game_customize");
                         actions('institution_info', '');
                     });
                 });
@@ -148,7 +146,7 @@ var actions = function (action, click_parent) {
             });
 
             //getBookmarks
-            MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_GAME_API.settings.gid, function (account_bookmarks) {
+            MG_API.ajaxCall('/multiplayer/getBookmarks/gid/' + MG_PYRAMID.gid, function (account_bookmarks) {
                 var json = {};
                 json.bookmarked = account_bookmarks;
                 $("#template-account_bookmark").tmpl(json).appendTo($("#account_bookmark")).after(function () {
@@ -225,7 +223,7 @@ var actions = function (action, click_parent) {
             });
 
             // Interests
-            MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_GAME_API.settings.gid, function (account_interest) {
+            MG_API.ajaxCall('/multiplayer/getInterests/gid/' + MG_PYRAMID.gid, function (account_interest) {
                 var json = {};
                 json.interests = account_interest;
                 $("#template-account_interest").tmpl(json).appendTo($("#account_interest")).after(function () {
@@ -235,7 +233,7 @@ var actions = function (action, click_parent) {
                             var row = $(this).closest('.row');
                             var row_id = row.attr('interest_id');
                             confirmPretty("Do you really want to remove the interest.", function () {
-                                MG_API.ajaxCall('/multiplayer/removeInterest/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function (response) {
+                                MG_API.ajaxCall('/multiplayer/removeInterest/gid/' + MG_PYRAMID.gid + '/id/' + row_id + '/', function (response) {
                                     row.remove();
                                 });
                             })
@@ -245,7 +243,7 @@ var actions = function (action, click_parent) {
             });
 
             // List of all institutions that are not banned yet
-            MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_GAME_API.settings.gid, function (account_playlist) {
+            MG_API.ajaxCall('/multiplayer/getInstitutions/gid/' + MG_PYRAMID.gid, function (account_playlist) {
                 var json = {};
                 json.play_lists = account_playlist;
                 $("#template-account_playlist").tmpl(json).appendTo($("#account_playlist")).after(function () {
@@ -275,7 +273,7 @@ var actions = function (action, click_parent) {
                             var row = $(this).closest('.row');
                             var row_id = row.attr('institution_id');
                             confirmPretty("Do you really want to disable medias from the institution.", function () {
-                                MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function (response) {
+                                MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_PYRAMID.gid + '/id/' + row_id + '/', function (response) {
                                     row.remove();
                                 });
                             })
@@ -350,7 +348,7 @@ var actions = function (action, click_parent) {
             $("#header").find('.back').removeClass('hidden'); // so we substitute with this
             console.log("the arrow: ", $("#header").find('.back'));
 
-            MG_API.ajaxCall('/multiplayer/GetInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_PYRAMID.institution_id + '/', function (response) {
+            MG_API.ajaxCall('/multiplayer/GetInstitution/gid/' + MG_PYRAMID.gid + '/id/' + MG_PYRAMID.institution_id + '/', function (response) {
                 var inst_remove = '<div class="right top_btn favorite" type="remove">REMOVE FROM PLAYLIST</div>',
                     inst_add = '<div class="right top_btn favorite" type="add">FAVORITE</div>';
 
@@ -371,14 +369,14 @@ var actions = function (action, click_parent) {
                     $("#header").find('.favorite').off('click').on('click', function () { // this is the upper-right "Remove from  Playlist"
                         $("#header").find('.favorite').remove();
                         if ($(this).attr('type') === 'remove') {
-                            MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_PYRAMID.institution_id + '/', function (response) {
+                            MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_PYRAMID.gid + '/id/' + MG_PYRAMID.institution_id + '/', function (response) {
                                 setTimeout(function () {
                                 }, 3000);
                                 $("#header").append(inst_add);
                                 addClickFav();
                             });
                         } else {
-                            MG_API.ajaxCall('/multiplayer/unbanInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + MG_PYRAMID.institution_id + '/', function (response) {
+                            MG_API.ajaxCall('/multiplayer/unbanInstitution/gid/' + MG_PYRAMID.gid + '/id/' + MG_PYRAMID.institution_id + '/', function (response) {
                                 setTimeout(function () {
                                 }, 3000);
                                 $("#header").append(inst_remove);
@@ -541,7 +539,7 @@ var setAuthentication = function () {
                     MG_PYRAMID.isLogged = true;
                     MG_PYRAMID.username = $("#register #username").val();
                     MG_PYRAMID.email = $("#register #email").val();
-                    $("a[location='main_screen']").click();
+                    $("#menu-right a[location='main_screen']").click();
                 }
                 $().toastmessage("showToast", {
                     text:response.responseText,
@@ -625,3 +623,30 @@ $(document).ready(function() {
         $('nav#menu-right').remove();
     }*/
 });
+
+
+function confirmPretty(text, onOk) {
+    $("<div title='Confirmation'>" + text + "</div>").dialog({
+        modal:true,
+        dialogClass:'no-title',
+        minWidth:450,
+        maxWidth:600,
+        buttons:[
+            {
+                text:"Cancel",
+                id:"confirm_no",
+                click:function () {
+                    $(this).dialog('destroy').remove();
+                }
+            },
+            {
+                text:"Ok",
+                id:"confirm_yes",
+                click:function () {
+                    onOk();
+                    $(this).dialog('destroy').remove();
+                }
+            }
+        ]
+    });
+}

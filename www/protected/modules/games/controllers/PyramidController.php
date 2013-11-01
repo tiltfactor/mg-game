@@ -57,6 +57,7 @@ class PyramidController extends GxController
         if ($game) {
             $cs = Yii::app()->clientScript;
             $cs->registerCoreScript('jquery');
+            $cs->registerCoreScript('jquery.ui');
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/jquery.fancybox-1.3.4.css');
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/pyramid/css/normalize.css');
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/pyramid/css/main.css');
@@ -97,7 +98,6 @@ class PyramidController extends GxController
                 $currentUserEmail = "";
             };
 
-
             $js = <<<EOD
 MG_PYRAMID = {};
 MG_PYRAMID.api_url = '{$game->api_base_url}';
@@ -132,6 +132,7 @@ EOD;
         if ($game) {
             $cs = Yii::app()->clientScript;
             $cs->registerCoreScript('jquery');
+            $cs->registerCoreScript('jquery.ui');
             $cs->registerCssFile(Yii::app()->baseUrl . '/css/jquery.fancybox-1.3.4.css');
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/pyramid/css/normalize.css');
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/pyramid/css/main.css');

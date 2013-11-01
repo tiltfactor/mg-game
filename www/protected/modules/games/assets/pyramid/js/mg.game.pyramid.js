@@ -148,11 +148,11 @@ MG_GAME_PYRAMID = function ($) {
             $("#container").find("footer div").html("4 letters!");
             var num_sound;
 
-            $(":input").bind("keydown", function(event) {
+            $(":input").not(".input").bind("keydown", function(event) {
                 return ((event.which >= 97 && event.which <= 122) || (event.which >= 65 && event.which <= 90) || event.which === 8);
             });
 
-            $(":input").bind("keyup change", function(event) {
+            $(":input").not(".input").bind("keyup change", function(event) {
                 var this_input = $(this),
                     str = $("#word").val(),
                     input_length = parseInt(str.length, 10);
