@@ -103,10 +103,10 @@ class Media extends BaseMedia
             }
             if(isset($_GET['Custom']['type_sort']))
             {
-                $alphaSort = $_GET['Custom']['type_sort'];
-                if($alphaSort == 'a_z') $criteria->order = 'name ASC';
-                if($alphaSort == 'z_a') $criteria->order = 'name DESC';
-                if($alphaSort == 'relevance') $criteria->order = 'tag_count DESC';
+                $typeSort = $_GET['Custom']['type_sort'];
+                if($typeSort == 'a_z') $criteria->order = 'name ASC';
+                if($typeSort == 'z_a') $criteria->order = 'name DESC';
+                if($typeSort == 'relevance') $criteria->order = 'tag_count DESC';
             }
             $criteria->join .= ' LEFT JOIN {{institution}} inst ON inst.id=t.institution_id';
             $criteria->addInCondition('inst.status', array(1));
@@ -375,6 +375,7 @@ class Media extends BaseMedia
         $out = array();
         if (count($this->collections) > 0) {
             foreach ($this->collections as $collection) {
+                if($collection->name == 'All') continue;
                 $out[] = (GxHtml::encode($collection->name));
             }
         }
