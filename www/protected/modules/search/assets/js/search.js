@@ -8,6 +8,11 @@ $(document).ready(function () {
     checkInstitutionsCollections();
     setImageClick();
 
+    $('#by_collection label').each(function( index, element ) { //for tooltip when col. name is too long
+        console.log($(this).text())
+        $(this).attr('title', $(this).text())
+    })
+
 });
 
 

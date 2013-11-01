@@ -78,7 +78,7 @@ class MGJuiAutoCompleteMultiple extends CJuiInputWidget
 		if(isset($this->htmlOptions['name']))
 			$name=$this->htmlOptions['name'];
 
-		if($this->hasModel())
+	if($this->hasModel())
 			echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
 		else
 			echo CHtml::textField($name,$this->value,$this->htmlOptions);
@@ -91,7 +91,7 @@ class MGJuiAutoCompleteMultiple extends CJuiInputWidget
     $this->options['source'] = 'js:function( request, response ) {$.getJSON( "' . $this->options['source'] . '", {term: extractLast( request.term )}, response );}';
     $this->options['search'] = 'js:function() {var term = extractLast( this.value );if ( term.length < 2 ) {return false;}}';
     $this->options['focus'] = 'js:function() {return false;}';
-    $this->options['select'] = 'js:function( event, ui ) {var terms = split( this.value );terms.pop();terms.push( ui.item.value );terms.push( "" );this.value = terms.join( ", " );return false;}';
+    $this->options['select'] = 'js:function( event, ui ) {var terms = split( this.value );terms.pop();terms.push( ui.item.value );terms.push( "" );this.value = terms.join( " " );return false;}';
         
     $options=CJavaScript::encode($this->options);
 
