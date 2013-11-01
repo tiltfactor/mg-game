@@ -1,5 +1,6 @@
 <div>
     <!-- The bounding-box around the text input and the button -->
+    <input type="hidden" id="game_uri" value="<?php echo Yii::app()->baseUrl; ?>/index.php/games/Pyramid/" />
     <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
     <div id="header" class="group">
         <a href="#menu-left" class="header_mm_left">

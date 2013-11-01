@@ -98,7 +98,6 @@ class PyramidController extends GxController
                 $currentUserEmail = "";
             };
 
-
             $js = <<<EOD
 MG_PYRAMID = {};
 MG_PYRAMID.api_url = '{$game->api_base_url}';
