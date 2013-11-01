@@ -549,14 +549,15 @@ function onResize () {
     //$("#content header div").css("left", 0);
 //    $("#input_area input").css("width", $(window).width()-195 );
     //$("#input_area input").css('cssText', "width: " + $(window).width()-150 + "px !important, border: 1px solid pink !important" );
-    $("#content").css("min-height", device_ratio*($(window).height() + 20 - ($("#header").outerHeight() + $("#content footer").outerHeight())));
+   // $("#content").css("min-height", device_ratio*($(window).height() - ($("#header").outerHeight() + $("#content footer").outerHeight())));
 
-    $("#container").css("height", device_ratio*($(window).height() - 190));
-    if ($("body").hasClass("retina")) {
-        max_height = $(window).height() - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
+    //$("#container").css("height", device_ratio*($(window).height() - 210));
+
+        max_height = $(window).height() - 34 - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
         if (max_height < 200) max_height = 200;
         $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 35});
         $("#gamearea").css("height", max_height);
+/*
     } else {
         if ($("body").hasClass("touch_device")) {
             max_height = $(window).height() - $("#header").outerHeight() - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
@@ -567,6 +568,7 @@ function onResize () {
         $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 45});
         $("#gamearea").css("height", max_height);
     }
+*/
 
     //$("#content header div").centerHorizontal();
     $("#content header div").css("width", parseInt($("#input_area").css("width"), 10) + parseInt($("#countdown").css("width") +15, 10));

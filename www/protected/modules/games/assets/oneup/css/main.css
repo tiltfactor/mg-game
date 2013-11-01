@@ -1,6 +1,12 @@
 body {
   background-color: #150917;
 }
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
 .popup_gradient {
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
 
