@@ -310,8 +310,6 @@ class MGTags
             {
               if(strstr($tags, '"') == false)  $tags = strtr($tags, array (' ' => ', ')); // no multiWords
             }
-           // print_r($tags);
-            //die();//pkostov
             $tags = explode('"', trim(strip_tags($tags), ' ,'));
 
             $tmp = array(); // elements in ""

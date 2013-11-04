@@ -48,6 +48,7 @@ class Media extends BaseMedia
         // used a join, group by and having but this would only show medias that had at least one tag use
         // to fix that we're now - sigh - using subselects is not the fastest way. Might need improvement in further versions
         $criteria->select = 't.*, (SELECT COUNT(tcu.tag_id) FROM tag_use tcu WHERE tcu.media_id=t.id AND tcu.weight > 0) AS tag_count';
+      //  $criteria->select = array('t.*', '(SELECT COUNT(tcu.tag_id) FROM tag_use tcu WHERE tcu.media_id=t.id AND tcu.weight > 0) AS tag_count');
         $criteria->distinct = true;
 
         $criteria->compare('id', $this->id);
@@ -65,9 +66,20 @@ class Media extends BaseMedia
         if (isset($_GET["Custom"])) {
             if (isset($_GET["Custom"]["tags"])) {
                 $parsed_tags = MGTags::parseTags($_GET["Custom"]["tags"]);
+                $criteria->select = 't.*, (SELECT COUNT(tcu.tag_id) FROM tag_use tcu WHERE tcu.media_id=t.id AND tcu.weight > 0) AS tag_count  ,
+                        (SELECT  COUNT(*) as counted
+						FROM `tag_use` `tu`
+						JOIN `tag` `tag` ON tu.tag_id = tag.id
+						WHERE (tu.weight > 0) AND (`tag`.`tag` IN ( \'' . implode ('\', \'', $parsed_tags) . '\') AND tu.media_id = t.id)
+						GROUP BY `tu`.`media_id`
+						ORDER BY `counted` DESC) AS tag_count2';
+
                 if (count($parsed_tags) > 0) {
                     $cmd = Yii::app()->db->createCommand();
-
+                    $criteria->join .= "  LEFT JOIN {{tag_use}} tagu ON tagu.media_id=t.id
+                              LEFT JOIN {{tag}} tg ON tg.id=tagu.tag_id";
+                    $criteria->group = "tagu.media_id";
+                    //$criteria->order = ('COUNT(*) ASC');
                     $tags = null;
                     if ($_GET["Custom"]["tags_search_option"] == "OR") {
                         $tags = $cmd->selectDistinct('tu.media_id')
@@ -106,7 +118,7 @@ class Media extends BaseMedia
                 $typeSort = $_GET['Custom']['type_sort'];
                 if($typeSort == 'a_z') $criteria->order = 'name ASC';
                 if($typeSort == 'z_a') $criteria->order = 'name DESC';
-                if($typeSort == 'relevance') $criteria->order = 'tag_count DESC';
+                if($typeSort == 'relevance') $criteria->order = 'tag_count2 DESC';
             }
             $criteria->join .= ' LEFT JOIN {{institution}} inst ON inst.id=t.institution_id';
             $criteria->addInCondition('inst.status', array(1));
@@ -162,7 +174,7 @@ class Media extends BaseMedia
         }
 
         if (!Yii::app()->request->isAjaxRequest)
-           // $criteria->order = 'name ASC';
+           // $criteria->order = 'tag_count DESC';
 
         $sort = new CSort;
         $sort->attributes = array(
