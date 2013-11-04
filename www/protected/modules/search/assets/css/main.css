@@ -38,6 +38,7 @@ a:link, a:visited, a:hover {
 }
 
 .image_description {
+    font-size: 12px;
     width: 140px;
     height: 40px;
     overflow-x: hidden;
