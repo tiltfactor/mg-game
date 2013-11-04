@@ -53,7 +53,7 @@ $( window ).load(function() {
 function onResize () {
     $("#splash_home .middle_height").css("max-height", $(window).height() / 3);
     $("#splash_logo").centerVertival();
-    var height_top = $(window).height() - $(".splash_logo").outerHeight() - $("#header").outerHeight() - $("img.middle_height").height();
+    var height_top = $(window).height() - $(".splash_logo").outerHeight() - $("#header").outerHeight() - $("img.middle_height").outerHeight();
     if (height_top < 10) height_top = 10;
     $("#main_screen .top").css('height', height_top + 'px');
     $("nav .mm-inner").css('width', $(window).width());

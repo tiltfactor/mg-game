@@ -413,7 +413,6 @@ abstract class MGMultiPlayer extends CComponent
                 $payload = array();
                 $payload['playedGameId'] = $this->playedGame->id;
                 $payload['gameTurn'] = $turn;
-
                 $this->pushMessage($this->playedGame->sessionId1->user_id, MGMultiPlayer::PUSH_NEW_TURN, json_encode($payload));
                 $this->pushMessage($this->playedGame->sessionId2->user_id, MGMultiPlayer::PUSH_NEW_TURN, json_encode($payload));
             } else {
