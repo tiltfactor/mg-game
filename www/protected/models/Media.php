@@ -72,7 +72,7 @@ class Media extends BaseMedia
 						JOIN `tag` `tag` ON tu.tag_id = tag.id
 						WHERE (tu.weight > 0) AND (`tag`.`tag` IN ( \'' . implode ('\', \'', $parsed_tags) . '\') AND tu.media_id = t.id)
 						GROUP BY `tu`.`media_id`
-						ORDER BY `counted` DESC) AS tag_count2';
+						ORDER BY `counted` DESC) AS relevance_count';
 
                 if (count($parsed_tags) > 0) {
                     $cmd = Yii::app()->db->createCommand();
@@ -118,7 +118,7 @@ class Media extends BaseMedia
                 $typeSort = $_GET['Custom']['type_sort'];
                 if($typeSort == 'a_z') $criteria->order = 'name ASC';
                 if($typeSort == 'z_a') $criteria->order = 'name DESC';
-                if($typeSort == 'relevance') $criteria->order = 'tag_count2 DESC';
+                if($typeSort == 'relevance') $criteria->order = 'relevance_count DESC, tag_count DESC';
             }
             $criteria->join .= ' LEFT JOIN {{institution}} inst ON inst.id=t.institution_id';
             $criteria->addInCondition('inst.status', array(1));
