@@ -553,7 +553,7 @@ function onResize () {
 
     //$("#container").css("height", device_ratio*($(window).height() - 210));
 
-        max_height = $(window).height() - 34 - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10);
+        max_height = $(window).height() - 34 - $("#content header").outerHeight() - $("#content footer").outerHeight() - parseInt(gamearea.css('padding-top'), 10) - parseInt(gamearea.css('padding-bottom'), 10) - 30;
         if (max_height < 200) max_height = 200;
         $("#image_to_tag").css({'max-height': max_height, 'max-width': $(window).width() - 35});
         $("#gamearea").css("height", max_height);
