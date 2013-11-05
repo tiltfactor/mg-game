@@ -20,6 +20,7 @@ MG_GAME_ONEUP = function ($) {
         back_location:null,
         toastStayTime:9900,
         socketDisconnect:null,
+        socketReconnect:null,
         toastBackgroundClass:'popup_gradient',
         isDisconnected:false,
         oneup_show_curtain:function () {
@@ -1140,7 +1141,12 @@ MG_GAME_ONEUP = function ($) {
 
             function validUser() {
                 $("#menu-right").css('visibility', 'visible');
-                MG_GAME_ONEUP.nodeInit();
+                if(typeof(MG_GAME_ONEUP.socketReconnect) === "function"){
+                    MG_GAME_ONEUP.isDisconnected=false;
+                    MG_GAME_ONEUP.socketReconnect();
+                }else{
+                    MG_GAME_ONEUP.nodeInit();
+                }
                 $("#header .setting").show();
                 // Called just after sharedSecret is triggered
                 ///api/multiplayer/register/gid/OneUp/
@@ -1341,26 +1347,33 @@ MG_GAME_ONEUP = function ($) {
                         socket.packet({ type:'disconnect' });
                         socket.$emit('disconnect');
                     }
-
-                    socket = {};
-                    delete io.sockets[MG_INIT.nodeJSUrl];
-                    io.j = [];
+                    //socket = {};
+                    //delete io.sockets[MG_INIT.nodeJSUrl];
+                    //io.j = [];
                 }
             };
+
+            MG_GAME_ONEUP.socketReconnect = function () {
+                if (typeof socket !== 'undefined') {
+                    socket.socket.reconnect();
+                }
+            };
+
+
 
             socket.on('reconnect', function () {
                 console_log('Reconnected to the server');
                 socket.emit('register', MG_API.settings.shared_secret, MG_GAME_API.settings.gid);
-                if(this.isDisconnected){
+                if(MG_GAME_ONEUP.isDisconnected){
                     MG_API.ajaxCall('/multiplayer/register/gid/' + MG_GAME_API.settings.gid, function (response) {
                         MG_GAME_ONEUP.user = response.user;
                     });
-                    this.isDisconnected = false;
+                    MG_GAME_ONEUP.isDisconnected = false;
                 }
             });
 
             socket.on('disconnect', function () {
-                this.isDisconnected = true;
+                MG_GAME_ONEUP.isDisconnected = true;
                 console_log('DISCONNECT is fired!!! ');
             });
 
