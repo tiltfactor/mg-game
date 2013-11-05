@@ -1,0 +1,355 @@
+Metadata Games - Multiplayer API Documentation
+===========================
+
+Last modified: 06/11/2013
+
+Introduction
+------------
+
+The following document explains how to use the Metadata Games API for multiplayer games.
+The API has been developped to allow the implementation of HTML(5), CSS, and JavaScript 
+based games that will make use of the MG platform to facilitate the research 
+in new ways of gathering keyword/tag information for large amount of images.
+
+This document will explain all implemented API callbacks to support your
+endevour in coding new or ammending existing games
+
+API
+---
+
+As the whole system the API is implemented making use of the Yii framework. 
+The API is a module that implements its functionality via controller and 
+their actions. 
+
+*To construct the url calling the API user http://(MG ROOT URL)/api/...*
+
+While the current state of the API is implemented within two controller 
+(User & Games) it will be here presented as one. You'll be able to distinguish
+the controller by looking at the API callback URL.
+
+API SECURITY / USED FILTER
+--------------------------
+
+To increase security the API makes use of several techniques and Yii action 
+filter to enforce them and other. If you like to extend the API you will have
+to make sure to set the needed filter or ammend the existing controller's filter
+rules.
+
+The API makes returns valid JSON and expects you to make all request via the 
+browsers 'XMLHttpRequest' objects. E.g. with jQuery's $.ajax(...) calls. The
+system checks the reqest if a HTTP header entry named *HTTP_X_REQUESTED_WITH*
+exists and is set to *XMLHttpRequest*.
+
+To increase security and make spoofing more complex the API expects you to 
+retrieve a shared secret by sending a GET request to 
+http://(MG ROOT URL)/api/user/SharedSecret and to sign all further request 
+with the retrieved icon by adding a further header to your request. This header
+should be called *HTTP_X_REQUESTED_WITH* and have the shared secret as a
+value. 
+
+*To simplify development we have developped a JavaScript API that offers many 
+features and automatically attempts to retrieve the needed shared secret and 
+signs the AJAX request with the needed headers. You can find the needed files
+in /www/js/. Best to extend the base class that can be found in mg.api.js.*
+
+*FILTER*
+
+The API implementation makes use of the following filter:
+
+- **throttle** making sure that the API can only be called in certain intervals. 
+    Throwing 420 HTTP error if the client calls to fast (the sharedsecret call is 
+    not throttled)'.
+    
+    HTTP STATUS ON FILTER TRIGGERED: 420
+      
+- **IPBlock** all API calls can be blocked for certain IP addresses by making use 
+    of MG's IP block functionality.
+    
+    HTTP STATUS ON FILTER TRIGGERED: 403
+    
+- **APIAjaxOnly** all API request have to come as JavaScript GET or POST ajax request
+    
+    The filter will not throw an exception but redirect all non ajax traffic to the API
+    modules default controller. Showing a short message that the API can only be consumed
+    via AJAX requests
+    
+- **accessControl** some API callbacks might be using the Yii access control filter.
+
+    HTTP STATUS ON FILTER TRIGGERED: 403
+    
+- **sharedSecret** as already mentioned with exclusion of the index and sharesecret 
+    callbacks all requests have to be signed with an shared secret HTTP header
+    
+    HTTP STATUS ON FILTER TRIGGERED: 420
+
+MULTIPLAYER API SPECIFICATION 
+-----------------
+
+The following listing describes all implemented callback functions. And their 
+behaviour in HTTP GET and/or POST requests. The development of the API aimed
+to make the use of MG independent to the implementation of the arcade.
+
+In general each API callback responses in JSON or throws exceptions coded with 
+HTTP STATUSES. Each JSON respons includes a status field that can either be 'ok' 
+or 'error'. In case of 'error' an additional field 'errors' might give more detailed
+error information.
+
+### */api/user/SharedSecret*
+
+Returns a shared secret for the user that will be saved in the session. Each further 
+request has to be signed with this shared secret. This should happen by setting the 
+custom header *HTTP_X_MG_API_SHARED_SECRET* with the retrieved value
+
+HTTP METHOD: GET
+
+JSON:
+<pre> 
+  {
+    "status":"ok",
+    "shared_secret":"MG_API4f4fabdb05820p6tfh"
+  }
+</pre>
+   
+    
+### */api/multiplayer/register/gid/(GAME NAME)/
+
+Register a player to the game. You have to call this api action when you received the shared secret.
+String JSON response with game and user info message on success will be send;
+   
+HTTP METHOD: GET
+
+JSON: 
+{"game":{"uniqueId":"OneUp",
+	"name":"OneUp",
+	"description":"Clear your mind and you will hear the voice of the serene tagger within you. Ohm.",
+	"moreInfoUrl":null,
+	"baseUrl":"http:\/\/localhost",
+	"gameBaseUrl":"\/mggameserver\/index.php\/games\/OneUp",
+	"apiBaseUrl":"http:\/\/localhost\/mggameserver\/index.php\/api",
+	"gameImageUrl":"\/mggameserver\/assets\/c8deb5bc\/oneup\/images\/zenpond_arcade.png","turns":3},
+"user":{"id":1,
+	"username":"admin",
+	"scores":"83",
+	"numberPlayed":"9",
+	"playedGameId":null}}
+ 
+ 
+### */api/multiplayer/submit/gid/(GAME NAME)/playedGameId/(played game id)/
+
+Submit game tags.Tags should be send as POST parameter tags. Sent tags should be json encode of GameTagDTO[].
+Response sent is json encode of GameTagDTO[];
+
+GameTagDTO:
+[{"tag": "test", 
+   "original":null,
+   "score":null,
+   "weight":null,
+   "mediaId":"19",
+   "type":null,
+   "tag_id":null}]
+
+HTTP METHOD: POST
+
+JSON:
+[{"tag":"test",
+   "original":null,
+   "score":1,
+   "weight":1,
+   "mediaId":"19",
+   "type":"new",
+   "tag_id":null}]
+ 
+
+### */api/multiplayer/challenge/gid/(GAME NAME)/username/(player username)/	
+Challenge game player by username or select one random.
+Response sent is json encode of GameUserDTO
+
+HTTP METHOD: GET
+
+JSON:
+{"id":"3",
+ "username":"player",
+ "scores":null,
+ "numberPlayed":null,
+ "playedGameId":null}
+
+### */api/multiplayer/acceptChallenge/gid/(GAME NAME)/opponentId/(player opponent id)/	
+Accept challenge and start the game.
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok",
+ "playedGameID":127,
+}
+
+### */api/multiplayer/rejectChallenge/gid/(GAME NAME)/fromUserId/(player id)/toUserId/(player id)/	
+Reject player challenge.
+fromUserId is the user id who sent the challenge
+toUserId is the user id who has been challenged
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+
+### */api/multiplayer/getChallenges/gid/(GAME NAME)/	
+Get player's requested challenges.
+Response sent is json encode of GameChallengesDTO
+
+HTTP METHOD: GET
+
+JSON:
+GameChallengesDTO
+{"sent":[{"id":"3",
+          "username":"player",
+	  "scores":null,
+	  "numberPlayed":null,
+	  "playedGameId":null}],
+ "received":[]}
+
+### */api/multiplayer/getOfflineGames/gid/(GAME NAME)/	
+Get all not finished offline games
+Response sent is json encode of GameOfflineDTO[]
+
+HTTP METHOD: GET
+
+JSON:
+GameOfflineDTO
+[{"playedGameId":"30","opponentId":"3","opponentName":"player","turnUserId":"1"}]
+
+### */api/multiplayer/GetOfflineGameState/gid/(GAME NAME)/playedGameId/(played game id)/	
+Get current game state
+Response sent is json encode of GameStateDTO
+
+HTTP METHOD: GET
+
+JSON:
+GameStateDTO
+{"turns":[{"turn":1,
+	   "score":"2",
+	   "opponentScore":"3",
+	   "tags":[{"tag":"asdasd","original":null,"score":1,"weight":1,"mediaId":"19","type":"new","tag_id":null},
+		   {"tag":"test","original":null,"score":1,"weight":1,"mediaId":"19","type":"new","tag_id":null}],
+           "opponentTags":[{"tag":"asdsd","original":null,"score":1,"weight":1,"mediaId":"19","type":"new","tag_id":null},
+			   {"tag":"asd","original":null,"score":1,"weight":1,"mediaId":"19","type":"new","tag_id":null},
+			   {"tag":"csdc","original":null,"score":1,"weight":1,"mediaId":"19","type":"new","tag_id":null}],
+           "media":[{"id":"19",
+	             "mimeType":"image\/jpeg",
+		     "imageFullSize":"http:\/\/192.168.128.210\/mgc\/\/uploads\/images\/blended-margarita-cocktail-drink_w544_h725.jpg",
+		     "imageScaled":"http:\/\/192.168.128.210\/mgc\/index.php\/image\/scale\/token\/ad668bda91d95001eb3ce280b340f778\/name\/blended-margarita-cocktail-drink_w544_h725.jpg\/width\/450\/height\/450\/",
+		     "thumbnail":"http:\/\/192.168.128.210\/mgc\/\/uploads\/thumbs\/blended-margarita-cocktail-drink_w544_h725.jpg",
+		     "videoWebm":null,
+		     "videoMp4":null,
+		     "audioMp3":null,
+		     "audioOgg":null,
+		     "licence":{"id":"1","name":"Default Licence","description":"This is the default licence. The medias used are not licenced"},
+		     "collection":"MGC1","institution":"MGC1","instWebsite":"http:\/\/www.loyax.com"}],
+		     "wordsToAvoid":[]}],"finished":false}
+
+### */api/multiplayer/getBookmarks/gid/(GAME NAME)/	
+Get bookmarked media files of the user. At the end of each game user can bookmark game's media file
+Response sent is json encode of GameMediaDTO[]
+
+HTTP METHOD: GET
+
+JSON:
+GameMediaDTO
+[{"id":"5",
+  "mimeType":"image\/jpeg",
+  "imageFullSize":"http:\/\/192.168.128.210\/mgc\/\/uploads\/images\/badger-animal-meles-meles_w725_h507.jpg",
+  "imageScaled":null,"thumbnail":"http:\/\/192.168.128.210\/mgc\/\/uploads\/thumbs\/badger-animal-meles-meles_w725_h507.jpg",
+  "videoWebm":null,
+  "videoMp4":null,
+  "audioMp3":null,
+  "audioOgg":null,
+  "licence":null,"collection":null,"institution":null,"instWebsite":null}]
+
+
+### */api/multiplayer/bookmark/gid/(GAME NAME)/mediaId/(media id)/playedId/(played game id)/
+Bookmark media file at the end of the game.
+string JSON response with status message on success will be send
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+### */api/multiplayer/getInterests/gid/(GAME NAME)/
+Get user's interests
+Response sent is json encode of GameInterestDTO[]
+
+HTTP METHOD: GET
+
+JSON:
+[{"id":"3","interest":"cats","created":"2013-11-05 18:57:05"}]
+
+### */api/multiplayer/addInterest/gid/(GAME NAME)/interest/(player interest)/
+Get user's interests
+string JSON response with status message on success will be send
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+### */api/multiplayer/removeInterest/gid/(GAME NAME)/id/(interest id)/
+Remove user interests
+string JSON response with status message on success will be send
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+
+### */api/multiplayer/getInstitutions/gid/(GAME NAME)/
+Get all active institutions
+Response sent is json encode of GameUserInstitutionDTO[]
+
+HTTP METHOD: GET
+
+JSON:
+[{"id":"1",
+  "name":"MGC1",
+  "description":"Test",
+  "logo":"http:\/\/localhost\/mgc\/uploads\/images\/0029.jpg",
+  "website":"http:\/\/www.loyax.com","isBanned":false}]
+
+
+### */api/multiplayer/banInstitution/gid/(GAME NAME)/id/(institution id)/
+User ban an institution
+string JSON response with status message on success will be send
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+### */api/multiplayer/unbanInstitution/gid/(GAME NAME)/id/(institution id)/
+User unban institution
+string JSON response with status message on success will be send
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+### */api/multiplayer/endGame/gid/(GAME NAME)/playedGameId/(played game id)/
+User end current game 
+string JSON response with status message on success will be send
+
+HTTP METHOD: GET
+
+JSON:
+{"status":"ok"}
+
+### */api/multiplayer/getEndedGames/gid/(GAME NAME)/
+Get ended games for which user is not notified
+Response sent is json encode of GameOfflineDTO[]
+
+HTTP METHOD: GET
+
+JSON:
+[{"playedGameId":"30","opponentId":"3","opponentName":"player","turnUserId":"1"}]
