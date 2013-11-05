@@ -571,7 +571,8 @@ function onResize () {
 */
 
     //$("#content header div").centerHorizontal();
-    $("#content header div").css("width", parseInt($("#input_area").css("width"), 10) + parseInt($("#countdown").css("width") +15, 10));
+    $("#content header div").css({"width": parseInt($("#input_area").css("width"), 10) + parseInt($("#countdown").outerWidth(), 10) + 30});
+    //$("#content header div input").css("border", '1px solid pink');
     $("nav .mm-inner").css('width', $(window).width());
 }
 

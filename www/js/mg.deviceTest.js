@@ -35,34 +35,31 @@ if (Modernizr.retina_resolution) {
 
 device_ratio = ratio;
 
-if ( $.browser.webkit ) {
-    var width = window.innerWidth;
-    if (width < screen.width) {
-        width = screen.width;
+    if ( $.browser.webkit ) {
+        var width = window.innerWidth;
+        if (width < screen.width) {
+            width = screen.width;
+        }
+
+        // fix for Iphone app
+        var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
+        var mw = parseInt($(window).width(), 10) * parseInt(window.devicePixelRatio, 10); // min width of site
+
+        //var ratio =  1 / parseInt(window.devicePixelRatio, 10); //ww / ww*window.devicePixelRatio; //calculate ratio
+        if(device_ratio === 0.5){ //smaller than minimum size
+            $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww*multiply_width);
+            $("body").css('width', width + 'px');
+        } else{ //regular size
+            $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=1, minimum-scale=1.0, user-scalable=no, width=' + screen.width / 2);
+            $("body").css('width', screen.width + 'px');
+        }
     }
 
-    // fix for Iphone app
-    var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
-    var mw = parseInt($(window).width(), 10) * parseInt(window.devicePixelRatio, 10); // min width of site
-
-    //var ratio =  1 / parseInt(window.devicePixelRatio, 10); //ww / ww*window.devicePixelRatio; //calculate ratio
-    if( ww < mw || device_ratio === 0.5){ //smaller than minimum size
-        $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=yes, width=' + ww*multiply_width);
-    } else{ //regular size
-        $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=2, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+    if(/Android|webOS/i.test(navigator.userAgent) && !/Nexus/i.test(navigator.userAgent) ) {
+        var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
+        //var ratio =  1 / parseInt(window.devicePixelRatio, 10);
+        $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=1, user-scalable=yes, width=' + ww);
     }
-    $("body").css('width', width + 'px');
-}
-
-if(/Android|webOS/i.test(navigator.userAgent) && !/Nexus/i.test(navigator.userAgent) ) {
-    var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width
-    //var ratio =  1 / parseInt(window.devicePixelRatio, 10);
-    $('#Viewport').attr('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=1, user-scalable=yes, width=' + ww);
-}
-
-$(window).resize(function() {
-
-});
 
 /*if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
  var ww = ( $(window).width() < window.screen.width ) ? $(window).width() : window.screen.width; //get proper width

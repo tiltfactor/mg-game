@@ -43,6 +43,21 @@ function Sound(source) {
 
 Sound.prototype.play = function (source) {
     if (!usingWebAudio) {
+        playThis ();
+    } else {
+        if (this.isLoaded === true) {
+            var playSound = audioContext.createBufferSource();
+            playSound.buffer = this.buffer;
+            playSound.connect(audioContext.destination);
+            if (typeof playSound.noteOn === 'function') {
+                playSound.noteOn(0 + 0.1);
+            } else {
+                playThis ();
+            }
+        }
+    }
+
+    function playThis () {
         var sound_info = {};
         sound_info.ogg_path = source.substr(0, source.length-3) + 'ogg'; //game_assets_uri + 'audio/sound' + num_sound + '.ogg';
         sound_info.mp3_path = source;
@@ -50,12 +65,5 @@ Sound.prototype.play = function (source) {
         $("#template-make-sound").tmpl(sound_info).appendTo($("body")).after(function () {
             $('#make_sound')[0].play();
         });
-    } else {
-        if (this.isLoaded === true) {
-            var playSound = audioContext.createBufferSource();
-            playSound.buffer = this.buffer;
-            playSound.connect(audioContext.destination);
-            playSound.noteOn(0 + 0.1);
-        }
     }
 }
