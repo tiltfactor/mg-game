@@ -13,8 +13,8 @@
   only screen and (               min-resolution: 2dppx),
   only screen and (         min-device-pixel-ratio: 1.5) and (pointer:coarse),
   only screen and (              min-resolution: 1.5dppx) and (orientation: portrait),
-  only screen and (-webkit-min-device-pixel-ratio : 1) and (min-width: 740px) and (orientation: portrait),
-  only screen and (-webkit-min-device-pixel-ratio : 1) and (min-width: 1000px) and (orientation: landscape) {
+  only screen and (-webkit-min-device-pixel-ratio : 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait),
+  only screen and (-webkit-min-device-pixel-ratio : 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
     // last 2 lines emulate retina images on ipads with non-retina display
     background-image: url(@at2x_path);
     //background-size: @w @h;

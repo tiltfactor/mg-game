@@ -163,7 +163,7 @@ input.add_word::-ms-input-placeholder {
   width: 35px;
   height: 22px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   #header .setting {
     background-image: url('../images/settings@2x.png');
     background-repeat: 'no-repeat';
@@ -313,7 +313,7 @@ html.mm-right.mm-opening #mm-blocker {
   padding-right: 10px;
   cursor: pointer;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   #content .delete {
     background-image: url('../images/delete@2x.png');
     background-repeat: 'no-repeat';
@@ -377,7 +377,7 @@ body .back_yellow {
   background-repeat: repeat-x;
   color: #341d33 !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .back_yellow {
     background-image: url('../images/back_yellow@2x.png');
     background-repeat: 'repeat-x';
@@ -404,7 +404,7 @@ body .blank_bar {
   background-repeat: repeat-x;
   color: #341d33 !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .back_gray,
   body .blank_bar {
     background-image: url('../images/back_gray@2x.png');
@@ -434,7 +434,7 @@ body .back_dark_gray {
   background-repeat: repeat-x;
   color: white !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .back_dark_gray {
     background-image: url('../images/back_dark_gray@2x.png');
     background-repeat: 'repeat-x';
@@ -458,7 +458,7 @@ body .upped_bar {
   color: white !important;
   cursor: pointer;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .upped_bar {
     background-image: url('../images/back_upped_bar@2x.png');
     background-repeat: 'repeat-x';
@@ -475,7 +475,7 @@ body .bonus_bar {
   background-repeat: repeat-x;
   color: white !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .bonus_bar {
     background-image: url('../images/back_bonus_bar@2x.png');
     background-repeat: 'repeat-x';
@@ -493,7 +493,7 @@ body .standard_bar {
   background-repeat: repeat-x;
   color: white !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .back_black,
   body .standard_bar {
     background-image: url('../images/back_black@2x.png');
@@ -517,7 +517,7 @@ body .up_bar {
   background-repeat: repeat-x;
   color: white !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .up_bar {
     background-image: url('../images/back_blue@2x.png');
     background-repeat: 'repeat-x';
@@ -566,7 +566,7 @@ body .main_gray {
   text-align: center;
   padding: 10px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .main_gray {
     background-image: url('../images/pattern@2x.gif');
     background-repeat: repeat;
@@ -584,7 +584,7 @@ body .up_bar {
   background-repeat: repeat-x;
   color: white !important;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .back_blue,
   body .up_bar {
     background-image: url('../images/back_blue@2x.png');
@@ -607,7 +607,7 @@ body .mm-is-menu {
   height: 100%;
   width: 100%;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body .mm-is-menu {
     background-image: url('../images/all_blue@2x.png');
     background-repeat: repeat;
