@@ -2,7 +2,7 @@ $(window).resize(function() {
     onResize ();
 });
 $( document ).ready(function() {
-    onResize();
+    //onResize();
     $("#footer").hide();
     $(".hover_btn").hover(
         function () {

@@ -7,8 +7,11 @@
  // low resolution device
  }
  */
-Modernizr.addTest('retina_resolution', function() {
+var ratio,
+    multiply_width,
+    device;
 
+Modernizr.addTest('retina_resolution', function() {
     try {
         if (window.devicePixelRatio > 1.25) {
             return true;
@@ -21,9 +24,6 @@ Modernizr.addTest('retina_resolution', function() {
 /**
  * Required modernizr lib
  */
-
-var ratio,
-    multiply_width;
 
 if (Modernizr.retina_resolution) {
     ratio = 0.5;
@@ -73,6 +73,43 @@ device_ratio = ratio;
  }*/
 
 $( document ).ready(function() {
+
+    Modernizr.addTest('device_test', function() {
+        // Target ipads as retina displays
+        var screenPPI = $('#ppitest').outerWidth();
+
+        if (BrowserDetect.browser === 'Other') {
+            device = "application ";
+        } else {
+            device = "browser ";
+        }
+        if (screenPPI === 96 && ((screen.availWidth == '748' && screen.availHeight == '1024') || (screen.availHeight == '748' && screen.availWidth == '1024'))) {
+            // Target Ipad applications
+            device = device + "ipad";
+            return true;
+        } else if (screenPPI === 96 && ((screen.availWidth == '1004' && screen.availHeight == '768') || (screen.availHeight == '1004' && screen.availWidth == '768'))) {
+            //Ipad 3rd generation && Ipad 4th generation && ipad air
+            // target ipad mini 1st generation app
+            //2048 × 1536 px color IPS LCD display at (264 ppi)
+            device = device + "ipad";
+            return true;
+        } else if (screenPPI === 96 && ((screen.availWidth == '1024' && screen.availHeight == '768') || (screen.availHeight == '1024' && screen.availWidth == '768'))) {
+        //Ipad 3rd generation && Ipad 4th generation && ipad air
+        // target ipad mini 1st generation app
+        //2048 × 1536 px color IPS LCD display at (264 ppi)
+        // Ipad ios7 app
+        device = device + "ipad";
+        return true;
+        }
+    });
+
+    if (Modernizr.device_test) {
+        // device is recognized and we want to fake as non-retina display
+        $("body").addClass(device);
+        $('#Viewport').attr('content', 'initial-scale=1.0, maximum-scale=1, minimum-scale=1.0, user-scalable=no, width=' + screen.availWidth);
+        $("body").css('width', 'auto');
+    }
+
     if (Modernizr.touch_device) {
         $("body").addClass('touch_device');
         is_touch_device = true;
@@ -80,8 +117,7 @@ $( document ).ready(function() {
         $("body").addClass('no-touch_device');
         is_touch_device = false;
     }
-
-    if (Modernizr.retina_resolution) {
+    if (Modernizr.retina_resolution || $("body").hasClass('ipad')) {
         $("body").addClass('retina');
     } else {
         $("body").addClass('no-retina');

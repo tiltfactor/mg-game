@@ -394,6 +394,9 @@ MG_GAME_ONEUP = function ($) {
 
                         var tag_count = json.num_words;
                         $("#template-game_screen").tmpl(json).appendTo($("#game_screen")).after(function () {
+                            if ($("#game_screen .words .blank_bar").length === 0) {
+                                $("#game_screen .round").attr('status', 'waiting').html('WAITING ...');
+                            }
                             $("#game_image").css({'height':'auto', 'max-width':$(window).width() - 25});
                             $("#game_screen .blank_bar").each(function () {
                                 $(this).off('click').on('click', function () {
@@ -431,7 +434,9 @@ MG_GAME_ONEUP = function ($) {
                                                         position:"tops-center",
                                                         type:"notice",
                                                         background:"white",
-                                                        color:"black"
+                                                        color:"black",
+                                                        stayTime:MG_GAME_ONEUP.toastStayTime,
+                                                        addClass:MG_GAME_ONEUP.toastBackgroundClass
                                                     });
                                                     //MG_GAME_ONEUP.oneup_show_curtain();
                                                 }
@@ -820,7 +825,6 @@ MG_GAME_ONEUP = function ($) {
                         console_log('touch device');
                         Hammer(swipe_img).off('swipe').on("swipe", function (e) {
                             e.stopPropagation();
-                            console.log(e.gesture.direction);
                             if (e.gesture.direction === 'left') {
                                 next_iter = my_iter + 1;
                                 if (next_iter === numb_img) {
@@ -1344,7 +1348,7 @@ MG_GAME_ONEUP = function ($) {
                     if (!$.browser.webkit) {
                         socket.disconnect();
                     } else {
-                        socket.packet({ type:'disconnect' });
+                        //socket.packet({ type:'disconnect' });
                         socket.$emit('disconnect');
                     }
                     //socket = {};
@@ -1675,7 +1679,7 @@ function calculatedRow(tag, score, opponent_name, tag_type) {
         html_class = 'upped_bar';
         new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
     } else if (parseInt(score, 10) === 2) {
-        html_class = 'bonus_bar';
+        html_class = 'up_bar';
         new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
     } else if (parseInt(score, 10) >= 3) {
         html_class = 'bonus_bar';

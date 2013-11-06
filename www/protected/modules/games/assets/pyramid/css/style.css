@@ -24,7 +24,7 @@ body {
   background-repeat: repeat;
   width: 100%;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body {
     background-image: url('../images/pyramid-background@2x.jpg');
     background-repeat: repeat;
@@ -64,7 +64,7 @@ body .delete {
   padding-right: 10px;
   cursor: pointer;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .delete {
     background-image: url('../images/delete@2x.png');
     background-repeat: repeat;
@@ -302,7 +302,7 @@ body #content footer.footer_level_1 {
   background-image: url('../images/level_1.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_1 {
     background-image: url('../images/level_1@2x.png');
     background-repeat: repeat;
@@ -315,7 +315,7 @@ body #content footer.footer_level_2 {
   background-image: url('../images/level_2.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_2 {
     background-image: url('../images/level_2@2x.png');
     background-repeat: repeat;
@@ -328,7 +328,7 @@ body #content footer.footer_level_3 {
   background-image: url('../images/level_3.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_3 {
     background-image: url('../images/level_3@2x.png');
     background-repeat: repeat;
@@ -341,7 +341,7 @@ body #content footer.footer_level_4 {
   background-image: url('../images/level_4.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_4 {
     background-image: url('../images/level_4@2x.png');
     background-repeat: repeat;
@@ -354,7 +354,7 @@ body #content footer.footer_level_5 {
   background-image: url('../images/level_5.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_5 {
     background-image: url('../images/level_5@2x.png');
     background-repeat: repeat;
@@ -367,7 +367,7 @@ body #content footer.footer_level_6 {
   background-image: url('../images/level_6.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_6 {
     background-image: url('../images/level_6@2x.png');
     background-repeat: repeat;
@@ -380,7 +380,7 @@ body #content footer.footer_level_7 {
   background-image: url('../images/level_7.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_7 {
     background-image: url('../images/level_7@2x.png');
     background-repeat: repeat;
@@ -393,7 +393,7 @@ body #content footer.footer_level_8 {
   background-image: url('../images/level_8.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_8 {
     background-image: url('../images/level_8@2x.png');
     background-repeat: repeat;
@@ -406,7 +406,7 @@ body #content footer.footer_level_9 {
   background-image: url('../images/level_9.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body #content footer.footer_level_9 {
     background-image: url('../images/level_9@2x.png');
     background-repeat: repeat;
@@ -437,7 +437,7 @@ body .pyramid.word_level_1 {
   height: 71px;
   line-height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_1 {
     background-image: url('../images/pyramid_1@2x.png');
     background-repeat: repeat;
@@ -452,7 +452,7 @@ body .pyramid.word_level_2 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_2 {
     background-image: url('../images/pyramid_2@2x.png');
     background-repeat: repeat;
@@ -467,7 +467,7 @@ body .pyramid.word_level_3 {
   line-height: 36px;
   height: 36px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_3 {
     background-image: url('../images/pyramid_3@2x.png');
     background-repeat: repeat;
@@ -482,7 +482,7 @@ body .pyramid.word_level_4 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_4 {
     background-image: url('../images/pyramid_4@2x.png');
     background-repeat: repeat;
@@ -497,7 +497,7 @@ body .pyramid.word_level_5 {
   line-height: 34px;
   height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_5 {
     background-image: url('../images/pyramid_5@2x.png');
     background-repeat: repeat;
@@ -512,7 +512,7 @@ body .pyramid.word_level_6 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_6 {
     background-image: url('../images/pyramid_6@2x.png');
     background-repeat: repeat;
@@ -527,7 +527,7 @@ body .pyramid.word_level_7 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_7 {
     background-image: url('../images/pyramid_7@2x.png');
     background-repeat: repeat;
@@ -542,7 +542,7 @@ body .pyramid.word_level_8 {
   line-height: 34px;
   height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_8 {
     background-image: url('../images/pyramid_8@2x.png');
     background-repeat: repeat;
@@ -557,7 +557,7 @@ body .pyramid.word_level_9 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.word_level_9 {
     background-image: url('../images/pyramid_9@2x.png');
     background-repeat: repeat;
@@ -572,7 +572,7 @@ body .pyramid.level_1 {
   height: 72px;
   line-height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_1 {
     background-image: url('../images/pyramid_1@2x.png');
     background-repeat: repeat;
@@ -587,7 +587,7 @@ body .pyramid.level_2 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_2 {
     background-image: url('../images/pyramid_NA_2@2x.png');
     background-repeat: repeat;
@@ -602,7 +602,7 @@ body .pyramid.level_3 {
   line-height: 36px;
   height: 36px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_3 {
     background-image: url('../images/pyramid_NA_3@2x.png');
     background-repeat: repeat;
@@ -617,7 +617,7 @@ body .pyramid.level_4 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_4 {
     background-image: url('../images/pyramid_NA_4@2x.png');
     background-repeat: repeat;
@@ -632,7 +632,7 @@ body .pyramid.level_5 {
   line-height: 34px;
   height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_5 {
     background-image: url('../images/pyramid_NA_5@2x.png');
     background-repeat: repeat;
@@ -647,7 +647,7 @@ body .pyramid.level_6 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_6 {
     background-image: url('../images/pyramid_NA_6@2x.png');
     background-repeat: repeat;
@@ -662,7 +662,7 @@ body .pyramid.level_7 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_7 {
     background-image: url('../images/pyramid_NA_7@2x.png');
     background-repeat: repeat;
@@ -677,7 +677,7 @@ body .pyramid.level_8 {
   line-height: 34px;
   height: 34px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_8 {
     background-image: url('../images/pyramid_NA_8@2x.png');
     background-repeat: repeat;
@@ -692,7 +692,7 @@ body .pyramid.level_9 {
   line-height: 35px;
   height: 35px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   body .pyramid.level_9 {
     background-image: url('../images/pyramid_NA_9@2x.png');
     background-repeat: repeat;
@@ -724,7 +724,7 @@ body .header_mm_left {
   width: 35px;
   height: 22px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   #header .setting {
     background-image: url('../images/settings@2x.png');
     background-repeat: repeat;
@@ -828,7 +828,7 @@ input#word.level_1 {
   background-image: url('../images/underscore_1.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_1 {
     background-image: url('../images/underscore_1@2x.png');
     background-repeat: no-repeat;
@@ -841,7 +841,7 @@ input#word.level_2 {
   background-image: url('../images/underscore_2.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_2 {
     background-image: url('../images/underscore_2@2x.png');
     background-repeat: no-repeat;
@@ -854,7 +854,7 @@ input#word.level_3 {
   background-image: url('../images/underscore_3.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_3 {
     background-image: url('../images/underscore_3@2x.png');
     background-repeat: no-repeat;
@@ -867,7 +867,7 @@ input#word.level_4 {
   background-image: url('../images/underscore_4.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_4 {
     background-image: url('../images/underscore_4@2x.png');
     background-repeat: no-repeat;
@@ -880,7 +880,7 @@ input#word.level_5 {
   background-image: url('../images/underscore_5.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_5 {
     background-image: url('../images/underscore_5@2x.png');
     background-repeat: no-repeat;
@@ -893,7 +893,7 @@ input#word.level_6 {
   background-image: url('../images/underscore_6.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_6 {
     background-image: url('../images/underscore_6@2x.png');
     background-repeat: no-repeat;
@@ -906,7 +906,7 @@ input#word.level_7 {
   background-image: url('../images/underscore_7.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_7 {
     background-image: url('../images/underscore_7@2x.png');
     background-repeat: no-repeat;
@@ -919,7 +919,7 @@ input#word.level_8 {
   background-image: url('../images/underscore_8.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_8 {
     background-image: url('../images/underscore_8@2x.png');
     background-repeat: no-repeat;
@@ -932,7 +932,7 @@ input#word.level_9 {
   background-image: url('../images/underscore_9.png');
   background-repeat: no-repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   input#word.level_9 {
     background-image: url('../images/underscore_9@2x.png');
     background-repeat: no-repeat;
@@ -1091,7 +1091,7 @@ span:hover.button {
   height: 80px;
   margin-left: 0px;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   .new_game {
     background-image: url('../images/new_game@2x.png');
     background-repeat: repeat;
@@ -1105,7 +1105,7 @@ span:hover.button {
   background-image: url('../images/new_game_on.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   .new_game:hover,
   .new_game:focus {
     background-image: url('../images/new_game_on@2x.png');
@@ -1119,7 +1119,7 @@ span:hover.button {
   background-image: url('../images/new_game_on.png');
   background-repeat: repeat;
 }
-@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
+@media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 740px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (min-width: 1000px) and (orientation: landscape) {
   .new_game:active {
     background-image: url('../images/new_game_on@2x.png');
     background-repeat: repeat;

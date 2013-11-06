@@ -14,6 +14,7 @@
 </head>
 
 <body>
+<div id="ppitest" style="width:1in;height:0px;padding:0px"></div>
 
 <?php echo $content; ?>
 

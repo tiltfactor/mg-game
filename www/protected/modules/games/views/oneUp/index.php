@@ -231,7 +231,7 @@
     <br/>
     <br/>
 
-    <div class="group" style="max-height:250px;">
+    <div class="group" style="min-height:200px;">
         <div class="bookmark_img">
             <div class="left" style="padding: 0 10px 10px 10px;"><img src="${media.imageScaled}" class="left" style="max-width:250px;" id="mediaImg"/></div>
             <div style="color:#9FA1A4;">This image provided by ${media.collection} at ${media.institution}</div>
