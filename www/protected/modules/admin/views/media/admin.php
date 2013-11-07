@@ -39,7 +39,7 @@ $tagDialog = $this->widget('MGTagJuiDialog');
 $max_toptags = 15;
 
 function generateImage($data) {
-    $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url,$data->mime_type,$data->name),$data->name) . " <span>" . $data->name . "</span>";
+    $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url,$data->mime_type,$data->name),$data->name,array('height'=>60)) . " <span>" . $data->name . "</span>";
     return $media;
 }
 
