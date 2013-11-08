@@ -56,8 +56,10 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
 
 //    foreach ($game && $game->request->submissions as $submission) {
     foreach ($game->request->submissions as $submission) {
+    
       if (!$game->played_against_computer && $submission['mode'] == 'describe') { 
         // the user has described an image this turn and becomes thus poins for new tags
+        
         foreach ($tags as $image_id => $image_tags) {
           foreach ($image_tags as $tag => $tag_info) {
             if ($tag_info["weight"] > 0) {
@@ -77,7 +79,15 @@ class GuessWhatScoringPlugin extends MGWeightingPlugin  {
         }  
       }
       
-      if (is_array($submission["guesses"]) && count($submission["guesses"]) && in_array($submission["image_id"], $submission["guesses"])) {
+      //Jack Guan: modify $submission["image_id"] to $submission["media_id"], 2013-11-08
+      if (is_array($submission["guesses"]) && count($submission["guesses"]) && in_array($submission["media_id"], $submission["guesses"])) {
+      
+        $file = fopen("scoring-plugin.txt","a");
+        fwrite($file,"monitoring good guess.\nscore_first_guess: ".
+            (int)$model->score_first_guess.
+            "\n");
+        fclose($file);
+      
         switch (count($submission["guesses"])) {
           case 1: // image guessed on first try
             $score += (int)$model->score_first_guess;
