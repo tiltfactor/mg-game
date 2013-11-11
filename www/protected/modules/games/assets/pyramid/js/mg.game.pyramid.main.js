@@ -96,12 +96,44 @@ var actions = function (action, click_parent) {
             });
             break;
         case 'register':
-            MG_API.ajaxCall('/user/sharedsecret', function (response) {
-                if(response.status === 'ok') {
-                    MG_API.settings.shared_secret = response.shared_secret;
-                }
-                else {
-                    throw "MG_API.init() can't retrieve shared secret";
+            $('#register #btn_register').off('click').on('click', function (e) {
+                e.preventDefault();
+                if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val() < 6 && $("#register #email").val().length < 5) {
+                    $().toastmessage("showToast", {
+                        text:'All fields are required.',
+                        position:"tops-center",
+                        type:"notice",
+                        background:"white",
+                        color:"black",
+                        stayTime:MG_GAME_PYRAMID.toastStayTime,
+                        addClass:MG_GAME_PYRAMID.toastBackgroundClass
+                    });
+                } else {
+                    MG_API.ajaxCall('/user/register', function (response) { // we dont have that action
+                        if (response.status === 'ok') {
+                            MG_PYRAMID.isLogged = true;
+                            MG_PYRAMID.username = $("#register #username").val();
+                            MG_PYRAMID.email = $("#register #email").val();
+                            $("#menu-right a[location='main_screen']").click();
+                        }
+                        $().toastmessage("showToast", {
+                            text:response.responseText,
+                            position:"tops-center",
+                            type:"notice",
+                            background:"white",
+                            color:"black",
+                            stayTime:MG_GAME_PYRAMID.toastStayTime,
+                            addClass:MG_GAME_PYRAMID.toastBackgroundClass
+                        });
+                    }, {
+                        type:'post',
+                        data:{
+                            password:$("#register #password").val(),
+                            username:$("#register #username").val(),
+                            email:$("#register #email").val(),
+                            verifyPassword:$("#register #verifyPassword").val()
+                        }
+                    });
                 }
             });
             break;
@@ -519,47 +551,6 @@ var setAuthentication = function () {
             );
         }
         return false;
-    });
-
-    $('#register #btn_register').off('click').on('click', function (e) {
-        e.preventDefault();
-        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val() < 6 && $("#register #email").val().length < 5) {
-            $().toastmessage("showToast", {
-                text:'All fields are required.',
-                position:"tops-center",
-                type:"notice",
-                background:"white",
-                color:"black",
-                stayTime:MG_GAME_PYRAMID.toastStayTime,
-                addClass:MG_GAME_PYRAMID.toastBackgroundClass
-            });
-        } else {
-            MG_API.ajaxCall('/user/register', function (response) { // we dont have that action
-                if (response.status === 'ok') {
-                    MG_PYRAMID.isLogged = true;
-                    MG_PYRAMID.username = $("#register #username").val();
-                    MG_PYRAMID.email = $("#register #email").val();
-                    $("#menu-right a[location='main_screen']").click();
-                }
-                $().toastmessage("showToast", {
-                    text:response.responseText,
-                    position:"tops-center",
-                    type:"notice",
-                    background:"white",
-                    color:"black",
-                    stayTime:MG_GAME_PYRAMID.toastStayTime,
-                    addClass:MG_GAME_PYRAMID.toastBackgroundClass
-                });
-            }, {
-                type:'post',
-                data:{
-                    password:$("#register #password").val(),
-                    username:$("#register #username").val(),
-                    email:$("#register #email").val(),
-                    verifyPassword:$("#register #verifyPassword").val()
-                }
-            });
-        }
     });
 
     $("#facebook").off('click').on('click', function () {
