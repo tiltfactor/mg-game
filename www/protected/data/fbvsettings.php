@@ -283,17 +283,6 @@ return array (
       'image_width' => '450',
       'image_height' => '450',
     ),
-    'OneUp' => 
-    array (
-      'name' => 'OneUp',
-      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
-      'arcade_image' => 'zenpond_arcade.png',
-      'more_info_url' => '',
-      'turns' => '3',
-      'submissions' => '3',
-      'image_width' => '450',
-      'image_height' => '450',
-    ),
   ),
   'settings' => 
   array (
