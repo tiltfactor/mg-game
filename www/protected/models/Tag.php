@@ -153,7 +153,7 @@ class Tag extends BaseTag
         if ($medias) {
             $out = "";
             foreach ($medias as $media) {
-                $html_media = CHtml::image(MGHelper::getMediaThumb($media['url'],$media['mime_type'], $media['name']), $media['name']) . " <span>x " . $media['counted'] . "</span>";
+                $html_media = CHtml::image(MGHelper::getMediaThumb($media['url'],$media['mime_type'], $media['name']), $media['name'], array('height'=>60)) . " <span>x " . $media['counted'] . "</span>";
                 $out .= CHtml::link($html_media, array("/admin/media/view", "id" => $media["id"]));
             }
             return $out;
