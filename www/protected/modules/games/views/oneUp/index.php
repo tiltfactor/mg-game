@@ -88,7 +88,7 @@
 
             <div id="game_customize" class="hidden">
                 <h2>CUSTOMIZE YOUR GAME</h2>
-                <div class="padding">Share your interests and you might see more images with those subjects!</div>
+                <div class="padding div_text">Share your interests and you might see more images with those subjects! Use commas to separate interests.</div>
                 <div class="new_interest text-center"><input autocapitalize="off" autocorrect="off" autocomplete="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
                 <hr />
             </div>
