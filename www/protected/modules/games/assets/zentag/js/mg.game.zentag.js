@@ -20,10 +20,15 @@ MG_GAME_ZENTAG = function ($) {
 
             MG_GAME_ZENTAG.wordField = $("#words");
 
+            // Disable pasting text
+            $("#words").bind("paste",function(e) {
+              e.preventDefault();
+            });
+
             // TODO: Refactor this part
             // allowed keys, in game
             $("#words").bind("keydown", function(event) {
-                //console.log(event.which);
+                console.log(event.which);
                 if (event.shiftKey) { // When pressing shift, only allow these
                     return (
                         (event.which >= 97 && event.which <= 122) || // a-z
