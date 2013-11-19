@@ -322,7 +322,7 @@
         </div>
         <div id="challenges_sent" class="list_challenges">
             <h3>WAITING</h3>
-            <div class="no_value hidden">Noone waits for you!</div>
+            <div class="no_value hidden">No one waits for you!</div>
             {{each sent}}
             <div opponent_id="${id}" playedGameId="" class="back_gray row">
                 <div>GAME WITH <span class="username">${username}</span></div>
