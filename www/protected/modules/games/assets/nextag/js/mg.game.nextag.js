@@ -22,6 +22,28 @@ MG_GAME_NEXTAG = function ($) {
 // mechanics are close enough to just work without much tweaking!
             MG_GAME_NEXTAG.wordField = $("#words");
 
+            // TODO: Refactor this part
+            // allowed keys, in game
+            $("#words").bind("keydown", function(event) {
+                //console.log(event.which);
+                if (event.shiftKey) { // When pressing shift, only allow these
+                    return (
+                        (event.which >= 97 && event.which <= 122) || // a-z
+                        (event.which >= 65 && event.which <= 90) // A-Z
+                    );
+                }
+                else {
+                    return ( 
+                        (event.which >= 97 && event.which <= 122) ||// a-z
+                        (event.which >= 65 && event.which <= 90) || // A-Z
+                        (event.which >= 48 && event.which <= 57) || // 0-9
+                        event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
+                        event.which == 188 || event.which == 222 || // comma, apostrophe
+                        event.which == 109 || event.which == 189 // dash, for different browsers
+                    );
+                }
+            });
+
             // submit on enter
             MG_GAME_NEXTAG.wordField.focus().keydown(function (event) {
                 if (event.keyCode == 13) {
@@ -357,6 +379,17 @@ MG_GAME_NEXTAG = function ($) {
         onsubmit: function () {
             if (!MG_GAME_NEXTAG.busy) {
                 var tags = $.trim(MG_GAME_NEXTAG.wordField.val());
+
+                // TODO: Refactor this part
+                // replace multiple whitespaces with a single space
+                // already done for db submissions, so not really needed here
+                //tags = tags.replace(/\s{2,}/g, ' '); 
+                // just to be safe, strip the special chars if still present
+                // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
+                // allowed: '-
+                tags = tags.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, ""); 
+                //console.log(tags);
+
                 if (tags == "") {
                     // val filtered for all white spaces (trim)
                     MG_GAME_NEXTAG.error("<h1>Ooops</h1><p>Please enter at least one word</p>");
