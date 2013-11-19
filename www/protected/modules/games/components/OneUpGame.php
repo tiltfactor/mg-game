@@ -68,7 +68,7 @@ class OneUpGame extends MGMultiPlayer
                 foreach ($opponentTagDTOs as $turn => $oTags) {
                     $found = false;
                     foreach ($oTags as $oTag) {
-                        if ($oTag->tag == $tag->tag) {
+                        if (strtolower($oTag->tag) == strtolower($tag->tag)) {
                             if ($turn == $this->gameTurn->turn)
                                 $tag->weight += 1;
                             else
@@ -89,7 +89,7 @@ class OneUpGame extends MGMultiPlayer
                 if ($prvTurn > 0) {
                     for ($i = 1; $i <= $prvTurn; $i++) {
                         foreach ($opponentTagDTOs[$i] as $row) {
-                            if ($row->tag == $tag->tag) {
+                            if (strtolower($row->tag) == strtolower($tag->tag)) {
                                 $tag->score = -1;
                                 $payload = array();
                                 $payload['tag'] = $tag;
@@ -370,7 +370,7 @@ class OneUpGame extends MGMultiPlayer
             $tagsArr = json_decode($submit->submission, true);
             $tmpTags = GameTagDTO::createFromArray($tagsArr);
             foreach ($tmpTags as &$tt) {
-                if ($tt->tag == $tag->tag) {
+                if (strtolower($tt->tag) == strtolower($tag->tag)) {
                     $tt->type = "bonus";
                     $tt->score += 1;
 
