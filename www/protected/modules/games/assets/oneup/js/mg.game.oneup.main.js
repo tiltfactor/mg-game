@@ -410,10 +410,43 @@ MG_GAME_ONEUP = function ($) {
                                         that.append('<div><input class="add_word" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="ADD A WORD" /></div>');
                                     }
                                     that.find('input').focus();
+
+                                    // TODO: Refactor this part
+                                    // allowed keys, in game
+                                    $("input").bind("keydown", function(event) {
+                                        //console.log(event.which);
+                                        if (event.shiftKey) { // When pressing shift, only allow these
+                                            return (
+                                                (event.which >= 97 && event.which <= 122) || // a-z
+                                                (event.which >= 65 && event.which <= 90) // A-Z
+                                            );
+                                        }
+                                        else {
+                                            return ( 
+                                                (event.which >= 97 && event.which <= 122) ||// a-z
+                                                (event.which >= 65 && event.which <= 90) || // A-Z
+                                                (event.which >= 48 && event.which <= 57) || // 0-9
+                                                event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
+                                                event.which == 188 || event.which == 222 || // comma, apostrophe
+                                                event.which == 109 || event.which == 189 // dash, for different browsers
+                                            );
+                                        }
+                                    });
+
                                     that.find('input').unbind("keypress").keypress(function (e) {
                                         if (e.which === 13) {
-                                            var tag = that.find('input').val(),
-                                                new_html,
+                                            var tag = that.find('input').val();
+
+                                            // TODO: Refactor this part
+                                            // replace multiple whitespaces with a single space
+                                            // already done for db submissions, so not really needed here
+                                            //tag = tag.replace(/\s{2,}/g, ' '); 
+                                            // just to be safe, strip the special chars if still present
+                                            // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
+                                            // allowed: '-
+                                            tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, ""); 
+
+                                            var new_html,
                                                 validateTag = validTag(that.find('input').val(), turn_response.turns);
 
                                             MG_GAME_ONEUP.playSound('submit');
@@ -736,6 +769,8 @@ MG_GAME_ONEUP = function ($) {
                     $("#game_customize").find("#listing").remove();
                     $('#new_interest').attr('value', '');
 
+
+                    // TODO: Refactor this part
                     // allowed keys on the interest field
                     $("input#new_interest").bind("keydown", function(event) {
                         //console.log(event.which);
@@ -751,7 +786,7 @@ MG_GAME_ONEUP = function ($) {
                                 (event.which >= 65 && event.which <= 90) || // A-Z
                                 (event.which >= 48 && event.which <= 57) || // 0-9
                                 event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
-                                event.which == 188 || event.which == 222 || // comma, quote
+                                event.which == 188 || event.which == 222 || // comma, apostrophe
                                 event.which == 109 || event.which == 189 // dash, for different browsers
                             );
                         }
@@ -763,10 +798,10 @@ MG_GAME_ONEUP = function ($) {
                             $("#game_customize").find('.note').remove();
                             var string = $('#new_interest').val();
 
+                            // TODO: Refactor this part
                             // replace multiple whitespaces with a single space
                             // already done for db submissions, so not really needed here
                             //string = string.replace(/\s{2,}/g, ' '); 
- 
                             // just to be safe, strip the special chars if still present
                             // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
                             // allowed: '-
