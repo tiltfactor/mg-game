@@ -28,7 +28,7 @@ MG_GAME_ZENTAG = function ($) {
             // TODO: Refactor this part
             // allowed keys, in game
             $("#words").bind("keydown", function(event) {
-                console.log(event.which);
+                //console.log(event.which);
                 if (event.shiftKey) { // When pressing shift, only allow these
                     return (
                         (event.which >= 97 && event.which <= 122) || // a-z
@@ -42,7 +42,7 @@ MG_GAME_ZENTAG = function ($) {
                         (event.which >= 48 && event.which <= 57) || // 0-9
                         event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
                         event.which == 188 || event.which == 222 || // comma, apostrophe
-                        event.which == 109 || event.which == 189 // dash, for different browsers
+                        event.which == 189 || event.which == 173 // dash, for different browsers
                     );
                 }
             });
