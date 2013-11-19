@@ -1407,8 +1407,9 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit:function () {
-            // remove {secure: true} if not running socket.io over https        
-            var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'", {secure: true}),
+            // add {secure: true} if not running socket.io over https        
+//             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'", {secure: true}),
+        var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
                 game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
 
             MG_GAME_ONEUP.socketDisconnect = function () {
