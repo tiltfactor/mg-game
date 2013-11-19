@@ -22,6 +22,11 @@ MG_GAME_NEXTAG = function ($) {
 // mechanics are close enough to just work without much tweaking!
             MG_GAME_NEXTAG.wordField = $("#words");
 
+            // Disable pasting text
+            $("#words").bind("paste",function(e) {
+              e.preventDefault();
+            });
+
             // TODO: Refactor this part
             // allowed keys, in game
             $("#words").bind("keydown", function(event) {
