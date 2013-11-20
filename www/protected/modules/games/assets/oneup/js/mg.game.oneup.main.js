@@ -268,7 +268,7 @@ MG_GAME_ONEUP = function ($) {
                                             opponent_id = that.attr('opponent_id');
                                             var playedGameId = that.attr('playedGameId');
                                             opponent_name = that.find('span.username').text();
-                                            confirm_text = "Do you really want to end your game with " + "'" + opponent_name + "'" + "?";
+                                            confirm_text = "Do you really want to end your game with " + opponent_name + "?";
                                             confirmPretty(confirm_text, function () {
                                                 if (playedGameId === '') {
                                                     // this is a challenge
@@ -300,9 +300,9 @@ MG_GAME_ONEUP = function ($) {
                                             opponent_name = that.find('span.username').text();
                                             var playedGameId = that.attr('playedGameId');
                                             if (playedGameId === '') {
-                                                confirm_text = "Do you really want to reject your game with " + "'" + opponent_name + "'" + "?";
+                                                confirm_text = "Are you sure you want to decline " + opponent_name + "'s " + "challenge?";
                                             } else {
-                                                confirm_text = "Do you really want to end your game with " + "'" + opponent_name + "'" + "?";
+                                                confirm_text = "Do you really want to end your game with " + opponent_name + "?";
                                             }
                                             confirmPretty(confirm_text, function () {
                                                 if (playedGameId === '') {
@@ -422,7 +422,7 @@ MG_GAME_ONEUP = function ($) {
                                             );
                                         }
                                         else {
-                                            return ( 
+                                            return (
                                                 (event.which >= 97 && event.which <= 122) ||// a-z
                                                 (event.which >= 65 && event.which <= 90) || // A-Z
                                                 (event.which >= 48 && event.which <= 57) || // 0-9
@@ -440,11 +440,11 @@ MG_GAME_ONEUP = function ($) {
                                             // TODO: Refactor this part
                                             // replace multiple whitespaces with a single space
                                             // already done for db submissions, so not really needed here
-                                            //tag = tag.replace(/\s{2,}/g, ' '); 
+                                            //tag = tag.replace(/\s{2,}/g, ' ');
                                             // just to be safe, strip the special chars if still present
                                             // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
                                             // allowed: '-
-                                            tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, ""); 
+                                            tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, "");
 
                                             var new_html,
                                                 validateTag = validTag(that.find('input').val(), turn_response.turns);
@@ -667,7 +667,7 @@ MG_GAME_ONEUP = function ($) {
                             MG_GAME_ONEUP.playSound('win');
                         } else if (parseInt(json.score, 10) < parseInt(json.opponentScore, 10)) {
                             json.game_result = 'YOU LOST!';
-                            json.congratulation_text = 'Sorry, but you lost.';
+                            json.congratulation_text = 'Better luck next time!';
                         } else {
                             json.game_result = 'TIED GAME!';
                             json.congratulation_text = "The game was too close: it's a tied game!";
@@ -781,7 +781,7 @@ MG_GAME_ONEUP = function ($) {
                             );
                         }
                         else {
-                            return ( 
+                            return (
                                 (event.which >= 97 && event.which <= 122) ||// a-z
                                 (event.which >= 65 && event.which <= 90) || // A-Z
                                 (event.which >= 48 && event.which <= 57) || // 0-9
@@ -801,11 +801,11 @@ MG_GAME_ONEUP = function ($) {
                             // TODO: Refactor this part
                             // replace multiple whitespaces with a single space
                             // already done for db submissions, so not really needed here
-                            //string = string.replace(/\s{2,}/g, ' '); 
+                            //string = string.replace(/\s{2,}/g, ' ');
                             // just to be safe, strip the special chars if still present
                             // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
                             // allowed: '-
-                            string = string.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, ""); 
+                            string = string.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, "");
                             //console.log(string);
 
                             var array = string.split(','),
@@ -1407,7 +1407,7 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit:function () {
-            // add {secure: true} if not running socket.io over https        
+            // add {secure: true} if not running socket.io over https
 //             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'", {secure: true}),
             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
 
@@ -1750,7 +1750,7 @@ function calculatedRow(tag, score, opponent_name, tag_type) {
         new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
     } else if (parseInt(score, 10) === 2) {
         html_class = 'up_bar';
-        new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
+        new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + "'s" + '<br/>POINT!</span>';
     } else if (parseInt(score, 10) >= 3) {
         html_class = 'bonus_bar';
         new_html = '<span>+' + parseInt(score, 10) + '</span><span class="tag">' + tag + '</span><span class="bar_right lines_2" style="padding-top: 5px;">GREAT<br/>WORD!</span>';
