@@ -428,7 +428,7 @@ MG_GAME_ONEUP = function ($) {
                                                 (event.which >= 48 && event.which <= 57) || // 0-9
                                                 event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
                                                 event.which == 188 || event.which == 222 || // comma, apostrophe
-                                                event.which == 109 || event.which == 189 // dash, for different browsers
+                                                event.which == 189 || event.which == 173 // dash, for different browsers
                                             );
                                         }
                                     });
@@ -787,7 +787,7 @@ MG_GAME_ONEUP = function ($) {
                                 (event.which >= 48 && event.which <= 57) || // 0-9
                                 event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
                                 event.which == 188 || event.which == 222 || // comma, apostrophe
-                                event.which == 109 || event.which == 189 // dash, for different browsers
+                                event.which == 189 || event.which == 173 // dash, for different browsers
                             );
                         }
                     });

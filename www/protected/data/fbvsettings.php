@@ -1,19 +1,14 @@
 <?php
 return array (
-    'api_id' => 'MG_API',
-    'installed' => false,
-    'frontend_theme' => 'metadatagames',
-    'nodeJSUrl' => 'http://localhost:8000',
-    'pushUrl' => 'http://localhost:8000/message/',
-    // can not work with localhost need ip or real address
-    'weinreUrl' => 'http://10.15.20.92:8088',
-    //Linux: sudo npm install -g weinre || Windows: npm install -g weinre
-    //weinre --httpPort 8088 --boundHost -all-
-    //http://localhost:8088/client/
-    //development mode will enable waine and consolejs with key DA9E1A3-4EE0-4DC0-9AFF-81427DECD9F5 - works for OneUp
-    'developmentMode' => false,
-    'facebookId' => '672156142814370', // Need to change and facebook setting - this is sample
-    'facebookSecret' => '3fb442fe62ff22f00c7a60b81c00f305', // Need to change and facebook setting - this is sample
+  'api_id' => 'MG_API',
+  'installed' => true,
+  'frontend_theme' => 'metadatagames',
+  'nodeJSUrl' => 'http://localhost:8000',
+  'pushUrl' => 'http://localhost:8000/message/',
+  'weinreUrl' => 'http://10.15.20.92:8088',
+  'developmentMode' => false,
+  'facebookId' => '672156142814370',
+  'facebookSecret' => '3fb442fe62ff22f00c7a60b81c00f305',
   'arcade' => 
   array (
     'description' => 'This is a short description of the project',
@@ -45,7 +40,11 @@ return array (
       'name' => 'Media',
       'description' => 'Manage media that have been imported and processed.',
       'url' => '/admin/media',
-      'roles' => array(EDITOR,INSTITUTION),
+      'roles' => 
+      array (
+        0 => 'researcher',
+        1 => 'institution',
+      ),
       'group' => 'Media & Tags',
     ),
     'tool-tag' => 
@@ -53,7 +52,11 @@ return array (
       'name' => 'Tags',
       'description' => 'Manage tags that have been created by players.',
       'url' => '/admin/tag',
-      'roles' => array(EDITOR,INSTITUTION),
+      'roles' => 
+      array (
+        0 => 'researcher',
+        1 => 'institution',
+      ),
       'group' => 'Media & Tags',
     ),
     'tool-collection' => 
@@ -61,7 +64,11 @@ return array (
       'name' => 'Collections',
       'description' => 'Group media and apply applicable licences.',
       'url' => '/admin/collection',
-      'roles' => array(EDITOR,INSTITUTION),
+      'roles' => 
+      array (
+        0 => 'researcher',
+        1 => 'institution',
+      ),
       'group' => 'Media & Tags',
     ),
     'tool-licence' => 
@@ -69,7 +76,11 @@ return array (
       'name' => 'Licences',
       'description' => 'Create licences under which media can be published in the system.',
       'url' => '/admin/licence',
-      'roles' => array(EDITOR,INSTITUTION),
+      'roles' => 
+      array (
+        0 => 'researcher',
+        1 => 'institution',
+      ),
       'group' => 'Media & Tags',
     ),
     'tool-export' => 
@@ -77,7 +88,10 @@ return array (
       'name' => 'Export',
       'description' => 'Export tags, tag uses, and tagged media.',
       'url' => '/admin/export',
-      'roles' => array(INSTITUTION),
+      'roles' => 
+      array (
+        0 => 'institution',
+      ),
       'group' => 'Media & Tags',
     ),
     'tool-user' => 
@@ -85,7 +99,10 @@ return array (
       'name' => 'Players',
       'description' => 'Manage registered players and the tags they have created.',
       'url' => '/admin/user',
-      'roles' => array(EDITOR),
+      'roles' => 
+      array (
+        0 => 'researcher',
+      ),
       'group' => 'Players',
     ),
     'tool-subject-matter' => 
@@ -93,7 +110,10 @@ return array (
       'name' => 'Subject Matters',
       'description' => 'Manage subject matter categories in which players can express interest. These values are used to influence media selection and tag weights.',
       'url' => '/admin/subjectMatter',
-      'roles' => array(EDITOR),
+      'roles' => 
+      array (
+        0 => 'researcher',
+      ),
       'group' => 'Players',
     ),
     'tool-plugins' => 
@@ -101,7 +121,10 @@ return array (
       'name' => 'Plugins',
       'description' => 'Plugins allow the flexible extension of functionality and can be managed here.',
       'url' => '/plugins',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Games & Plugins',
     ),
     'tool-games' => 
@@ -109,7 +132,10 @@ return array (
       'name' => 'Games',
       'description' => 'Manage games.',
       'url' => '/games',
-      'roles' => array(EDITOR),
+      'roles' => 
+      array (
+        0 => 'researcher',
+      ),
       'group' => 'Games & Plugins',
     ),
     'tool-bages' => 
@@ -117,7 +143,10 @@ return array (
       'name' => 'Badges',
       'description' => 'Manage badges that can be achieved by players.',
       'url' => '/admin/badge',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Games & Plugins',
     ),
     'tool-ip' => 
@@ -125,7 +154,10 @@ return array (
       'name' => 'IP Blacklist',
       'description' => 'Restrict access to Metadata Games by whitelisting or blacklisting IP addresses.',
       'url' => '/admin/blockedIp',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Other',
     ),
     'tool-settings' => 
@@ -133,7 +165,10 @@ return array (
       'name' => 'Global Settings',
       'description' => 'Configure settings that are used globally in the system.',
       'url' => '/admin/settings',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Other',
     ),
     'tool-logs' => 
@@ -141,7 +176,10 @@ return array (
       'name' => 'Admin Log',
       'description' => 'Access records of changes made using admin tools.',
       'url' => '/admin/log',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Other',
     ),
     'update-code' => 
@@ -149,7 +187,10 @@ return array (
       'name' => 'Update DB',
       'description' => 'Please visit this tool after an update of the code base to make sure the database structure is up-to date.',
       'url' => '/admin/update',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Other',
     ),
     'tool-institution' => 
@@ -157,7 +198,10 @@ return array (
       'name' => 'Institution',
       'description' => 'Manage MG Content Server register to MG Game Server',
       'url' => '/admin/institution',
-      'roles' => array(ADMIN),
+      'roles' => 
+      array (
+        0 => 'gameadmin',
+      ),
       'group' => 'Other',
     ),
   ),
@@ -221,11 +265,23 @@ return array (
       'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
       'arcade_image' => 'pyramid_arcade.png',
       'more_info_url' => '',
-      'play_once_and_move_on' => 0,
+      'play_once_and_move_on' => '0',
       'play_once_and_move_on_url' => '',
-      'turns' => 4,
-      'image_width' => 450,
-      'image_height' => 450,
+      'turns' => '4',
+      'image_width' => '450',
+      'image_height' => '450',
+    ),
+    'NexTag' => 
+    array (
+      'name' => 'NexTag',
+      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'arcade_image' => 'nextag_arcade.png',
+      'more_info_url' => '',
+      'play_once_and_move_on' => '0',
+      'play_once_and_move_on_url' => '',
+      'turns' => '4',
+      'image_width' => '450',
+      'image_height' => '450',
     ),
   ),
   'settings' => 
@@ -233,7 +289,7 @@ return array (
     'app_name' => 'Metadata Games',
     'throttle_interval' => '500',
     'message_queue_interval' => '450',
-    'app_email' => 'admin@admin.com',
+    'app_email' => 'anup.dhamala+gameadmin@gmail.com',
     'pagination_size' => '25',
     'app_upload_path' => '/../uploads',
     'app_upload_url' => '/uploads',
