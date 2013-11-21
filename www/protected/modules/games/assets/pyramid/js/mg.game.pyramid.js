@@ -159,6 +159,14 @@ MG_GAME_PYRAMID = function ($) {
 
                 str = str.replace(/[^\w\s]|_/g, "");
 
+                // special chars are forbidden at kb level and the game also complains
+                // if the user inputs it.
+                // however, just to be safe, strip the special chars if still present
+                // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\",'
+                // allowed: -
+                str = str.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g, ""); 
+                //console.log(str);
+
                 if (event.keyCode != '13' && event.keyCode != '8' && event.keyCode != '46' && event.keyCode != '32') {
                     //num_sound = (input_length -1) % 8;
                     num_sound = (input_length -1) < 7 ? (input_length -1) : 7; //modified by Jack Guan 13/09/2013
@@ -437,6 +445,18 @@ MG_GAME_PYRAMID = function ($) {
                 else if (tags.length > (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step)) {
                     $().toastmessage("showToast", {
                         text:"too many letters!",
+                        position:"tops-center",
+                        type:"notice",
+                        background: "#F1F1F1"
+                    });
+                    MG_GAME_PYRAMID.playSound('try_again');
+                }
+                // check if these special characters are present, and if present, complain
+                // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\",'
+                // TODO: Turn this into a function maybe..
+                else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
+                    $().toastmessage("showToast", {
+                        text:"special character not allowed!",
                         position:"tops-center",
                         type:"notice",
                         background: "#F1F1F1"
