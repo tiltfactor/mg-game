@@ -427,7 +427,7 @@ MG_GAME_ONEUP = function ($) {
                                                 (event.which >= 65 && event.which <= 90) || // A-Z
                                                 (event.which >= 48 && event.which <= 57) || // 0-9
                                                 event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
-                                                event.which == 188 || event.which == 222 || // comma, apostrophe
+                                                event.which == 222 || // apostrophe
                                                 event.which == 189 || event.which == 173 // dash, for different browsers
                                             );
                                         }
@@ -442,9 +442,9 @@ MG_GAME_ONEUP = function ($) {
                                             // already done for db submissions, so not really needed here
                                             //tag = tag.replace(/\s{2,}/g, ' ');
                                             // just to be safe, strip the special chars if still present
-                                            // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
+                                            // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\",
                                             // allowed: '-
-                                            tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, "");
+                                            tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",]/g, "");
 
                                             var new_html,
                                                 validateTag = validTag(that.find('input').val(), turn_response.turns);
