@@ -472,32 +472,70 @@ MG_GAME_PYRAMID = function ($) {
                     });
                     MG_GAME_PYRAMID.playSound('try_again');
                 } else {
-                    MG_GAME_PYRAMID.words.push(tags);
-                    // text entered
-                    //MG_GAME_API.curtain.show();
-                    //MG_GAME_PYRAMID.busy = true;
 
-                    // send ajax call as POST request to validate a turn
-                    MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
-                        if (MG_API.checkResponse(response)) {
-                            MG_GAME_PYRAMID.wordField.val("");
-                            MG_GAME_PYRAMID.onresponse(response);
+                    // everything done here before nlp stuff was introduced
+                    function mgApiAction() {
+                        MG_GAME_PYRAMID.words.push(tags);
+                        // text entered
+                        //MG_GAME_API.curtain.show();
+                        //MG_GAME_PYRAMID.busy = true;
+
+                        // send ajax call as POST request to validate a turn
+                        MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+                            if (MG_API.checkResponse(response)) {
+                                MG_GAME_PYRAMID.wordField.val("");
+                                MG_GAME_PYRAMID.onresponse(response);
+                            }
+                            return false;
+                        }, {
+                            type:'post',
+                            data:{ // this is the data needed for the turn
+                                turn: 1,
+                                played_game_id: MG_GAME_PYRAMID.game.played_game_id,
+                                'submissions':[
+                                    {
+                                        media_id: MG_GAME_PYRAMID.media.media_id,
+                                        pass: false,
+                                        tags: tags.toLowerCase()
+                                    }
+                                ]
+                            }
+                        });
+                    }
+
+                    // ajax call to the nlp api
+                    $.ajax({
+                        type: "GET",
+                        //url: "http://localhost/tf/anup-mgame-nov/www/protected/extensions/nlp/python/wordcheck/check_input.py",
+                        //url: "http://localhost:5000/possible_word_check?input="+tags,
+                        url: "http://localhost:5000/possible_word_check",
+                        timeout: 5000,
+                        data: { input: tags },
+                        error: function( o ) {
+                            //console.log(o);
+                            console.log('error with nlp api, so proceeding with the game');
+                            mgApiAction();
                         }
-                        return false;
-                    }, {
-                        type:'post',
-                        data:{ // this is the data needed for the turn
-                            turn: 1,
-                            played_game_id: MG_GAME_PYRAMID.game.played_game_id,
-                            'submissions':[
-                                {
-                                    media_id: MG_GAME_PYRAMID.media.media_id,
-                                    pass: false,
-                                    tags: tags.toLowerCase()
-                                }
-                            ]
+                    }).done(function( o ) {
+                        var is_word = o;
+                        console.log(is_word);
+                        if (is_word == "False") {
+                            console.log(tags+' is not a word.');
+                            $().toastmessage("showToast", {
+                                text:"not a word!",
+                                position:"tops-center",
+                                type:"notice",
+                                background: "#F1F1F1"
+                            });
+                            MG_GAME_PYRAMID.playSound('try_again');
+                        }
+                        else {
+                            console.log(tags+' could be a word.');
+                            console.log('nlp api call done, result not false so proceeding with game');
+                            mgApiAction();
                         }
                     });
+
                 }
             }
             return false;
