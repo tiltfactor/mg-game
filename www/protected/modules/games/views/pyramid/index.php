@@ -36,7 +36,11 @@
             <div id="how_to" class="hidden">
                 <h2>HOW TO PLAY</h2>
                 <div class="padding div_text">
-                    This is just a custom text that need to be verified.
+                  <p>Think of a single-word tag that fits the number of spaces shown - a tag is a keyword describing an image and can contain any alphabetical characters.</p>
+									<p>Type the tag and press enter - if it matches what one of the experts entered, you'll advance to the next round; if not, try again!</p>
+									<p>The first round asks for a 4-letter tag, and each progressive round increases to a 5-letter tag, 6-letter tag, and so on.</p>
+									<p>If stuck, click "Pass!" in upper right to skip to the next round or click "Quit" to quit current game and see your score.</p>
+									<p>Got it? Now go play!<p>
                 </div>
             </div>
 
@@ -70,20 +74,21 @@
 
             <div id="learn_more" class="hidden">
                 <h2>Learn More</h2>
-                <div class="padding div_text">One Up is part of a suite of games from the
-                    Metadata Games project. Metadata Games is a
-                    Free and Open Source (FOSS) online game
-                    system for gathering useful data on photo,
-                    audio, and moving image artifacts. By playing,
-                    you have a direct impact on the preservation
-                    and accessibility of vital cultural heritage
-                    collections for future generations.</div>
                 <div class="padding div_text">
-                    Metadata Games is created by the Tiltfactor
-                    Laboratory at Dartmouth College, with support
-                    from the National Endowment for the
-                    Humanities (NEH) and the American Council of
-                    Learned Societies (ACLS).
+									<p>Pyramid Tag is part of a suite of games from the
+									Metadata Games project. Metadata Games is a
+									Free and Open Source (FOSS) online game
+									system for gathering useful data on photo,
+									audio, and moving image artifacts. By playing,
+									you have a direct impact on the preservation
+									and accessibility of vital cultural heritage
+									collections for future generations.</p>
+									<p>
+									Metadata Games is created by the Tiltfactor
+									Laboratory at Dartmouth College, with support
+									from the National Endowment for the
+									Humanities (NEH) and the American Council of
+									Learned Societies (ACLS).</p>
                 </div>
                 <h3 class="padding">METADATAGAMES</h3>
                 <div>
