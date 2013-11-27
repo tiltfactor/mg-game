@@ -1407,7 +1407,7 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit:function () {
-            // add {secure: true} if not running socket.io over https
+            // add {secure: true} if running socket.io over HTTPS
 //             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'", {secure: true}),
             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
 
