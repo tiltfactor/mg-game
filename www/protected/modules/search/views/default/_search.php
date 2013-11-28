@@ -46,7 +46,7 @@
         Refine
         <div id="or_and" class="group">
             <div class="separator"></div>
-            <div>Show medias that have at least one (OR) or all (AND) of the given tags</div>
+            <div>Show media that have at least one (OR) or all (AND) of the given tags</div>
             <div class="menu_item">';
     echo CHtml::radioButtonList("Custom[tags_search_option]", ((isset($_GET["Custom"]) && isset($_GET["Custom"]["tags_search_option"])) ? $_GET["Custom"]["tags_search_option"] : 'OR'), array("OR" => "OR", "AND" => "AND"), array(
         'template' => '<div class="inline-radio">{input} {label}</div>',

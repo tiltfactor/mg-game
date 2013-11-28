@@ -88,7 +88,7 @@
 
             <div id="game_customize" class="hidden">
                 <h2>CUSTOMIZE YOUR GAME</h2>
-                <div class="padding">Share your interests and you might see more images with those subjects!</div>
+                <div class="padding div_text">Share your interests and you might see more images with those subjects! Use commas to separate interests.</div>
                 <div class="new_interest text-center"><input autocapitalize="off" autocorrect="off" autocomplete="off" id="new_interest" type="text" placeholder="I'm interested in..." /></div>
                 <hr />
             </div>
@@ -322,7 +322,7 @@
         </div>
         <div id="challenges_sent" class="list_challenges">
             <h3>WAITING</h3>
-            <div class="no_value hidden">Noone waits for you!</div>
+            <div class="no_value hidden">No one waits for you!</div>
             {{each sent}}
             <div opponent_id="${id}" playedGameId="" class="back_gray row">
                 <div>GAME WITH <span class="username">${username}</span></div>

@@ -45,12 +45,44 @@ var actions = function (action, click_parent) {
             $("#game_customize").find("#listing").remove();
             $('#new_interest').attr('value', '');
 
+            // allowed keys on the interest field
+            $("input#new_interest").bind("keydown", function(event) {
+                //console.log(event.which);
+                if (event.shiftKey) { // When pressing shift, only allow these
+                    return (
+                        (event.which >= 97 && event.which <= 122) || // a-z
+                        (event.which >= 65 && event.which <= 90) // A-Z
+                    );
+                }
+                else {
+                    return ( 
+                        (event.which >= 97 && event.which <= 122) ||// a-z
+                        (event.which >= 65 && event.which <= 90) || // A-Z
+                        (event.which >= 48 && event.which <= 57) || // 0-9
+                        event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
+                        event.which == 188 || event.which == 222 || // comma, apostrophe
+                        event.which == 189 || event.which == 173 // dash, for different browsers
+                    );
+                }
+            });
+
             $('input#new_interest').unbind("keypress").keypress(function (e) {
                 if (e.which == 13) {
                     $("#game_customize #node").remove();
                     $("#game_customize").find('.note').remove();
-                    var string = $('#new_interest').val(),
-                        array = string.split(','),
+                    var string = $('#new_interest').val();
+
+                    // replace multiple whitespaces with a single space
+                    // already done for db submissions, so not really needed here
+                    //string = string.replace(/\s{2,}/g, ' '); 
+
+                    // just to be safe, strip the special chars if still present
+                    // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
+                    // allowed: '-
+                    string = string.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, ""); 
+                    //console.log(string);
+
+                    var array = string.split(','),
                         counter_i = 0;
                     for (var i = 0; i < array.length; i++) {
                         MG_API.ajaxCall('/multiplayer/addInterest/gid/' + MG_PYRAMID.gid + '/interest/' + encodeURIComponent($.trim(array[i])), function (institution_response) {

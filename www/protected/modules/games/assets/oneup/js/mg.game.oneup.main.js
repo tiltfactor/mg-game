@@ -268,7 +268,7 @@ MG_GAME_ONEUP = function ($) {
                                             opponent_id = that.attr('opponent_id');
                                             var playedGameId = that.attr('playedGameId');
                                             opponent_name = that.find('span.username').text();
-                                            confirm_text = "Do you really want to end the game with " + opponent_name;
+                                            confirm_text = "Do you really want to end your game with " + opponent_name + "?";
                                             confirmPretty(confirm_text, function () {
                                                 if (playedGameId === '') {
                                                     // this is a challenge
@@ -300,9 +300,9 @@ MG_GAME_ONEUP = function ($) {
                                             opponent_name = that.find('span.username').text();
                                             var playedGameId = that.attr('playedGameId');
                                             if (playedGameId === '') {
-                                                confirm_text = "Do you really want to reject the game with " + opponent_name;
+                                                confirm_text = "Are you sure you want to decline " + opponent_name + "'s " + "challenge?";
                                             } else {
-                                                confirm_text = "Do you really want to end the game with " + opponent_name;
+                                                confirm_text = "Do you really want to end your game with " + opponent_name + "?";
                                             }
                                             confirmPretty(confirm_text, function () {
                                                 if (playedGameId === '') {
@@ -410,10 +410,43 @@ MG_GAME_ONEUP = function ($) {
                                         that.append('<div><input class="add_word" type="text" autocapitalize="off" autocorrect="off" autocomplete="off" placeholder="ADD A WORD" /></div>');
                                     }
                                     that.find('input').focus();
+
+                                    // TODO: Refactor this part
+                                    // allowed keys, in game
+                                    $("input").bind("keydown", function(event) {
+                                        //console.log(event.which);
+                                        if (event.shiftKey) { // When pressing shift, only allow these
+                                            return (
+                                                (event.which >= 97 && event.which <= 122) || // a-z
+                                                (event.which >= 65 && event.which <= 90) // A-Z
+                                            );
+                                        }
+                                        else {
+                                            return (
+                                                (event.which >= 97 && event.which <= 122) ||// a-z
+                                                (event.which >= 65 && event.which <= 90) || // A-Z
+                                                (event.which >= 48 && event.which <= 57) || // 0-9
+                                                event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
+                                                event.which == 222 || // apostrophe
+                                                event.which == 189 || event.which == 173 // dash, for different browsers
+                                            );
+                                        }
+                                    });
+
                                     that.find('input').unbind("keypress").keypress(function (e) {
                                         if (e.which === 13) {
-                                            var tag = that.find('input').val(),
-                                                new_html,
+                                            var tag = that.find('input').val();
+
+                                            // TODO: Refactor this part
+                                            // replace multiple whitespaces with a single space
+                                            // already done for db submissions, so not really needed here
+                                            //tag = tag.replace(/\s{2,}/g, ' ');
+                                            // just to be safe, strip the special chars if still present
+                                            // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\",
+                                            // allowed: '-
+                                            tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",]/g, "");
+
+                                            var new_html,
                                                 validateTag = validTag(that.find('input').val(), turn_response.turns);
 
                                             MG_GAME_ONEUP.playSound('submit');
@@ -630,14 +663,14 @@ MG_GAME_ONEUP = function ($) {
 
                         if (parseInt(json.score, 10) > parseInt(json.opponentScore, 10)) {
                             json.game_result = 'YOU WON!';
-                            json.congratulation_text = 'Congratulations! You are the winner.';
+                            json.congratulation_text = 'Congratulations! You won!';
                             MG_GAME_ONEUP.playSound('win');
                         } else if (parseInt(json.score, 10) < parseInt(json.opponentScore, 10)) {
                             json.game_result = 'YOU LOST!';
-                            json.congratulation_text = 'We are sorry but you lost.';
+                            json.congratulation_text = 'Better luck next time!';
                         } else {
                             json.game_result = 'TIED GAME!';
-                            json.congratulation_text = "The game was too close it's a tied game.";
+                            json.congratulation_text = "The game was too close: it's a tied game!";
                         }
 
                         $("#template-final_screen").tmpl(json).appendTo($("#final_screen")).after(function () {
@@ -736,19 +769,53 @@ MG_GAME_ONEUP = function ($) {
                     $("#game_customize").find("#listing").remove();
                     $('#new_interest').attr('value', '');
 
+
+                    // TODO: Refactor this part
+                    // allowed keys on the interest field
+                    $("input#new_interest").bind("keydown", function(event) {
+                        //console.log(event.which);
+                        if (event.shiftKey) { // When pressing shift, only allow these
+                            return (
+                                (event.which >= 97 && event.which <= 122) || // a-z
+                                (event.which >= 65 && event.which <= 90) // A-Z
+                            );
+                        }
+                        else {
+                            return (
+                                (event.which >= 97 && event.which <= 122) ||// a-z
+                                (event.which >= 65 && event.which <= 90) || // A-Z
+                                (event.which >= 48 && event.which <= 57) || // 0-9
+                                event.which === 8 || event.which == 13 || event.which == 32 || // Backspace, Enter, space
+                                event.which == 188 || event.which == 222 || // comma, apostrophe
+                                event.which == 189 || event.which == 173 // dash, for different browsers
+                            );
+                        }
+                    });
+
                     $('input#new_interest').unbind("keypress").keypress(function (e) {
                         if (e.which == 13) {
                             $("#game_customize #node").remove();
                             $("#game_customize").find('.note').remove();
-                            var string = $('#new_interest').val(),
-                                array = string.split(','),
+                            var string = $('#new_interest').val();
+
+                            // TODO: Refactor this part
+                            // replace multiple whitespaces with a single space
+                            // already done for db submissions, so not really needed here
+                            //string = string.replace(/\s{2,}/g, ' ');
+                            // just to be safe, strip the special chars if still present
+                            // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
+                            // allowed: '-
+                            string = string.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, "");
+                            //console.log(string);
+
+                            var array = string.split(','),
                                 counter_i = 0;
                             for (var i = 0; i < array.length; i++) {
                                 MG_API.ajaxCall('/multiplayer/addInterest/gid/' + MG_GAME_API.settings.gid + '/interest/' + encodeURIComponent($.trim(array[i])), function (institution_response) {
                                     counter_i++;
                                     if (i === counter_i) {
                                         $('#new_interest').attr('value', '');
-                                        $("#game_customize").find('.new_interest').append('<div class="note">The interest was added.</div>');
+                                        $("#game_customize").find('.new_interest').append('<div class="note">Interest(s) added.</div>');
                                     }
                                 });
                             }
@@ -984,7 +1051,7 @@ MG_GAME_ONEUP = function ($) {
                                     e.stopPropagation();
                                     var row = $(this).closest('.row');
                                     var row_id = row.attr('interest_id');
-                                    confirmPretty("Do you really want to remove the interest.", function () {
+                                    confirmPretty("Do you really want to remove this interest?", function () {
                                         MG_API.ajaxCall('/multiplayer/removeInterest/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function (response) {
                                             row.remove();
                                         });
@@ -1023,7 +1090,7 @@ MG_GAME_ONEUP = function ($) {
                                     e.stopPropagation();
                                     var row = $(this).closest('.row');
                                     var row_id = row.attr('institution_id');
-                                    confirmPretty("Do you really want to disable medias from the institution.", function () {
+                                    confirmPretty("Do you really want to stop playing media from this institution?", function () {
                                         MG_API.ajaxCall('/multiplayer/banInstitution/gid/' + MG_GAME_API.settings.gid + '/id/' + row_id + '/', function (response) {
                                             row.remove();
                                         });
@@ -1340,7 +1407,10 @@ MG_GAME_ONEUP = function ($) {
             MG_GAME_ONEUP.sound[index].play(MG_GAME_ONEUP.sounds[index]);
         },
         nodeInit:function () {
+            // add {secure: true} if running socket.io over HTTPS
+//             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'", {secure: true}),
             var socket = io.connect("'" + MG_INIT.nodeJSUrl + "'"),
+
                 game_title = '<b>' + MG_GAME_ONEUP.gameName + '</b> ';
 
             MG_GAME_ONEUP.socketDisconnect = function () {
@@ -1394,7 +1464,7 @@ MG_GAME_ONEUP = function ($) {
                 var response = JSON.parse(data.payload);
                 console_log(response);
                 $().toastmessage("showToast", {
-                    text:game_title + response.username + ' challenged you to a game!',
+                    text:game_title + ": " + response.username + " challenged you to a game!",
                     position:"tops-center",
                     type:"notice",
                     background:"white",
@@ -1413,7 +1483,7 @@ MG_GAME_ONEUP = function ($) {
                 var response = JSON.parse(data.payload);
                 console_log(response);
                 $().toastmessage("showToast", {
-                    text:game_title + response.username + ' turned down your challenge.',
+                    text:game_title + ": " + response.username + " turned down your challenge.",
                     position:"tops-center",
                     type:"notice",
                     background:"white",
@@ -1445,7 +1515,7 @@ MG_GAME_ONEUP = function ($) {
                         $("#menu-right a[location='main_screen']").click();
                     }
                     $().toastmessage("showToast", {
-                        text:game_title + " It's your turn!",
+                        text:game_title + ": " + " It's your turn!",
                         position:"tops-center",
                         type:"notice",
                         background:"white",
@@ -1492,7 +1562,7 @@ MG_GAME_ONEUP = function ($) {
 
                 if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                     $().toastmessage("showToast", {
-                        text:game_title + " " + MG_GAME_ONEUP.opponent_name + " got your points with " + response.tag.tag,
+                        text:game_title + ": " + MG_GAME_ONEUP.opponent_name + " got your point with " + "'" + response.tag.tag + "'",
                         position:"tops-center",
                         type:"notice",
                         background:"white",
@@ -1511,7 +1581,7 @@ MG_GAME_ONEUP = function ($) {
                 console_log(response);
 
                 $().toastmessage("showToast", {
-                    text:game_title + ' You got ' + response.opponentName + " point with " + response.tag.tag + "!",
+                    text:game_title + ": " + "You got " + response.opponentName + "'s" + " point with " + "'" + response.tag.tag + "'" + "!",
                     position:"tops-center",
                     type:"notice",
                     background:"white",
@@ -1538,7 +1608,7 @@ MG_GAME_ONEUP = function ($) {
 
                 if ($("#main_screen").is(":visible")) {
                     $().toastmessage("showToast", {
-                        text:game_title + " It's your turn! opponentWaiting",
+                        text:game_title + ": " + "It's your turn! " + response.opponentName + " is waiting...",
                         position:"tops-center",
                         type:"notice",
                         background:"white",
@@ -1550,7 +1620,7 @@ MG_GAME_ONEUP = function ($) {
                 } else if ($("#game_screen").is(":visible") || $("#word_screen").is(":visible")) {
                     if (parseInt(MG_GAME_ONEUP.pass_game_id, 10) === parseInt(response.playedGameId, 10)) {
                         $().toastmessage("showToast", {
-                            text:game_title + ' ' + response.username + " finished his turn.",
+                            text:game_title + ": " + response.username + " finished. It's your turn!",
                             position:"tops-center",
                             type:"notice",
                             background:"white",
@@ -1680,7 +1750,7 @@ function calculatedRow(tag, score, opponent_name, tag_type) {
         new_html = '<span>-1</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">' + opponent_name + '<br/>GOT YOUR<br/>POINT!</span>';
     } else if (parseInt(score, 10) === 2) {
         html_class = 'up_bar';
-        new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + '<br/>POINT!</span>';
+        new_html = '<span>+2</span><span class="tag">' + tag + '</span><span class="bar_right lines_3">YOU GOT<br/>' + opponent_name + "'s" + '<br/>POINT!</span>';
     } else if (parseInt(score, 10) >= 3) {
         html_class = 'bonus_bar';
         new_html = '<span>+' + parseInt(score, 10) + '</span><span class="tag">' + tag + '</span><span class="bar_right lines_2" style="padding-top: 5px;">GREAT<br/>WORD!</span>';

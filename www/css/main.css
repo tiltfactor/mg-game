@@ -17,13 +17,12 @@ body
 }
 
 #page_title {
-  width: 129px;
-  height:14px;
+  width: 301px;
+  height: 26px;
   background: url(../images/metadatagames.png) 0px 0px no-repeat transparent;
   float:left;
-  margin:10px 0px 0px 8px;
+  margin:2px 0px 0px 8px;
 }
-
 
 #content
 {

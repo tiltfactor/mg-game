@@ -5,7 +5,7 @@
 class OneUp extends MGGameModel
 {
     public $name = "OneUp";
-    public $arcade_image = "zenpond_arcade.png";
+    public $arcade_image = "oneup_arcade.png";
     public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
     public $turns = 3;
     public $submissions = 3;
