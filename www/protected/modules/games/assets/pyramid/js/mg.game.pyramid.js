@@ -506,8 +506,6 @@ MG_GAME_PYRAMID = function ($) {
                     // ajax call to the nlp api
                     $.ajax({
                         type: "GET",
-                        //url: "http://localhost/tf/anup-mgame-nov/www/protected/extensions/nlp/python/wordcheck/check_input.py",
-                        //url: "http://localhost:5000/possible_word_check?input="+tags,
                         url: "http://localhost:8139/possible_word_check",
                         timeout: 5000,
                         data: { input: tags },
@@ -521,7 +519,7 @@ MG_GAME_PYRAMID = function ($) {
                         //console.log(o);
                         var is_word = o.response;
                         if (!is_word) {
-                            console.log(tags+' is not a word.');
+                            //console.log(tags+' is not a word.');
                             $().toastmessage("showToast", {
                                 text:"not a word!",
                                 position:"tops-center",
@@ -531,8 +529,8 @@ MG_GAME_PYRAMID = function ($) {
                             MG_GAME_PYRAMID.playSound('try_again');
                         }
                         else {
-                            console.log(tags+' could be a word.');
-                            console.log('nlp api call done, result not false so proceeding with game');
+                            //console.log(tags+' could be a word.');
+                            //console.log('nlp api call done, result not false so proceeding with game');
                             mgApiAction();
                         }
                     });
