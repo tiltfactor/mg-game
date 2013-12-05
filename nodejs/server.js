@@ -8,8 +8,36 @@ var express = require('express'),
 var players = [];
 var settings = require('./settings');
 
-app.use(express.bodyParser());
 server.listen(8000);
+
+// If using HTTPS, replace above listed above with the following
+// START
+// var express = require('express');
+// var https = require('https');
+// var fs = require('fs');
+//
+// // This line is from the Node.js HTTPS documentation.
+// var options = {
+//   key: fs.readFileSync('/home/website/tf1-key.pem'),
+//   cert: fs.readFileSync('/home/website/tf1-cert.pem')
+// };
+//
+// // Create a service (the app object is just a callback).
+// var app = express();
+//
+// // Create an HTTPS service identical to the HTTP service.
+// var server = https.createServer(options, app);
+// var io = require('socket.io').listen(server),
+// 	request = require("request");
+//
+// server.listen(8000, "0.0.0.0");
+//
+//
+// var players = [];
+// var settings = require('./settings');
+// END
+
+app.use(express.bodyParser());
 
 app.get('/', function (req, res) {
     res.send(404);
