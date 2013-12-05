@@ -1,0 +1,15 @@
+# Also add this to apache ports.conf: Listen 8139
+<VirtualHost *:8139>
+    ServerName nlp.localhost
+
+    WSGIDaemonProcess nlpserver user=anup group=www-data threads=5
+    WSGIScriptAlias / /home/anup/public_html/tf/anup-mgame-nov/nlp/nlpserver.wsgi
+
+    <Directory /home/anup/public_html/tf/anup-mgame-nov/nlp/>
+        WSGIProcessGroup nlpserver
+        WSGIApplicationGroup %{GLOBAL}
+        WSGIScriptReloading On
+        Order deny,allow
+        Allow from all
+    </Directory>
+</VirtualHost>

@@ -1,0 +1,4 @@
+*.pyc
+*.log
+TODO
+possible_wordcheck_trigrams.py

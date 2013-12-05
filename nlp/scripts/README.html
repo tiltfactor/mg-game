@@ -1,0 +1,31 @@
+<h1>NLP Scripts</h1>
+
+<p>A collection of scripts that form the backend for the NLP server. Each script can be run on its own, from the commandline.
+For more details on the script features, refer to the server README file. </p>
+
+<h3>generate_ngram_data</h3>
+
+<p>Currently has the script to generate letter-based bigram data. Two english corpora are provided. One of them, I stole from Peter Norvig's <a href="http://norvig.com/spell-correct.html">page</a>. The other is a file similar to Norvig's (contains gutenberg texts like <em>Alice In Wonderland</em> and <em>The Adventures of Tom Sawyer</em> )</p>
+
+<pre><code>usage: python generate_bigram_data.py &lt;file with corpus&gt; &lt;file to save data&gt;
+</code></pre>
+
+<h3>possible_wordcheck</h3>
+
+<p>Checks if the input could be a possible word in the language. Uses the data file generated from the <em>generate_ngram_data</em> scripts. folder <em>data</em> contains some of such files, but you can rerun the script in <em>generate_ngram_data</em> folder with your own corpus (for example: if you are working with a different language) <em>norvig-big-bigram-letters</em> is the file used by default. If you use some other file (like the trigram ones or the ones you made), you might want to play around with the threshhold values in the file. And if you want to change the default (which gets used in the server too), just modify it's occurence in the script.</p>
+
+<pre><code>usage: python possible_wordcheck.py &lt;input&gt; (uses the default bigram file)
+       python possible_wordcheck.py &lt;file with ngram data&gt; -f &lt;input_file&gt;
+       python possible_wordcheck.py &lt;file with ngram data&gt; -i &lt;input&gt;
+</code></pre>
+
+<h3>wordcheck</h3>
+
+<p>Utilizes the pyenchant library to check whether input is a word. Add words to <em>mywords.txt</em> if they are not being accepted. </p>
+
+<pre><code>usage: python wordcheck.py &lt;input&gt;
+       python wordcheck.py -i &lt;input&gt; # ignores case
+       python wordcheck.py -s &lt;input&gt; # for spelling suggestions
+</code></pre>
+
+<p>By Anup M. Dhamala, anupdhml at gmail dot com</p>
