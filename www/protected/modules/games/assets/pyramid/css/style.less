@@ -18,7 +18,7 @@
     //background-size: @w @h;
     background-repeat: @repeat;
     /*    width: @w_retina;
-        height: @h_retina;*/
+          height: @h_retina;*/
   }
 }
 
@@ -46,6 +46,18 @@ body {
   background-color: #FFFFFF;
   .at2x('../images/pyramid-background.jpg');
   width: 100%;
+}
+
+/* main menu style overrides */
+.mm-is-menu * {
+font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif !important;
+text-align: left;
+}
+
+html.mm-right.mm-opening .mm-page,
+html.mm-right.mm-opening #mm-blocker
+{
+	margin: 0 -50px 0 0 !important; /* fix width when opening Menu during game */
 }
 
 body {
@@ -135,6 +147,10 @@ body {
     font-size: 14px;
   }
 
+  p {
+    padding: 8px 0;
+  }
+
   ::-webkit-input-placeholder {
     font-family: "Lucida Console", Monaco, monospace;
     color: #36454c;
@@ -173,16 +189,17 @@ body {
     border: 0px;
     background-color: gray;
     color: black;
-    height: 22px;
+    height: 28px;
     line-height: 22px;
     font-size: 22px;
     color: #ffffff;
   }
 
-  .div_text {
+  .div_text, h2 {
     background-color: #ffffff;
     text-align: left;
-    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 
   .new_interest {
@@ -821,7 +838,7 @@ a:hover.button, span:hover.button {
 }
 
 #sidepanel .content {
-  background:#b8b8b8; 
+  background:#b8b8b8;
   position: absolute;
   left: 30px;  /* move over by the width of the tab image */
   top: 0px;
@@ -871,11 +888,11 @@ a:hover.button, span:hover.button {
 
 
 /* iPhone 4 - 4S  in portrait & landscape */
-@media only screen 
-and (min-device-width : 320px) 
+@media only screen
+and (min-device-width : 320px)
 and (max-device-width : 480px) {
   /* STYLES GO HERE */
-  
+
 }
 
 .no-title {

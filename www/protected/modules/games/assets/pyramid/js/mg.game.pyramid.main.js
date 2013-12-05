@@ -609,6 +609,7 @@ function console_log(logged_text) {
 
 var isLoggedUser = function() {
     if(MG_PYRAMID.isLogged == 'true'){
+        /* cause problems in chrome call shared secret 2nd time
         MG_API.ajaxCall('/user/sharedsecret', function (response) {
             if(response.status === 'ok') {
                 MG_API.settings.shared_secret = response.shared_secret;
@@ -617,6 +618,7 @@ var isLoggedUser = function() {
                 throw "MG_API.init() can't retrieve shared secret";
             }
         });
+        */
         $('#mmenuLogin').addClass('hidden');
         $('#mmenuRegister').addClass('hidden');
         $('#mmenuLogout').removeClass('hidden');
