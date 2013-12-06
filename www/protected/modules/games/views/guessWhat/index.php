@@ -1,20 +1,20 @@
 <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
-<!-- Images from the database appear here --> 
+<!-- Images from the database appear here -->
 <div id="stage">
   <div class="left-column">
-    <div id="guesswhat"> 
-      <img src="<?php echo GamesModule::getAssetsUrl(); ?>/guesswhat/images/guesswhatlogo.png" alt="Zen Pond" width="131" height="97" /> 
-    </div> 
+    <div id="guesswhat">
+      <img src="<?php echo GamesModule::getAssetsUrl(); ?>/guesswhat/images/guesswhatlogo.png" alt="Zen Pond" width="131" height="97" />
+    </div>
     <div id="scores" class="clearfix"></div>
     <div class="game_description describe guess"><h2>How To Play</h2>Help your partner guess the following image from the others. Then you try and guess what your partner's image is!<p>Click on the zoom icon to see a full-screen version.</p></div>
     <div id="wrong-guesses"><h3>Guessed Image(s)</h3></div>
-    <div id="more_info"></div>  
+    <div id="more_info"></div>
   </div>
-  
+
   <div id="messages"></div>
 
   <div id="game">
-    <div class="describe">      
+    <div class="describe">
       <div class="image"></div>
       <div class="form">
       	<div id="words_to_avoid"></div>
@@ -34,18 +34,18 @@
     <div class="guess">
       <div class="images" class="clearfix"></div>
     	<div class="form clearfix">
-        <div class="hints"><h3>Hints Received</h3></div> 
+        <div class="hints"><h3>Hints Received</h3></div>
       </div>
         <div id="requestHintContainer"></div>
     </div>
   </div>
   <div id="finalScreen"></div>
-  
+
   <!-- Currently don't know value of having license info here -->
 	<!-- when it's shown when player clicks on image anyways    -->
 	<!-- so I'm commenting it out for now. SP 20111201          -->
   <!-- <div id="licences"></div> -->
-  
+
 </div>
 <div id="info-modal"></div>
 
@@ -113,11 +113,11 @@
 </script>
 
 <script id="template-words-to-avoid" type="text/x-jquery-tmpl">
-  <span>${tag}</span> 
+  <span>${tag}</span>
 </script>
 
 <script id="template-licence" type="text/x-jquery-tmpl">
-  <span><b>${name}</b> ${description}</span> 
+  <span><b>${name}</b> ${description}</span>
 </script>
 
 <script id="template-info-modal-time-out" type="text/x-jquery-tmpl">
@@ -151,10 +151,10 @@
   <b>${game_partner_name}</b> waits for you to make a guess.
 </script>
 <script id="template-wrong-guess-waiting-for-guess" type="text/x-jquery-tmpl">
-  <b>${game_partner_name}</b> made a wrong guess. 
+  <b>${game_partner_name}</b> made a wrong guess.
 </script>
 <script id="template-wrong-guess-waiting-for-hint" type="text/x-jquery-tmpl">
-  <b>${game_partner_name}</b> made a wrong guess. Please give another hint. ${time_out} Seconds left.  
+  <b>${game_partner_name}</b> made a wrong guess.<br /> Please give another hint.<br />${time_out} Seconds left.
 </script>
 <script id="template-error-hint-stop-word" type="text/x-jquery-tmpl">
   <h1>Ooops</h1><p>Your hint is on our stop word list. Please give another hint.</p>
