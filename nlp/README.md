@@ -14,40 +14,77 @@ My thanks to the [tiltfactor lab](http://www.tiltfactor.org/) for allowing me to
 
 ## Setup
 
-Install flask with pip:
+These instructions are sepcifically for Ubuntu/Debian, but with minor tweaking, it should work for other systems too.
 
-    sudo  pip install flask
-This will install flask system-wide. If you prefer working with virtual environment, follow the instructions [here](http://flask.pocoo.org/docs/installation/).
+Install [pip](http://www.pip-installer.org/en/latest/installing.html) (if not already present).
 
-For parts of the program to work, you'll need the [PyEnchant](http://pythonhosted.org/pyenchant/download.html) library.
+    sudo apt-get install python-pip
 
-    sudo pip install pyenchant
+We'll be working with [virtual environment](https://pypi.python.org/pypi/virtualenv). This is to handle possible dependency conflicts in the future.
 
-Now run the server:
+    sudo apt-get install python-virtualenv
+
+Now run this from the project folder:
+
+    virtualenv venv
+    . venv/bin/activate
+
+Install flask with pip. For parts of the program to work, you'll also need the [PyEnchant](http://pythonhosted.org/pyenchant/download.html) library.
+
+    pip install flask pyenchant
+
+If you prefer installing the dependencies system-wide, you can skip the virtual environment setup and just do this. 
+
+    sudo pip install flask pyenchant
+
+Now start the flask server:
 
     python run_nlpserver.py
 
-Go to <http://localhost:8139> and you should see a simple welcome message.
+Make sure that you have a symlink pointing to *scripts* in the *nlpserver* folder, if you encounter module import errors related to the nlp scripts. If you can't form a symlink (eg: on Windows machines), just move the *scripts* folder inside *nlpserver*.
 
-Basic configuration is handled from *config.py* where things like server name and port can be changed. If you are using this in a production environment, set the *DEBUG* flag to *False* here. (Debug) messages get logged to *nlpserver.log* file, in the application directory. Make sure that you have a symlink pointing to *scripts* in the *nlpserver* folder, if you encounter module import errors related to the nlp scripts. If you can't form a symlink (eg: on Windows machines), just move the *scripts* folder inside *nlpserver*.
+You will need to activate the virtual environment and run the flask server everytime you want to use the functionality here. If apache is already setup and you want to avoid this, use *mod_wsgi* (see below).
 
+#### Testing the server
 
-## Running the server with mod_wsgi
+Go to <http://localhost:8139> and you should see a simple welcome message: `NLP API: Swagatam`.
+You may also test the server functionality with:
 
-If you already have apache running and don't want a separate flask server running, you can install [mod\_wsgi](https://code.google.com/p/modwsgi/)
-For Ubuntu/Debian, this will suffice:
+    curl http://localhost:8139/possible_wordcheck?input=cromulent
+
+Should return:
+
+    {
+      "response": true
+    }
+
+#### Running the server with mod_wsgi
+
+If you already have apache running and don't want a separate flask server running, you can install [mod\_wsgi](https://code.google.com/p/modwsgi/). For Ubuntu/Debian, this will suffice:
 
     sudo apt-get install libapache2-mod-wsgi
 
-After installing, copy the *example/nlpserver* file to */etc/apache2/sites-enabled*. Modify the user and group field, and also the paths to the app. Change the port from 8139 if you want, but make sure to add the line *Listen portnumber* to */etc/apache2/ports.conf*. Also, in the server directory, update the path in the file *nlpserver.wsgi*. Then enable the site with 
+After installing, copy the *examples/nlpserver* file to */etc/apache2/sites-available*. Modify the user and group field, and also the paths to the app. Change the port from 8139 if you want, but make sure to add the line `Listen 8139` to */etc/apache2/ports.conf*, and that it is open in the firewall. Also, when using the python virtual environment, modify the global apache file (*apache2.conf*) to include the line below (modifying the paths of course):
+
+    WSGIPythonHome /home/anup/public_html/tf/anup-mgame-nov/nlpserver/venv
+
+Finally, in the server directory, update the path in the file *nlpserver.wsgi*. 
+
+Then enable the site with 
 
     sudo a2ensite nlpserver
 
-Restart apache and you should be good to go. Note that the configuration of servername and port is now dependent on the apache config files, and not on *config.py*. (Debug) messages will also get logged to the apache log files, in addition to the *nlpserver.log* file in the application dir.
+If you are having problems with *a2ensite*, you can just copy the nlpserver file to */etc/apache2/sites-enabled* and work from there. 
 
-In case of problems with mod-wsgi: <http://flask.pocoo.org/docs/deploying/mod_wsgi/>. It might also help to set the log level to *info* in the apache configuration file.
+Restart apache and you should be good to go. Run the tests in the previous section. In case of problems with mod-wsgi: <http://flask.pocoo.org/docs/deploying/mod_wsgi/>. It might also help to set the log level to *info* in the apache configuration file.
 
 The flask application here can be kept in any folder for which apache has read access, but for security, make sure that apache can't serve static files from that folder.
+
+#### Server configuration and debugging
+
+Basic configuration is handled from *config.py* where things like server name and port can be changed. (Debug) messages get logged to *nlpserver.log* file, in the application directory. If you are using this in a production environment, we don't want the messages to clutter the log file, so set the *DEBUG* flag to *False* here. 
+
+When running the server with *mod_wsgi*, the configuration of servername and port is dependent on the apache config files (as documented above), and *not* on *config.py*. (Debug) messages will also get logged to the apache log files, in addition to the file *nlpserver.log*.
 
 
 ## Available views (with a mix of linguistics)
