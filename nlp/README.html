@@ -12,7 +12,7 @@
 
 <h2>Setup</h2>
 
-<p>These instructions are sepcifically for Ubuntu/Debian, but with minor tweaking, it should work for other systems too.</p>
+<p>These instructions are specifically for Ubuntu/Debian, but with minor tweaking, it should work for other systems too.</p>
 
 <p>Install <a href="http://www.pip-installer.org/en/latest/installing.html">pip</a> (if not already present).</p>
 
@@ -91,7 +91,7 @@ You may also test the server functionality with:</p>
 
 <h4>Server configuration and debugging</h4>
 
-<p>Basic configuration is handled from <em>config.py</em> where things like server name and port can be changed. (Debug) messages get logged to <em>nlpserver.log</em> file, in the application directory. If you are using this in a production environment, we don't want the messages to clutter the log file, so set the <em>DEBUG</em> flag to <em>False</em> here. </p>
+<p>Basic configuration is handled from <em>config.py</em> where things like server name and port can be changed. (Debug) messages get logged to <em>nlpserver.log</em> file, in the application directory. If you are using this in a production environment, you probably don't want the messages to clutter the log file, so set the <em>DEBUG</em> flag to <em>False</em> here. </p>
 
 <p>When running the server with <em>mod_wsgi</em>, the configuration of servername and port is dependent on the apache config files (as documented above), and <em>not</em> on <em>config.py</em>. (Debug) messages will also get logged to the apache log files, in addition to the file <em>nlpserver.log</em>.</p>
 

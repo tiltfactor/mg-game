@@ -8,9 +8,8 @@ DEBUG = True
 
 # Used for running the flask server independent of mod_wsgi
 # using SERVER_NAME as the var name makes views fail..
-# Set servername to one used for the gameserver
+# Set servername to gameserver base url
 #SERVERNAME = "127.0.0.1"
-#SERVERNAME = "tiltfactor1.dartmouth.edu" 
 SERVERNAME = "localhost" 
 SERVER_PORT = 8139
 #SERVER_PORT = 5000

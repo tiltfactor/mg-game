@@ -14,7 +14,7 @@ My thanks to the [tiltfactor lab](http://www.tiltfactor.org/) for allowing me to
 
 ## Setup
 
-These instructions are sepcifically for Ubuntu/Debian, but with minor tweaking, it should work for other systems too.
+These instructions are specifically for Ubuntu/Debian, but with minor tweaking, it should work for other systems too.
 
 Install [pip](http://www.pip-installer.org/en/latest/installing.html) (if not already present).
 
@@ -82,7 +82,7 @@ The flask application here can be kept in any folder for which apache has read a
 
 #### Server configuration and debugging
 
-Basic configuration is handled from *config.py* where things like server name and port can be changed. (Debug) messages get logged to *nlpserver.log* file, in the application directory. If you are using this in a production environment, we don't want the messages to clutter the log file, so set the *DEBUG* flag to *False* here. 
+Basic configuration is handled from *config.py* where things like server name and port can be changed. (Debug) messages get logged to *nlpserver.log* file, in the application directory. If you are using this in a production environment, you probably don't want the messages to clutter the log file, so set the *DEBUG* flag to *False* here. 
 
 When running the server with *mod_wsgi*, the configuration of servername and port is dependent on the apache config files (as documented above), and *not* on *config.py*. (Debug) messages will also get logged to the apache log files, in addition to the file *nlpserver.log*.
 
