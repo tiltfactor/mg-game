@@ -506,7 +506,9 @@ MG_GAME_PYRAMID = function ($) {
                     // ajax call to the nlp api
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost:8139/possible_word_check",
+                        // TODO: seperate this url setup like for mg-game-api url
+                        //url: "http://localhost:8139/possible_wordcheck",
+                        url: "http://tiltfactor1.dartmouth.edu:8139/possible_wordcheck",
                         timeout: 5000,
                         data: { input: tags },
                         dataType: "json",
