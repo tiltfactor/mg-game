@@ -2,8 +2,16 @@
 <VirtualHost *:8139>
     ServerName nlp.localhost
 
-    WSGIDaemonProcess nlpserver user=anup group=www-data threads=5
     WSGIScriptAlias / /home/anup/public_html/tf/anup-mgame-nov/nlp/nlpserver.wsgi
+    WSGIDaemonProcess nlpserver user=anup group=www-data threads=5
+
+    # don't foregt to turn on ssl for apache: sudo a2enmod ssl
+    SSLEngine On
+
+    # For testing: the one on ubuntu, used for default-ssl
+    # Replace with your website's certificates..
+    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
 
     <Directory /home/anup/public_html/tf/anup-mgame-nov/nlp/>
         WSGIProcessGroup nlpserver

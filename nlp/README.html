@@ -66,12 +66,17 @@ You may also test the server functionality with:</p>
 
 <h4>Running the server with mod_wsgi</h4>
 
-<p>If you already have apache running and don't want a separate flask server running, you can install <a href="https://code.google.com/p/modwsgi/">mod_wsgi</a>. For Ubuntu/Debian, this will suffice:</p>
+<p>If you already have apache running and don't want a separate flask server running, you can install <a href="https://code.google.com/p/modwsgi/">mod_wsgi</a>. Also, flask does not handle SSL connections by default, but with <em>mod_wsgi</em>, you can set up the nlpserver so that it works over <em>https</em>. For Ubuntu/Debian, this will suffice:</p>
 
 <pre><code>sudo apt-get install libapache2-mod-wsgi
 </code></pre>
 
-<p>After installing, copy the <em>examples/nlpserver</em> file to <em>/etc/apache2/sites-available</em>. Modify the user and group field, and also the paths to the app. Change the port from 8139 if you want, but make sure to add the line <code>Listen 8139</code> to <em>/etc/apache2/ports.conf</em>, and that it is open in the firewall. Also, when using the python virtual environment, modify the global apache file (<em>apache2.conf</em>) to include the line below (modifying the paths of course):</p>
+<p>After installing, copy the <em>examples/nlpserver</em> file to <em>/etc/apache2/sites-available</em>. Modify the user and group field, and also the paths to the app. Change the port from 8139 if you want, but make sure to add the line <code>Listen 8139</code> to <em>/etc/apache2/ports.conf</em>, and that it is open in the firewall. To run the server over <em>https</em>, modify the SSLCertificate lines to point to the pem and key file for your server. You might have to enable SSL for apache, if it's not done already. </p>
+
+<pre><code>sudo a2enmod ssl
+</code></pre>
+
+<p>Also, when using the python virtual environment, modify the global apache file (<em>apache2.conf</em>) to include the line below (modifying the paths of course):</p>
 
 <pre><code>WSGIPythonHome /home/anup/public_html/tf/anup-mgame-nov/nlpserver/venv
 </code></pre>
@@ -97,7 +102,7 @@ You may also test the server functionality with:</p>
 
 <h2>Available views (with a mix of linguistics)</h2>
 
-<p>The commandline utility <a href="http://curl.haxx.se/">curl</a> was used for these demonstrations, but anything capable of doing HTTP GET requests will work (meaning all web browsers)</p>
+<p>The commandline utility <a href="http://curl.haxx.se/">curl</a> was used for these demonstrations, but anything capable of doing HTTP GET requests will work (meaning all web browsers). When you are using <em>https</em> (as done in the <em>mod_wsgi</em> setup), just replace <em>http</em> in the server urls with <em>https</em>.</p>
 
 <h4>/possible_wordcheck</h4>
 

@@ -60,11 +60,15 @@ Should return:
 
 #### Running the server with mod_wsgi
 
-If you already have apache running and don't want a separate flask server running, you can install [mod\_wsgi](https://code.google.com/p/modwsgi/). For Ubuntu/Debian, this will suffice:
+If you already have apache running and don't want a separate flask server running, you can install [mod\_wsgi](https://code.google.com/p/modwsgi/). Also, flask does not handle SSL connections by default, but with *mod_wsgi*, you can set up the nlpserver so that it works over *https*. For Ubuntu/Debian, this will suffice:
 
     sudo apt-get install libapache2-mod-wsgi
 
-After installing, copy the *examples/nlpserver* file to */etc/apache2/sites-available*. Modify the user and group field, and also the paths to the app. Change the port from 8139 if you want, but make sure to add the line `Listen 8139` to */etc/apache2/ports.conf*, and that it is open in the firewall. Also, when using the python virtual environment, modify the global apache file (*apache2.conf*) to include the line below (modifying the paths of course):
+After installing, copy the *examples/nlpserver* file to */etc/apache2/sites-available*. Modify the user and group field, and also the paths to the app. Change the port from 8139 if you want, but make sure to add the line `Listen 8139` to */etc/apache2/ports.conf*, and that it is open in the firewall. To run the server over *https*, modify the SSLCertificate lines to point to the pem and key file for your server. You might have to enable SSL for apache, if it's not done already. 
+
+    sudo a2enmod ssl
+
+Also, when using the python virtual environment, modify the global apache file (*apache2.conf*) to include the line below (modifying the paths of course):
 
     WSGIPythonHome /home/anup/public_html/tf/anup-mgame-nov/nlpserver/venv
 
@@ -89,7 +93,7 @@ When running the server with *mod_wsgi*, the configuration of servername and por
 
 ## Available views (with a mix of linguistics)
 
-The commandline utility [curl](http://curl.haxx.se/) was used for these demonstrations, but anything capable of doing HTTP GET requests will work (meaning all web browsers)
+The commandline utility [curl](http://curl.haxx.se/) was used for these demonstrations, but anything capable of doing HTTP GET requests will work (meaning all web browsers). When you are using *https* (as done in the *mod_wsgi* setup), just replace *http* in the server urls with *https*.
 
 #### /possible_wordcheck
 
