@@ -19,7 +19,7 @@
 
                     <div id="splash_title">
                     </div>
-                    <div class="spacial_font size_20 div_center logo_subtext text_left">We showed an image to our panel of experts and had each of them describe it in one word. How many of our experts' words can you match in 2 minutes?!</div>
+                    <div class="spacial_font size_20 div_center logo_subtext text_left">We asked random people to describe the image you are about to see in a single word each.  How many of these words can you match in 2 minutes?!</div>
                 </div>
                 <div class="text_left">
                     <a href="<?php echo $game_url; ?>/Pyramid/play" class="hover_btn">

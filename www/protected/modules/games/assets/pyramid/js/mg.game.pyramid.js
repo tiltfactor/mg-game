@@ -164,7 +164,7 @@ MG_GAME_PYRAMID = function ($) {
                 // however, just to be safe, strip the special chars if still present
                 // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\",'
                 // allowed: -
-                str = str.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g, ""); 
+                str = str.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g, "");
                 //console.log(str);
 
                 if (event.keyCode != '13' && event.keyCode != '8' && event.keyCode != '46' && event.keyCode != '32') {
@@ -253,7 +253,7 @@ MG_GAME_PYRAMID = function ($) {
             $("#input_area").html("");
             $("#input_area").hide();
 
-            //  text is "You matched # words with those surveyed!"
+            //  text is "You matched # words with the random people."
             var final_words = {};
             final_words[0] = 'Better luck next time!';
             final_words[1] = 'A good start!';
@@ -265,10 +265,10 @@ MG_GAME_PYRAMID = function ($) {
             final_words[7] = 'That\'s incredible!';
             final_words[8] = 'You\'re on fire!';
             final_words[9] = 'I bow to your greatness!';
-            
+
             //finalMsg:"You reached " + (MG_GAME_PYRAMID.level+MG_GAME_PYRAMID.level_step -1) + " letters! How far can you go?"
             var final_info = {
-                finalMsg: "You matched " + matched_words + " with our experts!",
+                finalMsg: "You matched " + matched_words + " with the random people.",
                 finalMsg_2ndline: final_words[matched_words]
             };
 
@@ -388,7 +388,7 @@ MG_GAME_PYRAMID = function ($) {
                         MG_GAME_PYRAMID.nextlevel(false);
                     } else {
                     		// no match -- feedback
-                        var myArray = ['No match. Try again?', "That's not what our experts said!", "Sorry, our experts don't agree!"];
+                        var myArray = ['No match. Try again?', "That's not what our experts said!", "Sorry, the random people don't agree!"];
                         $().toastmessage("showToast", {
                             text: myArray[Math.floor(Math.random() * myArray.length)],
                             position:"tops-center",
@@ -435,7 +435,7 @@ MG_GAME_PYRAMID = function ($) {
 
                 } else if (tags.length < (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step)) {
                     $().toastmessage("showToast", {
-                        text: "not enough letters!",//"That wasn't a " + (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step) + " letters word!",
+                        text: "Not enough letters!",//"That wasn't a " + (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step) + " letters word!",
                         position:"tops-center",
                         type:"notice",
                         background: "#F1F1F1"
@@ -456,7 +456,7 @@ MG_GAME_PYRAMID = function ($) {
                 // TODO: Turn this into a function maybe..
                 else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
                     $().toastmessage("showToast", {
-                        text:"special character not allowed!",
+                        text:"Special characters are not allowed!",
                         position:"tops-center",
                         type:"notice",
                         background: "#F1F1F1"
@@ -465,7 +465,7 @@ MG_GAME_PYRAMID = function ($) {
                 }
                 else if($.inArrayIn(tags, MG_GAME_PYRAMID.words) !== -1){
                     $().toastmessage("showToast", {
-                        text:"already tried that!",
+                        text:"You already tried that!",
                         position:"tops-center",
                         type:"notice",
                         background: "#F1F1F1"
@@ -523,7 +523,7 @@ MG_GAME_PYRAMID = function ($) {
                         if (!is_word) {
                             //console.log(tags+' is not a word.');
                             $().toastmessage("showToast", {
-                                text:"not a word!",
+                                text:"That's not a word...",
                                 position:"tops-center",
                                 type:"notice",
                                 background: "#F1F1F1"
@@ -569,21 +569,21 @@ MG_GAME_PYRAMID = function ($) {
         nextlevel:function (skip) {
             MG_GAME_PYRAMID.level++;
             MG_GAME_PYRAMID.wordField.attr("placeholder", "Enter a " + (MG_GAME_PYRAMID.level + MG_GAME_PYRAMID.level_step) + " letter word");
-            $("#content").find("footer").removeClass("footer_level_" + MG_GAME_PYRAMID.level -1).addClass("footer_level_" + MG_GAME_PYRAMID.level); 		
+            $("#content").find("footer").removeClass("footer_level_" + MG_GAME_PYRAMID.level -1).addClass("footer_level_" + MG_GAME_PYRAMID.level);
             //$("#content").find("footer").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
             $("input#word").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
 // Comment out. Pass button should be same color, regardless of level
 //             $("#pass").removeClass("level_" + MG_GAME_PYRAMID.level -1).addClass("level_" + MG_GAME_PYRAMID.level);
 
             if (skip !== true) {
-                var myArray = ['Awesome!', "Great job! Bet you can't get this one!", 'Nice!', 'Cool!', "Our experts agree!"];
+                var myArray = ['Awesome!', "Great job! Bet you can't get this one!", 'Nice!', 'Cool!', "One of the random people agrees!"];
                 $().toastmessage("showToast", {
                     text: myArray[Math.floor(Math.random() * myArray.length)],
                     position:"tops-center",
                     type:"notice",
                     background: "#ffcc00"
                 });
-                MG_GAME_PYRAMID.playSound('next_level');                
+                MG_GAME_PYRAMID.playSound('next_level');
             }
         }
     });
