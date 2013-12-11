@@ -98,9 +98,11 @@
     <div class="total_turns">Turn <span>${current_turn}</span>&nbsp;/&nbsp;<span>${turns}</span></div>
     <div class="guesses"><span>${num_guesses_left}</span> guess(es) left</div>
     <!-- TODO: Give hints their own CSS class... -->
-    <div class="hints_left">
+
+    <!-- 20131211 - sp - comment out as additional hints no longer given -->
+    <!-- <div class="hints_left">
       <span>${num_hints_left}</span> hint(s) left
-    </div>
+    </div> -->
   </div>
 </script>
 
