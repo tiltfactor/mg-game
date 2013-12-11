@@ -388,7 +388,7 @@ MG_GAME_PYRAMID = function ($) {
                         MG_GAME_PYRAMID.nextlevel(false);
                     } else {
                     		// no match -- feedback
-                        var myArray = ['No match. Try again?', "That's not what our experts said!", "Sorry, the random people don't agree!"];
+                        var myArray = ['No match. Try again?', "None of the random people said that!", "Sorry, the random people don't agree!"];
                         $().toastmessage("showToast", {
                             text: myArray[Math.floor(Math.random() * myArray.length)],
                             position:"tops-center",
