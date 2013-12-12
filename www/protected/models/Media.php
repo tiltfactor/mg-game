@@ -173,7 +173,7 @@ class Media extends BaseMedia
 
         }
 
-        if (!Yii::app()->request->isAjaxRequest)
+        // if (!Yii::app()->request->isAjaxRequest)
            // $criteria->order = 'tag_count DESC';
 
         $sort = new CSort;
