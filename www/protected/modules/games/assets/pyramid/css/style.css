@@ -22,6 +22,7 @@ body {
   background-color: #FFFFFF;
   background-image: url('../images/pyramid-background.jpg');
   background-repeat: repeat;
+  background-position: 0 0;
   width: 100%;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
@@ -36,11 +37,6 @@ body {
 .mm-is-menu * {
   font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif !important;
   text-align: left;
-}
-html.mm-right.mm-opening .mm-page,
-html.mm-right.mm-opening #mm-blocker {
-  margin: 0 -50px 0 0 !important;
-  /* fix width when opening Menu during game */
 }
 body {
   height: 100%;
@@ -65,6 +61,7 @@ body .back_yellow {
 body .delete {
   background-image: url('../images/delete.png');
   background-repeat: repeat;
+  background-position: 0 0;
   background-repeat: no-repeat;
   width: 31px;
   height: 22px;
@@ -292,6 +289,7 @@ body #content footer {
 body #content footer.footer_level_1 {
   background-image: url('../images/level_1.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_1 {
@@ -304,6 +302,7 @@ body #content footer.footer_level_1 {
 body #content footer.footer_level_2 {
   background-image: url('../images/level_2.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_2 {
@@ -316,6 +315,7 @@ body #content footer.footer_level_2 {
 body #content footer.footer_level_3 {
   background-image: url('../images/level_3.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_3 {
@@ -328,6 +328,7 @@ body #content footer.footer_level_3 {
 body #content footer.footer_level_4 {
   background-image: url('../images/level_4.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_4 {
@@ -340,6 +341,7 @@ body #content footer.footer_level_4 {
 body #content footer.footer_level_5 {
   background-image: url('../images/level_5.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_5 {
@@ -352,6 +354,7 @@ body #content footer.footer_level_5 {
 body #content footer.footer_level_6 {
   background-image: url('../images/level_6.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_6 {
@@ -364,6 +367,7 @@ body #content footer.footer_level_6 {
 body #content footer.footer_level_7 {
   background-image: url('../images/level_7.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_7 {
@@ -376,6 +380,7 @@ body #content footer.footer_level_7 {
 body #content footer.footer_level_8 {
   background-image: url('../images/level_8.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_8 {
@@ -388,6 +393,7 @@ body #content footer.footer_level_8 {
 body #content footer.footer_level_9 {
   background-image: url('../images/level_9.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   body #content footer.footer_level_9 {
@@ -408,7 +414,7 @@ body #content footer div {
 }
 body .pyramid {
   background-repeat: no-repeat;
-  background-position: center top;
+  background-position: center top !important;
   background-repeat: no-repeat !important;
   color: white;
   font-size: 20px;
@@ -416,6 +422,7 @@ body .pyramid {
 body .pyramid.word_level_1 {
   background-image: url('../images/pyramid_1.png');
   background-repeat: repeat;
+  background-position: 0 0;
   height: 71px;
   line-height: 35px;
 }
@@ -430,6 +437,7 @@ body .pyramid.word_level_1 {
 body .pyramid.word_level_2 {
   background-image: url('../images/pyramid_2.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -444,6 +452,7 @@ body .pyramid.word_level_2 {
 body .pyramid.word_level_3 {
   background-image: url('../images/pyramid_3.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 36px;
   height: 36px;
 }
@@ -458,6 +467,7 @@ body .pyramid.word_level_3 {
 body .pyramid.word_level_4 {
   background-image: url('../images/pyramid_4.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -472,6 +482,7 @@ body .pyramid.word_level_4 {
 body .pyramid.word_level_5 {
   background-image: url('../images/pyramid_5.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 34px;
   height: 34px;
 }
@@ -486,6 +497,7 @@ body .pyramid.word_level_5 {
 body .pyramid.word_level_6 {
   background-image: url('../images/pyramid_6.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -500,6 +512,7 @@ body .pyramid.word_level_6 {
 body .pyramid.word_level_7 {
   background-image: url('../images/pyramid_7.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 35px;
 }
@@ -514,6 +527,7 @@ body .pyramid.word_level_7 {
 body .pyramid.word_level_8 {
   background-image: url('../images/pyramid_8.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 34px;
   height: 34px;
 }
@@ -528,6 +542,7 @@ body .pyramid.word_level_8 {
 body .pyramid.word_level_9 {
   background-image: url('../images/pyramid_9.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -542,6 +557,7 @@ body .pyramid.word_level_9 {
 body .pyramid.level_1 {
   background-image: url('../images/pyramid_1.png');
   background-repeat: repeat;
+  background-position: 0 0;
   height: 72px;
   line-height: 35px;
 }
@@ -556,6 +572,7 @@ body .pyramid.level_1 {
 body .pyramid.level_2 {
   background-image: url('../images/pyramid_NA_2.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -570,6 +587,7 @@ body .pyramid.level_2 {
 body .pyramid.level_3 {
   background-image: url('../images/pyramid_NA_3.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 36px;
   height: 36px;
 }
@@ -584,6 +602,7 @@ body .pyramid.level_3 {
 body .pyramid.level_4 {
   background-image: url('../images/pyramid_NA_4.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -598,6 +617,7 @@ body .pyramid.level_4 {
 body .pyramid.level_5 {
   background-image: url('../images/pyramid_NA_5.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 34px;
   height: 34px;
 }
@@ -612,6 +632,7 @@ body .pyramid.level_5 {
 body .pyramid.level_6 {
   background-image: url('../images/pyramid_NA_6.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -626,6 +647,7 @@ body .pyramid.level_6 {
 body .pyramid.level_7 {
   background-image: url('../images/pyramid_NA_7.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 35px;
 }
@@ -640,6 +662,7 @@ body .pyramid.level_7 {
 body .pyramid.level_8 {
   background-image: url('../images/pyramid_NA_8.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 34px;
   height: 34px;
 }
@@ -654,6 +677,7 @@ body .pyramid.level_8 {
 body .pyramid.level_9 {
   background-image: url('../images/pyramid_NA_9.png');
   background-repeat: repeat;
+  background-position: 0 0;
   line-height: 35px;
   height: 34px;
 }
@@ -684,6 +708,7 @@ body .header_mm_left {
   display: block;
   background-image: url('../images/settings.png');
   background-repeat: repeat;
+  background-position: 0 0;
   background-repeat: no-repeat;
   width: 35px;
   height: 22px;
@@ -787,6 +812,7 @@ input#word {
 input#word.level_1 {
   background-image: url('../images/underscore_1.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_1 {
@@ -799,6 +825,7 @@ input#word.level_1 {
 input#word.level_2 {
   background-image: url('../images/underscore_2.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_2 {
@@ -811,6 +838,7 @@ input#word.level_2 {
 input#word.level_3 {
   background-image: url('../images/underscore_3.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_3 {
@@ -823,6 +851,7 @@ input#word.level_3 {
 input#word.level_4 {
   background-image: url('../images/underscore_4.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_4 {
@@ -835,6 +864,7 @@ input#word.level_4 {
 input#word.level_5 {
   background-image: url('../images/underscore_5.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_5 {
@@ -847,6 +877,7 @@ input#word.level_5 {
 input#word.level_6 {
   background-image: url('../images/underscore_6.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_6 {
@@ -859,6 +890,7 @@ input#word.level_6 {
 input#word.level_7 {
   background-image: url('../images/underscore_7.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_7 {
@@ -871,6 +903,7 @@ input#word.level_7 {
 input#word.level_8 {
   background-image: url('../images/underscore_8.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_8 {
@@ -883,6 +916,7 @@ input#word.level_8 {
 input#word.level_9 {
   background-image: url('../images/underscore_9.png');
   background-repeat: no-repeat;
+  background-position: 0px 6px;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   input#word.level_9 {
@@ -902,7 +936,6 @@ input#word.level_9 {
   padding: 0px !important;
   margin: 3px 0px 0 0px;
   min-width: 220px !important;
-  height: 30px;
   font-size: 25px;
   letter-spacing: 1px;
 }
@@ -1037,8 +1070,9 @@ span:hover.button {
 .new_game {
   background-image: url('../images/new_game.png');
   background-repeat: repeat;
+  background-position: 0 0;
   background-repeat: no-repeat !important;
-  background-position: center;
+  background-position: center !important;
   height: 80px;
   margin-left: 0px;
 }
@@ -1054,6 +1088,7 @@ span:hover.button {
 .new_game:focus {
   background-image: url('../images/new_game_on.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   .new_game:hover,
@@ -1067,6 +1102,7 @@ span:hover.button {
 .new_game:active {
   background-image: url('../images/new_game_on.png');
   background-repeat: repeat;
+  background-position: 0 0;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
   .new_game:active {
@@ -1506,11 +1542,11 @@ body.retina #gamearea {
 }
 html.mm-right.mm-opening .mm-page,
 html.mm-right.mm-opening #mm-blocker {
-  margin: 0 -44px 0 0;
+  margin: 0 -50px 0 0 !important;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait) {
   html.mm-right.mm-opening .mm-page,
   html.mm-right.mm-opening #mm-blocker {
-    margin: 0 -77px 0 0 !important;
+    margin: 0 -60px 0 0 !important;
   }
 }

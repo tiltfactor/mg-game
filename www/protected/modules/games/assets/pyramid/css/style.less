@@ -1,6 +1,8 @@
-.at2x(@path, @w: auto, @h: auto, @repeat: repeat) {
+.at2x(@path, @w: auto, @h: auto, @repeat: repeat, @pos: 0 0) {
   background-image: url(@path);
   background-repeat: @repeat;
+  background-position: @pos;
+
   @at2x_path: ~`"@{path}".split('.').slice(0, "@{path}".split('.').length - 1).join(".") + "@2x" + "." + "@{path}".split('.')["@{path}".split('.').length - 1]`;
 
   @media all and  (-webkit-min-device-pixel-ratio : 1.5),
@@ -52,12 +54,6 @@ body {
 .mm-is-menu * {
 font-family: Museo, Helvetica, Verdana, Arial, Sans-Serif !important;
 text-align: left;
-}
-
-html.mm-right.mm-opening .mm-page,
-html.mm-right.mm-opening #mm-blocker
-{
-	margin: 0 -50px 0 0 !important; /* fix width when opening Menu during game */
 }
 
 body {
@@ -329,7 +325,7 @@ body {
 
   .pyramid {
     background-repeat: no-repeat;
-    background-position: center top;
+    background-position: center top !important;
     background-repeat: no-repeat !important;
     color: white;
     font-size: 20px;
@@ -578,31 +574,31 @@ input#word {
 
   &.level_1 {
     //background: url('../images/underscore_1@2x.png') 0px 0px no-repeat transparent;
-    .at2x('../images/underscore_1.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_1.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_2 {
-    .at2x('../images/underscore_2.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_2.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_3 {
-    .at2x('../images/underscore_3.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_3.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_4 {
-    .at2x('../images/underscore_4.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_4.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_5 {
-    .at2x('../images/underscore_5.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_5.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_6 {
-    .at2x('../images/underscore_6.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_6.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_7 {
-    .at2x('../images/underscore_7.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_7.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_8 {
-    .at2x('../images/underscore_8.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_8.png', 0, 0, no-repeat, 0px 6px);
   }
   &.level_9 {
-    .at2x('../images/underscore_9.png', 0, 0, no-repeat);
+    .at2x('../images/underscore_9.png', 0, 0, no-repeat, 0px 6px);
   }
 }
 
@@ -618,7 +614,6 @@ input#word {
 
   margin: 3px 0px 0 0px;
   min-width: 220px !important;
-  height: 30px;
   font-size: 25px;
   letter-spacing: 1px;
 }
@@ -777,7 +772,7 @@ a:hover.button, span:hover.button {
 .new_game {
   .at2x('../images/new_game.png');
   background-repeat: no-repeat !important;
-  background-position: center;
+  background-position: center !important;
   height: 80px;
   margin-left: 0px;
 
@@ -1274,7 +1269,7 @@ body.retina {
 
 html.mm-right.mm-opening .mm-page,
 html.mm-right.mm-opening #mm-blocker {
-  margin: 0 -44px 0 0;
+  margin: 0 -50px 0 0 !important;
 }
 
 @media all and  (-webkit-min-device-pixel-ratio : 1.5),
@@ -1287,6 +1282,6 @@ only screen and (         min-device-pixel-ratio: 1.5) and (pointer:coarse),
 only screen and (              min-resolution: 1.5dppx) and (orientation: portrait) {
   html.mm-right.mm-opening .mm-page,
   html.mm-right.mm-opening #mm-blocker {
-    margin: 0 -77px 0 0 !important;
+    margin: 0 -60px 0 0 !important;
   }
 }
