@@ -95,20 +95,21 @@
 
             <div id="learn_more" class="hidden">
                 <h2>Learn More</h2>
-                <div class="padding">One Up is part of a suite of games from the
+                <div class="padding">
+                    <p>One Up is part of a suite of games from the
                     Metadata Games project. Metadata Games is a
                     Free and Open Source (FOSS) online game
                     system for gathering useful data on photo,
                     audio, and moving image artifacts. By playing,
                     you have a direct impact on the preservation
                     and accessibility of vital cultural heritage
-                    collections for future generations.</div>
-                <div class="padding">
+                    collections for future generations.</p>
+                    <p>
                     Metadata Games is created by the Tiltfactor
                     Laboratory at Dartmouth College, with support
                     from the National Endowment for the
                     Humanities (NEH) and the American Council of
-                    Learned Societies (ACLS).
+                    Learned Societies (ACLS).</p>
                 </div>
                 <h3 class="padding">METADATAGAMES</h3>
                 <div>
