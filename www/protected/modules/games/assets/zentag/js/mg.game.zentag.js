@@ -349,6 +349,9 @@ MG_GAME_ZENTAG = function ($) {
                 // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\"
                 // allowed: '-
                 tags = tags.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\"]/g, ""); 
+
+                // Lowercase the tags. Means that the db will have all lowercase data
+                tags = tags.toLowerCase();
                 //console.log(tags);
 
                 if (tags == "") {

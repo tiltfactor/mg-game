@@ -446,6 +446,9 @@ MG_GAME_ONEUP = function ($) {
                                             // allowed: '-
                                             tag = tag.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",]/g, "");
 
+                                            // Lowercase the tags. Means that the db will have all lowercase data
+                                            tag = tag.toLowerCase();
+
                                             var new_html,
                                                 validateTag = validTag(that.find('input').val(), turn_response.turns);
 
