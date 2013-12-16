@@ -53,5 +53,12 @@
 - (void)webViewDidFinishLoad:(UIWebView *)localWebView {
     
     [spinner stopAnimating];
+    NSString *currentURL = customWebView.request.URL.absoluteString;
+    NSString *checkURL= [NSString stringWithFormat:@"http://localhost//"];
+    
+    
+    if(![currentURL isEqualToString:checkURL]){
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:currentURL]];
+    }
 }
 @end
