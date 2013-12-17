@@ -11,6 +11,18 @@ import android.app.Activity;
 
 public class MainActivity extends Activity {
 
+	private class OneUpWebViewClient extends WebViewClient {
+	    @Override
+	    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+	        if (url.equals("https://gameServerLocation")) {
+	            return false;
+	        }
+	        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	            view.getContext().startActivity(intent);
+	            return true;
+	    }
+	}
+
 	private WebView myWebView;
 
 	@Override
