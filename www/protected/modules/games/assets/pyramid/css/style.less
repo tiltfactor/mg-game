@@ -93,16 +93,17 @@ body {
   #pass, #new_image {
     width: auto;
     background: #ffce13;
-    height: 30px;
-    line-height: 30px;
+    height: 50px;
+    line-height: 50px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-right: 20px;
     right: 0;
     z-index: 999;
     white-space: nowrap;
     position: absolute;
     padding: 0 10px;
+    font-size: 50px;
 
     &.level_1 {
       background: #ffce13;
@@ -133,8 +134,12 @@ body {
     }
   }
 
+  #pass {
+    margin-top: 4px;
+  }
+
   #new_image {
-    margin-top: -30px;
+    margin-top: -54px;
   }
 
   p, div, li, input {
@@ -150,28 +155,28 @@ body {
   ::-webkit-input-placeholder {
     font-family: "Lucida Console", Monaco, monospace;
     color: #36454c;
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
   :-moz-placeholder { /* Firefox 18- */
     font-family: "Lucida Console", Monaco, monospace;
     color: #36454c;
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
   ::-moz-placeholder {  /* Firefox 19+ */
     font-family: "Lucida Console", Monaco, monospace;
     color: #36454c;
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
   :-ms-input-placeholder {
     font-family: "Lucida Console", Monaco, monospace;
     color: #36454c;
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
@@ -611,8 +616,7 @@ input#word {
   border: none;
   background: transparent;
   padding: 0px !important;
-
-  margin: 3px 0px 0 0px;
+  margin: 0px 0px 0 0px;
   min-width: 220px !important;
   font-size: 25px;
   letter-spacing: 1px;
@@ -936,9 +940,18 @@ body.touch_device {
     }
 
     #pass, #new_image {
-      height: 40px;
-      line-height: 40px;
-      font-size: 30px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 50px;
+      border-radius: 10px;
+    }
+
+    #pass {
+      margin-top: 4px;
+    }
+
+    #new_image {
+      margin-top: -54px;
     }
 
     #register .button, #login .button, #account_update .button {
@@ -1150,22 +1163,22 @@ body.retina {
   }
 
   ::-webkit-input-placeholder {
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
   :-moz-placeholder { /* Firefox 18- */
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
   ::-moz-placeholder {  /* Firefox 19+ */
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 
   :-ms-input-placeholder {
-    font-size: 11px;
+    font-size: 24px;
     letter-spacing: 1px;
   }
 

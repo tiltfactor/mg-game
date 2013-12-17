@@ -82,16 +82,17 @@ body #pass,
 body #new_image {
   width: auto;
   background: #ffce13;
-  height: 30px;
-  line-height: 30px;
+  height: 50px;
+  line-height: 50px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-right: 20px;
   right: 0;
   z-index: 999;
   white-space: nowrap;
   position: absolute;
   padding: 0 10px;
+  font-size: 50px;
 }
 body #pass.level_1,
 body #new_image.level_1 {
@@ -129,8 +130,11 @@ body #pass.level_9,
 body #new_image.level_9 {
   background: #ff6813;
 }
+body #pass {
+  margin-top: 4px;
+}
 body #new_image {
-  margin-top: -30px;
+  margin-top: -54px;
 }
 body p,
 body div,
@@ -146,27 +150,27 @@ body p {
 body ::-webkit-input-placeholder {
   font-family: "Lucida Console", Monaco, monospace;
   color: #36454c;
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body :-moz-placeholder {
   /* Firefox 18- */
   font-family: "Lucida Console", Monaco, monospace;
   color: #36454c;
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body ::-moz-placeholder {
   /* Firefox 19+ */
   font-family: "Lucida Console", Monaco, monospace;
   color: #36454c;
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body :-ms-input-placeholder {
   font-family: "Lucida Console", Monaco, monospace;
   color: #36454c;
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body input.input {
@@ -934,7 +938,7 @@ input#word.level_9 {
   border: none;
   background: transparent;
   padding: 0px !important;
-  margin: 3px 0px 0 0px;
+  margin: 0px 0px 0 0px;
   min-width: 220px !important;
   font-size: 25px;
   letter-spacing: 1px;
@@ -1244,9 +1248,16 @@ body.retina header .center {
 }
 body.retina #pass,
 body.retina #new_image {
-  height: 40px;
-  line-height: 40px;
-  font-size: 30px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+  border-radius: 10px;
+}
+body.retina #pass {
+  margin-top: 4px;
+}
+body.retina #new_image {
+  margin-top: -54px;
 }
 body.retina #register .button,
 body.retina #login .button,
@@ -1447,21 +1458,21 @@ body.retina #input_area input {
   padding: 0px !important;
 }
 body.retina ::-webkit-input-placeholder {
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body.retina :-moz-placeholder {
   /* Firefox 18- */
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body.retina ::-moz-placeholder {
   /* Firefox 19+ */
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body.retina :-ms-input-placeholder {
-  font-size: 11px;
+  font-size: 24px;
   letter-spacing: 1px;
 }
 body.retina .hasCountdown {
