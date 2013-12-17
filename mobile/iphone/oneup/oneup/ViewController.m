@@ -22,24 +22,24 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://10.15.20.154/mgg_test/www/index.php/games/OneUp"]];
-    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://gameLocation"]];
+
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
-    
+
     NSMutableURLRequest *requestObj = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval: 10.0];
     [requestObj setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
-    
+
     [customWebView loadRequest:requestObj];
     customWebView.delegate =self;
-    
-    
+
+
     spinner= [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [spinner setFrame:CGRectMake(self.view.bounds.size.width/2.0-25, self.view.bounds.size.height/2.0-25, 50, 50)];
     [spinner setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"darkGrey_background.png"]]];
     [customWebView addSubview:spinner];
 }
 - (void)viewWillDisappear:(BOOL)animated {
-    
+
      [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 - (void)didReceiveMemoryWarning
@@ -51,14 +51,23 @@
     [spinner startAnimating];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)localWebView {
-    
+
     [spinner stopAnimating];
-    NSString *currentURL = customWebView.request.URL.absoluteString;
-    NSString *checkURL= [NSString stringWithFormat:@"http://localhost//"];
-    
-    
-    if(![currentURL isEqualToString:checkURL]){
-        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:currentURL]];
-    }
+
 }
+
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSURL *checkURL= [NSURL URLWithString:@"https://gameLocation"];
+
+    if (navigationType == UIWebViewNavigationTypeLinkClicked && ![request.URL isEqual:checkURL])
+    {
+        [[UIApplication sharedApplication] openURL:request.URL];
+        return NO;
+    }
+
+    return YES;
+}
+
 @end
