@@ -1,29 +1,15 @@
-package com.panaton.mgoneup;
+package org.tiltfactor.pyramid;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
 import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.app.Activity;
 
 public class MainActivity extends Activity {
-
-	private class OneUpWebViewClient extends WebViewClient {
-	    @Override
-	    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-	        if (url.equals("https://gameServerLocation")) {
-	            return false;
-	        }
-	        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-	            view.getContext().startActivity(intent);
-	            return true;
-	    }
-	}
 
 	private WebView myWebView;
 
@@ -36,7 +22,7 @@ public class MainActivity extends Activity {
 		myWebView.loadUrl(getResources().getString(R.string.gameUrl));
 		WebSettings webSettings = myWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
-		myWebView.setWebViewClient(new OneUpWebViewClient());
+		myWebView.setWebViewClient(new WebViewClient());
 
 		final ProgressBar progressWebView = (ProgressBar) findViewById(R.id.progress_webview);
 		myWebView.setWebChromeClient(new WebChromeClient() {
@@ -55,8 +41,8 @@ public class MainActivity extends Activity {
                 }
 			}
 		});
-
 	}
+
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -69,5 +55,4 @@ public class MainActivity extends Activity {
 	    // system behavior (probably exit the activity)
 	    return super.onKeyDown(keyCode, event);
 	}
-
 }
