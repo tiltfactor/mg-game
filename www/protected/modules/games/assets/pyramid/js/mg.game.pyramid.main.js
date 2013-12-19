@@ -193,6 +193,21 @@ var actions = function (action, click_parent) {
                     }
                 });
             });
+
+            //If facebook login was used, alerts the user
+            if (localStorage['fblogin']) {
+                $().toastmessage("showToast", {
+                    text:"Close your browser to logout of facebook!",
+                    position:"tops-center",
+                    type:"notice",
+                    background:"white",
+                    color:"black",
+                    stayTime:MG_GAME_PYRAMID.toastStayTime,
+                    addClass:MG_GAME_PYRAMID.toastBackgroundClass
+                });
+                localStorage.removeItem('fblogin');
+            }
+
             break;
         case 'how_to':
             break;
@@ -587,6 +602,9 @@ var setAuthentication = function () {
 
     $("#facebook").off('click').on('click', function () {
         window.location.href = MG_PYRAMID.arcade_url + "/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_PYRAMID.game_base_url + '/' + MG_PYRAMID.gid);
+
+        // keeps track of facebook login
+        localStorage['fblogin'] = true;
     });
 }
 
@@ -609,7 +627,8 @@ function console_log(logged_text) {
 
 var isLoggedUser = function() {
     if(MG_PYRAMID.isLogged == 'true'){
-        /* cause problems in chrome call shared secret 2nd time
+        // cause problems in chrome call shared secret 2nd time
+        // This section uncommented to make fb logout work
         MG_API.ajaxCall('/user/sharedsecret', function (response) {
             if(response.status === 'ok') {
                 MG_API.settings.shared_secret = response.shared_secret;
@@ -618,7 +637,6 @@ var isLoggedUser = function() {
                 throw "MG_API.init() can't retrieve shared secret";
             }
         });
-        */
         $('#mmenuLogin').addClass('hidden');
         $('#mmenuRegister').addClass('hidden');
         $('#mmenuLogout').removeClass('hidden');

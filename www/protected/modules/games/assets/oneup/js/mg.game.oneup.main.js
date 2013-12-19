@@ -953,6 +953,20 @@ MG_GAME_ONEUP = function ($) {
                         });
                     });
 
+                    // If facebook login was used, alerts the user
+                    if (localStorage['fblogin']) {
+                        $().toastmessage("showToast", {
+                            text:"Close your browser to logout of facebook!",
+                            position:"tops-center",
+                            type:"notice",
+                            background:"white",
+                            color:"black",
+                            stayTime:MG_GAME_ONEUP.toastStayTime,
+                            addClass:MG_GAME_ONEUP.toastBackgroundClass
+                        });
+                        localStorage.removeItem('fblogin');
+                    }
+
                     break;
                 case 'account':
                     $("#account_playlist").empty();
@@ -1343,6 +1357,9 @@ MG_GAME_ONEUP = function ($) {
                 MG_API.curtain.show();
                 //alert(MG_GAME_ONEUP.settings.arcade_url +"/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid));
                 window.location.href = MG_GAME_ONEUP.settings.arcade_url + "/site/login/provider/facebook?backUrl=" + encodeURIComponent(MG_GAME_ONEUP.settings.game_base_url + '/' + MG_GAME_ONEUP.settings.gid);
+
+                // keeps track of facebook login
+                localStorage['fblogin'] = true;
             });
 
             $('#login input#password').unbind("keypress").keypress(function (e) {
