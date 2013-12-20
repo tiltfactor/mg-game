@@ -172,41 +172,59 @@ var actions = function (action, click_parent) {
         case 'learn_more':
             break;
         case 'logout':
-            MG_API.ajaxCall('/user/logout', function () {
-                MG_PYRAMID.isLogged = false;
-                MG_PYRAMID.username = "";
-                MG_PYRAMID.email = "";
-                MG_API.ajaxCall('/user/sharedsecret', function (response) {
-                    if (MG_API.checkResponse(response)) {
-                        if (response.shared_secret !== undefined && response.shared_secret !== "") {
-                            MG_API.settings.shared_secret = response.shared_secret;
-                            $('#mmenuLogin').removeClass('hidden');
-                            $('#mmenuRegister').removeClass('hidden');
-                            $('#mmenuLogout').addClass('hidden');
-                            $('#mmenuPlay').addClass('hidden');
-                            $('#mmenuCustomize').addClass('hidden');
-                            $('#mmenuAccount').addClass('hidden');
-                            $("#menu-right a[location='main_screen']").click();
-                        } else {
-                            throw "MG_API.init() can't retrieve shared secret";
+            // old logout stuff
+            function pyramidLogout() {
+                MG_API.ajaxCall('/user/logout', function () {
+                    MG_PYRAMID.isLogged = false;
+                    MG_PYRAMID.username = "";
+                    MG_PYRAMID.email = "";
+                    MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                        if (MG_API.checkResponse(response)) {
+                            if (response.shared_secret !== undefined && response.shared_secret !== "") {
+                                MG_API.settings.shared_secret = response.shared_secret;
+                                $('#mmenuLogin').removeClass('hidden');
+                                $('#mmenuRegister').removeClass('hidden');
+                                $('#mmenuLogout').addClass('hidden');
+                                $('#mmenuPlay').addClass('hidden');
+                                $('#mmenuCustomize').addClass('hidden');
+                                $('#mmenuAccount').addClass('hidden');
+                                $("#menu-right a[location='main_screen']").click();
+                                fbAlert(); // added to alert the user about facebook
+                            } else {
+                                throw "MG_API.init() can't retrieve shared secret";
+                            }
                         }
-                    }
+                    });
                 });
-            });
+            }
 
             //If facebook login was used, alerts the user
-            if (localStorage['fblogin']) {
-                $().toastmessage("showToast", {
-                    text:"Close your browser to logout of facebook!",
-                    position:"tops-center",
-                    type:"notice",
-                    background:"white",
-                    color:"black",
-                    stayTime:MG_GAME_PYRAMID.toastStayTime,
-                    addClass:MG_GAME_PYRAMID.toastBackgroundClass
-                });
-                localStorage.removeItem('fblogin');
+            function fbAlert() {
+                if (localStorage['fblogin']) {
+                    $().toastmessage("showToast", {
+                        text:"Close your browser to logout of facebook!",
+                        position:"tops-center",
+                        type:"notice",
+                        background:"white",
+                        color:"black",
+                        stayTime:MG_GAME_PYRAMID.toastStayTime,
+                        addClass:MG_GAME_PYRAMID.toastBackgroundClass
+                    });
+                    localStorage.removeItem('fblogin');
+                }
             }
+
+            // fetch shared secret second time and then do the logout
+            // this fixes issues with chrome: game wouldn't initialize when fb login was used
+            MG_API.ajaxCall('/user/sharedsecret', function (response) {
+                if(response.status === 'ok') {
+                    MG_API.settings.shared_secret = response.shared_secret;
+                    pyramidLogout();
+                }
+                else {
+                    throw "MG_API.init() can't retrieve shared secret";
+                }
+            });
 
             break;
         case 'how_to':
@@ -628,7 +646,7 @@ function console_log(logged_text) {
 var isLoggedUser = function() {
     if(MG_PYRAMID.isLogged == 'true'){
         // cause problems in chrome call shared secret 2nd time
-        // This section uncommented to make fb logout work
+        /*
         MG_API.ajaxCall('/user/sharedsecret', function (response) {
             if(response.status === 'ok') {
                 MG_API.settings.shared_secret = response.shared_secret;
@@ -637,6 +655,7 @@ var isLoggedUser = function() {
                 throw "MG_API.init() can't retrieve shared secret";
             }
         });
+        */
         $('#mmenuLogin').addClass('hidden');
         $('#mmenuRegister').addClass('hidden');
         $('#mmenuLogout').removeClass('hidden');
