@@ -946,26 +946,26 @@ MG_GAME_ONEUP = function ($) {
                                     MG_API.settings.shared_secret = response.shared_secret;
                                     MG_API.curtain.hide();
                                     MG_GAME_ONEUP.setLoginScreen();
+
+                                    // If facebook login was used, alerts the user
+                                    if (localStorage['fblogin']) {
+                                        $().toastmessage("showToast", {
+                                            text:"Close your browser to logout of facebook!",
+                                            position:"tops-center",
+                                            type:"notice",
+                                            background:"white",
+                                            color:"black",
+                                            stayTime:MG_GAME_ONEUP.toastStayTime,
+                                            addClass:MG_GAME_ONEUP.toastBackgroundClass
+                                        });
+                                        localStorage.removeItem('fblogin');
+                                    }
                                 } else {
                                     throw "MG_API.init() can't retrieve shared secret";
                                 }
                             }
                         });
                     });
-
-                    // If facebook login was used, alerts the user
-                    if (localStorage['fblogin']) {
-                        $().toastmessage("showToast", {
-                            text:"Close your browser to logout of facebook!",
-                            position:"tops-center",
-                            type:"notice",
-                            background:"white",
-                            color:"black",
-                            stayTime:MG_GAME_ONEUP.toastStayTime,
-                            addClass:MG_GAME_ONEUP.toastBackgroundClass
-                        });
-                        localStorage.removeItem('fblogin');
-                    }
 
                     break;
                 case 'account':
