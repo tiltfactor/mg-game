@@ -69,16 +69,16 @@
             <h2>Account</h2>
             <div class="back_blue row row_link"><div><a href="#" location="account_update">UPDATE ACCOUNT SETTINGS</a></div></div>
             <div id="account_info">
-<!--                <div id="bookmarks">
+                <div id="bookmarks">
                     <h3 class="no_margin">YOUR BOOKMARKED IMAGES</h3>
                     <div id="account_bookmark" class="group">
                     </div>
-                </div>-->
+                </div>
 
-<!--                <div id="play_lists">
+                <div id="play_lists">
                     <h3>YOUR PLAYLIST</h3>
                     <div id="account_playlist" class="group"></div>
-                </div>-->
+                </div>
 
                 <div id="interests">
                     <h3>YOUR INTERESTS</h3>
@@ -243,7 +243,7 @@
         </div>
     </script>
 
-<!--    <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
+    <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
         <div id="listing">
             <div class="padding div_text">When you add an archive to your favorites, you will see more images from that archive when you play.</div>
             <div id="favorite_institutions"  class="padding" align="center">
@@ -256,7 +256,7 @@
                 </div>
             </div>
         </div>
-    </script>-->
+    </script>
 
     <script id="template-favorite_institutions" type="text/x-jquery-tmpl">
     </script>
