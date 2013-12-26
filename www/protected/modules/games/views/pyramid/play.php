@@ -262,7 +262,7 @@
     </script>
 
     <script id="template-show_institution" type="text/x-jquery-tmpl">
-        <div class="padding" style="width: 320px;">
+        <div class="padding" >
             <div class="text-center"><img src="${logo}" /></div>
             <h4>${name}</h4>
             <div>${description}</div>
