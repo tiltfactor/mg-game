@@ -58,16 +58,19 @@ body .back_yellow {
   background-color: #ffffff;
   border-bottom: 1px solid #333333;
 }
+body #institution_info {
+  background-color: #fff;
+  padding: 5px;
+}
 body .delete {
   background-image: url('../images/delete.png');
   background-repeat: repeat;
   background-position: 0 0;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat !important;
   width: 31px;
   height: 22px;
   margin-top: -28px;
-  padding-right: 0s;
-  padding-right: 10px;
+  padding-right: 10%;
   cursor: pointer;
 }
 @media all and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (-o-max-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 1.5), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx), only screen and (min-device-pixel-ratio: 1.5) and (pointer: coarse), only screen and (min-resolution: 1.5dppx) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 1040px) and (max-width: 770px) and (orientation: portrait), only screen and (-webkit-min-device-pixel-ratio: 1) and (max-height: 770px) and (max-width: 1040px) and (orientation: landscape) {
