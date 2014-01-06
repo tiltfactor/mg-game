@@ -87,13 +87,13 @@
     <?php echo $form->label($model, 'tag_weight_min'); ?>
     <?php echo $form->textField($model, 'tag_weight_min', array('maxlength' => 10)); ?>
     <?php echo $form->error($model,'tag_weight_min'); ?>
-    <div class="description"><?php echo Yii::t('app', "(please enter the minimum tag weight"); ?></div>
+    <div class="description"><?php echo Yii::t('app', "(please enter the minimum tag weight)"); ?></div>
   </div>
   <div class="row">
     <?php echo $form->label($model, 'tag_weight_sum'); ?>
     <?php echo $form->textField($model, 'tag_weight_sum', array('maxlength' => 10)); ?>
     <?php echo $form->error($model,'tag_weight_sum'); ?>
-    <div class="description"><?php echo Yii::t('app', "(the minum sum of all tag use weights to make a tag elegible for export)"); ?></div>
+    <div class="description"><?php echo Yii::t('app', "(for each media, grab only the tags whose sum weight is greater than or equal to this value)"); ?></div>
   </div>
   
   <div class="row">
