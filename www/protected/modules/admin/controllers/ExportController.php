@@ -325,8 +325,18 @@ class ExportController extends GxController {
         }
     
         if ($model->collections) {
+            // check if collection all is selected. "1" is All.
+            // If collection is All, we can safely ignore other collections
+            // This check added to fix duplication while exporting
+            if ($model->collections[0] == "1") {
+                $collections_to_use = array("1");
+            }    
+            else {
+                $collections_to_use = $model->collections;
+            }
+
             $command->join('{{collection_to_media}} isi', 'isi.media_id=tu.media_id');
-            $where[] = array('in', 'isi.collection_id', array_values($model->collections));
+            $where[] = array('in', 'isi.collection_id', array_values($collections_to_use));
         }
     
         if ($model->tag_weight_min && (int)$model->tag_weight_min >= 0) {
