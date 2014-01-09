@@ -253,6 +253,12 @@ div.search-form {
     margin-bottom: 2%;
 }
 
+#gameStat {
+    display: inline;
+    float: right;
+    margin-right: 1%;
+    margin-top: 0.5%;
+}
 
 .delete.right {
     cursor: pointer;

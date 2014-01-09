@@ -25,4 +25,19 @@ class SearchModule extends CWebModule
         }
         return self::$_assetsUrl;
     }
+
+    public static function getGameStats($stat)
+    {
+        $command = Yii::app()->db->createCommand();
+        $result = NULL;
+
+        switch ($stat) {
+            case "no_of_games_played":
+                $result = $command->select('sum(number_played)')->from('game')->queryScalar();
+            case "no_of_tags_submitted":
+                $result = $command->select('count(tag)')->from('tag')->queryScalar();
+        }
+
+        return number_format($result);
+    }
 }

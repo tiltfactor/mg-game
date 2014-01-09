@@ -63,6 +63,9 @@ foreach($items as $key=>&$data){
     }
 }
 
+$gameStatHtml = '<div id="gameStat">Games played: ' . SearchModule::getGameStats("no_of_games_played") .
+            ' | Tags submitted: ' . SearchModule::getGameStats("no_of_tags_submitted") . '</div>';
+
 echo '
     <div class="main_content box">';
 $options = array ('10' => '10', '15' => '15', '20'=>'20', '25'=>'25' );
@@ -72,7 +75,7 @@ $this->widget('zii.widgets.CListView', array(
     'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
     'ajaxUpdate'=>false,
     'enablePagination'=>true,
-    'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('Custom[items_per_page]', $setItemsPerPage, $options) . "</div>" . 'Sort by: ' . CHtml::dropDownList('Custom[type_sort]', $setTypeOrder, $sorterOptions) ."{pager}</div>{items}", //pager on top
+    'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('Custom[items_per_page]', $setItemsPerPage, $options) . "</div>" . 'Sort by: ' . CHtml::dropDownList('Custom[type_sort]', $setTypeOrder, $sorterOptions) . $gameStatHtml ."{pager}</div>{items}", //pager on top
     'summaryText'=>" ",
 ));
 echo '</div>';
