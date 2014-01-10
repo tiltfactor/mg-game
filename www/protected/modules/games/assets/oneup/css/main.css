@@ -878,6 +878,6 @@ body.FF.retina #content #final_screen .header_scores {
 #terms a {
   font-family: Museo;
   color: white;
-  font-size: 18px; 
+  font-size: 100%;
   /*text-decoration: none;*/
 }
