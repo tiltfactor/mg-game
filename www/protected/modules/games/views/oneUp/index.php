@@ -48,11 +48,12 @@
                     <input type="password" autocapitalize="off" autocorrect="off" autocomplete="off" id="verifyPassword" name="verifyPassword" placeholder="Verify Password" value="" tabindex="3" />
                 </div>
                 <div class="button">
-                    <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="Choose an e-mail (optional)" tabindex="4" value="" />
+                    <input type="email" autocapitalize="off" autocorrect="off" autocomplete="off" id="email" name="email" placeholder="E-mail (optional)" tabindex="4" value="" />
                 </div>
                 <div class="button">
                     <a href="#" id="btn_register" class="button login"><span>START PLAYING</span></a>
                 </div>
+                <div id="terms" class="button"><a href="http://metadatagames.org/terms/" target="_blank">Privacy Policy</a></div>
             </div>
             <div id="account_update" class="hidden text-center">
 

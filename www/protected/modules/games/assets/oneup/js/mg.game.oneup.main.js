@@ -127,7 +127,7 @@ MG_GAME_ONEUP = function ($) {
                         e.preventDefault();
                         if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val() < 6) {
                             $().toastmessage("showToast", {
-                                    text:'All fields (except e-mail) are required.',
+                                    text:'Username and password are required.',
                                 position:"tops-center",
                                 type:"notice",
                                 background:"white",
