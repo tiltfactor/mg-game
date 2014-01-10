@@ -125,9 +125,9 @@ MG_GAME_ONEUP = function ($) {
 
                     $('#register #btn_register').off('click').on('click', function (e) {
                         e.preventDefault();
-                        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val() < 6 && $("#register #email").val().length < 5) {
+                        if ($("#register #username").val().length < 6 && $("#register #password").val().length < 6 && $("#register #verifyPassword").val() < 6) {
                             $().toastmessage("showToast", {
-                                text:'All fields are required.',
+                                    text:'All fields (except e-mail) are required.',
                                 position:"tops-center",
                                 type:"notice",
                                 background:"white",
@@ -136,6 +136,14 @@ MG_GAME_ONEUP = function ($) {
                                 addClass:MG_GAME_ONEUP.toastBackgroundClass
                             });
                         } else {
+                            // If no email was entered, generate a random email as a placeholder
+                            var userEmail = $("#register #email").val();
+                            if (!userEmail) {
+                                //http://stackoverflow.com/questions/10726909/random-alpha-numeric-string-in-javascript
+                                randomStr = Math.random().toString(36).slice(2)
+                                userEmail = "oneup_CHANGEME_" + randomStr + "@tiltfactor.com"
+                            }
+
                             MG_API.ajaxCall('/user/register', function (response) {
                                 if (response.status === 'ok') {
                                     MG_GAME_ONEUP.actions('login', '');
@@ -154,7 +162,7 @@ MG_GAME_ONEUP = function ($) {
                                 data:{
                                     password:$("#register #password").val(),
                                     username:$("#register #username").val(),
-                                    email:$("#register #email").val(),
+                                    email:userEmail,
                                     verifyPassword:$("#register #verifyPassword").val()
                                 }
                             });
