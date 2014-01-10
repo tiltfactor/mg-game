@@ -37,6 +37,24 @@ You may optionally enter a comparison operator (&lt;, &lt;=, &gt;, &gt;=, &lt;&g
 
 $tagDialog = $this->widget('MGTagJuiDialog');
 
+function getInstitutionUrl($id)
+{
+    $command = Yii::app()->db->createCommand();
+    $url = $command->select('url')->from('institution')->where('id=:id', array(':id'=>$id))->queryScalar();
+    return $url;
+}
+
+// Little different from the way it's done in other pages, but it works
+function generateImage($data) {
+    $media = $data->media;
+    $institutionUrl = getInstitutionUrl($media['institution_id']);
+
+    $image_html = CHtml::image(MGHelper::getMediaThumb($institutionUrl, $media['mime_type'], $media['name']), $media['name'], array('height'=>60)) . " <span> " . $media['name'] . "</span>";
+    $media_html = GxHtml::link($image_html, array('media/view', 'id' => GxActiveRecord::extractPkValue($data->media, true)), array('class' => 'image'));
+
+    return $media_html;
+}
+
 echo CHtml::beginForm('','post',array('id'=>'tag-use-form'));
 $this->widget('zii.widgets.grid.CGridView', array(
 	'id' => 'tag-use-grid',
@@ -52,7 +70,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'name' => 'media_id',
         'cssClassExpression' => '"med"',
         'type'=>'html',
-        'value'=>'GxHtml::link(CHtml::image(Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get(\'settings.app_upload_url\') . \'/thumbs/\'. GxHtml::valueEx($data->media), GxHtml::valueEx($data->media)) . " <span>" . GxHtml::valueEx($data->media) . "</span>", array(\'media/view\', \'id\' => GxActiveRecord::extractPkValue($data->media, true)))',
+        'value' => 'generateImage($data)',
+        //'value'=>'GxHtml::link(CHtml::image(Yii::app()->getBaseUrl() . Yii::app()->fbvStorage->get(\'settings.app_upload_url\') . \'/thumbs/\'. GxHtml::valueEx($data->media), GxHtml::valueEx($data->media)) . " <span>" . GxHtml::valueEx($data->media) . "</span>", array(\'media/view\', \'id\' => GxActiveRecord::extractPkValue($data->media, true)))',
       ),
 		array(
 		    'header' => Yii::t('app', 'Tag (Filter with ID)'),
