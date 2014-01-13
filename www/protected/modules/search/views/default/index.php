@@ -1,89 +1,104 @@
 <?php
-    $form = $this->beginWidget('GxActiveForm', array(
-    'action' => Yii::app()->createUrl($this->route),
-    'method' => 'get',
-)); ?>
+$form = $this->beginWidget ( 'GxActiveForm', array (
+		'action' => Yii::app ()->createUrl ( $this->route ),
+		'method' => 'get' 
+) );
+?>
 
 <div class="search-form" style="display: block;">
-    <?php $this->renderPartial('_search', array(
-        'model' => $model,
-        'institutions' => $institutions
-    )); ?>
-</div><!-- search-form -->
+    <?php
+				
+				$this->renderPartial ( '_search', array (
+						'model' => $model,
+						'institutions' => $institutions 
+				) );
+				?>
+</div>
+<!-- search-form -->
 
 
 <?php
-
-function generateImage($data)
-{
-    $media = CHtml::image(MGHelper::getMediaThumb($data->institution->url, $data->mime_type, $data->name), $data->name);
-    return $media;
+function generateImage($data) {
+	$media = CHtml::image ( MGHelper::getMediaThumb ( $data->institution->url, $data->mime_type, $data->name ), $data->name );
+	return $media;
 }
-function generateImageURL ($data)
-{
-    $url = MGHelper::getMediaThumb($data->institution->url, $data->mime_type, $data->name);
-    return $url;
+function generateImageURL($data) {
+	$url = MGHelper::getMediaThumb ( $data->institution->url, $data->mime_type, $data->name );
+	return $url;
 }
-
-function totalItemsFound($provider)
-{
-    $iterator = new CDataProviderIterator($provider);
-    $i = 0;
-    foreach($iterator as $tmp) {
-        $i++;
-    }
-    return $i;
+function totalItemsFound($provider) {
+	$iterator = new CDataProviderIterator ( $provider );
+	$i = 0;
+	foreach ( $iterator as $tmp ) {
+		$i ++;
+	}
+	return $i;
 }
+function startsWith($haystack, $needle) {
+	$length = strlen ( $needle );
+	return (substr ( $haystack, 0, $length ) === $needle);
+}
+;
 
-function startsWith($haystack, $needle)
-{
-    $length = strlen($needle);
-    return (substr($haystack, 0, $length) === $needle);
-};
-
-$mediaResults = $model->search(true);
-$total = count($mediaResults->getData());
-$items = $mediaResults->getData();
+$mediaResults = $model->search ( true );
+$total = count ( $mediaResults->getData () );
+$items = $mediaResults->getData ();
 global $currentUserRole;
 $currentUserRole = $userRole;
 global $relatedMedia;
-$relatedMedia = array();
-foreach($items as $key=>&$data){
-    $relatedMedia[$data->id] = array();
-    $index = $key+1;
-    if($index>=$total) $index = 0;
-    if($total<8) $index = $key+1;
-    for($i=0;$i<$total;$i++){
-        $relate = array("id"=>$items[$index]->id,
-                        "thumb"=>MGHelper::getMediaThumb($items[$index]->institution->url,$items[$index]->mime_type,$items[$index]->name));
-        $index++;
-        if(($key + 1) == $index && $total<8) continue;
-        array_push($relatedMedia[$data->id],$relate);
-        if($index>=$total) $index = 0;
-    }
+$relatedMedia = array ();
+foreach ( $items as $key => &$data ) {
+	$relatedMedia [$data->id] = array ();
+	$index = $key + 1;
+	if ($index >= $total)
+		$index = 0;
+	if ($total < 8)
+		$index = $key + 1;
+	for($i = 0; $i < $total; $i ++) {
+		$relate = array (
+				"id" => $items [$index]->id,
+				"thumb" => MGHelper::getMediaThumb ( $items [$index]->institution->url, $items [$index]->mime_type, $items [$index]->name ) 
+		);
+		$index ++;
+		if (($key + 1) == $index && $total < 8)
+			continue;
+		array_push ( $relatedMedia [$data->id], $relate );
+		if ($index >= $total)
+			$index = 0;
+	}
 }
 
-$gameStatHtml = '<div id="gameStat">Games played: ' . SearchModule::getGameStats("no_of_games_played") .
-            ' | Tags submitted: ' . SearchModule::getGameStats("no_of_tags_submitted") . '</div>';
+$gameStatHtml = '<div id="gameStat">Games played: ' . SearchModule::getGameStats ( "no_of_games_played" ) . ' | Tags submitted: ' . SearchModule::getGameStats ( "no_of_tags_submitted" ) . '</div>';
 
 echo '
     <div class="main_content box">';
-$options = array ('10' => '10', '15' => '15', '20'=>'20', '25'=>'25' );
-$sorterOptions = array('relevance' => 'Relevance', 'a_z' => 'A-Z', 'z_a'=>'Z-A');
-$this->widget('zii.widgets.CListView', array(
-    'dataProvider'=>$mediaResults,
-    'itemView'=>'_viewSearch',   // refers to the partial view named '_viewSearch'
-    'ajaxUpdate'=>false,
-    'enablePagination'=>true,
-    'template'=>"<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList('Custom[items_per_page]', $setItemsPerPage, $options) . "</div>" . 'Sort by: ' . CHtml::dropDownList('Custom[type_sort]', $setTypeOrder, $sorterOptions) . $gameStatHtml ."{pager}</div>{items}", //pager on top
-    'summaryText'=>" ",
-));
+$options = array (
+		'10' => '10',
+		'15' => '15',
+		'20' => '20',
+		'25' => '25' 
+);
+$sorterOptions = array (
+		'relevance' => 'Relevance',
+		'a_z' => 'A-Z',
+		'z_a' => 'Z-A' 
+);
+$this->widget ( 'zii.widgets.CListView', array (
+		'dataProvider' => $mediaResults,
+		'itemView' => '_viewSearch', // refers to the partial view named '_viewSearch'
+		'ajaxUpdate' => false,
+		'enablePagination' => true,
+		// 'template' => "<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList ( 'Custom[items_per_page]', $setItemsPerPage, $options ) . "</div>" . 'Sort by: ' . CHtml::dropDownList ( 'Custom[type_sort]', $setTypeOrder, $sorterOptions ) . $gameStatHtml . "{pager}</div>{items}", // pager on top
+		'template' => "<div id = \"levelOneHolder\">{summary}<div class = \"itemsPerPage\">Items per page: " . CHtml::dropDownList ( 'Custom[items_per_page]', $setItemsPerPage, $options ) . "</div>" . $gameStatHtml . "{pager}</div>{items}", // pager on top
+		'summaryText' => " " 
+) );
 echo '</div>';
-$this->endWidget();
+$this->endWidget ();
 
 echo "<div id=\"totalItemsFound\">";
-$itemsFound =  totalItemsFound($mediaResults);
-if($itemsFound != 0) echo  'Your search ' .   "<div id=\"putFor\"> </div>"  .' '. "<div id=\"searchedValue\"> </div>" . ' returned ' . $itemsFound . ' results.';
+$itemsFound = totalItemsFound ( $mediaResults );
+if ($itemsFound != 0)
+	echo 'Your search ' . "<div id=\"putFor\"> </div>" . ' ' . "<div id=\"searchedValue\"> </div>" . ' returned ' . $itemsFound . ' results.';
 echo "</div>";
 ?>
 

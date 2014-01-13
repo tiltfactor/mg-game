@@ -1,29 +1,29 @@
 <?php
 return array (
   'api_id' => 'MG_API',
-  'installed' => false,
+  'installed' => true,
   'frontend_theme' => 'metadatagames',
-  'nodeJSUrl' => 'http://localhost:8000', /* change URL */
-  'pushUrl' => 'http://localhost:8000/message/', /* change URL */
+  'nodeJSUrl' => 'http://localhost:8000',
+  'pushUrl' => 'http://localhost:8000/message/',
   'developmentMode' => false,
   'facebookId' => 'GET FROM YOUR FACEBOOK DEVELOPER ACCOUNT',
   'facebookSecret' => 'GET FROM YOUR FACEBOOK DEVELOPER ACCOUNT',
-  'arcade' =>
+  'arcade' => 
   array (
     'description' => 'This is a short description of the project',
   ),
-  'media' =>
+  'media' => 
   array (
-    'formats' =>
+    'formats' => 
     array (
-      'thumbnail' =>
+      'thumbnail' => 
       array (
         'width' => 100,
         'height' => 60,
         'quality' => false,
         'sharpen' => false,
       ),
-      'large' =>
+      'large' => 
       array (
         'width' => 750,
         'height' => 750,
@@ -32,181 +32,181 @@ return array (
       ),
     ),
   ),
-  'admin-tools' =>
+  'admin-tools' => 
   array (
-    'tool-media' =>
+    'tool-media' => 
     array (
       'name' => 'Media',
       'description' => 'Manage media that have been imported and processed.',
       'url' => '/admin/media',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
         1 => 'institution',
       ),
       'group' => 'Media & Tags',
     ),
-    'tool-tag' =>
+    'tool-tag' => 
     array (
       'name' => 'Tags',
       'description' => 'Manage tags that have been created by players.',
       'url' => '/admin/tag',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
         1 => 'institution',
       ),
       'group' => 'Media & Tags',
     ),
-    'tool-collection' =>
+    'tool-collection' => 
     array (
       'name' => 'Collections',
       'description' => 'Group media and apply applicable licences.',
       'url' => '/admin/collection',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
         1 => 'institution',
       ),
       'group' => 'Media & Tags',
     ),
-    'tool-licence' =>
+    'tool-licence' => 
     array (
       'name' => 'Licences',
       'description' => 'Create licences under which media can be published in the system.',
       'url' => '/admin/licence',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
         1 => 'institution',
       ),
       'group' => 'Media & Tags',
     ),
-    'tool-export' =>
+    'tool-export' => 
     array (
       'name' => 'Export',
       'description' => 'Export tags, tag uses, and tagged media.',
       'url' => '/admin/export',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'institution',
       ),
       'group' => 'Media & Tags',
     ),
-    'tool-user' =>
+    'tool-user' => 
     array (
       'name' => 'Players',
       'description' => 'Manage registered players and the tags they have created.',
       'url' => '/admin/user',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
       ),
       'group' => 'Players',
     ),
-    'tool-subject-matter' =>
+    'tool-subject-matter' => 
     array (
       'name' => 'Subject Matters',
       'description' => 'Manage subject matter categories in which players can express interest. These values are used to influence media selection and tag weights.',
       'url' => '/admin/subjectMatter',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
       ),
       'group' => 'Players',
     ),
-    'tool-plugins' =>
+    'tool-plugins' => 
     array (
       'name' => 'Plugins',
       'description' => 'Plugins allow the flexible extension of functionality and can be managed here.',
       'url' => '/plugins',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Games & Plugins',
     ),
-    'tool-games' =>
+    'tool-games' => 
     array (
       'name' => 'Games',
       'description' => 'Manage games.',
       'url' => '/games',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'researcher',
       ),
       'group' => 'Games & Plugins',
     ),
-    'tool-bages' =>
+    'tool-bages' => 
     array (
       'name' => 'Badges',
       'description' => 'Manage badges that can be achieved by players.',
       'url' => '/admin/badge',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Games & Plugins',
     ),
-    'tool-ip' =>
+    'tool-ip' => 
     array (
       'name' => 'IP Blacklist',
       'description' => 'Restrict access to Metadata Games by whitelisting or blacklisting IP addresses.',
       'url' => '/admin/blockedIp',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Other',
     ),
-    'tool-settings' =>
+    'tool-settings' => 
     array (
       'name' => 'Global Settings',
       'description' => 'Configure settings that are used globally in the system.',
       'url' => '/admin/settings',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Other',
     ),
-    'tool-logs' =>
+    'tool-logs' => 
     array (
       'name' => 'Admin Log',
       'description' => 'Access records of changes made using admin tools.',
       'url' => '/admin/log',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Other',
     ),
-    'update-code' =>
+    'update-code' => 
     array (
       'name' => 'Update DB',
       'description' => 'Please visit this tool after an update of the code base to make sure the database structure is up-to date.',
       'url' => '/admin/update',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Other',
     ),
-    'tool-institution' =>
+    'tool-institution' => 
     array (
       'name' => 'Institution',
       'description' => 'Manage MG Content Server register to MG Game Server',
       'url' => '/admin/institution',
-      'roles' =>
+      'roles' => 
       array (
         0 => 'gameadmin',
       ),
       'group' => 'Other',
     ),
   ),
-  'games' =>
+  'games' => 
   array (
-    'ZenTag' =>
+    'ZenTag' => 
     array (
       'name' => 'Zen Tag',
       'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
@@ -218,7 +218,7 @@ return array (
       'image_width' => '450',
       'image_height' => '450',
     ),
-    'ZenTagPlayOnceMoveOn' =>
+    'ZenTagPlayOnceMoveOn' => 
     array (
       'name' => 'Zen Tag (Play Once Move On)',
       'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
@@ -230,7 +230,7 @@ return array (
       'image_width' => '450',
       'image_height' => '450',
     ),
-    'ZenPond' =>
+    'ZenPond' => 
     array (
       'name' => 'Zen Pond',
       'description' => 'Clear your mind with a partner and you will hear the voices of the serene taggers within you. Ohm.',
@@ -242,7 +242,7 @@ return array (
       'partner_wait_threshold' => '30',
       'play_against_computer' => '1',
     ),
-    'GuessWhat' =>
+    'GuessWhat' => 
     array (
       'name' => 'Guess What!',
       'description' => 'Can you guess what the other player\'s media is?',
@@ -258,7 +258,7 @@ return array (
       'partner_wait_threshold' => '30',
       'play_against_computer' => '1',
     ),
-    'Pyramid' =>
+    'Pyramid' => 
     array (
       'name' => 'Pyramid',
       'description' => 'We asked random people to describe the image you are about to see in a single word each. How many of these words can you match in 2 minutes?!',
@@ -270,7 +270,7 @@ return array (
       'image_width' => '450',
       'image_height' => '450',
     ),
-    'NexTag' =>
+    'NexTag' => 
     array (
       'name' => 'NexTag',
       'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
@@ -283,28 +283,28 @@ return array (
       'image_height' => '450',
     ),
   ),
-  'settings' =>
+  'settings' => 
   array (
     'app_name' => 'Metadata Games',
     'throttle_interval' => '500',
     'message_queue_interval' => '450',
-    'app_email' => '',
+    'app_email' => 'jack3@jack3.com',
     'pagination_size' => '25',
     'app_upload_path' => '/../uploads',
     'app_upload_url' => '/uploads',
   ),
-  'plugins' =>
+  'plugins' => 
   array (
-    'dictionary' =>
+    'dictionary' => 
     array (
-      'WordsToAvoid' =>
+      'WordsToAvoid' => 
       array (
         'words_to_avoid_threshold' => 10,
       ),
     ),
-    'weighting' =>
+    'weighting' => 
     array (
-      'ScoreBySubjectMatter' =>
+      'ScoreBySubjectMatter' => 
       array (
         'score_new' => 2,
         'score_match' => 1,
@@ -313,17 +313,17 @@ return array (
         'score_match_expert' => 3,
         'score_match_trusted' => 3,
       ),
-      'ScoreNewMatch' =>
+      'ScoreNewMatch' => 
       array (
         'score_new' => 2,
         'score_match' => 1,
       ),
-      'TwoPlayerBonus' =>
+      'TwoPlayerBonus' => 
       array (
         'score_new' => '2',
         'score_match' => '1',
       ),
-      'GuessWhatScoring' =>
+      'GuessWhatScoring' => 
       array (
         'score_new' => 2,
         'score_match' => 1,
