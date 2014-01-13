@@ -30,7 +30,7 @@ if($mediaType == 'image'){
 
 $licences = array();
 foreach($data->collections as $col){
-    if(!in_array($col->licence->name,$licences)){
+    if($col->licence->name != "Default Licence" && !in_array($col->licence->name,$licences)){
         array_push($licences,$col->licence->name);
     }
 }
