@@ -101,6 +101,7 @@ class PyramidController extends GxController
             $js = <<<EOD
 MG_PYRAMID = {};
 MG_PYRAMID.api_url = '{$game->api_base_url}';
+MG_PYRAMID.nlp_api_url = '{$game->nlp_api_base_url}';
 MG_PYRAMID.isLogged = '{$isLogged}';
 MG_PYRAMID.gid = 'Pyramid';
 MG_PYRAMID.game_base_url = '{$game->game_base_url}';
@@ -192,6 +193,7 @@ EOD;
             $jsInit = <<<EOD
 MG_PYRAMID = {};
 MG_PYRAMID.api_url = '{$game->api_base_url}';
+MG_PYRAMID.nlp_api_url = '{$game->nlp_api_base_url}';
 MG_PYRAMID.isLogged = '{$isLogged}';
 MG_PYRAMID.gid = 'Pyramid';
 MG_PYRAMID.game_base_url = '{$game->game_base_url}';
