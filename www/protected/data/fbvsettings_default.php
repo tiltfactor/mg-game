@@ -5,6 +5,7 @@ return array (
   'frontend_theme' => 'metadatagames',
   'nodeJSUrl' => 'http://localhost:8000', /* change URL */
   'pushUrl' => 'http://localhost:8000/message/', /* change URL */
+  'nlpApiUrl' => 'https://localhost:8139', /* change URL */
   'developmentMode' => false,
   'facebookId' => 'GET FROM YOUR FACEBOOK DEVELOPER ACCOUNT',
   'facebookSecret' => 'GET FROM YOUR FACEBOOK DEVELOPER ACCOUNT',
