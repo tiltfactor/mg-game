@@ -2,10 +2,12 @@
 <div id="header">
   <a id="page_title" class="ir" href="<?php echo MGHelper::bu("/"); ?>"><?php CHtml::encode(Yii::app()->fbvStorage->get("settings.app_name")); ?></a>
   <div id="mainmenu">
-  <?php $this->widget('application.components.MGMenu',array(
+  <?php 
+  $user = User::loadUser(Yii::app()->user->id);
+  $this->widget('application.components.MGMenu',array(
     'items'=>array(
       array('label'=>'Search', 'url'=>array('/search')),
-      array('label'=>'Arcade', 'url'=>array('/site/arcade')),
+      array('label'=>'Arcade', 'url'=>array('/site/arcade'), 'visible'=>( $user) ), // junjie guan: control the acrade here
       array('label'=>'Contact', 'url'=>array('/site/contact')),
       array('url'=>Yii::app()->getModule('user')->loginUrl, 'label'=>Yii::app()->getModule('user')->t("Login"), 'visible'=>Yii::app()->user->isGuest),
       array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
