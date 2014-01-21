@@ -48,7 +48,7 @@
   <?php echo $content; ?>
 
   <div id="footer">
-    Powered by <a href="http://metadatagames.com/" target="_blank">Metadata Games</a> software developed by <a href="http://www.tiltfactor.org/" target="_blank">tiltfactor</a>
+    Powered by <a href="http://metadatagames.org/" target="_blank">Metadata Games</a> software developed by <a href="http://www.tiltfactor.org/" target="_blank">tiltfactor</a>
     <div id="footerLogos">
       <a href="http://www.dartmouth.edu" target="_blank"><img src="<?php echo MGHelper::bu("/"); ?>images/dartmouth_logo_20120116.jpg" /></a>
       <a href="http://www.neh.gov" target="_blank">
