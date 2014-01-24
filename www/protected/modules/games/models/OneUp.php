@@ -6,7 +6,8 @@ class OneUp extends MGGameModel
 {
     public $name = "OneUp";
     public $arcade_image = "oneup_arcade.png";
-    public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
+    public $description = "Challenge a friend and see if you're smarter than they are! The best descriptions win, but be careful not to be One Upped in this competitive, turn-based game!";
+    public $more_info_url = "http://metadatagames.org/#oneup";
     public $turns = 3;
     public $submissions = 3;
 

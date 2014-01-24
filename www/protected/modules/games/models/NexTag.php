@@ -7,8 +7,8 @@ class NexTag extends MGGameModel
     public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
     public $name = "NexTag";
     public $arcade_image = "nextag_arcade.png";
-    public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
-    public $more_info_url = "";
+    public $description = 'In the "next evolution" of Zen Tag, you can tag audio and video clips, too. Plug in your headphones and get ready!';
+    public $more_info_url = "http://metadatagames.org/#nextag";
     public $play_once_and_move_on = 0;
     public $play_once_and_move_on_url = "";
     public $turns = 4;

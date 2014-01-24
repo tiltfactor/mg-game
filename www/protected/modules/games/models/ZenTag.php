@@ -7,14 +7,14 @@ class ZenTag extends MGGameModel
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
   public $name = "Zen Tag";
   public $arcade_image = "zentag_arcade.png";
-  public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
+  public $description = "A zen-like one player tagging activity — be as specific and accurate as you can in order to win high scores. Ohm.";
   public $more_info_url = "";
   public $play_once_and_move_on = 0;
-  public $play_once_and_move_on_url = "";
+  public $play_once_and_move_on_url = "http://metadatagames.org/#zentag";
   public $turns = 4;
   public $image_width = 450;
   public $image_height = 450;
-  
+
   public function rules() {
     return array(
         array('name, description, arcade_image, active, play_once_and_move_on, turns', 'required'),
@@ -26,7 +26,7 @@ class ZenTag extends MGGameModel
         array('turns', 'numerical', 'min'=>1, 'max'=>1000),
     );
   }
-  
+
   public function attributeLabels() {
     return array(
       'name' => Yii::t('app', 'Name'),
@@ -39,7 +39,7 @@ class ZenTag extends MGGameModel
       'turns' => Yii::t('app', 'Turns'),
     );
   }
-  
+
   public function fbvLoad() {
     $game_data = Yii::app()->fbvStorage->get("games." . $this->getGameID(), null);
     if (is_array($game_data)) {
@@ -54,7 +54,7 @@ class ZenTag extends MGGameModel
       $this->image_height = (int)$game_data["image_height"];
     }
   }
-  
+
   public function fbvSave() {
     $game_data = array(
       'name' => $this->name,
@@ -69,8 +69,8 @@ class ZenTag extends MGGameModel
     );
     Yii::app()->fbvStorage->set("games." . $this->getGameID(), $game_data);
   }
-  
+
   public function getGameID() {
-    return __CLASS__;    
+    return __CLASS__;
   }
 }

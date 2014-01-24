@@ -7,19 +7,19 @@ class GuessWhat extends MGGameModel
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
   public $name = "Guess What!";
   public $arcade_image = "guesswhat_arcade.png";
-  public $description = "Can you guess what the other player's image is?";
-  public $more_info_url = "";
+  public $description = "Work together with a stranger to identify images in this fast-paced guessing game. Give great hints and you\'ll both score big!";
+  public $more_info_url = "http://metadatagames.org/#guesswhat";
   public $turns = 4;
   public $image_width = 450;
   public $image_height = 450;
   public $image_grid_width = 150;
   public $image_grid_height = 150;
-  public $hint_time_out = 15; // how many seconds shall the describer given to give a hint
-  public $partner_wait_threshold = 20; // how many seconds should the system wait to look for a partner
-  public $play_against_computer = 1; // if true the system will simulate a human player
+  public $hint_time_out = 30; // how many seconds shall the describer given to give a hint
+  public $partner_wait_threshold = 45; // how many seconds should the system wait to look for a partner
+  public $play_against_computer = 0; // if true the system will simulate a human player
   public $number_guesses = 3; // the number of guesses the guessing user has per round
-  public $number_hints = 3; // the number of additional hints that can be given per turn (only in human human mode played against the computer the number of hints is equal the number of guesses)
-  
+  public $number_hints = 0; // the number of additional hints that can be given per turn (only in human human mode played against the computer the number of hints is equal the number of guesses)
+
   public function rules() {
     return array(
         array('name, description, arcade_image, active, turns, image_width, image_height, image_grid_width, image_grid_height, partner_wait_threshold, play_against_computer, number_guesses, number_hints', 'required'),
@@ -35,7 +35,7 @@ class GuessWhat extends MGGameModel
         array('number_hints', 'numerical', 'min'=>0, 'max'=>1000)
     );
   }
-  
+
   public function attributeLabels() {
     return array(
       'name' => Yii::t('app', 'Name'),
@@ -53,7 +53,7 @@ class GuessWhat extends MGGameModel
       'hint_time_out' => Yii::t('app', 'Hint Time Out (seconds)'),
     );
   }
-  
+
   public function fbvLoad() {
     $game_data = Yii::app()->fbvStorage->get("games." . $this->getGameID(), null);
     if (is_array($game_data)) {
@@ -73,7 +73,7 @@ class GuessWhat extends MGGameModel
       $this->hint_time_out = (isset($game_data["hint_time_out"]))? (int)$game_data["hint_time_out"] : $this->hint_time_out;
     }
   }
-  
+
   public function fbvSave() {
     $game_data = array(
       'name' => $this->name,
@@ -91,11 +91,11 @@ class GuessWhat extends MGGameModel
       'play_against_computer' => $this->play_against_computer,
       'hint_time_out' => $this->hint_time_out,
     );
-    
+
     Yii::app()->fbvStorage->set("games." . $this->getGameID(), $game_data);
   }
-  
+
   public function getGameID() {
-    return __CLASS__;    
+    return __CLASS__;
   }
 }
