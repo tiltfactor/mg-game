@@ -210,9 +210,9 @@ return array (
     'ZenTag' =>
     array (
       'name' => 'Zen Tag',
-      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'description' => 'A zen-like one player tagging activity — be as specific and accurate as you can in order to win high scores. Ohm.',
       'arcade_image' => 'zentag_arcade.png',
-      'more_info_url' => 'http://www.google.co.uk',
+      'more_info_url' => 'http://metadatagames.org/#zentag',
       'play_once_and_move_on' => '0',
       'play_once_and_move_on_url' => '',
       'turns' => '4',
@@ -222,11 +222,11 @@ return array (
     'ZenTagPlayOnceMoveOn' =>
     array (
       'name' => 'Zen Tag (Play Once Move On)',
-      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'description' => 'A zen-like one player tagging activity — be as specific and accurate as you can in order to win high scores. Ohm!',
       'arcade_image' => 'zentag_arcade.png',
       'more_info_url' => '',
       'play_once_and_move_on' => '1',
-      'play_once_and_move_on_url' => 'http://www.metadatagames.com',
+      'play_once_and_move_on_url' => 'http://metadatagames.org/#zentag',
       'turns' => '4',
       'image_width' => '450',
       'image_height' => '450',
@@ -246,25 +246,25 @@ return array (
     'GuessWhat' =>
     array (
       'name' => 'Guess What!',
-      'description' => 'Can you guess what the other player\'s media is?',
+      'description' => 'Work together with a stranger to identify images in this fast-paced guessing game. Give great hints and you\'ll both score big!',
       'arcade_image' => 'guesswhat_arcade.png',
-      'more_info_url' => '',
+      'more_info_url' => 'http://metadatagames.org/#guesswhat',
       'turns' => '4',
       'image_width' => '450',
       'image_height' => '450',
       'image_grid_width' => '150',
       'image_grid_height' => '150',
       'number_guesses' => '3',
-      'number_hints' => '1',
-      'partner_wait_threshold' => '30',
-      'play_against_computer' => '1',
+      'number_hints' => '0',
+      'partner_wait_threshold' => '45',
+      'play_against_computer' => '0',
     ),
     'Pyramid' =>
     array (
       'name' => 'Pyramid',
-      'description' => 'We asked random people to describe the image you are about to see in a single word each. How many of these words can you match in 2 minutes?!',
+      'description' => 'A competitive one player game — We asked random people to describe the image you are about to see in a single word each. How many of these words can you match in 2 minutes?!',
       'arcade_image' => 'pyramid_arcade.png',
-      'more_info_url' => '',
+      'more_info_url' => 'http://metadatagames.org/#pyramid',
       'play_once_and_move_on' => '0',
       'play_once_and_move_on_url' => '',
       'turns' => '4',
@@ -274,9 +274,9 @@ return array (
     'NexTag' =>
     array (
       'name' => 'NexTag',
-      'description' => 'Clear your mind and you will hear the voice of the serene tagger within you. Ohm.',
+      'description' => 'In the "next evolution" of Zen Tag, you can tag audio and video clips, too. Plug in your headphones and get ready!',
       'arcade_image' => 'nextag_arcade.png',
-      'more_info_url' => '',
+      'more_info_url' => 'http://metadatagames.org/#nextag',
       'play_once_and_move_on' => '0',
       'play_once_and_move_on_url' => '',
       'turns' => '4',
@@ -326,8 +326,8 @@ return array (
       ),
       'GuessWhatScoring' =>
       array (
-        'score_new' => 2,
-        'score_match' => 1,
+        'score_new' => 0,
+        'score_match' => 0,
         'score_first_guess' => 5,
         'score_second_guess' => 3,
         'score_third_guess' => 2,
