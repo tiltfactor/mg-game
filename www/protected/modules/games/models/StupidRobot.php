@@ -8,16 +8,16 @@ class StupidRobot extends MGGameModel
     public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
     public $name = "StupidRobot";
     public $arcade_image = "stupidRobot_arcade.png";
-    public $description = "Clear your mind and you will hear the voice of the serene tagger within you. Ohm.";
-    public $more_info_url = "";
+    public $description = "Stupid Robot looks at everything but understands nothing. Can you help? Teach him as much as you can about the image. As he learns, he'll want to know longer and longer words!";
+    public $more_info_url = "http://www.metadatagames.org/#stupidrobot";
     public $play_once_and_move_on = 0;
     public $play_once_and_move_on_url = "";
     public $turns = 4;
     public $image_width = 450;
     public $image_height = 450;
 
-    /*Junjie Guan (Jack): Fix the bug of unable to change attributes of StupidRobot 
-     * by pasting the whole 'public function rules()' from other models 
+    /*Junjie Guan (Jack): Fix the bug of unable to change attributes of StupidRobot
+     * by pasting the whole 'public function rules()' from other models
      * 2013-10-31
      */
     public function rules()
@@ -32,13 +32,13 @@ class StupidRobot extends MGGameModel
     			array('turns', 'numerical', 'min' => 1, 'max' => 1000),
     	);
     }
-    
-    /*Junjie Guan (Jack): 'public function attributeLabels()' 
-     * is missing in stupidRobot model. 
-     * It works fine currently, but may cause some future problem 
+
+    /*Junjie Guan (Jack): 'public function attributeLabels()'
+     * is missing in stupidRobot model.
+     * It works fine currently, but may cause some future problem
      * 2013-10-31
 	 */
-    
+
     public function attributeLabels()
     {
     	return array(
@@ -52,14 +52,14 @@ class StupidRobot extends MGGameModel
     			'turns' => Yii::t('app', 'Turns'),
     	);
     }
-        
+
     public function fbvLoad()
     {
         $game_data = Yii::app()->fbvStorage->get("games." . $this->getGameID(), null);
         if (is_array($game_data)) {
-        	
 
-        	
+
+
             $this->name = $game_data["name"];
             $this->description = $game_data["description"];
             $this->arcade_image = $game_data["arcade_image"];
@@ -85,7 +85,7 @@ class StupidRobot extends MGGameModel
             'image_width' => $this->image_width,
             'image_height' => $this->image_height,
         );
-        
+
         Yii::app()->fbvStorage->set("games." . $this->getGameID(), $game_data);
     }
 
