@@ -29,10 +29,16 @@ class StupidRobotGame extends NexTagGame
                     'tag_id' => 0
                 );
                 $currentTag = $tag;
-                $file = fopen("test.txt","w");
-                fwrite($file, $tag);
-                fclose($file);
-                break;
+
+                // 20141025 - SP
+                // Use for testing on local build, otherwise will prevent
+                // entering tags because server does not have permissions
+                // to open stream.
+                //
+                // $file = fopen("test.txt","w");
+                // fwrite($file, $tag);
+                // fclose($file);
+                // break;
             }
             // add the extracted tags to the media info
             $data[$mediaId] = $mediaTags;
