@@ -161,7 +161,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             });
             
             var game_assets_uri = $("#game_assets_uri").val();
-            console.log("jackjackjack" + game_assets_uri);
+            //console.log("jackjackjack" + game_assets_uri);
 
             MG_GAME_STUPIDROBOT.sounds = {
                 fail_sound: game_assets_uri + 'audio/sound_fail.mp3',
@@ -192,6 +192,14 @@ MG_GAME_STUPIDROBOT = function ($) {
         	
         	$("#reboot").click(function(){
         		location.reload();
+        	});
+        	
+        	// fix the loop sound problem after merging them together
+            // 1 is because there is only one loop audio in background
+            audio.play(1);
+            audio.play(1);
+        	$("#button-loop-1").click(function(){
+        		audio.play(1);
         	});
         	
         	MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.startingLevel;

@@ -126,6 +126,7 @@
         //-------------------------------        
         for (var a in audio.files) {
             (function() {
+            	console.log("music " + a);
                 var i = parseInt(a) + 1;
                 var req = new XMLHttpRequest();
                 req.open('GET', audio.files[i - 1], true); // array starts with 0 hence the -1
