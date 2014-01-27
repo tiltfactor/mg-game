@@ -41,6 +41,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         scorehtml:"",
         
         // new added for scoring
+        isRenderFinaled: false,
     	wordSpaces:null, 
     	wordArray:["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",],
     	// wordArray:["word",
@@ -160,6 +161,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             });
             
             var game_assets_uri = $("#game_assets_uri").val();
+            //console.log("jackjackjack" + game_assets_uri);
 
             MG_GAME_STUPIDROBOT.sounds = {
                 fail_sound: game_assets_uri + 'audio/sound_fail.mp3',
@@ -190,6 +192,14 @@ MG_GAME_STUPIDROBOT = function ($) {
         	
         	$("#reboot").click(function(){
         		location.reload();
+        	});
+        	
+        	// fix the loop sound problem after merging them together
+            // 1 is because there is only one loop audio in background
+            audio.play(1);
+            audio.play(1);
+        	$("#button-loop-1").click(function(){
+        		audio.play(1);
         	});
         	
         	MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.startingLevel;
@@ -252,7 +262,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 							 * value.substr(0, value.length-1); });
 							 */
                      } else {
-                    	 console.log('letter_' + num_sound);
+                    	 //console.log('letter_' + num_sound);
                     	 MG_GAME_STUPIDROBOT.playSound('letter_' + num_sound);
                      }
                  }
@@ -520,10 +530,11 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
         
         scrollIn:function () {
+        	//console.log("scrollIn");
         	// console.log("MG_GAME_STUPIDROBOT.scrollIn");
         	MG_GAME_STUPIDROBOT.p=MG_GAME_STUPIDROBOT.wordSpaces[MG_GAME_STUPIDROBOT.activeLine];
         	MG_GAME_STUPIDROBOT.i++;
-        	console.log("activeLine: " + MG_GAME_STUPIDROBOT.activeLine);
+        	//console.log("activeLine: " + MG_GAME_STUPIDROBOT.activeLine);
     		if(MG_GAME_STUPIDROBOT.activeLine >= 10){
     			// scroll is finished
     			
@@ -558,6 +569,11 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
         
         renderFinal:function () {
+        	if(MG_GAME_STUPIDROBOT.isRenderFinaled == true) 
+        		return;
+        	else
+        		MG_GAME_STUPIDROBOT.isRenderFinaled = true;
+        	//console.log("renderFinal");
         	// TO ZARA: line 404~407, this is point when I about to display the
 			// score page
         	// I simply make game page empty by using $("#game").html(""), or

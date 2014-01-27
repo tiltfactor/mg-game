@@ -13,15 +13,20 @@
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script-->
     </head>
+    
     <body class="splashContent">
         <!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
         <!-- Add your site or application content here -->
+        
+			
+		
                			<div id="loading">loading!</div>
 
         <div class="manifest" id="tree">
+        
         	<img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/Bitmap3.jpg" />
          	<img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/Bitmap7.jpg" />
          	<img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/Bitmap5.jpg" />
@@ -43,12 +48,15 @@
 					<p id="lastScrollText">&nbsp;</p>
 					<br>
 					<p class="scrollText">&nbsp;</p>
+					<button class="button" id="button-loop-1" type="button" value="1">sound</button>
 			</div>
 
 
+			
+
 	    <div id="loadgame">
-    	 <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/stupidrobot/'; ?>" />
-    	 <input type="hidden" id="loopsound" value="<?php echo GamesModule::getAssetsUrl() . '/stupidrobot/'; ?>" />
+         <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/stupidrobot/'; ?>" />
+    	 <input type="hidden" id="loopsound" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
 
 		<form>
 			<button class="button" id="button-loop-1" type="button" value="1">sound</button>
@@ -108,8 +116,10 @@
 
 
     </body>
-         <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/stupidrobot/'; ?>" />
-    	 <input type="hidden" id="loopsound" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
+    
+    
+    
+
 
     <script id="template-turn" type="text/x-jquery-tmpl">
         <div style="text-align:center">

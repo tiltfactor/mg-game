@@ -11,41 +11,41 @@ var p; // shortcut to reference prototypes
 		if(level==0){
 			this.stop();
 		}
-		console.log("nothing");
+		//console.log("nothing");
 	}
 	this.frame_1 = function() {
-		console.log("eyes");
+		//console.log("eyes");
 		this.eyes.gotoAndPlay("goeyes");
 		if(level==1){
 			this.stop();
 		}
 	}
 	this.frame_18 = function() {
-		console.log("wheels");
+		//console.log("wheels");
 			if(level==2){
 			this.stop();
 		}
 	}
 	this.frame_24 = function() {
-		console.log("leftarm");
+		//console.log("leftarm");
 				if(level==3){
 			this.stop();
 		}
 	}
 	this.frame_42 = function() {
-		console.log("eyesraise");
+		//console.log("eyesraise");
 				if(level==4){
 			this.stop();
 		}
 	}
 	this.frame_51 = function() {
-		console.log("satellite");
+		//console.log("satellite");
 			if(level==5){
 			this.stop();
 		}
 	}
 	this.frame_60 = function() {
-		console.log("raisemouth");
+		//console.log("raisemouth");
 				if(level==6){
 			this.stop();
 		}
@@ -54,14 +54,14 @@ var p; // shortcut to reference prototypes
 				if(level==7){
 			this.stop();
 		}
-		console.log("changemouth (ADD CHANGE)");
+		//console.log("changemouth (ADD CHANGE)");
 		this.mouth.gotoAndPlay("go");
 	}
 	this.frame_63 = function() {
 				if(level==8){
 			this.stop();
 		}
-		console.log("rightarm");
+		//console.log("rightarm");
 	}
 	this.frame_66 = function() {
 				if(level==9){
