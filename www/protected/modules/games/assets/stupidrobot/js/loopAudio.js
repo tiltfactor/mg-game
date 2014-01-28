@@ -1,6 +1,6 @@
     //--------------
     // Audio Object
-    // code from: http://forestmist.org/blog/web-audio-api-loops/, 
+    // code from: http://forestmist.org/blog/web-audio-api-loops/,
     // thanks for the author
     //--------------
 
@@ -123,10 +123,10 @@
 
         //-------------------------------
         // Setup Audio Files and Buttons
-        //-------------------------------        
+        //-------------------------------
         for (var a in audio.files) {
             (function() {
-            	console.log("music " + a);
+            	// console.log("music " + a);
                 var i = parseInt(a) + 1;
                 var req = new XMLHttpRequest();
                 req.open('GET', audio.files[i - 1], true); // array starts with 0 hence the -1
