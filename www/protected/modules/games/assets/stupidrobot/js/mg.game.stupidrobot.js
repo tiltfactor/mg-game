@@ -1,20 +1,9 @@
 MG_GAME_STUPIDROBOT = function ($) {
     return $.extend(MG_GAME_API, {
-    	idx_paragraphArray: null,
-    	idx_introText: ["This is Stupid Robot.",
-    	"Stupid Robot looks at everything but understands nothing.",
-    	"Can you help?",
-    	"Fill Stupid Robot’s input fields by naming what is in the pictures.",
-    	"Stupid Robot can only understand short words at first.",
-    	"Sometimes Stupid Robot has an ** NGR ERROR and can’t process a word.",
-    	"** No Good Reason",
-    	"If that happens, try another word until you find one that works."],
-    	idx_a : "",
-    	idx_p: null,
-    	idx_i:0,
-    	idx_activeLine:0,
-
-
+    	init_options:null,
+    	server_init:false,
+    	
+    	// the following is copied from pyramid tag
         wordField:null,
         playOnceMoveOnFinalScreenWaitingTime:15000, // milliseconds
         submitButton:null,
@@ -29,7 +18,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         sound: {},
         sounds: {},
 
-        // the following variable is newly added in stupidrobot:
+        // the following variable is newly added in stupidrobot for gaming:
         startingLevel: 4,
         level: null,
         maxLevel: 13,
@@ -39,6 +28,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         fields: null,
         animation: null,
         scorehtml:"",
+        loadgame:"",
 
         // new added for scoring
         isRenderFinaled: false,
@@ -53,6 +43,20 @@ MG_GAME_STUPIDROBOT = function ($) {
     	scorestage: null,
     	scorelevel:0,
 
+    	// new added for splash page
+    	idx_paragraphArray: null,
+    	idx_introText: ["This is Stupid Robot.",
+    	"Stupid Robot looks at everything but understands nothing.",
+    	"Can you help?",
+    	"Fill Stupid Robot’s input fields by naming what is in the pictures.",
+    	"Stupid Robot can only understand short words at first.",
+    	"Sometimes Stupid Robot has an ** NGR ERROR and can’t process a word.",
+    	"** No Good Reason",
+    	"If that happens, try another word until you find one that works."],
+    	idx_a : "",
+    	idx_p: null,
+    	idx_i:0,
+    	idx_activeLine:0,
 
     	idx_scrollIn:function () {
     		MG_GAME_STUPIDROBOT.idx_p=MG_GAME_STUPIDROBOT.idx_paragraphArray[MG_GAME_STUPIDROBOT.idx_activeLine];
@@ -80,7 +84,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
     	idx_init:function (options){
     		// the following three lines is for merging
-    		loadgame = $("#loadgame").html();
+    		MG_GAME_STUPIDROBOT.loadgame = $("#loadgame").html();
     		$("#loadgame").html("");
     		$("#loadgame").hide();
 
@@ -116,7 +120,8 @@ MG_GAME_STUPIDROBOT = function ($) {
     			$("body").attr('id','gameContent');
     			$("body").removeClass("splashContent");
     			$("body").addClass("gameContent");
-    			$("body").html(loadgame);
+    			$("body").html(MG_GAME_STUPIDROBOT.loadgame);
+    			MG_GAME_STUPIDROBOT.init_options = options;
     			MG_GAME_STUPIDROBOT.init(options);
     		});
     	},
@@ -189,11 +194,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         		animation.robot.gotoAndPlay("confused");
         		}
         	);
-
-        	$("#reboot").click(function(){
-        		location.reload();
-        	});
-
+        	
         	// fix the loop sound problem after merging them together
             // 1 is because there is only one loop audio in background
             audio.play(1);
@@ -271,7 +272,11 @@ MG_GAME_STUPIDROBOT = function ($) {
              });
 
         	// initiate server communication
-        	MG_GAME_API.game_init(settings);
+            if(!MG_GAME_STUPIDROBOT.server_init){
+            	//console.log("initiate with server: " + MG_GAME_STUPIDROBOT.server_init);
+            	MG_GAME_API.game_init(settings);
+            	MG_GAME_STUPIDROBOT.server_init = true;
+            }
 
         	// set original level
         	MG_GAME_STUPIDROBOT.timerTick();
@@ -584,6 +589,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#score").html(MG_GAME_STUPIDROBOT.scorehtml);
 			// passed levels should be added as "!"
 
+        	MG_GAME_API.releaseOnBeforeUnload();
         	$("#reboot").click(function(){
         		location.reload();
         	});
@@ -632,6 +638,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 			MG_GAME_STUPIDROBOT.wordSpaces = Array.prototype.slice.call( wordspaceCollection );
 			MG_GAME_STUPIDROBOT.scrollIn();
         },
+        
     });
 }(jQuery);
 
