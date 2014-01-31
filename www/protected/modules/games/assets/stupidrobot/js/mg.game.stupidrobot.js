@@ -192,6 +192,27 @@ MG_GAME_STUPIDROBOT = function ($) {
         		MG_GAME_STUPIDROBOT.playSound('next_level');
         		// ANIMATION ADDITION ~ play "confused" animation for passing
         		animation.robot.gotoAndPlay("confused");
+        		
+                // send ajax call as POST request to validate a turn
+                MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+                    if (MG_API.checkResponse(response)) {
+                    	MG_GAME_STUPIDROBOT.onresponse(response);
+                    }
+                    return false;
+                }, {
+                    type:'post',
+                    data:{ // this is the data needed for the turn
+                        turn: 1,
+                        played_game_id:MG_GAME_STUPIDROBOT.game.played_game_id,
+                        'submissions':[
+                            {
+                                media_id:MG_GAME_STUPIDROBOT.media.media_id,
+                                tags: "pass",
+                                pass: true
+                            }
+                        ]
+                    }
+                });
         		}
         	);
         	
