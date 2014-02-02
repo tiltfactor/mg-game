@@ -1,8 +1,8 @@
 # Installation #
 
 - [Requirements](#requirements)
-- [Install NodeJS](#install-nodejs)
-- [Install flask and mod_wgsi](#install-flask-and-mod_wgsi)
+- [Install NodeJS](#install-nodejs) (Skip if not using One Up game)
+- [Install flask and mod_wgsi](#install-flask-and-mod_wgsi) (for NLP framework)
 - [Install Game Build](#install-game-build)
 - [Running Game Build over https](#running-game-build-over-https)
 
@@ -189,14 +189,14 @@ curl http://localhost:8139/possible_wordcheck?input#cromulent
 
 ```
 --------------------------------------------------------------------------------
-DEBUG in possible_wordcheck [/home/www/test/mg-game/nlp/nlpserver/scripts/possible_wordcheck/possible_wordcheck.py:81]:
+DEBUG in possible_wordcheck [/mg-game/nlp/nlpserver/scripts/possible_wordcheck/possible_wordcheck.py:81]:
 cromulent 0.00372197658456
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-INFO in possible_wordcheck [/home/www/test/mg-game/nlp/nlpserver/scripts/possible_wordcheck/possible_wordcheck.py:89]:
+INFO in possible_wordcheck [/mg-game/nlp/nlpserver/scripts/possible_wordcheck/possible_wordcheck.py:89]:
 cromulent could be a word.
 --------------------------------------------------------------------------------
-127.0.0.1 - - [06/Dec/2013 13:56:35] "GET /possible_wordcheck?input#cromulent HTTP/1.1" 200 -
+127.0.0.1 - - [24/Dec/2013 13:56:35] "GET /possible_wordcheck?input#cromulent HTTP/1.1" 200 -
 ```
 
 ### If using flask with mod_wsgi ###
@@ -333,7 +333,7 @@ At the "Admin Account Setup" page, fill out the following fields:
 
   * __Email__ - A valid email address for the administrator.
 
-<img src ="images/mg-game_adminAccountSetup.png" title="Metadata Games - Admin Account Setup" width=615 style="border: 1px solid #000;" />
+<img src ="images/mg-game_adminAcct.png" title="Metadata Games - Admin Account Setup" width=615 style="border: 1px solid #000;" />
 
 Then click "Save". Congratulations! You have successfully installed the Game Build for Metadata Games! Now to __[install the Content Build](https://github.com/tiltfactor/mg-content/tree/development/documentation/install_contentbuild.md)__ and then __[configure the games](configure_gamebuild.md)!__
 
