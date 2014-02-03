@@ -223,6 +223,11 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#button-loop-1").click(function(){
         		audio.play(1);
         	});
+        	
+        	// done button for finishing the game immediately
+        	$("#gamedone").click(function(){
+        		MG_GAME_STUPIDROBOT.secs = 0;
+        	});
 
         	MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.startingLevel;
 
@@ -234,17 +239,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                 if(keyCode === 13){
                 	var word=$("#inputArea").val();
-                	// evaluate for word too short
-                	if(word.length < MG_GAME_STUPIDROBOT.level){
-                		console.log("too short");
-                // ANIMATION ADDITION ~ play "confused" animation for passing
-                		animation.robot.gotoAndPlay("confused");
-
-                		MG_GAME_STUPIDROBOT.flashMessage("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD", "red");
-                		return;
-                	}
-
-                	MG_GAME_STUPIDROBOT.onsubmit();
+                	MG_GAME_STUPIDROBOT. beforeSubmit();
                     return false;
                 }
         	 });
@@ -422,42 +417,79 @@ MG_GAME_STUPIDROBOT = function ($) {
         /*
 		 * on callback for the submit button
 		 */
-        onsubmit:function () {
+        beforeSubmit:function () {
         	// console.log("onsubmit");
-            if (!MG_GAME_STUPIDROBOT.busy) {
-                var tags = $.trim(MG_GAME_STUPIDROBOT.wordField.val());
-
-            	MG_GAME_STUPIDROBOT.words.push(tags);
-                // text entered
-                // MG_GAME_API.curtain.show();
-                // MG_GAME_PYRAMID.busy = true;
-
-                // send ajax call as POST request to validate a turn
-                MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
-                    if (MG_API.checkResponse(response)) {
-                    	MG_GAME_STUPIDROBOT.wordField.val("");
-                    	MG_GAME_STUPIDROBOT.onresponse(response);
+            var tags = $.trim(MG_GAME_STUPIDROBOT.wordField.val());
+        	// evaluate for word too short
+        	if(tags.length < MG_GAME_STUPIDROBOT.level){
+        		console.log("too short");
+        		// ANIMATION ADDITION ~ play "confused" animation for passing
+        		animation.robot.gotoAndPlay("confused");
+        		MG_GAME_STUPIDROBOT.flashMessage("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD", "red");
+        	}
+        	else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
+        		MG_GAME_STUPIDROBOT.flashMessage("Special characters are not allowed!", "red");
+                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+            }
+            else if($.inArrayIn(tags, MG_GAME_STUPIDROBOT.words) !== -1){
+            	MG_GAME_STUPIDROBOT.flashMessage("You already tried that!", "red");
+                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+            }else{
+                // ajax call to the nlp api
+                $.ajax({
+                    type: "GET",
+                    //url: "http://localhost:8139/possible_wordcheck",
+                    url: MG_STUPIDROBOT.nlp_api_url + "/possible_wordcheck",
+                    timeout: 5000,
+                    data: { input: tags },
+                    dataType: "json",
+                    error: function( o ) {
+                        //console.log(o);
+                        console.log('error with nlp api, so proceeding with the game');
+                        console.log(MG_STUPIDROBOT.nlp_api_url);
+                        MG_GAME_STUPIDROBOT.onsubmit(tags);
                     }
-                    return false;
-                }, {
-                    type:'post',
-                    data:{ // this is the data needed for the turn
-                        turn: 1,
-                        played_game_id: MG_GAME_STUPIDROBOT.game.played_game_id,
-                        'submissions':[
-                            {
-                                media_id: MG_GAME_STUPIDROBOT.media.media_id,
-                                pass: false,
-                                tags: tags.toLowerCase()
-                            }
-                        ]
+                }).done(function( o ) {
+                    //console.log(o);
+                    var is_word = o.response;
+                    if (!is_word) {
+                        //console.log(tags+' is not a word.');
+                    	MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
+                    	MG_GAME_STUPIDROBOT.playSound('try_again');
+                    }
+                    else {
+                        //console.log(tags+' could be a word.');
+                        //console.log('nlp api call done, result not false so proceeding with game');
+                    	MG_GAME_STUPIDROBOT.onsubmit(tags);
                     }
                 });
-
-
-
             }
             return false;
+        },
+        
+        onsubmit:function (tags) {
+        	MG_GAME_STUPIDROBOT.words.push(tags);
+            // send ajax call as POST request to validate a turn
+            MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+                if (MG_API.checkResponse(response)) {
+                	MG_GAME_STUPIDROBOT.wordField.val("");
+                	MG_GAME_STUPIDROBOT.onresponse(response);
+                }
+                return false;
+            }, {
+                type:'post',
+                data:{ // this is the data needed for the turn
+                    turn: 1,
+                    played_game_id: MG_GAME_STUPIDROBOT.game.played_game_id,
+                    'submissions':[
+                        {
+                            media_id: MG_GAME_STUPIDROBOT.media.media_id,
+                            pass: false,
+                            tags: tags.toLowerCase()
+                        }
+                    ]
+                }
+            });
         },
 
         /*

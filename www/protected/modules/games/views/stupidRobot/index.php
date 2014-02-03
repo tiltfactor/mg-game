@@ -49,6 +49,7 @@
 					<br>
 					<p class="scrollText">&nbsp;</p>
 					<button class="button" id="button-loop-1" type="button" value="1">sound</button>
+					
 			</div>
 
 
@@ -60,6 +61,7 @@
 
 		<form>
 			<button class="button" id="button-loop-1" type="button" value="1">sound</button>
+			<button class="button" id="gamedone" type="button" value="1">done</button>
 		</form>
 
          <div id="game">
