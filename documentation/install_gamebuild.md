@@ -43,6 +43,7 @@ Before installation, have a system administrator configure your server's php.ini
 
 * If running PHP 5.5+
   * Must define date.timezone (e.g., date.timezone # "America/New_York")
+  * Make sure you also change this in php.ini in /etc/php5/cli/
   * Reload apache
 
 
