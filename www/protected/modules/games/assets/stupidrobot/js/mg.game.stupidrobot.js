@@ -234,16 +234,6 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                 if(keyCode === 13){
                 	var word=$("#inputArea").val();
-                	// evaluate for word too short
-                	if(word.length < MG_GAME_STUPIDROBOT.level){
-                		console.log("too short");
-                // ANIMATION ADDITION ~ play "confused" animation for passing
-                		animation.robot.gotoAndPlay("confused");
-
-                		MG_GAME_STUPIDROBOT.flashMessage("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD", "red");
-                		return;
-                	}
-
                 	MG_GAME_STUPIDROBOT.onsubmit();
                     return false;
                 }
@@ -424,38 +414,44 @@ MG_GAME_STUPIDROBOT = function ($) {
 		 */
         onsubmit:function () {
         	// console.log("onsubmit");
-            if (!MG_GAME_STUPIDROBOT.busy) {
-                var tags = $.trim(MG_GAME_STUPIDROBOT.wordField.val());
-
-            	MG_GAME_STUPIDROBOT.words.push(tags);
-                // text entered
-                // MG_GAME_API.curtain.show();
-                // MG_GAME_PYRAMID.busy = true;
-
-                // send ajax call as POST request to validate a turn
-                MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
-                    if (MG_API.checkResponse(response)) {
-                    	MG_GAME_STUPIDROBOT.wordField.val("");
-                    	MG_GAME_STUPIDROBOT.onresponse(response);
-                    }
-                    return false;
-                }, {
-                    type:'post',
-                    data:{ // this is the data needed for the turn
-                        turn: 1,
-                        played_game_id: MG_GAME_STUPIDROBOT.game.played_game_id,
-                        'submissions':[
-                            {
-                                media_id: MG_GAME_STUPIDROBOT.media.media_id,
-                                pass: false,
-                                tags: tags.toLowerCase()
-                            }
-                        ]
-                    }
-                });
-
-
-
+            var tags = $.trim(MG_GAME_STUPIDROBOT.wordField.val());
+        	// evaluate for word too short
+        	if(tags.length < MG_GAME_STUPIDROBOT.level){
+        		console.log("too short");
+        		// ANIMATION ADDITION ~ play "confused" animation for passing
+        		animation.robot.gotoAndPlay("confused");
+        		MG_GAME_STUPIDROBOT.flashMessage("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD", "red");
+        	}
+        	else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
+        		MG_GAME_STUPIDROBOT.flashMessage("Special characters are not allowed!", "red");
+                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+            }
+            else if($.inArrayIn(tags, MG_GAME_STUPIDROBOT.words) !== -1){
+            	MG_GAME_STUPIDROBOT.flashMessage("You already tried that!", "red");
+                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+            }else{
+	        	MG_GAME_STUPIDROBOT.words.push(tags);
+	            // send ajax call as POST request to validate a turn
+	            MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+	                if (MG_API.checkResponse(response)) {
+	                	MG_GAME_STUPIDROBOT.wordField.val("");
+	                	MG_GAME_STUPIDROBOT.onresponse(response);
+	                }
+	                return false;
+	            }, {
+	                type:'post',
+	                data:{ // this is the data needed for the turn
+	                    turn: 1,
+	                    played_game_id: MG_GAME_STUPIDROBOT.game.played_game_id,
+	                    'submissions':[
+	                        {
+	                            media_id: MG_GAME_STUPIDROBOT.media.media_id,
+	                            pass: false,
+	                            tags: tags.toLowerCase()
+	                        }
+	                    ]
+	                }
+	            });
             }
             return false;
         },
