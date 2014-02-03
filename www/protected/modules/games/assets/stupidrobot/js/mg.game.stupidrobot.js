@@ -223,6 +223,11 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#button-loop-1").click(function(){
         		audio.play(1);
         	});
+        	
+        	// done button for finishing the game immediately
+        	$("#gamedone").click(function(){
+        		MG_GAME_STUPIDROBOT.secs = 0;
+        	});
 
         	MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.startingLevel;
 
