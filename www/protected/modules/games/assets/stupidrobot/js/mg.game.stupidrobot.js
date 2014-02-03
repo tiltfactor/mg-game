@@ -234,7 +234,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                 if(keyCode === 13){
                 	var word=$("#inputArea").val();
-                	MG_GAME_STUPIDROBOT.onsubmit();
+                	MG_GAME_STUPIDROBOT. beforeSubmit();
                     return false;
                 }
         	 });
@@ -412,7 +412,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         /*
 		 * on callback for the submit button
 		 */
-        onsubmit:function () {
+        beforeSubmit:function () {
         	// console.log("onsubmit");
             var tags = $.trim(MG_GAME_STUPIDROBOT.wordField.val());
         	// evaluate for word too short
@@ -430,30 +430,61 @@ MG_GAME_STUPIDROBOT = function ($) {
             	MG_GAME_STUPIDROBOT.flashMessage("You already tried that!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }else{
-	        	MG_GAME_STUPIDROBOT.words.push(tags);
-	            // send ajax call as POST request to validate a turn
-	            MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
-	                if (MG_API.checkResponse(response)) {
-	                	MG_GAME_STUPIDROBOT.wordField.val("");
-	                	MG_GAME_STUPIDROBOT.onresponse(response);
-	                }
-	                return false;
-	            }, {
-	                type:'post',
-	                data:{ // this is the data needed for the turn
-	                    turn: 1,
-	                    played_game_id: MG_GAME_STUPIDROBOT.game.played_game_id,
-	                    'submissions':[
-	                        {
-	                            media_id: MG_GAME_STUPIDROBOT.media.media_id,
-	                            pass: false,
-	                            tags: tags.toLowerCase()
-	                        }
-	                    ]
-	                }
-	            });
+                // ajax call to the nlp api
+                $.ajax({
+                    type: "GET",
+                    //url: "http://localhost:8139/possible_wordcheck",
+                    url: MG_STUPIDROBOT.nlp_api_url + "/possible_wordcheck",
+                    timeout: 5000,
+                    data: { input: tags },
+                    dataType: "json",
+                    error: function( o ) {
+                        //console.log(o);
+                        console.log('error with nlp api, so proceeding with the game');
+                        console.log(MG_STUPIDROBOT.nlp_api_url);
+                        MG_GAME_STUPIDROBOT.onsubmit(tags);
+                    }
+                }).done(function( o ) {
+                    //console.log(o);
+                    var is_word = o.response;
+                    if (!is_word) {
+                        //console.log(tags+' is not a word.');
+                    	MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
+                    	MG_GAME_STUPIDROBOT.playSound('try_again');
+                    }
+                    else {
+                        //console.log(tags+' could be a word.');
+                        //console.log('nlp api call done, result not false so proceeding with game');
+                    	MG_GAME_STUPIDROBOT.onsubmit(tags);
+                    }
+                });
             }
             return false;
+        },
+        
+        onsubmit:function (tags) {
+        	MG_GAME_STUPIDROBOT.words.push(tags);
+            // send ajax call as POST request to validate a turn
+            MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+                if (MG_API.checkResponse(response)) {
+                	MG_GAME_STUPIDROBOT.wordField.val("");
+                	MG_GAME_STUPIDROBOT.onresponse(response);
+                }
+                return false;
+            }, {
+                type:'post',
+                data:{ // this is the data needed for the turn
+                    turn: 1,
+                    played_game_id: MG_GAME_STUPIDROBOT.game.played_game_id,
+                    'submissions':[
+                        {
+                            media_id: MG_GAME_STUPIDROBOT.media.media_id,
+                            pass: false,
+                            tags: tags.toLowerCase()
+                        }
+                    ]
+                }
+            });
         },
 
         /*

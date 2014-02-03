@@ -109,6 +109,7 @@ EOD;
             $jsInit = <<<EOD
 MG_STUPIDROBOT = {};
 MG_STUPIDROBOT.api_url = '{$game->api_base_url}';
+MG_STUPIDROBOT.nlp_api_url = '{$game->nlp_api_base_url}';
 MG_STUPIDROBOT.isLogged = '{$isLogged}';
 MG_STUPIDROBOT.gid = 'StupidRobot';
 MG_STUPIDROBOT.game_base_url = '{$game->game_base_url}';
