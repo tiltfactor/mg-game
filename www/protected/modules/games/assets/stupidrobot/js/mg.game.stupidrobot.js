@@ -2,7 +2,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     return $.extend(MG_GAME_API, {
     	init_options:null,
     	server_init:false,
-    	
+
     	// the following is copied from pyramid tag
         wordField:null,
         playOnceMoveOnFinalScreenWaitingTime:15000, // milliseconds
@@ -50,9 +50,11 @@ MG_GAME_STUPIDROBOT = function ($) {
     	"Can you help?",
     	"Fill Stupid Robot’s input fields by naming what is in the pictures.",
     	"Stupid Robot can only understand short words at first.",
-    	"Sometimes Stupid Robot has an ** NGR ERROR and can’t process a word.",
-    	"** No Good Reason",
-    	"If that happens, try another word until you find one that works."],
+    	"Sometimes Stupid Robot has a ** DNC ERROR and can’t process a word.",
+    	"** Does Not Compute",
+    	"If that happens, try another word until you find one that works.",
+    	"Stupid Robot can only understand short words at first,",
+    	"but with your help, Stupid Robot will learn longer and evolve!"],
     	idx_a : "",
     	idx_p: null,
     	idx_i:0,
@@ -192,7 +194,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         		MG_GAME_STUPIDROBOT.playSound('next_level');
         		// ANIMATION ADDITION ~ play "confused" animation for passing
         		animation.robot.gotoAndPlay("confused");
-        		
+
                 // send ajax call as POST request to validate a turn
                 MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
                     if (MG_API.checkResponse(response)) {
@@ -215,7 +217,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 });
         		}
         	);
-        	
+
         	// fix the loop sound problem after merging them together
             // 1 is because there is only one loop audio in background
             audio.play(1);
@@ -223,7 +225,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#button-loop-1").click(function(){
         		audio.play(1);
         	});
-        	
+
         	// done button for finishing the game immediately
         	$("#gamedone").click(function(){
         		MG_GAME_STUPIDROBOT.secs = 0;
@@ -375,7 +377,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	// randomly assigns 50% chance of correct. Replace this with
 			// evaluation for word match
         	else if(Math.round(Math.random()*100) % 2){
-        		MG_GAME_STUPIDROBOT.flashMessage("NGR ERROR: TRY AGAIN", "red");
+        		MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
         		animation.robot.gotoAndPlay("incorrectAnswer");
         		//MG_GAME_STUPIDROBOT.playSound('nextlevel');
         	}
@@ -466,7 +468,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             }
             return false;
         },
-        
+
         onsubmit:function (tags) {
         	MG_GAME_STUPIDROBOT.words.push(tags);
             // send ajax call as POST request to validate a turn
@@ -532,13 +534,13 @@ MG_GAME_STUPIDROBOT = function ($) {
                 		MG_GAME_STUPIDROBOT.level++;
                 		MG_GAME_STUPIDROBOT.setLevel();
 
-                		MG_GAME_STUPIDROBOT.flashMessage("WORD ACCEPTED!", "green");
+                		MG_GAME_STUPIDROBOT.flashMessage("STUPID ROBOT KNOWS THAT NOW!", "green");
                 		animation.robot.gotoAndPlay("correctAnswer");
                 		MG_GAME_STUPIDROBOT.playSound('next_level');
                     } else {
                     		// no match -- feedback
                     	// console.log("not accepted");
-                    	MG_GAME_STUPIDROBOT.flashMessage("NGR ERROR: TRY AGAIN", "red");
+                    	MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
                 		animation.robot.gotoAndPlay("incorrectAnswer");
                 		MG_GAME_STUPIDROBOT.playSound('fail_sound');
                     }
@@ -658,7 +660,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 			var messageString;
 			switch(MG_GAME_STUPIDROBOT.scorelevel){
 				case 0:
-				messageString="STUPID ROBOT IS STILL COMPLETELY STUPID!";
+				messageString="STUPID ROBOT NEEDS MORE HELP. TRY AGAIN?";
 				break;
 				case 1:
 				messageString="STUPID ROBOT AN ITTY BITTY BIT SMARTER.";
@@ -668,6 +670,24 @@ MG_GAME_STUPIDROBOT = function ($) {
 				break;
 				case 3:
 				messageString="STUPID ROBOT SLIGHTLY SMARTER.";
+				break;
+				case 4:
+				messageString="STUPID ROBOT LEVELING UP!";
+				break;
+				case 5:
+				messageString="STUPID ROBOT SEEKS MORE KNOWLEDGE.";
+				break;
+				case 6:
+				messageString="BRING IT ON HUMAN.";
+				break;
+				case 7:
+				messageString="STUPID ROBOT READY TO TAKE ON DEEP BLUE.";
+				break;
+				case 8:
+				messageString="THE NAME IS SMARTY ROBOT.";
+				break;
+				case 9:
+				messageString="ALL YOUR TAGS ARE BELONG TO STUPID ROBOT.";
 				break;
 				default:
 				messageString="STUPID ROBOT AN ITTY BITTY BIT SMARTER.";
@@ -691,7 +711,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 			MG_GAME_STUPIDROBOT.wordSpaces = Array.prototype.slice.call( wordspaceCollection );
 			MG_GAME_STUPIDROBOT.scrollIn();
         },
-        
+
     });
 }(jQuery);
 
