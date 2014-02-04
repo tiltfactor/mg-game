@@ -124,7 +124,7 @@ textarea {
 	font-size:2em;
 	text-align:center;
 	padding-top:30%;
-	
+
 }
 
 .button{
@@ -198,8 +198,9 @@ textarea {
 
 .splashContent p{
 	font-family:"telegrama-raw";
-	font-size:.80em;
+	font-size:1em;
 	color:#1BBF77;
+	padding: 2px 0;
 }
 
 .splashContent .button{
@@ -227,6 +228,10 @@ textarea {
 	background-color:#ffffff;
 	margin:20px auto 0px auto;
 	border: 8px solid black;
+}
+
+#gameMessage {
+	font-size: 90%;
 }
 
 #imageContainer{
@@ -291,7 +296,7 @@ textarea {
 	border:8px solid #CCCCCC;
 	margin:5px 0px;
 	background-color:#CCCCCC;
-	
+
 }
 
 #game canvas{
