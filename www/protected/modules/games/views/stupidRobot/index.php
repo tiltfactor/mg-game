@@ -45,13 +45,12 @@
 					<br>
 					<p class="scrollText">&nbsp;</p>
 					<p class="scrollText">&nbsp;</p>
-					<p class="scrollText">&nbsp;</p>
 					<br>
 					<p class="scrollText">&nbsp;</p>
 					<br>
 					<p class="scrollText">&nbsp;</p>
 					<p class="scrollText">&nbsp;</p>
-					<p id="lastScrollText">&nbsp;</p>
+					<p class="scrollText">&nbsp;</p>
 					<br>
 
 					<button class="button" id="button-loop-1" type="button" value="1">sound</button>

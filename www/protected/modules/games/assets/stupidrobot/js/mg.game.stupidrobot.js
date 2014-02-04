@@ -49,12 +49,11 @@ MG_GAME_STUPIDROBOT = function ($) {
     	"Stupid Robot looks at everything but understands nothing.",
     	"Can you help?",
     	"Fill Stupid Robot’s input fields by naming what is in the pictures.",
-    	"Stupid Robot can only understand short words at first.",
     	"Sometimes Stupid Robot has a ** DNC ERROR and can’t process a word.",
     	"** Does Not Compute",
     	"If that happens, try another word until you find one that works.",
     	"Stupid Robot can only understand short words at first,",
-    	"but with your help, Stupid Robot will learn more and evolve!"],
+    	"but with your help, Stupid Robot will learn and evolve!"],
     	idx_a : "",
     	idx_p: null,
     	idx_i:0,
@@ -79,7 +78,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
     		MG_GAME_STUPIDROBOT.idx_a = MG_GAME_STUPIDROBOT.idx_introText[MG_GAME_STUPIDROBOT.idx_activeLine].substring(0,MG_GAME_STUPIDROBOT.idx_i);
     		MG_GAME_STUPIDROBOT.idx_p.innerHTML = MG_GAME_STUPIDROBOT.idx_a+"_";
-    		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",40);
+    		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",30);
     	},
 
 
