@@ -54,7 +54,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     	"** Does Not Compute",
     	"If that happens, try another word until you find one that works.",
     	"Stupid Robot can only understand short words at first,",
-    	"but with your help, Stupid Robot will learn longer and evolve!"],
+    	"but with your help, Stupid Robot will learn more and evolve!"],
     	idx_a : "",
     	idx_p: null,
     	idx_i:0,
@@ -73,7 +73,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     				return;
     				}
 
-    			setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",1000);
+    			setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",2000);
     			return;
     		 }
 
@@ -172,6 +172,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
             MG_GAME_STUPIDROBOT.sounds = {
                 fail_sound: game_assets_uri + 'audio/sound_fail.mp3',
+                scan_sound: game_assets_uri + 'audio/scan2.mp3',
                 letter_0  : game_assets_uri + 'audio/sound0.mp3',
                 letter_1  : game_assets_uri + 'audio/sound1.mp3',
                 letter_2  : game_assets_uri + 'audio/sound2.mp3',
@@ -180,7 +181,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                 letter_5  : game_assets_uri + 'audio/sound5.mp3',
                 letter_6  : game_assets_uri + 'audio/sound6.mp3',
                 letter_7  : game_assets_uri + 'audio/sound7.mp3',
-                next_level: game_assets_uri + 'audio/nextlevel.mp3',
+                next_level: game_assets_uri + 'audio/right.mp3',
+                confused	: game_assets_uri + 'audio/confused2.mp3',
                 try_again : game_assets_uri + 'audio/tryagain.mp3'
             };
             $.each(MG_GAME_STUPIDROBOT.sounds, function(index, source) {
@@ -317,9 +319,9 @@ MG_GAME_STUPIDROBOT = function ($) {
         	// ANIMATION ADDITION ~ play "scan" when animation launches. Use
 			// this code to cause animation to scan new images
         	setTimeout(function(){
+        	  MG_GAME_STUPIDROBOT.playSound('scan_sound');
         		animation.robot.gotoAndPlay("scan");
-        		MG_GAME_STUPIDROBOT.playSound('fail_sound');
-        	},3000);
+        	},1400);
 
         	// console.log("end of init");
 
@@ -378,7 +380,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 			// evaluation for word match
         	else if(Math.round(Math.random()*100) % 2){
         		MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
-        		animation.robot.gotoAndPlay("incorrectAnswer");
+        		animation.robot.gotoAndPlay("confused");
         		//MG_GAME_STUPIDROBOT.playSound('nextlevel');
         	}
         	else{
@@ -426,7 +428,10 @@ MG_GAME_STUPIDROBOT = function ($) {
         	if(tags.length < MG_GAME_STUPIDROBOT.level){
         		console.log("too short");
         		// ANIMATION ADDITION ~ play "confused" animation for passing
-        		animation.robot.gotoAndPlay("confused");
+        		animation.robot.gotoAndPlay("incorrectAnswer");
+
+        		 MG_GAME_STUPIDROBOT.playSound('fail_sound');
+
         		MG_GAME_STUPIDROBOT.flashMessage("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD", "red");
         	}
         	else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
@@ -457,7 +462,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     if (!is_word) {
                         //console.log(tags+' is not a word.');
                     	MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
-                    	MG_GAME_STUPIDROBOT.playSound('try_again');
+                    	MG_GAME_STUPIDROBOT.playSound('fail_sound');
                     }
                     else {
                         //console.log(tags+' could be a word.');
@@ -541,8 +546,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                     		// no match -- feedback
                     	// console.log("not accepted");
                     	MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
-                		animation.robot.gotoAndPlay("incorrectAnswer");
-                		MG_GAME_STUPIDROBOT.playSound('fail_sound');
+                		animation.robot.gotoAndPlay("confused");
+                		MG_GAME_STUPIDROBOT.playSound('confused');
                     }
                 }
             }
