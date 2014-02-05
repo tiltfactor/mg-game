@@ -591,7 +591,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     		// no match -- feedback
                     	// console.log("not accepted");
                     	MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
-                		animation.robot.gotoAndPlay("confused");
+                		animation.robot.gotoAndPlay("error");
                 		MG_GAME_STUPIDROBOT.playSound('confused');
                     }
                 }
