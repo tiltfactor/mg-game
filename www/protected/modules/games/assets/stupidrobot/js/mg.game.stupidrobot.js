@@ -518,7 +518,6 @@ MG_GAME_STUPIDROBOT = function ($) {
             // send ajax call as POST request to validate a turn
             MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
                 if (MG_API.checkResponse(response)) {
-                	MG_GAME_STUPIDROBOT.wordField.val("");
                 	MG_GAME_STUPIDROBOT.onresponse(response);
                 }
                 return false;
@@ -586,6 +585,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                 			MG_GAME_STUPIDROBOT.renderFinal();
                 			return;
                 		}
+                    	$("#inputArea").val("");
+                    	MG_GAME_STUPIDROBOT.inputlength = 0;
                     } else {
                     		// no match -- feedback
                     	// console.log("not accepted");
