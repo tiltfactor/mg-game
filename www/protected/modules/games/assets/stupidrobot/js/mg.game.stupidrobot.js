@@ -462,6 +462,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	// evaluate for word too short
             // set false for testing turn handling in the sever side
         	// if(tags.length < MG_GAME_STUPIDROBOT.level){
+            //console.log(MG_GAME_STUPIDROBOT.wordArray[tags.length] + " " + tags.length);
         	if(tags.length < 4){
         		console.log("too short");
         		// ANIMATION ADDITION ~ play "confused" animation for passing
@@ -475,9 +476,12 @@ MG_GAME_STUPIDROBOT = function ($) {
         		MG_GAME_STUPIDROBOT.flashMessage("Special characters are not allowed!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }
-            else if($.inArrayIn(tags, MG_GAME_STUPIDROBOT.words) !== -1 || 
-            		MG_GAME_STUPIDROBOT.wordArray[tags.length] != "!"){
+            else if($.inArrayIn(tags, MG_GAME_STUPIDROBOT.words) !== -1 ){
             	MG_GAME_STUPIDROBOT.flashMessage("You already tried that!", "red");
+                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+            }
+            else if(MG_GAME_STUPIDROBOT.wordArray[tags.length - 4] != "!"){
+            	MG_GAME_STUPIDROBOT.flashMessage("Try a different length!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }else{
                 // ajax call to the nlp api
