@@ -35,7 +35,11 @@ class StupidRobotGame extends NexTagGame
                 // entering tags because server does not have permissions
                 // to open stream.
                 //
-
+/*                 if($found){
+                	$file = fopen("test.txt","a");
+                	fwrite($file, "found it!");
+                	fclose($file);
+                } */
                 // break;
             }
             // add the extracted tags to the media info
@@ -305,7 +309,7 @@ class StupidRobotGame extends NexTagGame
         if (!is_null($mediaTags)) {
         	return $mediaTags;
         } else {
-            $mediaTags = MGTags::getTagsByLength($mediaId, ($level->level + StupidRobotGame::$LETTERS_STEP));
+            $mediaTags = MGTags::getTagsMediaId($mediaId);
             if (empty($mediaTags)) {
                 $tag = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $level->level + StupidRobotGame::$LETTERS_STEP);
                 $mediaTags[0]["tag"] = $tag;
