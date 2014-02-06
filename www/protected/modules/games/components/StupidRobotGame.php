@@ -99,11 +99,6 @@ class StupidRobotGame extends NexTagGame
             // so in the future we need to implement screening on server side
             // os, I also leave the pass functionality here, just in case we need to use it again
             //if ($pass || ($found && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag))) {
-            if($found){
-	            $file = fopen("test.txt","a");
-	            fwrite($file, "found it!");
-	            fclose($file);
-            }
             if ($pass || $found) {
             	//the answer is marked as correct and the player moves on to the next length tag
                 $level->isAccepted = true;
