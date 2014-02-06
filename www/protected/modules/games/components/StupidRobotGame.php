@@ -35,9 +35,11 @@ class StupidRobotGame extends NexTagGame
                 // entering tags because server does not have permissions
                 // to open stream.
                 //
-                // $file = fopen("test.txt","w");
-                // fwrite($file, $tag);
-                // fclose($file);
+/*                 if($found){
+                	$file = fopen("test.txt","a");
+                	fwrite($file, "found it!");
+                	fclose($file);
+                } */
                 // break;
             }
             // add the extracted tags to the media info
@@ -71,6 +73,11 @@ class StupidRobotGame extends NexTagGame
         }
         if ($mediaId > 0) {
             $found = false;
+            // currently they retrieve the tags with length regarding
+            // to current level. but now we want to switch to arbitrary level,
+            // currently I just hack it by not checking the level and 
+            // return tags with all the level, which is a quick fix
+            // a better way is change the whole query
             $mediaTags = $this->getMediaTags($level, $mediaId);
             foreach ($mediaTags as $val) {
                 if ($currentTag == strtolower($val['tag'])) {
@@ -90,8 +97,14 @@ class StupidRobotGame extends NexTagGame
             $level->isAccepted = false;
             $level->tag = $currentTag;
 
-            if ($pass || ($found && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag))) {
-                //the answer is marked as correct and the player moves on to the next length tag
+            // Junjie Guan: I modified the following condition here, so that palyers can submit arbitrary length of words
+            // and I leave the length screening to frontend, for example you cannot submit 2 four-letter words
+            // This is a quick fix, but have potential minor security issue, I leave that to future work.
+            // so in the future we need to implement screening on server side
+            // os, I also leave the pass functionality here, just in case we need to use it again
+            //if ($pass || ($found && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag))) {
+            if ($pass || $found) {
+            	//the answer is marked as correct and the player moves on to the next length tag
                 $level->isAccepted = true;
             } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
                 //run the “freebie” algorithm to determine whether or not we lie to the players
@@ -292,10 +305,11 @@ class StupidRobotGame extends NexTagGame
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
         $mediaTags = Yii::app()->session[$api_id . '_PYRAMID_IMAGE_TAGS'];
 
-        if (!is_null($mediaTags) && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($mediaTags[0]["tag"])) {
-            return $mediaTags;
+        //if (!is_null($mediaTags) && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($mediaTags[0]["tag"])) {
+        if (!is_null($mediaTags)) {
+        	return $mediaTags;
         } else {
-            $mediaTags = MGTags::getTagsByLength($mediaId, ($level->level + StupidRobotGame::$LETTERS_STEP));
+            $mediaTags = MGTags::getTagsMediaId($mediaId);
             if (empty($mediaTags)) {
                 $tag = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $level->level + StupidRobotGame::$LETTERS_STEP);
                 $mediaTags[0]["tag"] = $tag;

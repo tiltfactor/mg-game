@@ -404,6 +404,34 @@ class MGTags
         }
         return $tags;
     }
+    
+    public static function getTagsMediaId($mediaId)
+    {
+    	$tags = array();
+    	$used_tags = array();
+    	$used_tags = Yii::app()->db->createCommand()
+    	->select('t.id as tag_id, t.tag')
+    	->from('{{tag_use}} tu')
+    	->leftJoin('{{tag}} t', 't.id = tu.tag_id')
+    	->where('tu.weight > 0 and tu.media_id=:id ', array(':id' => $mediaId))
+    	->group('tag_id')
+    	->queryAll();
+    
+    
+    	foreach ($used_tags as $tag) {
+    		// PASSING: In most cases, we don't want to see any of the
+    		// so-called PASS tags, so we will filter them out here.
+    		if (strcasecmp($tag["tag"], "PASSONTHISTURN") == 0) {
+    			// DEBUG
+    			//Yii::log("FOUND a PASS tag.", "Error");
+    			continue;
+    		}
+    
+    		$tags[] = array("tag" => $tag["tag"],
+    				"tag_id" => $tag["tag_id"]);
+    	}
+    	return $tags;
+    }
 
     public static function isExisting($mediaId, $tag,$started=null)
     {
