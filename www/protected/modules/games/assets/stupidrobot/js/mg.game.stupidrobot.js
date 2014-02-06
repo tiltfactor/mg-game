@@ -47,12 +47,12 @@ MG_GAME_STUPIDROBOT = function ($) {
 
     	// new added for splash page
     	idx_paragraphArray: null,
-    	idx_introText: ["This is Stupid Robot.",
+    	idx_introText: ["Meet Stupid Robot.",
     	"Stupid Robot looks at everything but understands nothing.",
     	"Can you help?",
-    	"Fill Stupid Robot’s input fields by naming what is in the pictures.",
-    	"Sometimes Stupid Robot has a ** DNC ERROR and can’t process a word.",
-    	"** Does Not Compute",
+    	"Fill Stupid Robot’s input fields by describing what is in the image.",
+    	"Sometimes Stupid Robot has a **DNC ERROR** and can’t process a word.",
+    	"** Does Not Compute **",
     	"If that happens, try another word until you find one that works.",
     	"Stupid Robot can only understand short words at first,",
     	"but with your help, Stupid Robot will learn and evolve!"],
@@ -74,13 +74,13 @@ MG_GAME_STUPIDROBOT = function ($) {
     				return;
     				}
 
-    			setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",2000);
+    			setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",1400);
     			return;
     		 }
 
     		MG_GAME_STUPIDROBOT.idx_a = MG_GAME_STUPIDROBOT.idx_introText[MG_GAME_STUPIDROBOT.idx_activeLine].substring(0,MG_GAME_STUPIDROBOT.idx_i);
     		MG_GAME_STUPIDROBOT.idx_p.innerHTML = MG_GAME_STUPIDROBOT.idx_a+"_";
-    		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",30);
+    		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",20);
     	},
 
 
@@ -233,7 +233,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#gamedone").click(function(){
         		MG_GAME_STUPIDROBOT.secs = 0;
         	});
-        	
+
         	// set arbitrary level
         	$("#pass").hide();
 
@@ -249,13 +249,13 @@ MG_GAME_STUPIDROBOT = function ($) {
         	 	// console.log("keypressed");
 
                 if(keyCode === 13){
-                	
+
                 	MG_GAME_STUPIDROBOT. beforeSubmit();
                     return false;
                 }
-               
+
         	 });
-        	
+
         	$("#inputArea").keydown(function(event){
         		// console.log("keydown");
         		if(event.which == 8) {
@@ -364,16 +364,16 @@ MG_GAME_STUPIDROBOT = function ($) {
 
         	$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
         },
-        
+
         isNumOrLetter: function(e){
         	return (e >= 0x30 && e <= 0x39)
         		|| (e >= 0x41 && e <= 0x5A)
         		|| (e >= 0x61 && e <= 0x7A);
         },
-        
+
         setNewLevel: function (){
             // console.log("setlevel");
-        	if(MG_GAME_STUPIDROBOT.inputlength < 4) 
+        	if(MG_GAME_STUPIDROBOT.inputlength < 4)
         		MG_GAME_STUPIDROBOT.level = 4;
         	else
         		MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
@@ -415,7 +415,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 			// evaluation for word match
         	else if(Math.round(Math.random()*100) % 2){
         		MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
-        		animation.robot.gotoAndPlay("confused");
+        		animation.robot.gotoAndPlay("incorrectAnswer");
         		// MG_GAME_STUPIDROBOT.playSound('nextlevel');
         	}
         	else{
@@ -468,7 +468,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	if(tags.length < 4){
         		console.log("too short");
         		// ANIMATION ADDITION ~ play "confused" animation for passing
-        		animation.robot.gotoAndPlay("incorrectAnswer");
+        		animation.robot.gotoAndPlay("error");
 
         		 MG_GAME_STUPIDROBOT.playSound('fail_sound');
 
@@ -476,13 +476,16 @@ MG_GAME_STUPIDROBOT = function ($) {
         	}
         	else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
         		MG_GAME_STUPIDROBOT.flashMessage("Special characters are not allowed!", "red");
+        		    animation.robot.gotoAndPlay("error");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }
             else if($.inArrayIn(tags, MG_GAME_STUPIDROBOT.words) !== -1 ){
+            	animation.robot.gotoAndPlay("error");
             	MG_GAME_STUPIDROBOT.flashMessage("You already tried that!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }
             else if(MG_GAME_STUPIDROBOT.wordArray[tags.length - 4] != "!"){
+            	animation.robot.gotoAndPlay("error");
             	MG_GAME_STUPIDROBOT.flashMessage("Try a different length!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }else{
@@ -505,6 +508,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     var is_word = o.response;
                     if (!is_word) {
                         // console.log(tags+' is not a word.');
+                    	animation.robot.gotoAndPlay("error");
                     	MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
                     	MG_GAME_STUPIDROBOT.playSound('fail_sound');
                     }
@@ -598,7 +602,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     		// no match -- feedback
                     	// console.log("not accepted");
                     	MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
-                		animation.robot.gotoAndPlay("error");
+                		animation.robot.gotoAndPlay("incorrectAnswer");
                 		MG_GAME_STUPIDROBOT.playSound('confused');
                     }
                 }
