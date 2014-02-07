@@ -31,13 +31,14 @@ MG_GAME_STUPIDROBOT = function ($) {
         loadgame:"",
         wordsAccepted: 0,
         inputlength: 0,
+        main_menu_bar: null,
 
         // new added for scoring
         isRenderFinaled: false,
     	wordSpaces:null,
-    	wordArray:["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",],
-    	// wordArray:["word",
-		// "word","word","word","word","word","word","word","!","word",],
+    	//wordArray:["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",],
+    	 wordArray:["word",
+		 "word","word","word","word","word","word","word","word","word",],
     	a:"",
     	p:null,
     	i:0,
@@ -90,6 +91,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     		MG_GAME_STUPIDROBOT.loadgame = $("#loadgame").html();
     		$("#loadgame").html("");
     		$("#loadgame").hide();
+    		MG_GAME_STUPIDROBOT.main_menu_bar = $("#mainmenu_save").html();
 
     		$(".manifest").hide();
     		canvas = document.getElementById("canvas");
@@ -167,6 +169,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             var settings = $.extend(options, {
                 ongameinit: MG_GAME_STUPIDROBOT.ongameinit
             });
+            $("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
 
             var game_assets_uri = $("#game_assets_uri").val();
             // console.log("jackjackjack" + game_assets_uri);
