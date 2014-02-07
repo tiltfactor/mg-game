@@ -36,9 +36,9 @@ MG_GAME_STUPIDROBOT = function ($) {
         // new added for scoring
         isRenderFinaled: false,
     	wordSpaces:null,
-    	//wordArray:["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",],
-    	 wordArray:["word",
-		 "word","word","word","word","word","word","word","word","word",],
+    	wordArray:["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",],
+    	// wordArray:["word",
+		 //"word","word","word","word","word","word","word","word","word",],
     	a:"",
     	p:null,
     	i:0,
@@ -405,35 +405,6 @@ MG_GAME_STUPIDROBOT = function ($) {
         	},1500);
         },
 
-        evalWord: function (){
-            // console.log("evalWord");
-        	var word=$("#inputArea").val();
-        	// evaluate for word too short
-        	if(word.length < MG_GAME_STUPIDROBOT.level){
-        		console.log("too short");
-        		return;
-        	}
-
-        	// randomly assigns 50% chance of correct. Replace this with
-			// evaluation for word match
-        	else if(Math.round(Math.random()*100) % 2){
-        		MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
-        		animation.robot.gotoAndPlay("incorrectAnswer");
-        		// MG_GAME_STUPIDROBOT.playSound('nextlevel');
-        	}
-        	else{
-        		$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level-MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
-        		MG_GAME_STUPIDROBOT.level++;
-        		MG_GAME_STUPIDROBOT.setLevel();
-        	// set MG_GAME_STUPIDROBOT.level BEFORE flash message
-        		MG_GAME_STUPIDROBOT.flashMessage("WORD ACCEPTED!", "green");
-        		animation.robot.gotoAndPlay("correctAnswer");
-            	$("#inputArea").val("");
-            	MG_GAME_STUPIDROBOT.inputlength = 0;
-// MG_GAME_STUPIDROBOT.playSound('nextlevel');
-        	}
-        },
-
         timerTick: function (){
             // console.log("timerTick");
         	currentMinutes = Math.floor(MG_GAME_STUPIDROBOT.secs / 60);
@@ -475,7 +446,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
         		 MG_GAME_STUPIDROBOT.playSound('fail_sound');
 
-        		MG_GAME_STUPIDROBOT.flashMessage("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD", "red");
+        		MG_GAME_STUPIDROBOT.flashMessage("Too short!", "red");
         	}
         	else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
         		MG_GAME_STUPIDROBOT.flashMessage("Special characters are not allowed!", "red");
@@ -763,6 +734,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
 			var canvas = document.getElementById("canvas");
 			var exportRoot = new lib.animation_score(MG_GAME_STUPIDROBOT.scorelevel);
+			
 			// console.log("MG_GAME_STUPIDROBOT.scorelevel: " +
 			// MG_GAME_STUPIDROBOT.scorelevel);
 
