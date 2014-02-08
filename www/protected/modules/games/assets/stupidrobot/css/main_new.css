@@ -544,3 +544,11 @@ textarea {
 	width: 2.68em;
 	border-bottom: solid black 1px;
 }
+/* ==========================================================================
+   For the overrided navigation bar css
+   added by Junjie Guan
+   ========================================================================== */
+#mainmenu{
+	text-align:right;
+	font-size: 0.75em;
+}

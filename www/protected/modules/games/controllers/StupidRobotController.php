@@ -121,7 +121,7 @@ EOD;
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $jsInit, CClientScript::POS_HEAD);
             Yii::app()->clientScript->registerScript(__CLASS__ . '#game', $js, CClientScript::POS_READY);
 
-            $this->layout = '//layouts/mobile';
+            $this->layout = '//layouts/mobileWithMain';
 
             $this->render('index', array(
                 'game' => $game,
