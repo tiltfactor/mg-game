@@ -363,7 +363,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	}
         	$("#inputArea").animate({width:MG_GAME_STUPIDROBOT.level * 0.67 + "em"});
         	$("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxlevel);
-        	$("#gameMessage").html("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD");
+        	$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
 
         	$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
         },
@@ -382,7 +382,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         		MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
         	$("#inputArea").animate({width:MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 200);
         	$("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
-        	$("#gameMessage").html("INPUT A "+ MG_GAME_STUPIDROBOT.level+" LETTER WORD");
+        	$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
         	$("#inputFields span").removeClass("hilight");
         	$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
         },
@@ -402,7 +402,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         		$("#gameMessage").html(savedMessage);
         		$("#gameMessage").css("color", "black");
         		$("#gameMessage").fadeIn(100);
-        	},1500);
+        	},1625);
         },
 
         timerTick: function (){
@@ -449,7 +449,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         		MG_GAME_STUPIDROBOT.flashMessage("Too short!", "red");
         	}
         	else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
-        		MG_GAME_STUPIDROBOT.flashMessage("Special characters are not allowed!", "red");
+        		MG_GAME_STUPIDROBOT.flashMessage("Symbols not allowed!", "red");
         		    animation.robot.gotoAndPlay("error");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             }
@@ -560,10 +560,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                 		$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level-MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
                 		MG_GAME_STUPIDROBOT.level++;
                 		MG_GAME_STUPIDROBOT.setLevel();
-
-                		MG_GAME_STUPIDROBOT.flashMessage("STUPID ROBOT KNOWS THAT NOW!", "green");
-                		animation.robot.gotoAndPlay("correctAnswer");
-                		MG_GAME_STUPIDROBOT.playSound('next_level');
                 		MG_GAME_STUPIDROBOT.wordsAccepted++;
                 		if(MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel){
                 			MG_GAME_STUPIDROBOT.renderFinal();
@@ -572,6 +568,13 @@ MG_GAME_STUPIDROBOT = function ($) {
                     	$("#inputArea").val("");
                     	MG_GAME_STUPIDROBOT.inputlength = 0;
                     	MG_GAME_STUPIDROBOT.setNewLevel();
+
+//                     	console.log("correct");
+
+                    	MG_GAME_STUPIDROBOT.flashMessage("STUPID ROBOT KNOWS THAT NOW!", "green");
+                    	animation.robot.gotoAndPlay("correctAnswer");
+                    	MG_GAME_STUPIDROBOT.playSound('next_level');
+
                     } else {
                     		// no match -- feedback
                     	// console.log("not accepted");
@@ -734,7 +737,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
 			var canvas = document.getElementById("canvas");
 			var exportRoot = new lib.animation_score(MG_GAME_STUPIDROBOT.scorelevel);
-			
+
 			// console.log("MG_GAME_STUPIDROBOT.scorelevel: " +
 			// MG_GAME_STUPIDROBOT.scorelevel);
 
