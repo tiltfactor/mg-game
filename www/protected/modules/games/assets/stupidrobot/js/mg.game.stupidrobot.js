@@ -187,7 +187,13 @@ MG_GAME_STUPIDROBOT = function ($) {
                 letter_7  : game_assets_uri + 'audio/sound7.mp3',
                 next_level: game_assets_uri + 'audio/right.mp3',
                 confused	: game_assets_uri + 'audio/confused2.mp3',
-                try_again : game_assets_uri + 'audio/tryagain.mp3'
+                try_again : game_assets_uri + 'audio/tryagain.mp3',
+                score_1   : game_assets_uri + 'audio/score_1.mp3',
+                score_2   : game_assets_uri + 'audio/score_2.mp3',
+                score_3   : game_assets_uri + 'audio/score_3.mp3',
+                score_4   : game_assets_uri + 'audio/score_4.mp3',
+                score_5   : game_assets_uri + 'audio/score_5.mp3'
+
             };
             $.each(MG_GAME_STUPIDROBOT.sounds, function(index, source) {
             	MG_GAME_STUPIDROBOT.sound[index] = new Sound(source);
@@ -702,21 +708,27 @@ MG_GAME_STUPIDROBOT = function ($) {
 				break;
 				case 1:
 				messageString="STUPID ROBOT AN ITTY BITTY BIT SMARTER.";
+				MG_GAME_STUPIDROBOT.playSound('score_1');
 				break;
 				case 2:
 				messageString="STUPID ROBOT A TINY BIT SMARTER.";
+				MG_GAME_STUPIDROBOT.playSound('score_2');
 				break;
 				case 3:
 				messageString="STUPID ROBOT SLIGHTLY SMARTER.";
+				MG_GAME_STUPIDROBOT.playSound('score_3');
 				break;
 				case 4:
 				messageString="STUPID ROBOT LEVELING UP!";
+				MG_GAME_STUPIDROBOT.playSound('score_4');
 				break;
 				case 5:
 				messageString="STUPID ROBOT SEEKS MORE KNOWLEDGE.";
+				MG_GAME_STUPIDROBOT.playSound('score_5');
 				break;
 				case 6:
 				messageString="BRING IT ON HUMAN.";
+				MG_GAME_STUPIDROBOT.playSound('score_6');
 				break;
 				case 7:
 				messageString="STUPID ROBOT READY TO TAKE ON DEEP BLUE.";
