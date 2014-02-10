@@ -274,7 +274,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#inputArea").keypress(function(e){
         	 	var keyCode = e.keyCode || e.which;
         	 	var word=$("#inputArea").val();
-        	 	// console.log("keypressed");
+        	 	//console.log("keyCode: " + keyCode);
 
                 if(keyCode === 13){
 
@@ -311,7 +311,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	});
         	
             $(":input").not(".input").bind("keydown", function(event) {
-                return ((event.which >= 97 && event.which <= 122) || (event.which >= 65 && event.which <= 90) || event.which === 8);
+                return ((event.which >= 97 && event.which <= 122) || (event.which >= 65 && event.which <= 90) || event.which === 8 || event.which === 13);
             });
 
         	 $("#inputArea").bind("keyup change", function(event) {
