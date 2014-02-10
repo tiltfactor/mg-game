@@ -129,6 +129,19 @@ MG_GAME_STUPIDROBOT = function ($) {
     			MG_GAME_STUPIDROBOT.init_options = options;
     			MG_GAME_STUPIDROBOT.init(options);
     		});
+    		
+    		$("#bootButton").hide();
+    		setTimeout(function(){$("#bootButton").fadeIn(50, function(){
+    			$("#bootButton").fadeOut(50, function(){
+    				$("#bootButton").fadeIn(100, function(){
+    					$("#bootButton").fadeOut(50, function(){
+    						$("#bootButton").fadeIn(1000);
+    					});
+    				});
+    			});
+    		}
+    				
+    		)},1000);
     	},
 
 
