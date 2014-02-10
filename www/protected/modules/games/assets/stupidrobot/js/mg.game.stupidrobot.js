@@ -386,7 +386,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         		MG_GAME_STUPIDROBOT.level = 4;
         	else
         		MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
-        	$("#inputArea").animate({width:MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 200);
+        	$("#inputArea").animate({width:MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 10);
         	$("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
         	$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
         	$("#inputFields span").removeClass("hilight");
