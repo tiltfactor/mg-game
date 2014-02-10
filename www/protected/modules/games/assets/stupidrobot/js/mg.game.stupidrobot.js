@@ -580,9 +580,9 @@ MG_GAME_STUPIDROBOT = function ($) {
                         // console.log(MG_GAME_STUPIDROBOT.level + " and " +
 						// tag.tag);
 
-                        MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.level - 4] = tag.tag;
+                        MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.inputlength - 4] = tag.tag;
                 		$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level-MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
-                		MG_GAME_STUPIDROBOT.level++;
+                		//MG_GAME_STUPIDROBOT.level++;
                 		MG_GAME_STUPIDROBOT.setLevel();
                 		MG_GAME_STUPIDROBOT.wordsAccepted++;
                 		if(MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel){
