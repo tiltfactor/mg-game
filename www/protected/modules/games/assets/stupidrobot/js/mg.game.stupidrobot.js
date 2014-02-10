@@ -131,7 +131,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     		});
     		
     		$("#bootButton").hide();
-    		setTimeout(function(){$("#bootButton").fadeIn(50, function(){
+    		/*setTimeout(function(){$("#bootButton").fadeIn(50, function(){
     			$("#bootButton").fadeOut(50, function(){
     				$("#bootButton").fadeIn(100, function(){
     					$("#bootButton").fadeOut(50, function(){
@@ -139,8 +139,13 @@ MG_GAME_STUPIDROBOT = function ($) {
     					});
     				});
     			});
-    		}
-    				
+    		}   				
+    		)},1000);*/
+    		setTimeout(function(){$("#bootButton").fadeIn(100, function(){
+    			$("#bootButton").fadeOut(100, function(){
+    				$("#bootButton").fadeIn(1000);
+    			});
+    		}   				
     		)},1000);
     	},
 
