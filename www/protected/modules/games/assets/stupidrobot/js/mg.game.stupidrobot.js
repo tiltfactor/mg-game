@@ -32,6 +32,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         wordsAccepted: 0,
         inputlength: 0,
         main_menu_bar: null,
+        shift_detected: false,
 
         // new added for scoring
         isRenderFinaled: false,
@@ -129,6 +130,24 @@ MG_GAME_STUPIDROBOT = function ($) {
     			MG_GAME_STUPIDROBOT.init_options = options;
     			MG_GAME_STUPIDROBOT.init(options);
     		});
+    		
+    		$("#bootButton").hide();
+    		/*setTimeout(function(){$("#bootButton").fadeIn(50, function(){
+    			$("#bootButton").fadeOut(50, function(){
+    				$("#bootButton").fadeIn(100, function(){
+    					$("#bootButton").fadeOut(50, function(){
+    						$("#bootButton").fadeIn(1000);
+    					});
+    				});
+    			});
+    		}   				
+    		)},1000);*/
+    		setTimeout(function(){$("#bootButton").fadeIn(100, function(){
+    			$("#bootButton").fadeOut(100, function(){
+    				$("#bootButton").fadeIn(1000);
+    			});
+    		}   				
+    		)},1000);
     	},
 
 
@@ -255,7 +274,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#inputArea").keypress(function(e){
         	 	var keyCode = e.keyCode || e.which;
         	 	var word=$("#inputArea").val();
-        	 	// console.log("keypressed");
+        	 	//console.log("keyCode: " + keyCode);
 
                 if(keyCode === 13){
 
@@ -264,22 +283,36 @@ MG_GAME_STUPIDROBOT = function ($) {
                 }
 
         	 });
+        	
+        	// release shift key
+        	$("#inputArea").keyup(function(event){
+        		if(event.which == 16)
+            		MG_GAME_STUPIDROBOT.shift_detected = false;
+        	});
 
         	$("#inputArea").keydown(function(event){
-        		// console.log("keydown");
-        		if(event.which == 8) {
-        			// console.log("go back");
-        			if(MG_GAME_STUPIDROBOT.inputlength > 0) MG_GAME_STUPIDROBOT.inputlength--;
+        		//console.log(event.which);
+        		if(event.which == 16){
+        			// keep track of shift key
+            		MG_GAME_STUPIDROBOT.shift_detected = true;
+        		}else if(event.which == 8) {
+        			//console.log("go back");
+        			if(MG_GAME_STUPIDROBOT.inputlength > 0) 
+        				MG_GAME_STUPIDROBOT.inputlength--;
         			MG_GAME_STUPIDROBOT.setNewLevel();
         		}
-        		else if( MG_GAME_STUPIDROBOT.isNumOrLetter(event.which) ) {
-        			// console.log(MG_GAME_STUPIDROBOT.inputlength + " , " + MG_GAME_STUPIDROBOT.maxLevel);
+        		else if( MG_GAME_STUPIDROBOT.isLetter(event.which) ) {
+        			//console.log(MG_GAME_STUPIDROBOT.inputlength + " , " + MG_GAME_STUPIDROBOT.maxLevel);
         			if(MG_GAME_STUPIDROBOT.inputlength < MG_GAME_STUPIDROBOT.maxLevel){
 	        			MG_GAME_STUPIDROBOT.inputlength++;
 	        			MG_GAME_STUPIDROBOT.setNewLevel();
         			}
         		}
         	});
+        	
+            $(":input").not(".input").bind("keydown", function(event) {
+                return ((event.which >= 97 && event.which <= 122) || (event.which >= 65 && event.which <= 90) || event.which === 8 || event.which === 13);
+            });
 
         	 $("#inputArea").bind("keyup change", function(event) {
                  var this_input = $(this),
@@ -287,6 +320,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                      input_length = parseInt(str.length, 10);
 
                  str = str.replace(/[^\w\s]|_/g, "");
+                 
 
                  // special chars are forbidden at kb level and the game also
 					// complains
@@ -295,9 +329,22 @@ MG_GAME_STUPIDROBOT = function ($) {
 					// still present
                  // forbid: `~!@#$%^&*()_=+{}|<>./?;:[]\",'
                  // allowed: -
-                 str = str.replace(/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g, "");
-                 // console.log(str);
-
+                 /*
+        		if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(str)) {
+	        		MG_GAME_STUPIDROBOT.flashMessage("Don't feed me strange letter!", "red");
+	        		    animation.robot.gotoAndPlay("error");
+	                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+	                str = str.replace(/[`~!@#$%^&*()_=+{}|<>. /?;:\[\]\\",']/g, "");
+	                $("#inputArea").val(str);
+	                console.log("strange!!");
+        			if(MG_GAME_STUPIDROBOT.inputlength > 0) 
+        				MG_GAME_STUPIDROBOT.inputlength--;
+        			MG_GAME_STUPIDROBOT.setNewLevel();
+            	}*/
+        	    str = str.replace(/[`~!@#$%^&*()_=+{}|<>. /?;:\[\]\\",']/g, "");
+        	    //console.log($("#inputArea").width());
+        	    //$("#inputArea").val(str);
+        	    
                  if (event.keyCode != '13' && event.keyCode != '8' && event.keyCode != '46' && event.keyCode != '32') {
                      // num_sound = (input_length -1) % 8;
                      num_sound = (input_length -1) < 7 ? (input_length -1) : 7; // modified
@@ -374,21 +421,24 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
         },
 
-        isNumOrLetter: function(e){
-        	return (e >= 0x30 && e <= 0x39)
-        		|| (e >= 0x41 && e <= 0x5A)
+        isLetter: function(e){
+        	// console.log(MG_GAME_STUPIDROBOT.shift_detected);
+        	if (MG_GAME_STUPIDROBOT.shift_detected){
+        		return false;
+        	}
+        	return (e >= 0x41 && e <= 0x5A)
         		|| (e >= 0x61 && e <= 0x7A);
         },
 
         setNewLevel: function (){
-            // console.log("setlevel");
+            //console.log("setNewlevel: " + MG_GAME_STUPIDROBOT.inputlength);
         	if(MG_GAME_STUPIDROBOT.inputlength < 4)
         		MG_GAME_STUPIDROBOT.level = 4;
         	else
         		MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
-        	$("#inputArea").animate({width:MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 200);
+        	$("#inputArea").animate({width:MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
         	$("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
-        	$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
+        	//$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
         	$("#inputFields span").removeClass("hilight");
         	$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
         },
@@ -562,9 +612,9 @@ MG_GAME_STUPIDROBOT = function ($) {
                         // console.log(MG_GAME_STUPIDROBOT.level + " and " +
 						// tag.tag);
 
-                        MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.level - 4] = tag.tag;
+                        MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.inputlength - 4] = tag.tag;
                 		$("#inputFields span").eq(MG_GAME_STUPIDROBOT.level-MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
-                		MG_GAME_STUPIDROBOT.level++;
+                		//MG_GAME_STUPIDROBOT.level++;
                 		MG_GAME_STUPIDROBOT.setLevel();
                 		MG_GAME_STUPIDROBOT.wordsAccepted++;
                 		if(MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel){
