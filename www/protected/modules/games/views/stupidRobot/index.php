@@ -84,9 +84,9 @@
 					<input type=text id="inputArea" class="underlinedText clearfix2"></input>
 					<!-- span id = "underline">jack</span-->
 					<div id="inputFields" class="clearfix2">
-						<span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
-						<a class="button" id="pass">pass</a>
+						</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
 					</div>
+					<a class="button" id="pass">pass</a>
 					<canvas class="clearfix" id="canvas" width="342" height="212"> </canvas>
 				</div>
 				<div class="rightBox" id="imageContainer">
