@@ -63,6 +63,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     	idx_p: null,
     	idx_i:0,
     	idx_activeLine:0,
+    	introTextSpeedUp: 1,
 
     	idx_scrollIn:function () {
     		MG_GAME_STUPIDROBOT.idx_p=MG_GAME_STUPIDROBOT.idx_paragraphArray[MG_GAME_STUPIDROBOT.idx_activeLine];
@@ -77,13 +78,13 @@ MG_GAME_STUPIDROBOT = function ($) {
     				return;
     				}
 
-    			setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",1400);
+    			setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",1400/MG_GAME_STUPIDROBOT.introTextSpeedUp/MG_GAME_STUPIDROBOT.introTextSpeedUp);
     			return;
     		 }
 
     		MG_GAME_STUPIDROBOT.idx_a = MG_GAME_STUPIDROBOT.idx_introText[MG_GAME_STUPIDROBOT.idx_activeLine].substring(0,MG_GAME_STUPIDROBOT.idx_i);
     		MG_GAME_STUPIDROBOT.idx_p.innerHTML = MG_GAME_STUPIDROBOT.idx_a+"_";
-    		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",20);
+    		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",20/MG_GAME_STUPIDROBOT.introTextSpeedUp);
     	},
 
 
@@ -118,7 +119,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     		// set up scroller
     		var paragraphCollection=document.getElementsByClassName("scrollText");
     		MG_GAME_STUPIDROBOT.idx_paragraphArray = Array.prototype.slice.call( paragraphCollection );
-    		MG_GAME_STUPIDROBOT.idx_paragraphArray.push(document.getElementById("lastScrollText"));
+    		MG_GAME_STUPIDROBOT.idx_paragraphArray.push(document.getElementById("lastScrollText"));   		
 
     		// boot game
     		$("#bootButton").click(function(){
@@ -172,6 +173,11 @@ MG_GAME_STUPIDROBOT = function ($) {
     		createjs.Ticker.addEventListener("tick", stage);
 
     		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",2000);
+    		
+    		$("#idx_skipanimate").click(function(){
+    			MG_GAME_STUPIDROBOT.introTextSpeedUp = 100;
+    			MG_GAME_STUPIDROBOT.idx_scrollIn();
+    		}); 
 
     	},
 

@@ -558,3 +558,12 @@ textarea {
 	font-size: 0.75em;
 	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
+/* ==========================================================================
+   For skip button
+   added by Junjie Guan
+   ========================================================================== */
+#idx_skipanimate{
+	font-size: 16px;
+	cursor: pointer;
+	color: #ccc;
+}
