@@ -52,12 +52,13 @@ MG_GAME_STUPIDROBOT = function ($) {
     	idx_introText: ["Meet Stupid Robot.",
     	"Stupid Robot looks at everything but understands nothing.",
     	"Can you help?",
-    	"Fill Stupid Robot’s input fields by describing what is in the image.",
-    	"Sometimes Stupid Robot has a **DNC ERROR** and can’t process a word.",
-    	"** Does Not Compute **",
-    	"If that happens, try another word until you find one that works.",
-    	"Stupid Robot can only understand short words at first,",
-    	"but with your help, Stupid Robot will learn and evolve!"],
+    	"Tell Stupid Robot what is in the image.",
+    	"Stupid Robot has enough memory for 1 word of each different length.",
+    	"Can you teach Stupid Robot 10 words about the image?",
+    	"Sometimes Stupid Robot doesn't understand a word at all.",
+    	"When this happens, Stupid Robot learns that word for next time.",
+    	"Try a different word of that length until Stupid Robot understands.",
+    	"With your help, Stupid Robot will learn and evolve!"],
     	idx_a : "",
     	idx_p: null,
     	idx_i:0,
@@ -130,7 +131,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     			MG_GAME_STUPIDROBOT.init_options = options;
     			MG_GAME_STUPIDROBOT.init(options);
     		});
-    		
+
     		$("#bootButton").hide();
     		/*setTimeout(function(){$("#bootButton").fadeIn(50, function(){
     			$("#bootButton").fadeOut(50, function(){
@@ -140,13 +141,13 @@ MG_GAME_STUPIDROBOT = function ($) {
     					});
     				});
     			});
-    		}   				
+    		}
     		)},1000);*/
     		setTimeout(function(){$("#bootButton").fadeIn(100, function(){
     			$("#bootButton").fadeOut(100, function(){
     				$("#bootButton").fadeIn(1000);
     			});
-    		}   				
+    		}
     		)},1000);
     	},
 
@@ -283,7 +284,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 }
 
         	 });
-        	
+
         	// release shift key
         	$("#inputArea").keyup(function(event){
         		if(event.which == 16)
@@ -297,7 +298,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             		MG_GAME_STUPIDROBOT.shift_detected = true;
         		}else if(event.which == 8) {
         			//console.log("go back");
-        			if(MG_GAME_STUPIDROBOT.inputlength > 0) 
+        			if(MG_GAME_STUPIDROBOT.inputlength > 0)
         				MG_GAME_STUPIDROBOT.inputlength--;
         			MG_GAME_STUPIDROBOT.setNewLevel();
         		}
@@ -309,7 +310,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         			}
         		}
         	});
-        	
+
             $(":input").not(".input").bind("keydown", function(event) {
                 return ((event.which >= 97 && event.which <= 122) || (event.which >= 65 && event.which <= 90) || event.which === 8 || event.which === 13);
             });
@@ -320,7 +321,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                      input_length = parseInt(str.length, 10);
 
                  str = str.replace(/[^\w\s]|_/g, "");
-                 
+
 
                  // special chars are forbidden at kb level and the game also
 					// complains
@@ -337,14 +338,14 @@ MG_GAME_STUPIDROBOT = function ($) {
 	                str = str.replace(/[`~!@#$%^&*()_=+{}|<>. /?;:\[\]\\",']/g, "");
 	                $("#inputArea").val(str);
 	                console.log("strange!!");
-        			if(MG_GAME_STUPIDROBOT.inputlength > 0) 
+        			if(MG_GAME_STUPIDROBOT.inputlength > 0)
         				MG_GAME_STUPIDROBOT.inputlength--;
         			MG_GAME_STUPIDROBOT.setNewLevel();
             	}*/
         	    str = str.replace(/[`~!@#$%^&*()_=+{}|<>. /?;:\[\]\\",']/g, "");
         	    //console.log($("#inputArea").width());
         	    //$("#inputArea").val(str);
-        	    
+
                  if (event.keyCode != '13' && event.keyCode != '8' && event.keyCode != '46' && event.keyCode != '32') {
                      // num_sound = (input_length -1) % 8;
                      num_sound = (input_length -1) < 7 ? (input_length -1) : 7; // modified
@@ -627,14 +628,14 @@ MG_GAME_STUPIDROBOT = function ($) {
 
 //                     	console.log("correct");
 
-                    	MG_GAME_STUPIDROBOT.flashMessage("STUPID ROBOT KNOWS THAT NOW!", "green");
+                    	MG_GAME_STUPIDROBOT.flashMessage("I FEEL SMARTER ALREADY!", "green");
                     	animation.robot.gotoAndPlay("correctAnswer");
                     	MG_GAME_STUPIDROBOT.playSound('next_level');
 
                     } else {
                     		// no match -- feedback
                     	// console.log("not accepted");
-                    	MG_GAME_STUPIDROBOT.flashMessage("DOES NOT COMPUTE: TRY AGAIN?", "red");
+                    	MG_GAME_STUPIDROBOT.flashMessage("I DO NOT KNOW THAT WORD.", "red");
                 		animation.robot.gotoAndPlay("incorrectAnswer");
                 		MG_GAME_STUPIDROBOT.playSound('confused');
                     }
@@ -754,43 +755,43 @@ MG_GAME_STUPIDROBOT = function ($) {
 			var messageString;
 			switch(MG_GAME_STUPIDROBOT.scorelevel){
 				case 0:
-				messageString="STUPID ROBOT NEEDS MORE HELP. TRY AGAIN?";
+				messageString="I NEED MORE HELP. TRY AGAIN?";
 				break;
 				case 1:
-				messageString="STUPID ROBOT AN ITTY BITTY BIT SMARTER.";
+				messageString="I FEEL AN ITTY BITTY BIT SMARTER!";
 				MG_GAME_STUPIDROBOT.playSound('score_1');
 				break;
 				case 2:
-				messageString="STUPID ROBOT A TINY BIT SMARTER.";
+				messageString="I AM SLIGHTLY SMARTER!";
 				MG_GAME_STUPIDROBOT.playSound('score_2');
 				break;
 				case 3:
-				messageString="STUPID ROBOT SLIGHTLY SMARTER.";
+				messageString="STUPID ROBOT SEEKS MORE KNOWLEDGE!";
 				MG_GAME_STUPIDROBOT.playSound('score_3');
 				break;
 				case 4:
-				messageString="STUPID ROBOT LEVELING UP!";
+				messageString="I'VE LEARNED SO MUCH!";
 				MG_GAME_STUPIDROBOT.playSound('score_4');
 				break;
 				case 5:
-				messageString="STUPID ROBOT SEEKS MORE KNOWLEDGE.";
+				messageString="THEY SHOULD CALL ME SMARTY ROBOT!";
 				MG_GAME_STUPIDROBOT.playSound('score_5');
 				break;
 				case 6:
-				messageString="BRING IT ON HUMAN.";
-				MG_GAME_STUPIDROBOT.playSound('score_6');
+				messageString="NEXT TIME, I'LL TEACH YOU!";
+				// MG_GAME_STUPIDROBOT.playSound('score_6');
 				break;
 				case 7:
-				messageString="STUPID ROBOT READY TO TAKE ON DEEP BLUE.";
+				messageString="I FEEL... SOPHISTICATED!";
 				break;
 				case 8:
-				messageString="THE NAME IS SMARTY ROBOT.";
+				messageString="I AM READY TO TAKE ON DEEP BLUE!";
 				break;
 				case 9:
-				messageString="ALL YOUR TAGS ARE BELONG TO STUPID ROBOT.";
+				messageString="ALL YOUR TAGS ARE BELONG TO ME!";
 				break;
 				default:
-				messageString="STUPID ROBOT AN ITTY BITTY BIT SMARTER.";
+				messageString="I FEEL AN ITTY BITTY BIT SMARTER.";
 			}
 
 			// $("#gameMessage2").html("YOU TAUGHT STUPID ROBOT
