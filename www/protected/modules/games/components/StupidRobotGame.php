@@ -153,6 +153,7 @@ class StupidRobotGame extends NexTagGame
         	fclose($file);
         	
             $media = $this->getMedia();
+
             if (empty($media) || $reboot_value) {
                 $collections = $this->getCollections($game, $game_model);
                 $data["medias"] = array();
@@ -164,6 +165,11 @@ class StupidRobotGame extends NexTagGame
                 } else
                     throw new CHttpException(600, $game->name . Yii::t('app', ': Not enough medias available'));
             }
+            
+/*             $file = fopen("reboot_value.txt","a");
+            fwrite($file, $reboot_value);
+            fwrite($file, "\n");
+            fclose($file); */
 
             $lastLevel = $this->getLevel();
             if (is_null($lastLevel)) {

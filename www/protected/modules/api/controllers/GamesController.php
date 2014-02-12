@@ -439,9 +439,9 @@ class GamesController extends ApiController {
           $game->turns = 1;
         }
         
-        $file = fopen("actionPlay.txt","a");
+/*         $file = fopen("actionPlay.txt","a");
         fwrite($file, "actionPlay else\n");
-        fclose($file);
+        fclose($file); */
 
         if (Yii::app()->getRequest()->getIsPostRequest()) {
           $game->request = new stdClass(); // all request parameter will be stored in this object
@@ -641,9 +641,9 @@ class GamesController extends ApiController {
   private function _playSingleGet($game, $game_model, $game_engine) {
     $data = array();
     
-    $file = fopen("sequence.txt","a");
+/*     $file = fopen("sequence.txt","a");
     fwrite($file, "_playSingleGet\n");
-    fclose($file);
+    fclose($file); */
     
     $data['status'] = "ok";
     
@@ -813,9 +813,9 @@ class GamesController extends ApiController {
     $data = array();
     $data['status'] = "ok";
     
-    $file = fopen("sequence.txt","a");
+/*     $file = fopen("sequence.txt","a");
     fwrite($file, "_playSinglePost\n");
-    fclose($file);
+    fclose($file); */
     
     $game->submission_id = $game_engine->saveSubmission($game, $game_model); 
     
