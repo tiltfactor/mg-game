@@ -2,6 +2,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     return $.extend(MG_GAME_API, {
     	init_options:null,
     	server_init:false,
+    	loadgame:"",
 
     	// the following is copied from pyramid tag
         wordField:null,
@@ -28,7 +29,6 @@ MG_GAME_STUPIDROBOT = function ($) {
         fields: null,
         animation: null,
         scorehtml:"",
-        loadgame:"",
         wordsAccepted: 0,
         inputlength: 0,
         main_menu_bar: null,
@@ -64,6 +64,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     	idx_i:0,
     	idx_activeLine:0,
     	introTextSpeedUp: 1,
+    	
 
     	idx_scrollIn:function () {
     		MG_GAME_STUPIDROBOT.idx_p=MG_GAME_STUPIDROBOT.idx_paragraphArray[MG_GAME_STUPIDROBOT.idx_activeLine];
@@ -131,6 +132,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     			$("body").html(MG_GAME_STUPIDROBOT.loadgame);
     			MG_GAME_STUPIDROBOT.init_options = options;
     			MG_GAME_STUPIDROBOT.init(options);
+    			//MG_GAME_STUPIDROBOT.init(options);
     		});
 
     		$("#bootButton").hide();
@@ -192,13 +194,45 @@ MG_GAME_STUPIDROBOT = function ($) {
         	MG_GAME_STUPIDROBOT.scorehtml = $("#score").html();
         	$("#score").html("");
         	$("#score").hide();
-            var settings = $.extend(options, {
-                ongameinit: MG_GAME_STUPIDROBOT.ongameinit
-            });
-            $("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
+            
+        	$("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
 
             var game_assets_uri = $("#game_assets_uri").val();
             // console.log("jackjackjack" + game_assets_uri);
+            
+        	// initiate server communication, 
+            // be carefule of the multi-rounds
+            if(!MG_GAME_STUPIDROBOT.server_init){
+            	// console.log("initiate with server: " +
+				// MG_GAME_STUPIDROBOT.server_init);
+                var settings = $.extend(options, {
+                    ongameinit: MG_GAME_STUPIDROBOT.ongameinit
+                });
+            	MG_GAME_API.game_init(settings);
+            	MG_GAME_STUPIDROBOT.server_init = true;
+            }else{
+                // send ajax call as POST request to validate a turn
+                MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+                    if (MG_API.checkResponse(response)) {
+                    	MG_GAME_STUPIDROBOT.onresponse(response);
+                    }
+                    return false;
+                }, {
+                    type:'post',
+                    data:{ // this is the data needed for the turn
+                        turn: 1,
+                        played_game_id:MG_GAME_STUPIDROBOT.game.played_game_id,
+                        'submissions':[
+                            {
+                                media_id:MG_GAME_STUPIDROBOT.media.media_id,
+                                tags: "pass",
+                                pass: true,
+                                reboot: true
+                            }
+                        ]
+                    }
+                });
+            }
 
             MG_GAME_STUPIDROBOT.sounds = {
                 fail_sound: game_assets_uri + 'audio/sound_fail.mp3',
@@ -248,7 +282,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                             {
                                 media_id:MG_GAME_STUPIDROBOT.media.media_id,
                                 tags: "pass",
-                                pass: true
+                                pass: true,
+                                reboot: false
                             }
                         ]
                     }
@@ -378,14 +413,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                  return event.which != 32;
              });
 
-        	// initiate server communication
-            if(!MG_GAME_STUPIDROBOT.server_init){
-            	// console.log("initiate with server: " +
-				// MG_GAME_STUPIDROBOT.server_init);
-            	MG_GAME_API.game_init(settings);
-            	MG_GAME_STUPIDROBOT.server_init = true;
-            }
-
         	// set original level
         	MG_GAME_STUPIDROBOT.timerTick();
         	MG_GAME_STUPIDROBOT.setLevel();
@@ -410,8 +437,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	  MG_GAME_STUPIDROBOT.playSound('scan_sound');
         		animation.robot.gotoAndPlay("scan");
         	},1400);
-
-        	// console.log("end of init");
+        	
 
         },
 
@@ -520,6 +546,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             	animation.robot.gotoAndPlay("error");
             	MG_GAME_STUPIDROBOT.flashMessage("You already tried that!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
+                console.log(MG_GAME_STUPIDROBOT.words);
             }
             else if(MG_GAME_STUPIDROBOT.wordArray[tags.length - 4] != "!"){
             	animation.robot.gotoAndPlay("error");
@@ -564,6 +591,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	MG_GAME_STUPIDROBOT.words.push(tags);
             // send ajax call as POST request to validate a turn
             MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
+            	console.log("onsubmit: " + MG_GAME_API.settings.gid);
                 if (MG_API.checkResponse(response)) {
                 	MG_GAME_STUPIDROBOT.onresponse(response);
                 }
@@ -577,7 +605,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                         {
                             media_id: MG_GAME_STUPIDROBOT.media.media_id,
                             pass: false,
-                            tags: tags.toLowerCase()
+                            tags: tags.toLowerCase(),
+                            reboot: false
                         }
                     ]
                 }
@@ -594,7 +623,9 @@ MG_GAME_STUPIDROBOT = function ($) {
             if ($.trim(MG_GAME_STUPIDROBOT.game.more_info_url) != "")
             	MG_GAME_STUPIDROBOT.more_info = {url:MG_GAME_STUPIDROBOT.game.more_info_url, name:MG_GAME_STUPIDROBOT.game.name};
 
-            MG_GAME_STUPIDROBOT.media = response.turn.medias[0]
+            console.log("onresponse: " + response.turn.medias[0].full_size);
+            MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
+            
 
             var accepted = {
                 level:1,
@@ -687,6 +718,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         ongameinit:function (response) {
         	// console.log('ongameinit to with response, about to go in
 			// onresponse');
+        	console.log("ongameinit: ");
         	MG_GAME_STUPIDROBOT.onresponse(response);
         },
 
@@ -747,7 +779,8 @@ MG_GAME_STUPIDROBOT = function ($) {
 
         	MG_GAME_API.releaseOnBeforeUnload();
         	$("#reboot").click(function(){
-        		location.reload();
+        		//location.reload();
+        		MG_GAME_STUPIDROBOT.re_init();
         	});
 
 			// determine level by length of word array, minus passes
@@ -818,6 +851,56 @@ MG_GAME_STUPIDROBOT = function ($) {
 			var wordspaceCollection=document.getElementsByClassName("underlinedText");
 			MG_GAME_STUPIDROBOT.wordSpaces = Array.prototype.slice.call( wordspaceCollection );
 			MG_GAME_STUPIDROBOT.scrollIn();
+        },
+        
+        re_init: function(){
+        	// the following is copied from pyramid tag
+            MG_GAME_STUPIDROBOT.wordField=null;
+            MG_GAME_STUPIDROBOT.playOnceMoveOnFinalScreenWaitingTime=15000; // milliseconds
+            MG_GAME_STUPIDROBOT.submitButton=null;
+            //MG_GAME_STUPIDROBOT.media=null;
+            MG_GAME_STUPIDROBOT.licence_info=[];
+            MG_GAME_STUPIDROBOT.more_info=null;
+            MG_GAME_STUPIDROBOT.levels=[];
+            MG_GAME_STUPIDROBOT.pass_penalty= 0; // in seconds
+            MG_GAME_STUPIDROBOT.level_step=3;
+            MG_GAME_STUPIDROBOT.words=[];
+            MG_GAME_STUPIDROBOT.sound= {};
+            MG_GAME_STUPIDROBOT.sounds= {};
+            
+            // the following variable is newly added in stupidrobot for gaming = 
+            MG_GAME_STUPIDROBOT.startingLevel =  4;
+            MG_GAME_STUPIDROBOT.level =  null;
+            MG_GAME_STUPIDROBOT.maxLevel =  13;
+            MG_GAME_STUPIDROBOT.letterWidthInEms =  0.67;
+            MG_GAME_STUPIDROBOT.speed =  200;
+            MG_GAME_STUPIDROBOT.secs =  120;
+            MG_GAME_STUPIDROBOT.fields =  null;
+            MG_GAME_STUPIDROBOT.animation =  null;
+            MG_GAME_STUPIDROBOT.scorehtml = "";
+            // MG_GAME_STUPIDROBOT.loadgame = "";
+            MG_GAME_STUPIDROBOT.wordsAccepted =  0;
+            MG_GAME_STUPIDROBOT.inputlength =  0;
+            MG_GAME_STUPIDROBOT.main_menu_bar =  null;
+            MG_GAME_STUPIDROBOT.shift_detected =  false;
+
+            // new added for scoring
+            MG_GAME_STUPIDROBOT.isRenderFinaled =  false;
+        	MG_GAME_STUPIDROBOT.wordSpaces = null;
+        	MG_GAME_STUPIDROBOT.wordArray = ["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",];
+        	// wordArray = ["word";
+    		 //"word";"word";"word";"word";"word";"word";"word";"word";"word";];
+        	MG_GAME_STUPIDROBOT.a = "";
+        	MG_GAME_STUPIDROBOT.p = null;
+        	MG_GAME_STUPIDROBOT.i = 0;
+        	MG_GAME_STUPIDROBOT.activeLine = 0;
+        	MG_GAME_STUPIDROBOT.scorestage =  null;
+        	MG_GAME_STUPIDROBOT.scorelevel = 0;
+        
+			$("body").html("");
+			$("body").html(MG_GAME_STUPIDROBOT.loadgame);
+			//console.log(MG_GAME_STUPIDROBOT.loadgame);
+			MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options);
         },
 
     });

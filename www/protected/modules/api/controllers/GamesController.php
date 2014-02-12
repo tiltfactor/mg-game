@@ -327,6 +327,10 @@ class GamesController extends ApiController {
   public function actionPlay($gid) {
     $game = GamesModule::loadGame($gid);
     $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
+    
+/*     $file = fopen("actionPlay.txt","a");
+    fwrite($file, "actionPlay\n");
+    fclose($file); */
 
     if($game && $game->game_model) {
       $game_engine = GamesModule::getGameEngine($gid);
@@ -434,6 +438,10 @@ class GamesController extends ApiController {
         if (isset($game->play_once_and_move_on) && (int)$game->play_once_and_move_on == 1) {
           $game->turns = 1;
         }
+        
+        $file = fopen("actionPlay.txt","a");
+        fwrite($file, "actionPlay else\n");
+        fclose($file);
 
         if (Yii::app()->getRequest()->getIsPostRequest()) {
           $game->request = new stdClass(); // all request parameter will be stored in this object
@@ -633,6 +641,10 @@ class GamesController extends ApiController {
   private function _playSingleGet($game, $game_model, $game_engine) {
     $data = array();
     
+    $file = fopen("sequence.txt","a");
+    fwrite($file, "_playSingleGet\n");
+    fclose($file);
+    
     $data['status'] = "ok";
     
     $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
@@ -800,6 +812,10 @@ class GamesController extends ApiController {
   private function _playSinglePost($game, $game_model, $game_engine) {
     $data = array();
     $data['status'] = "ok";
+    
+    $file = fopen("sequence.txt","a");
+    fwrite($file, "_playSinglePost\n");
+    fclose($file);
     
     $game->submission_id = $game_engine->saveSubmission($game, $game_model); 
     

@@ -35,7 +35,8 @@ class StupidRobotGame extends NexTagGame
                 // entering tags because server does not have permissions
                 // to open stream.
                 //
-/*                 if($found){
+/*                 
+                    if($found){
                 	$file = fopen("test.txt","a");
                 	fwrite($file, "found it!");
                 	fclose($file);
@@ -135,12 +136,24 @@ class StupidRobotGame extends NexTagGame
 
         $startTime = $this->getStartTime();
         $now = time();
-
+        
+/*         $file = fopen("getturn.txt","a");
+        fwrite($file, "getTurn\n");
+        fclose($file); */
+        
+        // check for reboot request
+        // (this functionality is added by Junje Guan)
+        $reboot_value = $game->request->submissions[0]["reboot"];
+        
         // check if the game is not actually over
         if (($now - $startTime) < StupidRobotGame::$TIME_TO_PLAY) {
 
+        	$file = fopen("getturn.txt","a");
+        	fwrite($file, "< StupidRobotGame::\$TIME_TO_PLAY\n");
+        	fclose($file);
+        	
             $media = $this->getMedia();
-            if (empty($media)) {
+            if (empty($media) || $reboot_value) {
                 $collections = $this->getCollections($game, $game_model);
                 $data["medias"] = array();
                 $medias = $this->getMedias($collections, $game, $game_model);
@@ -204,7 +217,14 @@ class StupidRobotGame extends NexTagGame
             $data["tags"]["user"] = $tags;
             $data["licences"] = array(); // no need to show licences on the last screen as the previous turns are cached by javascript and therefore all licence info is available
             $this->reset();
+/*             $file = fopen("getturn.txt","a");
+            fwrite($file, "game over\n");
+            fclose($file); */
         }
+        
+
+
+        
         return $data;
     }
 
