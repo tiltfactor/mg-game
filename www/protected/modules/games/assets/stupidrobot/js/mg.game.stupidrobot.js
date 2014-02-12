@@ -76,12 +76,9 @@ MG_GAME_STUPIDROBOT = function ($) {
     			MG_GAME_STUPIDROBOT.idx_i=0;
 
     			if(MG_GAME_STUPIDROBOT.idx_activeLine >= MG_GAME_STUPIDROBOT.idx_introText.length){
-    				$("#bootButton").fadeIn(75, function(){
-    	    			$("#bootButton").fadeOut(75, function(){
-    	    				$("#bootButton").fadeIn(500);
-    	    			});
-    	    		}
-    	    		)
+    				if($("#bootButton").is(':hidden')){
+    					$("#bootButton").show();
+	    			}
     				return;
     				}
 
@@ -180,6 +177,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     		$("#idx_skipanimate").click(function(){
     			MG_GAME_STUPIDROBOT.introTextSpeedUp = 1000;
     			MG_GAME_STUPIDROBOT.idx_scrollIn();
+    			$("#bootButton").show();
     		}); 
 
     	},
