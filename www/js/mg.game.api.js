@@ -16,6 +16,7 @@ MG_GAME_API = function ($) {
      * needed parameter are set. will also initialize the API (to e.g. retrieve the SHARED SECRET)
      */
     game_init : function (options) {
+    	 // console.log('game_init!');
       var settings = $.extend({
         onapiinit: MG_GAME_API.onapiinit,
         partner_wait_threshold: 20, // how many seconds will we wait until timeout
@@ -42,6 +43,7 @@ MG_GAME_API = function ($) {
      * Attempt to initialize a game via a GET call
      */
     loadGame : function () {
+      // console.log('loadGame!');
       MG_API.waitForThrottleIntervalToPass(function () {
         MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid , function(response) {
           if (MG_API.checkResponse(response)) {

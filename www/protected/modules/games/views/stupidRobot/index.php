@@ -54,6 +54,7 @@
 					<br>
 					<p class="scrollText">&nbsp;</p>
 					<br>
+					<span id='idx_skipanimate'>skip animation >></span>
 
 					<button class="button" id="button-loop-1" type="button" value="1">sound</button>
 
