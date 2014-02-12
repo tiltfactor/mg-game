@@ -226,7 +226,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                                 media_id:MG_GAME_STUPIDROBOT.media.media_id,
                                 tags: "pass",
                                 pass: true,
-                                reboot: true
+                                reboot: 1
                             }
                         ]
                     }
@@ -282,7 +282,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                                 media_id:MG_GAME_STUPIDROBOT.media.media_id,
                                 tags: "pass",
                                 pass: true,
-                                reboot: false
+                                reboot: 0
                             }
                         ]
                     }
@@ -605,7 +605,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                             media_id: MG_GAME_STUPIDROBOT.media.media_id,
                             pass: false,
                             tags: tags.toLowerCase(),
-                            reboot: false
+                            reboot: 0
                         }
                     ]
                 }
