@@ -780,9 +780,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	$("#score").html(MG_GAME_STUPIDROBOT.scorehtml);
 			// passed levels should be added as "!"
 
-        	MG_GAME_API.releaseOnBeforeUnload();
         	$("#reboot").click(function(){
-        		//location.reload();
         		MG_GAME_STUPIDROBOT.re_init();
         	});
 
