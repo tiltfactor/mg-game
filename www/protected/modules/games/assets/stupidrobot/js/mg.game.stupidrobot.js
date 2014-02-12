@@ -3,6 +3,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     	init_options:null,
     	server_init:false,
     	loadgame:"",
+        main_menu_bar: null,
 
     	// the following is copied from pyramid tag
         wordField:null,
@@ -31,7 +32,6 @@ MG_GAME_STUPIDROBOT = function ($) {
         scorehtml:"",
         wordsAccepted: 0,
         inputlength: 0,
-        main_menu_bar: null,
         shift_detected: false,
 
         // new added for scoring
@@ -875,7 +875,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // MG_GAME_STUPIDROBOT.loadgame = "";
             MG_GAME_STUPIDROBOT.wordsAccepted =  0;
             MG_GAME_STUPIDROBOT.inputlength =  0;
-            MG_GAME_STUPIDROBOT.main_menu_bar =  null;
+            //MG_GAME_STUPIDROBOT.main_menu_bar =  null;
             MG_GAME_STUPIDROBOT.shift_detected =  false;
 
             // new added for scoring
