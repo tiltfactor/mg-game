@@ -38,8 +38,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         isRenderFinaled: false,
     	wordSpaces:null,
     	wordArray:["!", "!", "!", "!", "!", "!", "!", "!", "!", "!",],
-    	// wordArray:["word",
-		 //"word","word","word","word","word","word","word","word","word",],
+        //wordArray:["!","word","word","word","word","!","!","!","!","!",],
     	a:"",
     	p:null,
     	i:0,
@@ -138,17 +137,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     			//MG_GAME_STUPIDROBOT.init(options);
     		});
 
-    		$("#bootButton").hide();
-    		/*setTimeout(function(){$("#bootButton").fadeIn(50, function(){
-    			$("#bootButton").fadeOut(50, function(){
-    				$("#bootButton").fadeIn(100, function(){
-    					$("#bootButton").fadeOut(50, function(){
-    						$("#bootButton").fadeIn(1000);
-    					});
-    				});
-    			});
-    		}
-    		)},1000);*/
+
 
     	},
 
