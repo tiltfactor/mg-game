@@ -76,6 +76,12 @@ MG_GAME_STUPIDROBOT = function ($) {
     			MG_GAME_STUPIDROBOT.idx_i=0;
 
     			if(MG_GAME_STUPIDROBOT.idx_activeLine >= MG_GAME_STUPIDROBOT.idx_introText.length){
+    				$("#bootButton").fadeIn(75, function(){
+    	    			$("#bootButton").fadeOut(75, function(){
+    	    				$("#bootButton").fadeIn(500);
+    	    			});
+    	    		}
+    	    		)
     				return;
     				}
 
@@ -146,12 +152,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     			});
     		}
     		)},1000);*/
-    		setTimeout(function(){$("#bootButton").fadeIn(100, function(){
-    			$("#bootButton").fadeOut(100, function(){
-    				$("#bootButton").fadeIn(1000);
-    			});
-    		}
-    		)},1000);
+
     	},
 
 
@@ -177,7 +178,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",2000);
     		
     		$("#idx_skipanimate").click(function(){
-    			MG_GAME_STUPIDROBOT.introTextSpeedUp = 100;
+    			MG_GAME_STUPIDROBOT.introTextSpeedUp = 1000;
     			MG_GAME_STUPIDROBOT.idx_scrollIn();
     		}); 
 
