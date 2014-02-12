@@ -673,9 +673,13 @@ MG_GAME_STUPIDROBOT = function ($) {
                     } else {
                     		// no match -- feedback
                     	// console.log("not accepted");
-                    	MG_GAME_STUPIDROBOT.flashMessage("I DO NOT KNOW THAT WORD.", "red");
+                    	MG_GAME_STUPIDROBOT.flashMessage("AH, A NEW WORD?", "blue");
                 		animation.robot.gotoAndPlay("incorrectAnswer");
                 		MG_GAME_STUPIDROBOT.playSound('confused');
+                		
+                    	$("#inputArea").val("");
+                    	MG_GAME_STUPIDROBOT.inputlength = 0;
+                    	MG_GAME_STUPIDROBOT.setNewLevel();
                     }
                 }
             }
