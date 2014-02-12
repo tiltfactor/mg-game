@@ -13,7 +13,8 @@ class StupidRobotGame extends NexTagGame
         // loop through all submissions for this turn and set ONLY THE FIRST TAG
         foreach ($game->request->submissions as $submission) {
             $pass_value = $submission["pass"];
-            if ($pass_value == "true") {
+            $reboot_value = $submission["reboot"];
+            if ($pass_value == "true" || $reboot_value) {
                 $mediaId = $submission["media_id"];
                 $pass = true;
                 break;
@@ -79,8 +80,15 @@ class StupidRobotGame extends NexTagGame
             // currently I just hack it by not checking the level and 
             // return tags with all the level, which is a quick fix
             // a better way is change the whole query
-            $mediaTags = $this->getMediaTags($level, $mediaId);
+/*             $file = fopen("media_id.txt","a");
+            fwrite($file, $mediaId."\n");
+            fclose($file); */
+            $mediaTags = $this->getMediaTags($level, $mediaId, $reboot_value);
+
             foreach ($mediaTags as $val) {
+/*             	$file = fopen("media_id.txt","a");
+            	fwrite($file, $currentTag ." vs(".$mediaId.") ". strtolower($val['tag']."\n"));
+            	fclose($file); */
                 if ($currentTag == strtolower($val['tag'])) {
                     $data[$mediaId][$currentTag]['type'] = 'match';
                     $data[$mediaId][$currentTag]['tag_id'] = $val['tag_id'];
@@ -148,9 +156,9 @@ class StupidRobotGame extends NexTagGame
         // check if the game is not actually over
         if (($now - $startTime) < StupidRobotGame::$TIME_TO_PLAY) {
 
-        	$file = fopen("getturn.txt","a");
+/*         	$file = fopen("getturn.txt","a");
         	fwrite($file, "< StupidRobotGame::\$TIME_TO_PLAY\n");
-        	fclose($file);
+        	fclose($file); */
         	
             $media = $this->getMedia();
 
@@ -243,10 +251,10 @@ class StupidRobotGame extends NexTagGame
     {
         $time = time();
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-        if (!isset(Yii::app()->session[$api_id . '_PYRAMID_START_TIME'])) {
-            Yii::app()->session[$api_id . '_PYRAMID_START_TIME'] = $time;
+        if (!isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_START_TIME'])) {
+            Yii::app()->session[$api_id . '_STUPIDRORBOT_START_TIME'] = $time;
         } else {
-            $time = Yii::app()->session[$api_id . '_PYRAMID_START_TIME'];
+            $time = Yii::app()->session[$api_id . '_STUPIDRORBOT_START_TIME'];
         }
         return $time;
     }
@@ -261,8 +269,8 @@ class StupidRobotGame extends NexTagGame
     {
         $media = array();
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-        if (isset(Yii::app()->session[$api_id . '_PYRAMID_IMAGE'])) {
-            $media = Yii::app()->session[$api_id . '_PYRAMID_IMAGE'];
+        if (isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE'])) {
+            $media = Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE'];
         }
         return $media;
     }
@@ -277,16 +285,16 @@ class StupidRobotGame extends NexTagGame
     {
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
         Media::model()->setLastAccess(array($media['id']));
-        Yii::app()->session[$api_id . '_PYRAMID_IMAGE'] = $media;
+        Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE'] = $media;
     }
 
     public static function reset()
     {
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-        unset(Yii::app()->session[$api_id . '_PYRAMID_IMAGE']);
-        unset(Yii::app()->session[$api_id . '_PYRAMID_LEVELS']);
-        unset(Yii::app()->session[$api_id . '_PYRAMID_START_TIME']);
-        unset(Yii::app()->session[$api_id . '_PYRAMID_IMAGE_TAGS']);
+        unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE']);
+        unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS']);
+        unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_START_TIME']);
+        unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE_TAGS']);
     }
 
     /**
@@ -298,8 +306,8 @@ class StupidRobotGame extends NexTagGame
     {
         $level = null;
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-        if (isset(Yii::app()->session[$api_id . '_PYRAMID_LEVELS'])) {
-            $levels = Yii::app()->session[$api_id . '_PYRAMID_LEVELS'];
+        if (isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'])) {
+            $levels = Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'];
             $level = unserialize(end($levels));
         }
         return $level;
@@ -314,11 +322,11 @@ class StupidRobotGame extends NexTagGame
     {
         $levels = array();
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-        if (isset(Yii::app()->session[$api_id . '_PYRAMID_LEVELS'])) {
-            $levels = Yii::app()->session[$api_id . '_PYRAMID_LEVELS'];
+        if (isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'])) {
+            $levels = Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'];
         }
         array_push($levels, serialize($level));
-        Yii::app()->session[$api_id . '_PYRAMID_LEVELS'] = $levels;
+        Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'] = $levels;
     }
 
     /**
@@ -329,19 +337,29 @@ class StupidRobotGame extends NexTagGame
     private function getMediaTags(StupidRobotDTO $level, $mediaId)
     {
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
-        $mediaTags = Yii::app()->session[$api_id . '_PYRAMID_IMAGE_TAGS'];
+        $mediaTags = Yii::app()->session[$api_id . '_STUPIDROBOT_IMAGE_TAGS'];
 
         //if (!is_null($mediaTags) && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($mediaTags[0]["tag"])) {
-        if (!is_null($mediaTags)) {
+        if (!is_null($mediaTags) && $mediaId == Yii::app()->session[$api_id . '_STUPIDROBOT_MEDIAID']) {
         	return $mediaTags;
         } else {
+
             $mediaTags = MGTags::getTagsMediaId($mediaId);
             if (empty($mediaTags)) {
                 $tag = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $level->level + StupidRobotGame::$LETTERS_STEP);
                 $mediaTags[0]["tag"] = $tag;
                 $mediaTags[0]["tag_id"] = -1;
             }
-            Yii::app()->session[$api_id . '_PYRAMID_IMAGE_TAGS'] = $mediaTags;
+/*             foreach ($mediaTags as $val) {
+	            $file = fopen("getMediaTags.txt","a");
+	            fwrite($file, $mediaId.": ".$val['tag']."\n");
+	            fclose($file);
+            }
+            $file = fopen("getMediaTags.txt","a");
+            fwrite($file, "\n");
+            fclose($file); */
+            Yii::app()->session[$api_id . '_STUPIDROBOT_IMAGE_TAGS'] = $mediaTags;
+            Yii::app()->session[$api_id . '_STUPIDROBOT_MEDIAID'] = $mediaId;
             return $mediaTags;
         }
     }

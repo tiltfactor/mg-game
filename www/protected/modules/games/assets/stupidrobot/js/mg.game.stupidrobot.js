@@ -211,8 +211,10 @@ MG_GAME_STUPIDROBOT = function ($) {
             	MG_GAME_STUPIDROBOT.server_init = true;
             }else{
                 // send ajax call as POST request to validate a turn
+            	//console.log('before: ' + MG_GAME_STUPIDROBOT.media.media_id);
                 MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
                     if (MG_API.checkResponse(response)) {
+                    	//console.log('after: ' + MG_GAME_STUPIDROBOT.media.media_id);
                     	MG_GAME_STUPIDROBOT.onresponse(response);
                     }
                     return false;
@@ -588,6 +590,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
         onsubmit:function (tags) {
         	MG_GAME_STUPIDROBOT.words.push(tags);
+        	console.log("onsubmit: media_id " + MG_GAME_STUPIDROBOT.media.media_id);
             // send ajax call as POST request to validate a turn
             MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
             	console.log("onsubmit: " + MG_GAME_API.settings.gid);
@@ -622,7 +625,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             if ($.trim(MG_GAME_STUPIDROBOT.game.more_info_url) != "")
             	MG_GAME_STUPIDROBOT.more_info = {url:MG_GAME_STUPIDROBOT.game.more_info_url, name:MG_GAME_STUPIDROBOT.game.name};
 
-            console.log("onresponse: " + response.turn.medias[0].full_size);
+            //console.log("onresponse: " + response.turn.medias[0].full_size);
+            //console.log("onresponse: " + response.turn.medias[0].media_id);
             MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
             
 
@@ -721,7 +725,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         ongameinit:function (response) {
         	// console.log('ongameinit to with response, about to go in
 			// onresponse');
-        	console.log("ongameinit: ");
+        	//console.log("ongameinit: ");
         	MG_GAME_STUPIDROBOT.onresponse(response);
         },
 
