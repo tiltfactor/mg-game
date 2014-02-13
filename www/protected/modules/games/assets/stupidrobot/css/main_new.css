@@ -307,6 +307,12 @@ textarea {
 #game canvas{
 	float:left;
 	padding:0px;
+	margin-top:-10px;
+}
+
+#gamedone {
+  display: block;
+  clear: left;
 }
 
 /*score*/

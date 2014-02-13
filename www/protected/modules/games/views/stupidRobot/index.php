@@ -69,7 +69,6 @@
 
 		<form>
 			<button class="button" id="button-loop-1" type="button" value="1">sound</button>
-			<button class="button" id="gamedone" type="button" value="1">done</button>
 		</form>
 
          <div id="game">
@@ -91,6 +90,7 @@
 					</div>
 					<a class="button" id="pass">pass</a>
 					<canvas class="clearfix" id="canvas" width="342" height="212"> </canvas>
+					<a class="button" id="gamedone" type="button" value="1">done</a>
 				</div>
 				<div class="rightBox" id="imageContainer">
 					<center><img src="" /></center>
