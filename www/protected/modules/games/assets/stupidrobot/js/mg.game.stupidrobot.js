@@ -63,7 +63,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     	idx_i:0,
     	idx_activeLine:0,
     	introTextSpeedUp: 1,
-    	
+
 
     	idx_scrollIn:function () {
     		MG_GAME_STUPIDROBOT.idx_p=MG_GAME_STUPIDROBOT.idx_paragraphArray[MG_GAME_STUPIDROBOT.idx_activeLine];
@@ -122,7 +122,7 @@ MG_GAME_STUPIDROBOT = function ($) {
     		// set up scroller
     		var paragraphCollection=document.getElementsByClassName("scrollText");
     		MG_GAME_STUPIDROBOT.idx_paragraphArray = Array.prototype.slice.call( paragraphCollection );
-    		MG_GAME_STUPIDROBOT.idx_paragraphArray.push(document.getElementById("lastScrollText"));   		
+    		MG_GAME_STUPIDROBOT.idx_paragraphArray.push(document.getElementById("lastScrollText"));
 
     		// boot game
     		$("#bootButton").click(function(){
@@ -162,12 +162,12 @@ MG_GAME_STUPIDROBOT = function ($) {
     		createjs.Ticker.addEventListener("tick", stage);
 
     		setTimeout("MG_GAME_STUPIDROBOT.idx_scrollIn()",2000);
-    		
+
     		$("#idx_skipanimate").click(function(){
     			MG_GAME_STUPIDROBOT.introTextSpeedUp = 1000;
     			MG_GAME_STUPIDROBOT.idx_scrollIn();
     			$("#bootButton").show();
-    		}); 
+    		});
 
     	},
 
@@ -182,13 +182,13 @@ MG_GAME_STUPIDROBOT = function ($) {
         	MG_GAME_STUPIDROBOT.scorehtml = $("#score").html();
         	$("#score").html("");
         	$("#score").hide();
-            
+
         	$("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
 
             var game_assets_uri = $("#game_assets_uri").val();
             // console.log("jackjackjack" + game_assets_uri);
-            
-        	// initiate server communication, 
+
+        	// initiate server communication,
             // be carefule of the multi-rounds
             if(!MG_GAME_STUPIDROBOT.server_init){
             	// console.log("initiate with server: " +
@@ -427,7 +427,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	  MG_GAME_STUPIDROBOT.playSound('scan_sound');
         		animation.robot.gotoAndPlay("scan");
         	},1400);
-        	
+
 
         },
 
@@ -617,7 +617,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].full_size);
             //console.log("onresponse: " + response.turn.medias[0].media_id);
             MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
-            
+
 
             var accepted = {
                 level:1,
@@ -657,20 +657,20 @@ MG_GAME_STUPIDROBOT = function ($) {
 
 //                     	console.log("correct");
 
-                    	MG_GAME_STUPIDROBOT.flashMessage("I FEEL SMARTER ALREADY!", "green");
+                    	MG_GAME_STUPIDROBOT.flashMessage("SO <em>THAT'S</em> WHAT THAT IS!", "green");
                     	animation.robot.gotoAndPlay("correctAnswer");
                     	MG_GAME_STUPIDROBOT.playSound('next_level');
 
                     } else {
                     		// no match -- feedback
                     	// console.log("not accepted");
-                    	MG_GAME_STUPIDROBOT.flashMessage("AH, A NEW WORD?", "blue");
-                		animation.robot.gotoAndPlay("incorrectAnswer");
-                		MG_GAME_STUPIDROBOT.playSound('confused');
-                		
                     	$("#inputArea").val("");
                     	MG_GAME_STUPIDROBOT.inputlength = 0;
                     	MG_GAME_STUPIDROBOT.setNewLevel();
+
+                    	MG_GAME_STUPIDROBOT.flashMessage("AH, A NEW WORD?", "blue");
+                		animation.robot.gotoAndPlay("incorrectAnswer");
+                		MG_GAME_STUPIDROBOT.playSound('confused');
                     }
                 }
             }
@@ -846,7 +846,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 			MG_GAME_STUPIDROBOT.wordSpaces = Array.prototype.slice.call( wordspaceCollection );
 			MG_GAME_STUPIDROBOT.scrollIn();
         },
-        
+
         re_init: function(){
         	// the following is copied from pyramid tag
             MG_GAME_STUPIDROBOT.wordField=null;
@@ -861,8 +861,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.words=[];
             MG_GAME_STUPIDROBOT.sound= {};
             MG_GAME_STUPIDROBOT.sounds= {};
-            
-            // the following variable is newly added in stupidrobot for gaming = 
+
+            // the following variable is newly added in stupidrobot for gaming =
             MG_GAME_STUPIDROBOT.startingLevel =  4;
             MG_GAME_STUPIDROBOT.level =  null;
             MG_GAME_STUPIDROBOT.maxLevel =  13;
@@ -890,7 +890,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         	MG_GAME_STUPIDROBOT.activeLine = 0;
         	MG_GAME_STUPIDROBOT.scorestage =  null;
         	MG_GAME_STUPIDROBOT.scorelevel = 0;
-        
+
 			$("body").html("");
 			$("body").html(MG_GAME_STUPIDROBOT.loadgame);
 			//console.log(MG_GAME_STUPIDROBOT.loadgame);
