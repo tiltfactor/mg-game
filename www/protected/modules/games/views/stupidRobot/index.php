@@ -37,10 +37,11 @@
 
 	       	     <canvas id="canvas" width=960 height=180></canvas>
 
+					<button class="audio-button" id="button-loop-1" type="button" value="1"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/audio-off.png" /></button>
 
        			<div id="container">
 
-					<button class="audio-button" id="button-loop-1" type="button" value="1"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/audio-off.png" /></button>
+
 					<button id="bootButton" class="clearfix button">PLAY</button>
 	       	        <h1 class="clearfix">STUPID ROBOT</h1>
 					<p class="scrollText">&nbsp;</p>

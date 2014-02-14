@@ -140,13 +140,20 @@ textarea {
 }
 
 .audio-button{
-  padding: 2px;
-  outline: 2px solid #fff;
-  outline-offset: -4px;
 	cursor: pointer;
+	background: transparent;
+	border: none;
 }
 
-.button:hover, .audio-button:hover{
+.splashContent .audio-button{
+  margin: -20px 0 0 4px!important;
+}
+
+.gameContent .audio-button{
+	margin: 0 0 0 4px!important;
+}
+
+.button:hover{
 	outline: 2px solid #fff;
 	outline-offset: 0px;
 }
