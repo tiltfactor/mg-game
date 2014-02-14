@@ -36,8 +36,12 @@
         </div>
 
 	       	     <canvas id="canvas" width=960 height=180></canvas>
+
+
        			<div id="container">
-					<span id="bootButton" class="clearfix button">BOOT<br>GAME</span>
+
+					<button class="audio-button" id="button-loop-1" type="button" value="1"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/audio-off.png" /></button>
+					<button id="bootButton" class="clearfix button">PLAY</button>
 	       	        <h1 class="clearfix">STUPID ROBOT</h1>
 					<p class="scrollText">&nbsp;</p>
 					<p class="scrollText">&nbsp;</p>
@@ -55,9 +59,6 @@
 					<p class="scrollText">&nbsp;</p>
 					<br>
 					<span id='idx_skipanimate'>skip animation >></span>
-
-					<button class="button" id="button-loop-1" type="button" value="1">sound</button>
-
 			</div>
 
 
@@ -65,11 +66,10 @@
 
 	    <div id="loadgame">
          <input type="hidden" id="game_assets_uri" value="<?php echo GamesModule::getAssetsUrl() . '/stupidrobot/'; ?>" />
-    	 <input type="hidden" id="loopsound" value="<?php echo GamesModule::getAssetsUrl() . '/pyramid/'; ?>" />
 
-		<form>
-			<button class="button" id="button-loop-1" type="button" value="1">sound</button>
-		</form>
+
+			<button class="audio-button" id="button-loop-1" type="button" value="1"><img src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/audio-off.png" /></button>
+
 
          <div id="game">
 	    	 <div id="loading">loading!</div>

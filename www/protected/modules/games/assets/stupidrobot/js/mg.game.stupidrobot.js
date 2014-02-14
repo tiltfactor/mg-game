@@ -827,9 +827,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 				messageString="I FEEL AN ITTY BITTY BIT SMARTER.";
 			}
 
-			// $("#gameMessage2").html("YOU TAUGHT STUPID ROBOT
-			// "+MG_GAME_STUPIDROBOT.scorelevel+" WORDS!<br>"+messageString);
-			message.innerHTML="YOU TAUGHT STUPID ROBOT "+MG_GAME_STUPIDROBOT.scorelevel+" WORDS!<br>"+messageString;
+			message.innerHTML="YOU TAUGHT ME "+MG_GAME_STUPIDROBOT.scorelevel+" WORDS!<br>"+messageString;
 
 			var canvas = document.getElementById("canvas");
 			var exportRoot = new lib.animation_score(MG_GAME_STUPIDROBOT.scorelevel);
