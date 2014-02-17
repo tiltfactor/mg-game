@@ -66,6 +66,9 @@ class StupidRobotController extends GxController
             $cs->registerScriptFile('http://code.createjs.com/easeljs-0.6.0.min.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile('http://code.createjs.com/tweenjs-0.4.0.min.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile('http://code.createjs.com/movieclip-0.6.0.min.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.hammer.js', CClientScript::POS_END);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
             $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/stupidrobot/js/animation_intro.js', CClientScript::POS_END);

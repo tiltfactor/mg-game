@@ -617,6 +617,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].full_size);
             //console.log("onresponse: " + response.turn.medias[0].media_id);
             MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
+            //console.log(response.turn.medias[0].full_size);
 
 
             var accepted = {
