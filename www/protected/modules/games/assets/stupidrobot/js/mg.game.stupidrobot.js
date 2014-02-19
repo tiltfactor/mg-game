@@ -33,6 +33,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         wordsAccepted: 0,
         inputlength: 0,
         shift_detected: false,
+        mediaGet: false,
 
         // new added for scoring
         isRenderFinaled: false,
@@ -617,14 +618,17 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].full_size);
             //console.log("onresponse: " + response.turn.medias[0].media_id);
 
-            if (response.turn.medias)
-                MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
-            else {
-                console.log("meida not getted, try to get it again");
-                $("body").html("");
-                $("body").html(MG_GAME_STUPIDROBOT.loadgame);
-                MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options);
-                return;
+
+            if (!MG_GAME_STUPIDROBOT.mediaGet) {
+                if (response.turn.medias) {
+                    MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
+                    MG_GAME_STUPIDROBOT.mediaGet = true;
+                }
+                else {
+                    console.log("meida not getted, try to get it again");
+                    MG_GAME_STUPIDROBOT.re_init();
+                    return;
+                }
             }
 
             //console.log(response.turn.medias[0].full_size);
@@ -886,6 +890,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.inputlength = 0;
             //MG_GAME_STUPIDROBOT.main_menu_bar =  null;
             MG_GAME_STUPIDROBOT.shift_detected = false;
+            MG_GAME_STUPIDROBOT.mediaGet = false;
 
             // new added for scoring
             MG_GAME_STUPIDROBOT.isRenderFinaled = false;
