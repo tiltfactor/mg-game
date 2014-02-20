@@ -34,6 +34,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         inputlength: 0,
         shift_detected: false,
         mediaGet: false,
+        timerInit: false,
 
         // new added for scoring
         isRenderFinaled: false,
@@ -172,7 +173,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
         },
 
-        init: function (options) {
+        init: function (options, noTicker) {
             // console.log("init");
             // TO ZARA: line 46~48, this is point when I load the play page, in
             // your case
@@ -405,7 +406,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             });
 
             // set original level
-            MG_GAME_STUPIDROBOT.timerTick();
+            if(typeof(noTicker) == 'undefined')
+                MG_GAME_STUPIDROBOT.timerTick();
             MG_GAME_STUPIDROBOT.setLevel();
 
             // set up animation
@@ -485,7 +487,16 @@ MG_GAME_STUPIDROBOT = function ($) {
             }, 1625);
         },
 
-        timerTick: function () {
+        timerTick: function (isInit) {
+            if (typeof(isInit) === 'undefined') {
+                if (!MG_GAME_STUPIDROBOT.timerInit) {
+//                    console.log("timerInit: " + MG_GAME_STUPIDROBOT.timerInit)
+                    MG_GAME_STUPIDROBOT.timerInit = true;
+//                    console.log("timerInit 2: " + MG_GAME_STUPIDROBOT.timerInit)
+                }
+                else
+                    return; // block the replicate timerTick initialization
+            }
             // console.log("timerTick");
             currentMinutes = Math.floor(MG_GAME_STUPIDROBOT.secs / 60);
             currentSeconds = MG_GAME_STUPIDROBOT.secs % 60;
@@ -499,9 +510,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                 return;
             }
 
-            setTimeout('MG_GAME_STUPIDROBOT.timerTick()', 1000);
+            setTimeout('MG_GAME_STUPIDROBOT.timerTick(true)', 1000);
             MG_GAME_STUPIDROBOT.secs--;
-
         },
 
         playSound: function (index) {
@@ -626,7 +636,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 }
                 else {
                     console.log("meida not getted, try to get it again");
-                    MG_GAME_STUPIDROBOT.re_init();
+                    MG_GAME_STUPIDROBOT.re_init(true);
                     return;
                 }
             }
@@ -860,7 +870,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.scrollIn();
         },
 
-        re_init: function () {
+        re_init: function (noTicker) {
             // the following is copied from pyramid tag
             MG_GAME_STUPIDROBOT.wordField = null;
             MG_GAME_STUPIDROBOT.playOnceMoveOnFinalScreenWaitingTime = 15000; // milliseconds
@@ -891,6 +901,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             //MG_GAME_STUPIDROBOT.main_menu_bar =  null;
             MG_GAME_STUPIDROBOT.shift_detected = false;
             MG_GAME_STUPIDROBOT.mediaGet = false;
+            MG_GAME_STUPIDROBOT.timerInit = false;
 
             // new added for scoring
             MG_GAME_STUPIDROBOT.isRenderFinaled = false;
@@ -908,7 +919,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("body").html("");
             $("body").html(MG_GAME_STUPIDROBOT.loadgame);
             //console.log(MG_GAME_STUPIDROBOT.loadgame);
-            MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options);
+            MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options, noTicker);
         },
 
     });
