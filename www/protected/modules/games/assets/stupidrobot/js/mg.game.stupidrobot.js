@@ -125,6 +125,14 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.idx_paragraphArray = Array.prototype.slice.call(paragraphCollection);
             MG_GAME_STUPIDROBOT.idx_paragraphArray.push(document.getElementById("lastScrollText"));
 
+            // fix the loop sound problem after merging them together
+            // 1 is because there is only one loop audio in background
+            $(".audio_on").hide();
+            $("#button-loop-1").click(function () {
+                $(".audio_on").toggle();
+                $(".audio_off").toggle();
+            });
+
             // boot game
             $("#bootButton").click(function () {
                 // this several code is for violent merging
@@ -287,8 +295,11 @@ MG_GAME_STUPIDROBOT = function ($) {
             // 1 is because there is only one loop audio in background
             audio.play(1);
             audio.play(1);
+            $(".audio_on").hide();
             $("#button-loop-1").click(function () {
                 audio.play(1);
+                $(".audio_on").toggle();
+                $(".audio_off").toggle();
             });
 
             // done button for finishing the game immediately
