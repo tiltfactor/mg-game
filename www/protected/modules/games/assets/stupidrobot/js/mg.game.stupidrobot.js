@@ -35,6 +35,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         shift_detected: false,
         mediaGet: false,
         timerInit: false,
+        remoteProcessing: false,
 
         // new added for scoring
         isRenderFinaled: false,
@@ -322,9 +323,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 //console.log("keyCode: " + keyCode);
 
                 if (keyCode === 13) {
-
                     MG_GAME_STUPIDROBOT.beforeSubmit();
-                    return false;
                 }
 
             });
@@ -417,7 +416,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             });
 
             // set original level
-            if(typeof(noTicker) == 'undefined')
+            if (typeof(noTicker) == 'undefined')
                 MG_GAME_STUPIDROBOT.timerTick();
             MG_GAME_STUPIDROBOT.setLevel();
 
@@ -534,7 +533,7 @@ MG_GAME_STUPIDROBOT = function ($) {
          * on callback for the submit button
          */
         beforeSubmit: function () {
-            // console.log("onsubmit");
+            // console.log("nmit");
             var tags = $.trim(MG_GAME_STUPIDROBOT.wordField.val());
             // evaluate for word too short
             // set false for testing turn handling in the sever side
@@ -565,36 +564,46 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.flashMessage("Try a different length!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             } else {
-                // ajax call to the nlp api
-                $.ajax({
-                    type: "GET",
-                    // url: "http://localhost:8139/possible_wordcheck",
-                    url: MG_STUPIDROBOT.nlp_api_url + "/possible_wordcheck",
-                    timeout: 5000,
-                    data: { input: tags },
-                    dataType: "json",
-                    error: function (o) {
-                        // console.log(o);
-                        console.log('error with nlp api, so proceeding with the game');
-                        console.log(MG_STUPIDROBOT.nlp_api_url);
-                        MG_GAME_STUPIDROBOT.onsubmit(tags);
-                    }
-                }).done(function (o) {
-                    // console.log(o);
-                    var is_word = o.response;
-                    if (!is_word) {
-                        // console.log(tags+' is not a word.');
-                        animation.robot.gotoAndPlay("error");
-                        MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
-                        MG_GAME_STUPIDROBOT.playSound('fail_sound');
-                    }
-                    else {
-                        // console.log(tags+' could be a word.');
-                        // console.log('nlp api call done, result not false so
-                        // proceeding with game');
-                        MG_GAME_STUPIDROBOT.onsubmit(tags);
-                    }
-                });
+                if (!MG_GAME_STUPIDROBOT.remoteProcessing) {
+                    MG_GAME_STUPIDROBOT.remoteProcessing = true;
+                } else {
+                    MG_GAME_STUPIDROBOT.flashMessage("SLOW DOWN! TOO FAST!", "red");
+                    animation.robot.gotoAndPlay("error");
+                    MG_GAME_STUPIDROBOT.playSound('confused');
+                    return false;
+                }
+                MG_GAME_STUPIDROBOT.onsubmit(tags);
+                /*
+                 // ajax call to the nlp api
+                 $.ajax({
+                 type: "GET",
+                 // url: "http://localhost:8139/possible_wordcheck",
+                 url: MG_STUPIDROBOT.nlp_api_url + "/possible_wordcheck",
+                 timeout: 5000,
+                 data: { input: tags },
+                 dataType: "json",
+                 error: function (o) {
+                 // console.log(o);
+                 console.log('error with nlp api, so proceeding with the game');
+                 console.log(MG_STUPIDROBOT.nlp_api_url);
+                 MG_GAME_STUPIDROBOT.onsubmit(tags);
+                 }
+                 }).done(function (o) {
+                 console.log("nlp response!");
+                 var is_word = o.response;
+                 if (!is_word) {
+                 // console.log(tags+' is not a word.');
+                 animation.robot.gotoAndPlay("error");
+                 MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
+                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
+                 }
+                 else {
+                 // console.log(tags+' could be a word.');
+                 // console.log('nlp api call done, result not false so
+                 // proceeding with game');
+                 MG_GAME_STUPIDROBOT.onsubmit(tags);
+                 }
+                 });*/
             }
             return false;
         },
@@ -652,9 +661,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                 }
             }
 
-            //console.log(response.turn.medias[0].full_size);
-
-
             var accepted = {
                 level: 1,
                 tag: ""
@@ -670,7 +676,14 @@ MG_GAME_STUPIDROBOT = function ($) {
                     }
                     var tag = media[i_tag];
 
-                    if (turn.medias[0].tag_accepted) {
+                    if (turn.medias[0].nlp_test == -1) {
+                        console.log('error with nlp api');
+                        console.log(MG_STUPIDROBOT.nlp_api_url);
+                    } else if (turn.medias[0].nlp_test == 0) {
+                        animation.robot.gotoAndPlay("error");
+                        MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
+                        MG_GAME_STUPIDROBOT.playSound('fail_sound');
+                    } else if (turn.medias[0].tag_accepted) {
                         accepted.level = turn.medias[0].level;
                         accepted.tag = tag;
 
@@ -708,6 +721,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                         animation.robot.gotoAndPlay("incorrectAnswer");
                         MG_GAME_STUPIDROBOT.playSound('confused');
                     }
+                    MG_GAME_STUPIDROBOT.remoteProcessing = false;
                 }
             }
 
