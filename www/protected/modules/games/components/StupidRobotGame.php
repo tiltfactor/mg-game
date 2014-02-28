@@ -1,4 +1,5 @@
 <?php
+
 class StupidRobotGame extends NexTagGame
 {
     private static $TIME_TO_PLAY = 120;
@@ -19,9 +20,10 @@ class StupidRobotGame extends NexTagGame
                 $pass = true;
                 break;
             }
+
             $mediaId = $submission["media_id"];
             $mediaTags = array();
-            // Attempt to extract these
+// Attempt to extract these
             foreach (MGTags::parseTags($submission["tags"]) as $tag) {
                 $mediaTags[strtolower($tag)] = array(
                     'tag' => $tag,
@@ -36,18 +38,19 @@ class StupidRobotGame extends NexTagGame
                 // entering tags because server does not have permissions
                 // to open stream.
                 //
-/*                 
-                    if($found){
-                	$file = fopen("test.txt","a");
-                	fwrite($file, "found it!");
-                	fclose($file);
-                } */
+                /*
+                                    if($found){
+                                    $file = fopen("test.txt","a");
+                                    fwrite($file, "found it!");
+                                    fclose($file);
+                                } */
                 // break;
             }
-            // add the extracted tags to the media info
+// add the extracted tags to the media info
             $data[$mediaId] = $mediaTags;
             break;
         }
+
 
         $level = $this->getLevel();
         if (is_null($level)) {
@@ -74,60 +77,95 @@ class StupidRobotGame extends NexTagGame
             $level->tag = "";
         }
         if ($mediaId > 0) {
-            $found = false;
-            // currently they retrieve the tags with length regarding
-            // to current level. but now we want to switch to arbitrary level,
-            // currently I just hack it by not checking the level and 
-            // return tags with all the level, which is a quick fix
-            // a better way is change the whole query
-/*             $file = fopen("media_id.txt","a");
-            fwrite($file, $mediaId."\n");
-            fclose($file); */
-            $mediaTags = $this->getMediaTags($level, $mediaId, $reboot_value);
+            $level->nlpTest = $this->isValidWord($currentTag);
+            if ($level->nlpTest != 0) {
+                $found = false;
+                // currently they retrieve the tags with length regarding
+                // to current level. but now we want to switch to arbitrary level,
+                // currently I just hack it by not checking the level and
+                // return tags with all the level, which is a quick fix
+                // a better way is change the whole query
+                /*             $file = fopen("media_id.txt","a");
+                            fwrite($file, $mediaId."\n");
+                            fclose($file); */
+                $mediaTags = $this->getMediaTags($level, $mediaId, $reboot_value);
 
-            foreach ($mediaTags as $val) {
-/*             	$file = fopen("media_id.txt","a");
-            	fwrite($file, $currentTag ." vs(".$mediaId.") ". strtolower($val['tag']."\n"));
-            	fclose($file); */
-                if ($currentTag == strtolower($val['tag'])) {
-                    $data[$mediaId][$currentTag]['type'] = 'match';
-                    $data[$mediaId][$currentTag]['tag_id'] = $val['tag_id'];
-                    $found = true;
-                    break;
+                foreach ($mediaTags as $val) {
+                    /*             	$file = fopen("media_id.txt","a");
+                                    fwrite($file, $currentTag ." vs(".$mediaId.") ". strtolower($val['tag']."\n"));
+                                    fclose($file); */
+                    if ($currentTag == strtolower($val['tag'])) {
+                        $data[$mediaId][$currentTag]['type'] = 'match';
+                        $data[$mediaId][$currentTag]['tag_id'] = $val['tag_id'];
+                        $found = true;
+                        break;
+                    }
                 }
-            }
 
-            if ($level->countTags == 0) {
-                $level->countTags = count($mediaTags);
-            }
+                if ($level->countTags == 0) {
+                    $level->countTags = count($mediaTags);
+                }
 
-            //the answer is incorrect. Player can submit another word
-            $level->levelTurn++;
-            $level->isAccepted = false;
-            $level->tag = $currentTag;
+                //the answer is incorrect. Player can submit another word
+                $level->levelTurn++;
+                $level->isAccepted = false;
+                $level->tag = $currentTag;
 
-            // Junjie Guan: I modified the following condition here, so that palyers can submit arbitrary length of words
-            // and I leave the length screening to frontend, for example you cannot submit 2 four-letter words
-            // This is a quick fix, but have potential minor security issue, I leave that to future work.
-            // so in the future we need to implement screening on server side
-            // os, I also leave the pass functionality here, just in case we need to use it again
-            //if ($pass || ($found && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag))) {
-            if ($pass || $found) {
-            	//the answer is marked as correct and the player moves on to the next length tag
-                $level->isAccepted = true;
-            } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
-                //run the “freebie” algorithm to determine whether or not we lie to the players
-                $chance = pow($level->levelTurn, 2) / (10 * ($level->countTags + 1));
-                if ($chance > 0.5) $chance = 0.5;
-                $rand = mt_rand() / mt_getrandmax();
-                if ($rand < $chance) {
+                // Junjie Guan: I modified the following condition here, so that palyers can submit arbitrary length of words
+                // and I leave the length screening to frontend, for example you cannot submit 2 four-letter words
+                // This is a quick fix, but have potential minor security issue, I leave that to future work.
+                // so in the future we need to implement screening on server side
+                // os, I also leave the pass functionality here, just in case we need to use it again
+                //if ($pass || ($found && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag))) {
+                if ($pass || $found) {
+                    //the answer is marked as correct and the player moves on to the next length tag
                     $level->isAccepted = true;
+                } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
+                    //run the “freebie” algorithm to determine whether or not we lie to the players
+                    $chance = pow($level->levelTurn, 2) / (10 * ($level->countTags + 1));
+                    if ($chance > 0.5) $chance = 0.5;
+                    $rand = mt_rand() / mt_getrandmax();
+                    if ($rand < $chance) {
+                        $level->isAccepted = true;
+                    }
                 }
             }
             $this->saveLevel($level);
         }
 
         return $data;
+    }
+
+    function isValidWord($currentTag)
+    {
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, Yii::app()->fbvStorage->get("nlpApiUrl") . "/possible_wordcheck?input=" . $currentTag);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+            // receive server response ...
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $server_output = curl_exec($ch);
+
+            if (FALSE === $server_output)
+                throw new Exception(curl_error($ch), curl_errno($ch));
+            curl_close($ch);
+
+            // ...process $content now
+            $server_output = json_decode($server_output);
+            if ($server_output->response) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+            trigger_error(sprintf(
+                    'Curl failed with error #%d: %s',
+                    $e->getCode(), $e->getMessage()),
+                E_USER_ERROR);
+            curl_close($ch);
+            return -1;
+        }
     }
 
     /**
@@ -138,28 +176,29 @@ class StupidRobotGame extends NexTagGame
      * @throws CHttpException
      * @return array the turn information that will be sent to the players client
      */
-    public function getTurn(&$game, &$game_model, $tags = array())
+    public
+    function getTurn(&$game, &$game_model, $tags = array())
     {
         $data = array();
 
         $startTime = $this->getStartTime();
         $now = time();
-        
-/*         $file = fopen("getturn.txt","a");
-        fwrite($file, "getTurn\n");
-        fclose($file); */
-        
+
+        /*         $file = fopen("getturn.txt","a");
+                fwrite($file, "getTurn\n");
+                fclose($file); */
+
         // check for reboot request
         // (this functionality is added by Junje Guan)
         $reboot_value = $game->request->submissions[0]["reboot"];
-        
+
         // check if the game is not actually over
         if (($now - $startTime) < StupidRobotGame::$TIME_TO_PLAY) {
 
-/*         	$file = fopen("getturn.txt","a");
-        	fwrite($file, "< StupidRobotGame::\$TIME_TO_PLAY\n");
-        	fclose($file); */
-        	
+            /*         	$file = fopen("getturn.txt","a");
+                        fwrite($file, "< StupidRobotGame::\$TIME_TO_PLAY\n");
+                        fclose($file); */
+
             $media = $this->getMedia();
 
             if (empty($media) || $reboot_value) {
@@ -173,11 +212,11 @@ class StupidRobotGame extends NexTagGame
                 } else
                     throw new CHttpException(600, $game->name . Yii::t('app', ': Not enough medias available'));
             }
-            
-/*             $file = fopen("reboot_value.txt","a");
-            fwrite($file, $reboot_value);
-            fwrite($file, "\n");
-            fclose($file); */
+
+            /*             $file = fopen("reboot_value.txt","a");
+                        fwrite($file, $reboot_value);
+                        fwrite($file, "\n");
+                        fclose($file); */
 
             $lastLevel = $this->getLevel();
             if (is_null($lastLevel)) {
@@ -199,7 +238,8 @@ class StupidRobotGame extends NexTagGame
                 "scaled" => MGHelper::getScaledMediaUrl($media["name"], $game->image_width, $game->image_height, $media["institutionToken"], $media["institutionUrl"]),
                 "licences" => $media["licences"],
                 "level" => $lastLevel->level,
-                "tag_accepted" => $lastLevel->isAccepted
+                "tag_accepted" => $lastLevel->isAccepted,
+                "nlp_test" => $lastLevel->nlpTest
             );
 
             // extract needed licence info
@@ -231,14 +271,12 @@ class StupidRobotGame extends NexTagGame
             $data["tags"]["user"] = $tags;
             $data["licences"] = array(); // no need to show licences on the last screen as the previous turns are cached by javascript and therefore all licence info is available
             $this->reset();
-/*             $file = fopen("getturn.txt","a");
-            fwrite($file, "game over\n");
-            fclose($file); */
+            /*             $file = fopen("getturn.txt","a");
+                        fwrite($file, "game over\n");
+                        fclose($file); */
         }
-        
 
 
-        
         return $data;
     }
 
@@ -247,7 +285,8 @@ class StupidRobotGame extends NexTagGame
      *
      * @return int
      */
-    protected function getStartTime()
+    protected
+    function getStartTime()
     {
         $time = time();
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
@@ -265,7 +304,8 @@ class StupidRobotGame extends NexTagGame
      *
      * @return ArrayObject of the current media
      */
-    protected function getMedia()
+    protected
+    function getMedia()
     {
         $media = array();
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
@@ -281,14 +321,16 @@ class StupidRobotGame extends NexTagGame
      *
      * @param ArrayObject $media the media that have been shown to the user
      */
-    protected function setMedia($media)
+    protected
+    function setMedia($media)
     {
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
         Media::model()->setLastAccess(array($media['id']));
         Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE'] = $media;
     }
 
-    public static function reset()
+    public
+    static function reset()
     {
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
         unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE']);
@@ -341,7 +383,7 @@ class StupidRobotGame extends NexTagGame
 
         //if (!is_null($mediaTags) && ($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($mediaTags[0]["tag"])) {
         if (!is_null($mediaTags) && $mediaId == Yii::app()->session[$api_id . '_STUPIDROBOT_MEDIAID']) {
-        	return $mediaTags;
+            return $mediaTags;
         } else {
 
             $mediaTags = MGTags::getTagsMediaId($mediaId);
@@ -350,14 +392,14 @@ class StupidRobotGame extends NexTagGame
                 $mediaTags[0]["tag"] = $tag;
                 $mediaTags[0]["tag_id"] = -1;
             }
-/*             foreach ($mediaTags as $val) {
-	            $file = fopen("getMediaTags.txt","a");
-	            fwrite($file, $mediaId.": ".$val['tag']."\n");
-	            fclose($file);
-            }
-            $file = fopen("getMediaTags.txt","a");
-            fwrite($file, "\n");
-            fclose($file); */
+            /*             foreach ($mediaTags as $val) {
+                            $file = fopen("getMediaTags.txt","a");
+                            fwrite($file, $mediaId.": ".$val['tag']."\n");
+                            fclose($file);
+                        }
+                        $file = fopen("getMediaTags.txt","a");
+                        fwrite($file, "\n");
+                        fclose($file); */
             Yii::app()->session[$api_id . '_STUPIDROBOT_IMAGE_TAGS'] = $mediaTags;
             Yii::app()->session[$api_id . '_STUPIDROBOT_MEDIAID'] = $mediaId;
             return $mediaTags;
@@ -387,6 +429,8 @@ class StupidRobotDTO
      * @var bool
      */
     public $isAccepted = false;
+
+    public $nlpTest = 1;
 }
 
 ?>
