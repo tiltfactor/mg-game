@@ -336,6 +336,8 @@ textarea {
 #gamedone {
   display: block;
   clear: left;
+  position: relative;
+  top: -20px;
 }
 
 /*score*/
