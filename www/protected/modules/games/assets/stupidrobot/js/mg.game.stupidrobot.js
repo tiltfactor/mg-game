@@ -974,11 +974,12 @@ MG_GAME_STUPIDROBOT = function ($) {
 
             $("#loadgame").remove();
             $("#score").remove();
-            $("game").remove();
+            $("#game").remove();
+            $("#button-loop-1").remove();
             $("body").append(MG_GAME_STUPIDROBOT.loadgame);
-            //console.log(MG_GAME_STUPIDROBOT.loadgame);
+            console.log(MG_GAME_STUPIDROBOT.loadgame);
             MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options, noTicker);
-        },
+        }
 
     });
 }(jQuery);

@@ -74,7 +74,7 @@
     <br>
     <span id='idx_skipanimate'>skip animation >></span>
 </div>
-</div>>
+</div>
 
 
 <div id="loadgame">
