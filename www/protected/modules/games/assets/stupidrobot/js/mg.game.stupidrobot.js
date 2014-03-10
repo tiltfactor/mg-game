@@ -761,25 +761,26 @@ MG_GAME_STUPIDROBOT = function ($) {
                 $("#imageContainer").find("a").attr("title", turn_info.licence_info);
                 $("a[rel='zoom']").fancybox({overlayColor: '#000'});
 
-                // auto resize the image
-                imageH = $("#gameImage").height();
-                imageW = $("#gameImage").width();
-                if(imageW > imageH){
-                    $("#gameImage").width($("#imageContainer").width());
-                    //centering the image
-//                    console.log($("#imageContainer").height()*0.9);
-//                    console.log($("#gameImage").height());
-                    $("#gameImage").css("margin-top", function(){
-                        return ($("#imageContainer").height()*0.8-$("#gameImage").height())/2;
-                    });
-                }else{
-                    $("#gameImage").height($("#imageContainer").height()*0.9);
-                    $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
-                    //centering the image
-                    $("#gameImage").css("margin-left", function(){
-                        return ($("#imageContainer").width()-$("#gameImage").width())/2;
-                    });
-                }
+                var tmpImg = new Image();
+                tmpImg.src=turn_info.url; //or  document.images[i].src;
+                $(tmpImg).on('load',function(){
+                    // auto resize the image
+                    imageH = tmpImg.height;
+                    imageW = tmpImg.width;
+                    if(imageW > imageH){
+                        $("#gameImage").width($("#imageContainer").width());
+                        $("#gameImage").height($("#gameImage").height() * $("#gameImage").width() / imageW);
+                        $("#gameImage").css("margin-top", function(){
+                            return ($("#imageContainer").height()-$("#imageContainer").find("img").height())/2;
+                        });
+                    }else{
+                        $("#gameImage").height($("#imageContainer").height()*0.9);
+                        $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
+                        $("#gameImage").css("margin-left", function(){
+                            return ($("#imageContainer").width()-$("#gameImage").width())/2;
+                        });
+                    }
+                });
 
 
 
@@ -977,7 +978,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("#game").remove();
             $("#button-loop-1").remove();
             $("body").append(MG_GAME_STUPIDROBOT.loadgame);
-            console.log(MG_GAME_STUPIDROBOT.loadgame);
+//            console.log(MG_GAME_STUPIDROBOT.loadgame);
             MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options, noTicker);
         }
 
