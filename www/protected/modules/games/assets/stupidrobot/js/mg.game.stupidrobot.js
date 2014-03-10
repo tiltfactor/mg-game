@@ -3,6 +3,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         init_options: null,
         server_init: false,
         loadgame: "",
+        fancyboxes: "",
         main_menu_bar: null,
 
         // the following is copied from pyramid tag
@@ -99,6 +100,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.loadgame = $("#loadgame").html();
             $("#loadgame").html("");
             $("#loadgame").hide();
+            MG_GAME_STUPIDROBOT.fancyboxes = $("[id^='fancybox']")
+
             MG_GAME_STUPIDROBOT.main_menu_bar = $("#mainmenu_save").html();
 
             $(".manifest").hide();
@@ -137,17 +140,16 @@ MG_GAME_STUPIDROBOT = function ($) {
             // boot game
             $("#bootButton").click(function () {
                 // this several code is for violent merging
-                $("body").html("");
+                $("#splash_page").html("");
                 $("body").attr('id', 'gameContent');
                 $("body").removeClass("splashContent");
                 $("body").addClass("gameContent");
                 $("body").html(MG_GAME_STUPIDROBOT.loadgame);
+                $("body").append(MG_GAME_STUPIDROBOT.fancyboxes);
                 MG_GAME_STUPIDROBOT.init_options = options;
                 MG_GAME_STUPIDROBOT.init(options);
                 //MG_GAME_STUPIDROBOT.init(options);
             });
-
-
         },
 
 
@@ -564,14 +566,14 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.flashMessage("Try a different length!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             } else {
-                if (!MG_GAME_STUPIDROBOT.remoteProcessing) {
-                    MG_GAME_STUPIDROBOT.remoteProcessing = true;
-                } else {
-                    MG_GAME_STUPIDROBOT.flashMessage("SLOW DOWN! TOO FAST!", "red");
-                    animation.robot.gotoAndPlay("error");
-                    MG_GAME_STUPIDROBOT.playSound('confused');
-                    return false;
-                }
+                /*                if (!MG_GAME_STUPIDROBOT.remoteProcessing) {
+                 MG_GAME_STUPIDROBOT.remoteProcessing = true;
+                 } else {
+                 MG_GAME_STUPIDROBOT.flashMessage("SLOW DOWN! TOO FAST!", "red");
+                 animation.robot.gotoAndPlay("error");
+                 MG_GAME_STUPIDROBOT.playSound('confused');
+                 return false;
+                 }*/
                 MG_GAME_STUPIDROBOT.onsubmit(tags);
                 /*
                  // ajax call to the nlp api
@@ -749,14 +751,20 @@ MG_GAME_STUPIDROBOT = function ($) {
             // console.log('in renderTurn');
             // console.log("image url: " + response.turn.medias[0].full_size);
 
+            if (!MG_GAME_STUPIDROBOT.mediaGet) {
+                var turn_info = {
+                    url: response.turn.medias[0].full_size,
+                    url_full_size: response.turn.medias[0].full_size,
+                    licence_info: MG_GAME_API.parseLicenceInfo(response.turn.licences)
+                };
 
-            var turn_info = {
-                url: response.turn.medias[0].full_size,
-                url_full_size: response.turn.medias[0].full_size,
-                licence_info: MG_GAME_API.parseLicenceInfo(response.turn.licences)
-            };
-
-            $("#imageContainer").find("img").attr("src", turn_info.url);
+                $("#imageContainer").find("img").attr("src", turn_info.url);
+                $("#imageContainer").find("a").attr("href", turn_info.url);
+                console.log($("a[rel='zoom']").fancybox({overlayColor: '#c00'}));
+            }else{
+                MG_GAME_STUPIDROBOT.mediaGet = true;
+            }
+//            console.log($("a[rel='zoom']").attr("href"))
 
             MG_GAME_STUPIDROBOT.wordField.focus();
         },
