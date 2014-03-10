@@ -140,12 +140,13 @@ MG_GAME_STUPIDROBOT = function ($) {
             // boot game
             $("#bootButton").click(function () {
                 // this several code is for violent merging
-                $("#splash_page").html("");
+                $("#welcomepage").remove();
+//                $("#header").remove();
                 $("body").attr('id', 'gameContent');
                 $("body").removeClass("splashContent");
                 $("body").addClass("gameContent");
-                $("body").html(MG_GAME_STUPIDROBOT.loadgame);
-                $("body").append(MG_GAME_STUPIDROBOT.fancyboxes);
+                $("body").append(MG_GAME_STUPIDROBOT.loadgame);
+//                $("body").append(MG_GAME_STUPIDROBOT.fancyboxes);
                 MG_GAME_STUPIDROBOT.init_options = options;
                 MG_GAME_STUPIDROBOT.init(options);
                 //MG_GAME_STUPIDROBOT.init(options);
@@ -196,7 +197,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("#score").html("");
             $("#score").hide();
 
-            $("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
+            //$("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
 
             var game_assets_uri = $("#game_assets_uri").val();
             // console.log("jackjackjack" + game_assets_uri);
@@ -651,16 +652,13 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].media_id);
 
 
-            if (!MG_GAME_STUPIDROBOT.mediaGet) {
-                if (response.turn.medias) {
-                    MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
-                    MG_GAME_STUPIDROBOT.mediaGet = true;
-                }
-                else {
-                    console.log("meida not getted, try to get it again");
-                    MG_GAME_STUPIDROBOT.re_init(true);
-                    return;
-                }
+            if (response.turn.medias) {
+                MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
+            }
+            else {
+                console.log("meida not getted, try to get it again");
+                MG_GAME_STUPIDROBOT.re_init(true);
+                return;
             }
 
             var accepted = {
@@ -760,7 +758,8 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                 $("#imageContainer").find("img").attr("src", turn_info.url);
                 $("#imageContainer").find("a").attr("href", turn_info.url);
-                console.log($("a[rel='zoom']").fancybox({overlayColor: '#c00'}));
+                $("#imageContainer").find("a").attr("title", turn_info.licence_info);
+                console.log($("a[rel='zoom']").fancybox({overlayColor: '#000'}));
             }else{
                 MG_GAME_STUPIDROBOT.mediaGet = true;
             }
@@ -949,8 +948,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.scorestage = null;
             MG_GAME_STUPIDROBOT.scorelevel = 0;
 
-            $("body").html("");
-            $("body").html(MG_GAME_STUPIDROBOT.loadgame);
+            $("#loadgame").remove();
+            $("body").append(MG_GAME_STUPIDROBOT.loadgame);
             //console.log(MG_GAME_STUPIDROBOT.loadgame);
             MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options, noTicker);
         },

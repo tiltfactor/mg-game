@@ -62,11 +62,12 @@ class StupidRobotController extends GxController
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/stupidrobot/css/normalize.css');
             $cs->registerCssFile(GamesModule::getAssetsUrl() . '/stupidrobot/css/main_new.css');
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.sounds.js', CClientScript::POS_HEAD);
+            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile('http://code.createjs.com/preloadjs-0.3.0.min.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile('http://code.createjs.com/easeljs-0.6.0.min.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile('http://code.createjs.com/tweenjs-0.4.0.min.js', CClientScript::POS_HEAD);
             $cs->registerScriptFile('http://code.createjs.com/movieclip-0.6.0.min.js', CClientScript::POS_HEAD);
-            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
+//            $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.hammer.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
             $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
