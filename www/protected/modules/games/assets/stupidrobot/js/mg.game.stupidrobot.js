@@ -759,7 +759,30 @@ MG_GAME_STUPIDROBOT = function ($) {
                 $("#imageContainer").find("img").attr("src", turn_info.url);
                 $("#imageContainer").find("a").attr("href", turn_info.url);
                 $("#imageContainer").find("a").attr("title", turn_info.licence_info);
-                console.log($("a[rel='zoom']").fancybox({overlayColor: '#000'}));
+                $("a[rel='zoom']").fancybox({overlayColor: '#000'});
+
+                // auto resize the image
+                imageH = $("#gameImage").height();
+                imageW = $("#gameImage").width();
+                if(imageW > imageH){
+                    $("#gameImage").width($("#imageContainer").width());
+                    //centering the image
+//                    console.log($("#imageContainer").height()*0.9);
+//                    console.log($("#gameImage").height());
+                    $("#gameImage").css("margin-top", function(){
+                        return ($("#imageContainer").height()*0.8-$("#gameImage").height())/2;
+                    });
+                }else{
+                    $("#gameImage").height($("#imageContainer").height()*0.9);
+                    $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
+                    //centering the image
+                    $("#gameImage").css("margin-left", function(){
+                        return ($("#imageContainer").width()-$("#gameImage").width())/2;
+                    });
+                }
+
+
+
             }else{
                 MG_GAME_STUPIDROBOT.mediaGet = true;
             }
@@ -826,6 +849,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // you can store the html in a vairable before you erase them.
             $("#game").html("");
             $("#game").hide();
+            $("#game").remove();
             $("#score").show();
             $("#score").html(MG_GAME_STUPIDROBOT.scorehtml);
             // passed levels should be added as "!"
@@ -949,6 +973,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.scorelevel = 0;
 
             $("#loadgame").remove();
+            $("#score").remove();
+            $("game").remove();
             $("body").append(MG_GAME_STUPIDROBOT.loadgame);
             //console.log(MG_GAME_STUPIDROBOT.loadgame);
             MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options, noTicker);

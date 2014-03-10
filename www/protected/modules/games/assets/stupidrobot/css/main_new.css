@@ -598,3 +598,9 @@ textarea {
 	cursor: pointer;
 	color: #ccc;
 }
+
+.gameImageLink{
+    position: relative;
+    left: auto;
+    right: auto;
+}

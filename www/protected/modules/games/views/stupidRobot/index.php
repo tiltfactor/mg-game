@@ -111,7 +111,7 @@
             <a class="button" id="gamedone" type="button" value="1">done</a>
         </div>
         <div class="rightBox" id="imageContainer">
-            <a href="" rel="zoom" title=""><img src="" alt="game image"/></a>
+            <a class="gameImageLink" href="" rel="zoom" title=""><img id="gameImage" src="" alt="game image"/></a>
             <!--center><img src=""/></center-->
         </div>
     </div>
