@@ -612,6 +612,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
 
         onsubmit: function (tags) {
+            $("#inputArea").val("");
             MG_GAME_STUPIDROBOT.words.push(tags);
             console.log("onsubmit: media_id " + MG_GAME_STUPIDROBOT.media.media_id);
             // send ajax call as POST request to validate a turn
@@ -702,7 +703,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                             MG_GAME_STUPIDROBOT.renderFinal();
                             return;
                         }
-                        $("#inputArea").val("");
                         MG_GAME_STUPIDROBOT.inputlength = 0;
                         MG_GAME_STUPIDROBOT.setNewLevel();
 
@@ -715,7 +715,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                     } else {
                         // no match -- feedback
                         // console.log("not accepted");
-                        $("#inputArea").val("");
                         MG_GAME_STUPIDROBOT.inputlength = 0;
                         MG_GAME_STUPIDROBOT.setNewLevel();
 
@@ -766,17 +765,24 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                 var tmpImg = new Image();
                 tmpImg.src = turn_info.url; //or  document.images[i].src;
+//                tmpImg.src = $("#imageContainer").find("img").attr("src"); //or  document.images[i].src;
                 $(tmpImg).on('load', function () {
                     // auto resize the image
-                    imageH = tmpImg.height;
-                    imageW = tmpImg.width;
+//                    imageH = tmpImg.height;
+//                    imageW = tmpImg.width;
+                    imageH = $("#gameImage").height();
+                    imageW = $("#gameImage").width();
                     if (imageW > imageH) {
                         $("#gameImage").width($("#imageContainer").width());
                         $("#gameImage").height($("#gameImage").height() * $("#gameImage").width() / imageW);
+//                        tmpImg.width = $("#imageContainer").width() * 1.1;
+//                        tmpImg.height = tmpImg.height * tmpImg.width / imageW;
                         $("#gameImage").css("margin-top", function () {
-                            return ($("#imageContainer").height() - $("#imageContainer").find("img").height()) / 2;
+                            return ($("#container").height() - $("#gameImage").height()) / 2;
                         });
                     } else {
+//                        tmpImg.height= $("#container").height() * 0.9;
+//                        tmpImg.width  = tmpImg.width * tmpImg.height / imageH;
                         $("#gameImage").height($("#imageContainer").height() * 0.9);
                         $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
                         $("#gameImage").css("margin-left", function () {
