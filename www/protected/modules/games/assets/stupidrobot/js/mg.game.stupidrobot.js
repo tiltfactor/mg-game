@@ -652,13 +652,15 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].media_id);
 
 
-            if (response.turn.medias) {
-                MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
-            }
-            else {
-                console.log("meida not getted, try to get it again");
-                MG_GAME_STUPIDROBOT.re_init(true);
-                return;
+            if (!MG_GAME_STUPIDROBOT.mediaGet) {
+                if (response.turn.medias) {
+                    MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
+                }
+                else {
+                    console.log("meida not getted, try to get it again");
+                    MG_GAME_STUPIDROBOT.re_init(true);
+                    return;
+                }
             }
 
             var accepted = {
@@ -750,6 +752,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // console.log("image url: " + response.turn.medias[0].full_size);
 
             if (!MG_GAME_STUPIDROBOT.mediaGet) {
+                MG_GAME_STUPIDROBOT.mediaGet = true;
                 var turn_info = {
                     url: response.turn.medias[0].full_size,
                     url_full_size: response.turn.medias[0].full_size,
@@ -762,29 +765,28 @@ MG_GAME_STUPIDROBOT = function ($) {
                 $("a[rel='zoom']").fancybox({overlayColor: '#000'});
 
                 var tmpImg = new Image();
-                tmpImg.src=turn_info.url; //or  document.images[i].src;
-                $(tmpImg).on('load',function(){
+                tmpImg.src = turn_info.url; //or  document.images[i].src;
+                $(tmpImg).on('load', function () {
                     // auto resize the image
                     imageH = tmpImg.height;
                     imageW = tmpImg.width;
-                    if(imageW > imageH){
+                    if (imageW > imageH) {
                         $("#gameImage").width($("#imageContainer").width());
                         $("#gameImage").height($("#gameImage").height() * $("#gameImage").width() / imageW);
-                        $("#gameImage").css("margin-top", function(){
-                            return ($("#imageContainer").height()-$("#imageContainer").find("img").height())/2;
+                        $("#gameImage").css("margin-top", function () {
+                            return ($("#imageContainer").height() - $("#imageContainer").find("img").height()) / 2;
                         });
-                    }else{
-                        $("#gameImage").height($("#imageContainer").height()*0.9);
+                    } else {
+                        $("#gameImage").height($("#imageContainer").height() * 0.9);
                         $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
-                        $("#gameImage").css("margin-left", function(){
-                            return ($("#imageContainer").width()-$("#gameImage").width())/2;
+                        $("#gameImage").css("margin-left", function () {
+                            return ($("#imageContainer").width() - $("#gameImage").width()) / 2;
                         });
                     }
                 });
 
 
-
-            }else{
+            } else {
                 MG_GAME_STUPIDROBOT.mediaGet = true;
             }
 //            console.log($("a[rel='zoom']").attr("href"))
