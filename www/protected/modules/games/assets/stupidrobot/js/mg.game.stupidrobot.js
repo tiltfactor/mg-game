@@ -612,8 +612,11 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
 
         onsubmit: function (tags) {
+            // clear the input
             $("#inputArea").val("");
-            MG_GAME_STUPIDROBOT.words.push(tags);
+            MG_GAME_STUPIDROBOT.inputlength = 0;
+            MG_GAME_STUPIDROBOT.setNewLevel();
+
             console.log("onsubmit: media_id " + MG_GAME_STUPIDROBOT.media.media_id);
             // send ajax call as POST request to validate a turn
             MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
@@ -653,6 +656,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].media_id);
 
 
+
             if (!MG_GAME_STUPIDROBOT.mediaGet) {
                 if (response.turn.medias) {
                     MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
@@ -668,6 +672,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 level: 1,
                 tag: ""
             };
+
 
             var turn = response.turn;
             for (i_img in turn.tags.user) {
@@ -695,7 +700,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                         // tag.tag);
 
                         MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.inputlength - 4] = tag.tag;
-                        $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
+                        MG_GAME_STUPIDROBOT.words.push(tag.tag);
+                        $("#inputFields span").eq(turn.medias[0].wordlength - MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
                         //MG_GAME_STUPIDROBOT.level++;
                         MG_GAME_STUPIDROBOT.setLevel();
                         MG_GAME_STUPIDROBOT.wordsAccepted++;
@@ -703,8 +709,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                             MG_GAME_STUPIDROBOT.renderFinal();
                             return;
                         }
-                        MG_GAME_STUPIDROBOT.inputlength = 0;
-                        MG_GAME_STUPIDROBOT.setNewLevel();
 
 //                     	console.log("correct");
 
@@ -715,8 +719,6 @@ MG_GAME_STUPIDROBOT = function ($) {
                     } else {
                         // no match -- feedback
                         // console.log("not accepted");
-                        MG_GAME_STUPIDROBOT.inputlength = 0;
-                        MG_GAME_STUPIDROBOT.setNewLevel();
 
                         MG_GAME_STUPIDROBOT.flashMessage("AH, A NEW WORD?", "blue");
                         animation.robot.gotoAndPlay("incorrectAnswer");
