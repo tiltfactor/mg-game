@@ -104,7 +104,9 @@ Most content installs here:
 
 #### Install required packages in package.json ###
 * Install packages from nodejs/package.json
+```
 npm install
+```
 * You should now see the folder node_modules/ in nodejs/ folder
 
 
@@ -183,7 +185,7 @@ python run_nlpserver.py
 
 Test flask server
 ```
-curl http://localhost:8139/possible_wordcheck?input#cromulent
+curl http://localhost:8139/possible_wordcheck?input=cromulent
 ```
 
 * You should get a response that looks something like this:
@@ -245,7 +247,7 @@ TEST: go to http://GAME_BUILD_URL:8139
 
 TEST2: from commandline, test nlp is working.
 ```
-curl http://localhost:8139/possible_wordcheck?input#cromulent
+curl http://localhost:8139/possible_wordcheck?input=cromulent
 ```
 
 * If working, you should see something like the following output:
