@@ -453,8 +453,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.renderFinal();
                 return;
             }
-            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"});
-            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxlevel);
+            $("#inputArea").animate({width: 8.7 + "em"}); // 14 * 0.67
+            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             $("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
 
             $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
@@ -475,8 +475,8 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.level = 4;
             else
                 MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
-            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
-            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
+//            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
+//            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             //$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
             $("#inputFields span").removeClass("hilight");
             $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
