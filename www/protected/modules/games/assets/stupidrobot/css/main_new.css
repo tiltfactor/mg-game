@@ -187,7 +187,7 @@ textarea {
 	font-size:1.71em;
 	text-transform:uppercase;
 	font-family:"telegrama-render";
-	background-image:url('../images/underline.gif');
+	/*background-image:url('../images/underline.gif'); this is commented out*/
 	background-size: 22px 35px;
 	padding-left:2px;
 }
