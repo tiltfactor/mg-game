@@ -24,7 +24,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         // the following variable is newly added in stupidrobot for gaming:
         startingLevel: 4,
         level: null,
-        maxLevel: 13,
+        maxLevel: 10,
         letterWidthInEms: 0.67,
         speed: 200,
         secs: 120,
@@ -453,11 +453,12 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.renderFinal();
                 return;
             }
-            $("#inputArea").animate({width: 8.7 + "em"}); // 14 * 0.67
+            $("#inputArea").animate({width: 6.7 + "em"}); // 14 * 0.67
             $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             $("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
 
-            $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
+            if(MG_GAME_STUPIDROBOT.inputlength - 1 >= 0)
+                $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
         },
 
         isLetter: function (e) {
@@ -479,7 +480,14 @@ MG_GAME_STUPIDROBOT = function ($) {
 //            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             //$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
             $("#inputFields span").removeClass("hilight");
-            $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
+            $("#inputFields span").removeClass("blockHilight");
+            highlightIndex = MG_GAME_STUPIDROBOT.inputlength - 1;
+            if(highlightIndex >= 0){
+                if(highlightIndex < 3)
+                    $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("blockHilight");
+                else
+                    $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
+            }
         },
 
         flashMessage: function (message, color) {
@@ -701,7 +709,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                         MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.inputlength - 4] = tag.tag;
                         MG_GAME_STUPIDROBOT.words.push(tag.tag);
-                        $("#inputFields span").eq(turn.medias[0].wordlength - MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
+                        $("#inputFields span").eq(turn.medias[0].wordlength - 1).addClass("completed");
                         //MG_GAME_STUPIDROBOT.level++;
                         MG_GAME_STUPIDROBOT.setLevel();
                         MG_GAME_STUPIDROBOT.wordsAccepted++;

@@ -289,6 +289,9 @@ textarea {
 	height:1.9em;
 	line-height: 2em;
 }
+#inputFields > span{
+    visibility: hidden;
+}
 
 #inputFields a{
 	float:right;
@@ -296,7 +299,13 @@ textarea {
 	padding:4px 6px;
 }
 #inputFields .hilight{
+    visibility: visible;
 	background-color:yellow;
+}
+
+#inputFields .blockHilight{
+    visibility: visible;
+    background-color: #ff795c;
 }
 
 #inputFields .passed{
@@ -306,6 +315,7 @@ textarea {
 #inputFields .completed{
 	background-color:#1BBF77;
 	color:white;
+    visibility: visible;
 }
 
 #timer{
