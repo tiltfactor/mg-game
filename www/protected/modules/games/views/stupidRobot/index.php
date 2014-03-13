@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,7 +45,6 @@
 <div id="container">
 
 
-    <button id="bootButton" class="clearfix button">PLAY</button>
     <h1 class="clearfix">STUPID ROBOT</h1>
 
     <p class="scrollText">&nbsp;</p>
@@ -73,6 +72,9 @@
     <p class="scrollText">&nbsp;</p>
     <br>
     <span id='idx_skipanimate'>skip animation >></span>
+    <div>
+    <button id="bootButton" class="clearfix button">PLAY</button>
+    </div>
 </div>
 </div>
 
