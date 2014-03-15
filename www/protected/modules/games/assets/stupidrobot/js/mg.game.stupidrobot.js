@@ -457,7 +457,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             $("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
 
-            if(MG_GAME_STUPIDROBOT.inputlength - 1 >= 0)
+            if (MG_GAME_STUPIDROBOT.inputlength - 1 >= 0)
                 $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
         },
 
@@ -482,8 +482,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("#inputFields span").removeClass("hilight");
             $("#inputFields span").removeClass("blockHilight");
             highlightIndex = MG_GAME_STUPIDROBOT.inputlength - 1;
-            if(highlightIndex >= 0){
-                if(highlightIndex < 3)
+            if (highlightIndex >= 0) {
+                if (highlightIndex < 3)
                     $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("blockHilight");
                 else
                     $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
@@ -664,7 +664,6 @@ MG_GAME_STUPIDROBOT = function ($) {
             //console.log("onresponse: " + response.turn.medias[0].media_id);
 
 
-
             if (!MG_GAME_STUPIDROBOT.mediaGet) {
                 if (response.turn.medias) {
                     MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
@@ -683,6 +682,7 @@ MG_GAME_STUPIDROBOT = function ($) {
 
 
             var turn = response.turn;
+            console.log(response);
             for (i_img in turn.tags.user) {
                 var media = turn.tags.user[i_img];
                 for (i_tag in media) {
@@ -693,13 +693,17 @@ MG_GAME_STUPIDROBOT = function ($) {
                     var tag = media[i_tag];
 
                     if (turn.medias[0].nlp_test == -1) {
-                        console.log('error with nlp api');
+                        console.log('error with nlp api, keep playign without nlp');
                         console.log(MG_STUPIDROBOT.nlp_api_url);
-                    } else if (turn.medias[0].nlp_test == 0) {
+                    }
+
+                    if (turn.medias[0].nlp_test == 0) {
                         animation.robot.gotoAndPlay("error");
                         MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
                         MG_GAME_STUPIDROBOT.playSound('fail_sound');
                     } else if (turn.medias[0].tag_accepted) {
+
+
                         accepted.level = turn.medias[0].level;
                         accepted.tag = tag;
 
@@ -707,7 +711,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                         // console.log(MG_GAME_STUPIDROBOT.level + " and " +
                         // tag.tag);
 
-                        MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.inputlength - 4] = tag.tag;
+                        MG_GAME_STUPIDROBOT.wordArray[turn.medias[0].wordlength - 4] = tag.tag;
                         MG_GAME_STUPIDROBOT.words.push(tag.tag);
                         $("#inputFields span").eq(turn.medias[0].wordlength - 1).addClass("completed");
                         //MG_GAME_STUPIDROBOT.level++;
@@ -981,7 +985,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // new added for scoring
             MG_GAME_STUPIDROBOT.isRenderFinaled = false;
             MG_GAME_STUPIDROBOT.wordSpaces = null;
-            MG_GAME_STUPIDROBOT.wordArray = ["!", "!", "!", "!", "!", "!", "!", "!", "!", "!", ];
+            MG_GAME_STUPIDROBOT.wordArray = ["!", "!", "!", "!", "!", "!", "!", "!", "!", "!" ];
             // wordArray = ["word";
             //"word";"word";"word";"word";"word";"word";"word";"word";"word";];
             MG_GAME_STUPIDROBOT.a = "";
