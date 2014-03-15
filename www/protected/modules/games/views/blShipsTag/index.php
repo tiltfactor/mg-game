@@ -25,25 +25,13 @@
       <form action="#"><textarea name="words" cols="50" id="words"></textarea></form> 
     </div>  
     <div id="box1"> 
-      <div id="box2"> 
-        <div id="box3"> 
-          <a href="#" id="button-play" class="ir"> 
-            play
-          </a> 
-        </div> 
-      </div> 
+      <div class="blue-button" id="button-play"><a href="#">Submit</a></div>
+      <div class="blue-button" id="button-pass"><a href="#">Skip</a></div>
     </div>
+    <div class="clear"> </div>
     <!-- The ability to pass on a given image -->
     <div id="passing">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      Don't know anything about this image? Pass to see the next image.<br />
-      <!-- <a href="#" id="button-pass"> -->
-  <button id="button-pass" type="button" style="color: black; background-color: red; font-size: 110%; border: 1px solid;">PASS</button>
-<!--    </a> -->
+  <!-- <button id="button-pass" type="button" style="color: black; background-color: red; font-size: 110%; border: 1px solid;">PASS</button> -->
 </div>
     <div id="licences"></div>
     <div id="more_info"></div>

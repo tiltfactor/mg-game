@@ -147,6 +147,7 @@ MG_GAME_ZENTAG = function ($) {
 
             MG_GAME_API.releaseOnBeforeUnload();
             MG_GAME_ZENTAG.submitButton.addClass("again").unbind("click").attr("href", window.location.href);
+            MG_GAME_ZENTAG.passButton.hide();
 
             $("#stage").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
