@@ -1,9 +1,10 @@
 <div id="gamearea">
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
+  <div id="logo"></div>
   <div id="stage">
     <div id="zentag"> 
-      <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/ships_tag_logo.png" alt="Ships Tag" /> 
+      <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/ships_tag_logo_shadow.png" alt="Ships Tag" />
     </div>
     <div class="top-interface">
       <div id="scores"></div>

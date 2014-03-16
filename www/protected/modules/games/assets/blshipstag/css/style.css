@@ -68,10 +68,10 @@ h4 {
 #stage {
   display:none;
   background: #FFFFFF;
-  border: solid 1px #FFFFFF;
   border-radius: 10px;
   width: 500px;
-  margin: 0 auto;
+  margin: -150px auto 0;
+  box-shadow: 0px 0px 10px #FFFFFF;
 }
 
 #gameimage {
@@ -84,6 +84,13 @@ h4 {
   max-height: 171px;
   margin-top: 10px;
   border: 0;
+}
+
+.bl-logo {
+  background: url(../images/bl_logo.png) #00161e;
+  width: 82px;
+  height: 150px;
+  margin-left: 130px;
 }
 
 .top-interface {

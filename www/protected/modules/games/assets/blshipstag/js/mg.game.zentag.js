@@ -61,7 +61,7 @@ MG_GAME_ZENTAG = function ($) {
          * display games turn
          */
         renderTurn: function (response, score_info, turn_info, licence_info, more_info, words_to_avoid) {
-            $("#stage").hide();
+            $("#stage, #logo").hide();
 
             $("#scores").html("");
             $("#template-scores").tmpl(score_info).appendTo($("#scores"));
@@ -75,7 +75,7 @@ MG_GAME_ZENTAG = function ($) {
             $("a[rel='zoom']").fancybox({overlayColor: '#000'});
             $(".how-to-play").fancybox({overlayColor: '#000', content: $('#template-game-description').tmpl({})});
 
-            $("#stage").fadeIn(1000, function () {
+            $("#stage, #logo").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
                 MG_GAME_ZENTAG.wordField.focus();
             });
@@ -85,7 +85,7 @@ MG_GAME_ZENTAG = function ($) {
          * display the final turn
          */
         renderFinal: function (response, score_info, turn_info, licence_info, more_info) {
-            $("#stage").hide();
+            $("#stage, #logo").hide();
 
             $('#game_description').hide();
             $('#passing').hide();
@@ -127,7 +127,7 @@ MG_GAME_ZENTAG = function ($) {
             MG_GAME_ZENTAG.submitButton.addClass("again").unbind("click").attr("href", window.location.href);
             MG_GAME_ZENTAG.passButton.hide();
 
-            $("#stage").fadeIn(1000, function () {
+            $("#stage, #logo").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
                 MG_GAME_ZENTAG.wordField.focus();
             });
