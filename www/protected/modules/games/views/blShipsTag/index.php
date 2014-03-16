@@ -2,15 +2,6 @@
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
   <div id="stage">
-    <div id="game_description">
-    	<h2>How 2 Play</h2>
-    	<ul>
-    		<li>Describe the image as accurately as you can.</li> 
-    		<li>Use commas to separate phrases or individual words.</li>
-    		<li>Hit enter or click Ohm when done.</li>
-    	</ul>
-    	<p>Click on the image to see a full-screen version.</p>
-    </div>
     <div id="zentag"> 
       <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/ships_tag_logo.png" alt="Ships Tag" /> 
     </div>
@@ -29,13 +20,6 @@
       <div class="blue-button" id="button-pass"><a href="#">Skip</a></div>
     </div>
     <div class="clear"> </div>
-    <!-- The ability to pass on a given image -->
-    <div id="passing">
-  <!-- <button id="button-pass" type="button" style="color: black; background-color: red; font-size: 110%; border: 1px solid;">PASS</button> -->
-</div>
-    <div id="licences"></div>
-    <div id="more_info"></div>
-    <div id="words_to_avoid"></div>  
   </div> 
 </div>
 <script id="template-scores" type="text/x-jquery-tmpl">
@@ -43,10 +27,6 @@
   <div class="current_score">Score: <span>${current_score}</span></div>
   <div class="how-to-play">How to Play</div>
 </script>
-<script id="template-licence" type="text/x-jquery-tmpl">
-  <h4>${name}</h4>
-  <p>${description}</p>
-</script> 
 <script id="template-turn" type="text/x-jquery-tmpl">
   <div style="text-align:center" class="clearfix">
     <a href="${url_full_size}" rel="zoom" title="${licence_info}"><img src="${url}" alt="game image" /></a>
@@ -71,15 +51,6 @@
     <a href="${url_full_size}" rel="zoom" title="${licence_info}"><img src="${url}" alt="game image" /></a>
   </div>
 </script>
-<script id="template-more-info" type="text/x-jquery-tmpl">
-  <a href="${url}">Click here to learn more about ${name}</a>
-</script>
-<script id="template-words-to-avoid-heading" type="text/x-jquery-tmpl">
-  <h2>Words To Avoid</h2>
-</script>
-<script id="template-words-to-avoid" type="text/x-jquery-tmpl">
-  <span>${tag}</span>
-</script>
 <script id="template-final-info" type="text/x-jquery-tmpl">
   <p class="final">Congratulations <b>${user_name}</b>, you scored <b>${current_score}</b> points in this game.</p>
 </script>
@@ -94,4 +65,16 @@
 </script>
 <script id="template-info-modal-critical-error" type="text/x-jquery-tmpl">
   ${error} <p>Return to the <a href="${arcade_url}">arcade</a>.</p>
+</script>
+<script id="template-game-description" type="text/x-jquery-tmpl">
+  <div id="game_description">
+    <h2>How to Play</h2>
+    <ol>
+      <li>Describe the image as accurately as you can.</li> 
+      <li>Use commas to separate phrases or individual words.</li>
+      <li>Hit enter or click Submit when done.</li>
+      <li>Click Skip to skip an image.</li>
+      <li>Click on the image to see a full-screen version.</li>
+    </ul>
+  </div>
 </script>

@@ -54,7 +54,6 @@ MG_GAME_ZENTAG = function ($) {
             // TRY to get pass button to submit correct value.
             MG_GAME_ZENTAG.passButton = $("#button-pass").click(MG_GAME_ZENTAG.onpass);
 
-
             MG_GAME_API.game_init(settings);
         },
 
@@ -73,19 +72,8 @@ MG_GAME_ZENTAG = function ($) {
             $("#image_container").html("");
             $("#template-turn").tmpl(turn_info).appendTo($("#image_container"));
 
-            $("#licences").html("");
-            $("#template-licence").tmpl(licence_info).appendTo($("#licences"));
-
-            $("#more_info").html("");
-
-            if (more_info.length > 0)
-                $("#template-more-info").tmpl(more_info).appendTo($("#more_info"));
-
-            $("#words_to_avoid").html("");
-            $("#template-words-to-avoid-heading").tmpl().appendTo($("#words_to_avoid"))
-            $("#template-words-to-avoid").tmpl(words_to_avoid).appendTo($("#words_to_avoid"));
-
             $("a[rel='zoom']").fancybox({overlayColor: '#000'});
+            $(".how-to-play").fancybox({overlayColor: '#000', content: $('#template-game-description').tmpl({})});
 
             $("#stage").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
@@ -111,16 +99,6 @@ MG_GAME_ZENTAG = function ($) {
 
             if (score_info.tags_matched !== undefined && score_info.tags_matched != "")
                 $("#template-final-tags-matched").tmpl(score_info).appendTo($("#fieldholder"));
-
-            $("#licences").html("");
-            $("#template-licence").tmpl(licence_info).appendTo($("#licences"));
-
-            $("#more_info").html("");
-
-            if (more_info.length > 0)
-                $("#template-more-info").tmpl(more_info).appendTo($("#more_info"));
-
-            $("#words_to_avoid").html("");
 
             $("#image_container").html("");
             if (MG_GAME_ZENTAG.game.play_once_and_move_on == 1) {
@@ -425,7 +403,6 @@ MG_GAME_ZENTAG = function ($) {
             }
             return false;
         },
-
 
         /*
          * this method appears to be not used
