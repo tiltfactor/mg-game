@@ -71,7 +71,7 @@ h4 {
   border-radius: 10px;
   width: 500px;
   margin: -150px auto 0;
-  box-shadow: 0px 0px 10px #FFFFFF;
+  box-shadow: 0px 0px 10px #000000;
 }
 
 #gameimage {
@@ -86,8 +86,8 @@ h4 {
   border: 0;
 }
 
-.bl-logo {
-  background: url(../images/bl_logo.png) #00161e;
+#logo {
+  background: url(../images/bl_logo.png);
   width: 82px;
   height: 150px;
   margin-left: 130px;
