@@ -731,6 +731,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     } else {
                         // no match -- feedback
                         // console.log("not accepted");
+                        MG_GAME_STUPIDROBOT.words.push(tag.tag);
 
                         MG_GAME_STUPIDROBOT.flashMessage("AH, A NEW WORD?", "blue");
                         animation.robot.gotoAndPlay("incorrectAnswer");
