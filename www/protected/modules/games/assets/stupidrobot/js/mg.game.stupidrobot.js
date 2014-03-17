@@ -5,6 +5,10 @@ MG_GAME_STUPIDROBOT = function ($) {
         loadgame: "",
         fancyboxes: "",
         main_menu_bar: null,
+        correctMessage: ["So that's what that is!",
+                        "Good one!",
+                        "I understand!",
+                        "That makes sense!"],
 
         // the following is copied from pyramid tag
         wordField: null,
@@ -724,7 +728,8 @@ MG_GAME_STUPIDROBOT = function ($) {
 
 //                     	console.log("correct");
 
-                        MG_GAME_STUPIDROBOT.flashMessage("SO <em>THAT'S</em> WHAT THAT IS!", "green");
+                        rnd = Math.floor((Math.random()*4));
+                        MG_GAME_STUPIDROBOT.flashMessage(MG_GAME_STUPIDROBOT.correctMessage[rnd], "green");
                         animation.robot.gotoAndPlay("correctAnswer");
                         MG_GAME_STUPIDROBOT.playSound('next_level');
 
