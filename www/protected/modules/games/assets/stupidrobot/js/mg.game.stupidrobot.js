@@ -3,7 +3,12 @@ MG_GAME_STUPIDROBOT = function ($) {
         init_options: null,
         server_init: false,
         loadgame: "",
+        fancyboxes: "",
         main_menu_bar: null,
+        correctMessage: ["So that's what that is!",
+                        "Good one!",
+                        "I understand!",
+                        "That makes sense!"],
 
         // the following is copied from pyramid tag
         wordField: null,
@@ -23,7 +28,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         // the following variable is newly added in stupidrobot for gaming:
         startingLevel: 4,
         level: null,
-        maxLevel: 13,
+        maxLevel: 10,
         letterWidthInEms: 0.67,
         speed: 200,
         secs: 120,
@@ -99,6 +104,8 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.loadgame = $("#loadgame").html();
             $("#loadgame").html("");
             $("#loadgame").hide();
+            MG_GAME_STUPIDROBOT.fancyboxes = $("[id^='fancybox']")
+
             MG_GAME_STUPIDROBOT.main_menu_bar = $("#mainmenu_save").html();
 
             $(".manifest").hide();
@@ -137,17 +144,17 @@ MG_GAME_STUPIDROBOT = function ($) {
             // boot game
             $("#bootButton").click(function () {
                 // this several code is for violent merging
-                $("body").html("");
+                $("#welcomepage").remove();
+//                $("#header").remove();
                 $("body").attr('id', 'gameContent');
                 $("body").removeClass("splashContent");
                 $("body").addClass("gameContent");
-                $("body").html(MG_GAME_STUPIDROBOT.loadgame);
+                $("body").append(MG_GAME_STUPIDROBOT.loadgame);
+//                $("body").append(MG_GAME_STUPIDROBOT.fancyboxes);
                 MG_GAME_STUPIDROBOT.init_options = options;
                 MG_GAME_STUPIDROBOT.init(options);
                 //MG_GAME_STUPIDROBOT.init(options);
             });
-
-
         },
 
 
@@ -194,7 +201,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("#score").html("");
             $("#score").hide();
 
-            $("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
+            //$("body").prepend(MG_GAME_STUPIDROBOT.main_menu_bar);
 
             var game_assets_uri = $("#game_assets_uri").val();
             // console.log("jackjackjack" + game_assets_uri);
@@ -450,11 +457,12 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.renderFinal();
                 return;
             }
-            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"});
-            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxlevel);
+            $("#inputArea").animate({width: 6.7 + "em"}); // 14 * 0.67
+            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             $("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
 
-            $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
+            if (MG_GAME_STUPIDROBOT.inputlength - 1 >= 0)
+                $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
         },
 
         isLetter: function (e) {
@@ -472,11 +480,18 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.level = 4;
             else
                 MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
-            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
-            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
+//            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
+//            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
             //$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
             $("#inputFields span").removeClass("hilight");
-            $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("hilight");
+            $("#inputFields span").removeClass("blockHilight");
+            highlightIndex = MG_GAME_STUPIDROBOT.inputlength - 1;
+            if (highlightIndex >= 0) {
+                if (highlightIndex < 3)
+                    $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("blockHilight");
+                else
+                    $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
+            }
         },
 
         flashMessage: function (message, color) {
@@ -564,14 +579,14 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.flashMessage("Try a different length!", "red");
                 MG_GAME_STUPIDROBOT.playSound('fail_sound');
             } else {
-                if (!MG_GAME_STUPIDROBOT.remoteProcessing) {
-                    MG_GAME_STUPIDROBOT.remoteProcessing = true;
-                } else {
-                    MG_GAME_STUPIDROBOT.flashMessage("SLOW DOWN! TOO FAST!", "red");
-                    animation.robot.gotoAndPlay("error");
-                    MG_GAME_STUPIDROBOT.playSound('confused');
-                    return false;
-                }
+                /*                if (!MG_GAME_STUPIDROBOT.remoteProcessing) {
+                 MG_GAME_STUPIDROBOT.remoteProcessing = true;
+                 } else {
+                 MG_GAME_STUPIDROBOT.flashMessage("SLOW DOWN! TOO FAST!", "red");
+                 animation.robot.gotoAndPlay("error");
+                 MG_GAME_STUPIDROBOT.playSound('confused');
+                 return false;
+                 }*/
                 MG_GAME_STUPIDROBOT.onsubmit(tags);
                 /*
                  // ajax call to the nlp api
@@ -609,7 +624,11 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
 
         onsubmit: function (tags) {
-            MG_GAME_STUPIDROBOT.words.push(tags);
+            // clear the input
+            $("#inputArea").val("");
+            MG_GAME_STUPIDROBOT.inputlength = 0;
+            MG_GAME_STUPIDROBOT.setNewLevel();
+
             console.log("onsubmit: media_id " + MG_GAME_STUPIDROBOT.media.media_id);
             // send ajax call as POST request to validate a turn
             MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, function (response) {
@@ -652,7 +671,6 @@ MG_GAME_STUPIDROBOT = function ($) {
             if (!MG_GAME_STUPIDROBOT.mediaGet) {
                 if (response.turn.medias) {
                     MG_GAME_STUPIDROBOT.media = response.turn.medias[0];
-                    MG_GAME_STUPIDROBOT.mediaGet = true;
                 }
                 else {
                     console.log("meida not getted, try to get it again");
@@ -666,7 +684,9 @@ MG_GAME_STUPIDROBOT = function ($) {
                 tag: ""
             };
 
+
             var turn = response.turn;
+            console.log(response);
             for (i_img in turn.tags.user) {
                 var media = turn.tags.user[i_img];
                 for (i_tag in media) {
@@ -677,13 +697,17 @@ MG_GAME_STUPIDROBOT = function ($) {
                     var tag = media[i_tag];
 
                     if (turn.medias[0].nlp_test == -1) {
-                        console.log('error with nlp api');
+                        console.log('error with nlp api, keep playign without nlp');
                         console.log(MG_STUPIDROBOT.nlp_api_url);
-                    } else if (turn.medias[0].nlp_test == 0) {
+                    }
+
+                    if (turn.medias[0].nlp_test == 0) {
                         animation.robot.gotoAndPlay("error");
                         MG_GAME_STUPIDROBOT.flashMessage("That's not a word...", "red");
                         MG_GAME_STUPIDROBOT.playSound('fail_sound');
                     } else if (turn.medias[0].tag_accepted) {
+
+
                         accepted.level = turn.medias[0].level;
                         accepted.tag = tag;
 
@@ -691,8 +715,9 @@ MG_GAME_STUPIDROBOT = function ($) {
                         // console.log(MG_GAME_STUPIDROBOT.level + " and " +
                         // tag.tag);
 
-                        MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.inputlength - 4] = tag.tag;
-                        $("#inputFields span").eq(MG_GAME_STUPIDROBOT.level - MG_GAME_STUPIDROBOT.startingLevel).addClass("completed");
+                        MG_GAME_STUPIDROBOT.wordArray[turn.medias[0].wordlength - 4] = tag.tag;
+                        MG_GAME_STUPIDROBOT.words.push(tag.tag);
+                        $("#inputFields span").eq(turn.medias[0].wordlength - 1).addClass("completed");
                         //MG_GAME_STUPIDROBOT.level++;
                         MG_GAME_STUPIDROBOT.setLevel();
                         MG_GAME_STUPIDROBOT.wordsAccepted++;
@@ -700,22 +725,18 @@ MG_GAME_STUPIDROBOT = function ($) {
                             MG_GAME_STUPIDROBOT.renderFinal();
                             return;
                         }
-                        $("#inputArea").val("");
-                        MG_GAME_STUPIDROBOT.inputlength = 0;
-                        MG_GAME_STUPIDROBOT.setNewLevel();
 
 //                     	console.log("correct");
 
-                        MG_GAME_STUPIDROBOT.flashMessage("SO <em>THAT'S</em> WHAT THAT IS!", "green");
+                        rnd = Math.floor((Math.random()*4));
+                        MG_GAME_STUPIDROBOT.flashMessage(MG_GAME_STUPIDROBOT.correctMessage[rnd], "green");
                         animation.robot.gotoAndPlay("correctAnswer");
                         MG_GAME_STUPIDROBOT.playSound('next_level');
 
                     } else {
                         // no match -- feedback
                         // console.log("not accepted");
-                        $("#inputArea").val("");
-                        MG_GAME_STUPIDROBOT.inputlength = 0;
-                        MG_GAME_STUPIDROBOT.setNewLevel();
+                        MG_GAME_STUPIDROBOT.words.push(tag.tag);
 
                         MG_GAME_STUPIDROBOT.flashMessage("AH, A NEW WORD?", "blue");
                         animation.robot.gotoAndPlay("incorrectAnswer");
@@ -749,14 +770,52 @@ MG_GAME_STUPIDROBOT = function ($) {
             // console.log('in renderTurn');
             // console.log("image url: " + response.turn.medias[0].full_size);
 
+            if (!MG_GAME_STUPIDROBOT.mediaGet) {
+                MG_GAME_STUPIDROBOT.mediaGet = true;
+                var turn_info = {
+                    url: response.turn.medias[0].full_size,
+                    url_full_size: response.turn.medias[0].full_size,
+                    licence_info: MG_GAME_API.parseLicenceInfo(response.turn.licences)
+                };
 
-            var turn_info = {
-                url: response.turn.medias[0].full_size,
-                url_full_size: response.turn.medias[0].full_size,
-                licence_info: MG_GAME_API.parseLicenceInfo(response.turn.licences)
-            };
+                $("#imageContainer").find("img").attr("src", turn_info.url);
+                $("#imageContainer").find("a").attr("href", turn_info.url);
+                $("#imageContainer").find("a").attr("title", turn_info.licence_info);
+                $("a[rel='zoom']").fancybox({overlayColor: '#000'});
 
-            $("#imageContainer").find("img").attr("src", turn_info.url);
+                var tmpImg = new Image();
+                tmpImg.src = turn_info.url; //or  document.images[i].src;
+//                tmpImg.src = $("#imageContainer").find("img").attr("src"); //or  document.images[i].src;
+                $(tmpImg).on('load', function () {
+                    // auto resize the image
+//                    imageH = tmpImg.height;
+//                    imageW = tmpImg.width;
+                    imageH = $("#gameImage").height();
+                    imageW = $("#gameImage").width();
+                    if (imageW > imageH) {
+                        $("#gameImage").width($("#imageContainer").width());
+                        $("#gameImage").height($("#gameImage").height() * $("#gameImage").width() / imageW);
+//                        tmpImg.width = $("#imageContainer").width() * 1.1;
+//                        tmpImg.height = tmpImg.height * tmpImg.width / imageW;
+                        $("#gameImage").css("margin-top", function () {
+                            return ($("#container").height() - $("#gameImage").height()) / 2;
+                        });
+                    } else {
+//                        tmpImg.height= $("#container").height() * 0.9;
+//                        tmpImg.width  = tmpImg.width * tmpImg.height / imageH;
+                        $("#gameImage").height($("#imageContainer").height() * 0.9);
+                        $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
+                        $("#gameImage").css("margin-left", function () {
+                            return ($("#imageContainer").width() - $("#gameImage").width()) / 2;
+                        });
+                    }
+                });
+
+
+            } else {
+                MG_GAME_STUPIDROBOT.mediaGet = true;
+            }
+//            console.log($("a[rel='zoom']").attr("href"))
 
             MG_GAME_STUPIDROBOT.wordField.focus();
         },
@@ -819,6 +878,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // you can store the html in a vairable before you erase them.
             $("#game").html("");
             $("#game").hide();
+            $("#game").remove();
             $("#score").show();
             $("#score").html(MG_GAME_STUPIDROBOT.scorehtml);
             // passed levels should be added as "!"
@@ -931,7 +991,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // new added for scoring
             MG_GAME_STUPIDROBOT.isRenderFinaled = false;
             MG_GAME_STUPIDROBOT.wordSpaces = null;
-            MG_GAME_STUPIDROBOT.wordArray = ["!", "!", "!", "!", "!", "!", "!", "!", "!", "!", ];
+            MG_GAME_STUPIDROBOT.wordArray = ["!", "!", "!", "!", "!", "!", "!", "!", "!", "!" ];
             // wordArray = ["word";
             //"word";"word";"word";"word";"word";"word";"word";"word";"word";];
             MG_GAME_STUPIDROBOT.a = "";
@@ -941,11 +1001,14 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.scorestage = null;
             MG_GAME_STUPIDROBOT.scorelevel = 0;
 
-            $("body").html("");
-            $("body").html(MG_GAME_STUPIDROBOT.loadgame);
-            //console.log(MG_GAME_STUPIDROBOT.loadgame);
+            $("#loadgame").remove();
+            $("#score").remove();
+            $("#game").remove();
+            $("#button-loop-1").remove();
+            $("body").append(MG_GAME_STUPIDROBOT.loadgame);
+//            console.log(MG_GAME_STUPIDROBOT.loadgame);
             MG_GAME_STUPIDROBOT.init(MG_GAME_STUPIDROBOT.init_options, noTicker);
-        },
+        }
 
     });
 }(jQuery);

@@ -187,7 +187,7 @@ textarea {
 	font-size:1.71em;
 	text-transform:uppercase;
 	font-family:"telegrama-render";
-	background-image:url('../images/underline.gif');
+	/*background-image:url('../images/underline.gif'); this is commented out*/
 	background-size: 22px 35px;
 	padding-left:2px;
 }
@@ -289,6 +289,9 @@ textarea {
 	height:1.9em;
 	line-height: 2em;
 }
+#inputFields > span{
+    visibility: hidden;
+}
 
 #inputFields a{
 	float:right;
@@ -296,7 +299,13 @@ textarea {
 	padding:4px 6px;
 }
 #inputFields .hilight{
+    visibility: visible;
 	background-color:yellow;
+}
+
+#inputFields .blockHilight{
+    visibility: visible;
+    background-color: #ff795c;
 }
 
 #inputFields .passed{
@@ -306,6 +315,7 @@ textarea {
 #inputFields .completed{
 	background-color:#1BBF77;
 	color:white;
+    visibility: visible;
 }
 
 #timer{
@@ -597,4 +607,10 @@ textarea {
 	font-size: 16px;
 	cursor: pointer;
 	color: #ccc;
+}
+
+.gameImageLink{
+    position: relative;
+    left: auto;
+    right: auto;
 }
