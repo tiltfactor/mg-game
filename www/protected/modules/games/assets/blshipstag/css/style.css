@@ -1,0 +1,234 @@
+/** -*- Mode: css; css-indent-offset: 2; indent-tabs-mode: nil -*-
+ *
+ * Metadata Games - A FOSS Electronic Game for Archival Data Systems
+ * Copyright (C) 2010 Mary Flanagan, Tiltfactor Laboratory
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
+/* 
+ * 2010-09-29 - ZARA's css styles
+ * Modified by sukie
+ * Modified by Vincent Van Uffelen
+ */
+
+body {
+  font-family: Helvetica, Verdana, Arial, Sans-Serif;
+  color: black;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: url(../images/bg.png) #00161e;
+  min-height: 100%;
+}
+
+a:link, a:hover, a:visited {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+h2 {
+  color: #000;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.clear {
+  clear: both;
+}
+
+/* game related styles */
+
+#gamearea {
+	font-size: 14px;
+	margin: 0;
+	min-height: 600px;
+	padding: 20px 0 10px;
+}
+
+#stage {
+  display:none;
+  background: #FFFFFF;
+  border-radius: 10px;
+  width: 500px;
+  margin: -150px auto 0;
+  box-shadow: 0px 0px 10px #000000;
+}
+
+#gameimage {
+  max-width: 485px;
+  max-height: 366px;
+}
+
+.scoreimages {
+  max-width: 208px;
+  max-height: 171px;
+  margin-top: 10px;
+  border: 0;
+}
+
+#logo {
+  background: url(../images/bl_logo.png);
+  width: 82px;
+  height: 150px;
+  margin-left: 130px;
+}
+
+.top-interface {
+  height: 34px;
+}
+
+.how-to-play {
+  background: #009AFF;
+  color: white;
+  width: 100px;
+  font-size: 16px;
+  padding: 4px 0 12px;
+  border-radius: 4px 4px 0 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+#holder {
+  padding: 17px 0;
+  margin: -8px 25px 0;
+  background-color: #012938;
+  border-radius: 8px;
+}
+
+#holder img {
+  max-width: 400px;
+  max-height: 300px;
+}
+
+.smallholder {
+  width: 208px;
+  height: 171px;
+  float:left;
+  text-align: center;
+  margin: 0;
+  vertical-align: middle;
+}
+
+.smallholder.left {
+  margin-left: 17px;
+}
+
+#fieldholder {
+  text-align: center;
+  font-size: 16px;
+}
+
+/* Style the Text Area inside the fieldholder DIV */
+#fieldholder textarea {
+  width: 428px;
+  height: 25px;
+  font-size: 20px;
+  background-color: #EEEEEE;
+  border: thin solid #000000;
+  border-radius: 4px;
+  padding: 5px 10px
+}
+
+#zentag {
+  padding: 25px 0 10px;
+}
+
+#box1 {
+  text-align: center;
+  width:360px;
+  height: 55px;
+  margin: 0 auto;
+}
+
+.blue-button {
+  cursor: pointer;
+  float:left;
+  width: 100px;
+  color: white;
+  background: #009AFF;
+  font-size: 16px;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0px 30px;
+}
+
+#button-play.again {
+  float: none;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 20px auto 0;
+}
+
+#scores {
+  font-size: 20px;
+  padding: 0 25px;
+}
+
+#scores .current_score {
+  position: absolute;
+  text-align: center;
+  width: 450px;
+  height: 0;
+}
+
+#scores .total_turns {
+  float: right;
+  height: 0;
+}
+
+/* error modal window content */
+#mg_error {
+  text-align: left;
+}
+
+#mg_error h1 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom:10px;
+}
+
+#fieldholder p.final {
+  margin: 1em 0 0.2em;
+}
+
+#fieldholder p.tag-info {
+  margin: 0 0 0.2em;
+}
+
+#game_description {
+  width: 275px;
+	margin: 0 auto;
+	font-size: 14px;
+	text-align: left;
+	background: white;
+	padding: 15px;
+}
+
+#game_description h2 {
+  font-weight: bold;
+  text-align: center;
+}
+
+#fancybox-outer, #fancybox-content {
+  border-radius: 4px;
+}

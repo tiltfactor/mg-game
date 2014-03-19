@@ -126,3 +126,4 @@ return array(
     'embedded_metadata_format' => "1.0",
   ),
 );
+
