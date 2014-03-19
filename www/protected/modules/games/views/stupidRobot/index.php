@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +22,7 @@
 
 <!-- Add your site or application content here -->
 
-
+<div id = "welcomepage">
 <div id="loading">loading!</div>
 
 <div class="manifest" id="tree">
@@ -45,7 +45,6 @@
 <div id="container">
 
 
-    <button id="bootButton" class="clearfix button">PLAY</button>
     <h1 class="clearfix">STUPID ROBOT</h1>
 
     <p class="scrollText">&nbsp;</p>
@@ -73,6 +72,10 @@
     <p class="scrollText">&nbsp;</p>
     <br>
     <span id='idx_skipanimate'>skip animation >></span>
+    <div>
+    <button id="bootButton" class="clearfix button">PLAY</button>
+    </div>
+</div>
 </div>
 
 
@@ -99,18 +102,18 @@
         <div class="leftBox clearfix2">
             <span id="timer"></span>
             <span id="gameMessage">STAND BY</span>
-            <input type=text id="inputArea" class="underlinedText clearfix2"></input>
+            <input type=text id="inputArea" class="underlinedText clearfix2">
             <!-- span id = "underline">jack</span-->
             <div id="inputFields" class="clearfix2">
-                </span>
-                <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
             </div>
             <a class="button" id="pass">pass</a>
             <canvas class="clearfix" id="canvas" width="342" height="212"></canvas>
             <a class="button" id="gamedone" type="button" value="1">done</a>
         </div>
         <div class="rightBox" id="imageContainer">
-            <center><img src=""/></center>
+            <a class="gameImageLink" href="" rel="zoom" title=""><img id="gameImage" src="" alt="game image"/></a>
+            <!--center><img src=""/></center-->
         </div>
     </div>
 </div>
@@ -151,6 +154,8 @@
 
 
 
+
+
     </script>
 
     <script id="template-make-sound" type="text/x-jquery-tmpl">
@@ -158,6 +163,8 @@
             <source src="${ogg_path}" type="audio/ogg">
             <source src="${mp3_path}" type="audio/mpeg">
         </audio>
+
+
 
 
 
@@ -169,6 +176,8 @@
             <img src="${thumbnail}" class="show_big" scaled="${scaled}" />
             {{/each}}
         </div>
+
+
 
 
 
@@ -184,6 +193,8 @@
 
 
 
+
+
     </script>
 
     <script id="template-account_playlist" type="text/x-jquery-tmpl">
@@ -195,6 +206,8 @@
         </div>
         {{/if}}
         {{/each}}
+
+
 
 
 
@@ -213,6 +226,8 @@
         <div class="button">
             <a href="#" id="btn_update" class="button login"><span>UPDATE</span></a>
         </div>
+
+
 
 
 
@@ -245,6 +260,8 @@
 
 
 
+
+
     </script>
 
     <script id="template-turn" type="text/x-jquery-tmpl">
@@ -254,9 +271,13 @@
 
 
 
+
+
     </script>
     <script id="template-pyramid-step" type="text/x-jquery-tmpl">
         <div style="margin:5px auto;background-color:#EEEEEE;border:1px solid #CCCCCC;width:${width}px;">${tag}</div>
+
+
 
 
 
@@ -268,9 +289,13 @@
 
 
 
+
+
     </script>
     <script id="template-more-info" type="text/x-jquery-tmpl">
         <a href="${url}">Click here to learn more about ${name}</a>
+
+
 
 
 
@@ -290,6 +315,8 @@
 
 
 
+
+
     </script>
     <script id="template-final-info-play-once" type="text/x-jquery-tmpl">
         You'll be redirected in <span id="remainingTime">${remainingTime}</span> seconds. <a
@@ -297,9 +324,13 @@
 
 
 
+
+
     </script>
     <script id="template-info-modal-critical-error" type="text/x-jquery-tmpl">
         ${error} <p>Return to the <a href="${arcade_url}">arcade</a>.</p>
+
+
 
 
 

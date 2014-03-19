@@ -7,6 +7,11 @@ class StupidRobotGame extends NexTagGame
 
     public function parseTags(&$game, &$game_model)
     {
+        $rnd = rand(0, 100);
+//        exit();
+//        if($rnd > 50)
+//            exit();
+//        sleep(3);
         $data = array();
         $mediaId = 0;
         $currentTag = "";
@@ -120,6 +125,7 @@ class StupidRobotGame extends NexTagGame
                 if ($pass || $found) {
                     //the answer is marked as correct and the player moves on to the next length tag
                     $level->isAccepted = true;
+                    $level->wordlength = strlen($currentTag);
                 } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
                     //run the “freebie” algorithm to determine whether or not we lie to the players
                     $chance = pow($level->levelTurn, 2) / (10 * ($level->countTags + 1));
@@ -159,10 +165,10 @@ class StupidRobotGame extends NexTagGame
                 return 0;
             }
         } catch (Exception $e) {
-            trigger_error(sprintf(
-                    'Curl failed with error #%d: %s',
-                    $e->getCode(), $e->getMessage()),
-                E_USER_ERROR);
+//            trigger_error(sprintf(
+//                    'Curl failed with error #%d: %s',
+//                    $e->getCode(), $e->getMessage()),
+//                E_USER_ERROR);
             curl_close($ch);
             return -1;
         }
@@ -239,7 +245,8 @@ class StupidRobotGame extends NexTagGame
                 "licences" => $media["licences"],
                 "level" => $lastLevel->level,
                 "tag_accepted" => $lastLevel->isAccepted,
-                "nlp_test" => $lastLevel->nlpTest
+                "nlp_test" => $lastLevel->nlpTest,
+                "wordlength" => $lastLevel->wordlength
             );
 
             // extract needed licence info
@@ -431,6 +438,8 @@ class StupidRobotDTO
     public $isAccepted = false;
 
     public $nlpTest = 1;
+
+    public $wordlength = 0;
 }
 
 ?>
