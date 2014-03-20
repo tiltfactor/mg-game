@@ -47,7 +47,7 @@ class TagsJsonExportPlugin extends MGExportPlugin
         $this->activeByDefault = true;
 
         $legend = CHtml::tag("legend", array(),
-            Yii::t('app', 'Plugin: Tags JSON Export'));
+            Yii::t('app', 'Plugin: Tags MODS-JSON Export'));
 
         $value = $this->is_active() ? 1 : 0;
         $label = CHtml::label(Yii::t('app', 'Active'),
@@ -65,7 +65,7 @@ class TagsJsonExportPlugin extends MGExportPlugin
             '<div class="row">' . $label . $buttons .
             '<div class="description">' .
             Yii::t('app',
-                "Export image tags in a tab-separated JSON file.") .
+                "Export image tags to a JSON file with MODS schema.") .
             '</div></div>');
     }
 
