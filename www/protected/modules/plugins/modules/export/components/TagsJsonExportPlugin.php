@@ -87,15 +87,18 @@ class TagsJsonExportPlugin extends MGExportPlugin
         $format = Yii::app()->params['tags_csv_format'];
         $date = date("r");
         $system = "some.university.edu/mg/  (TODO: Source the correct value here)";
+        // to sukie: this is the place to add other MODS elements, currently I only have extension
         $jsonData = [
-            'comments' => ["This file contains an export of tag data from an installation of ",
-                "Metadata Games, a metadata tagging system from Tiltfactor Laboratory.",
-                "shortcutFor more information, see http://tiltfactor.org/mg/"],
-            'version' => $version,
-            'format' => $format,
-            'data' => $date,
-            'system' => $system
-        ];
+            'extension' => [
+                'comments' => ["This file contains an export of tag data from an installation of ",
+                    "Metadata Games, a metadata tagging system from Tiltfactor Laboratory.",
+                    "shortcutFor more information, see http://tiltfactor.org/mg/"],
+                'version' => $version,
+                'format' => $format,
+                'data' => $date,
+                'system' => $system,
+                'tags' => array()
+            ]];
 
         file_put_contents($tmp_folder . $model->filename . '_tags.json',
             json_encode($jsonData, JSON_PRETTY_PRINT));
@@ -115,6 +118,9 @@ class TagsJsonExportPlugin extends MGExportPlugin
         if (!$this->is_active()) {
             return 0;
         }
+
+        $str_data = file_get_contents($tmp_folder . $model->filename . '_tags.json');
+        $jsonData = json_decode($str_data,true);
 
         $sql = "
 tu.image_id,
@@ -142,10 +148,11 @@ inst.url
             $tags[] = $info[$i]['tag'];
         }
 
+        $jsonData['extension']['tags'][$info[0]['name']] = $tags;
+
         if (!empty($tags)) {
             file_put_contents($tmp_folder . $model->filename . '_tags.json',
-                $info[0]['name'] . "\t" . join(", ", $tags) . "\n",
-                FILE_APPEND);
+                json_encode($jsonData, JSON_PRETTY_PRINT));
         }
 
     }
