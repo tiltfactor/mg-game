@@ -21,108 +21,102 @@
  * <http://www.gnu.org/licenses/>.
  *
  * @END_LICENSE
- * 
+ *
  */
 
 Yii::import('ext.CSVExport.CSVExport');
 
-class TagsJsonExportPlugin extends MGExportPlugin {
-  public $enableOnInstall = true;
+class TagsJsonExportPlugin extends MGExportPlugin
+{
+    public $enableOnInstall = true;
 
-  function init() {
-    parent::init();
-  }
-  
-  /**
-   * Adds a checkbox that allows to activate/disactivate the use of the plugin on the 
-   * export form.
-   * 
-   * @param object $form the GxActiveForm rendering the export form
-   * @param object $model the ExportForm instance holding the forms values
-   */
-  function form(&$form, &$model) {
-    $this->activeByDefault = true;
-
-    $legend = CHtml::tag("legend", array(),
-                         Yii::t('app', 'Plugin: Tags JSON Export'));
-    
-    $value = $this->is_active() ? 1 : 0;
-    $label = CHtml::label(Yii::t('app', 'Active'),
-                          'ExportForm_TagsExportPlugin.php_active');
-    
-    $buttons= CHtml::radioButtonList( 
-      "ExportForm[TagsExportPlugin.php][active]", 
-      $value, 
-      MGHelper::itemAlias("yes-no"), 
-      array("template" => '<div class="checkbox">{input} {label}</div>',
-            "separator" => ""));
-    
-    return CHtml::tag("fieldset", array(),
-                      $legend .
-                      '<div class="row">' . $label . $buttons .
-                      '<div class="description">' .
-                      Yii::t('app',
-                             "Export image tags in a tab-separated JSON file.") .
-                      '</div></div>');
-  }
-  
-  /**
-   * Creates the CSV export file in the temporary folder and add the header row  
-   * and the statistics for each game in the file.
-   * 
-   * @param object $model the ExportForm instance
-   * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
-   * @param string $tmp_folder the full path to the temporary folder
-   */
-  function preProcess(&$model, &$command, $tmp_folder) {
-    if(!$this->is_active()) {
-      return 0;
+    function init()
+    {
+        parent::init();
     }
 
-    $version = Yii::app()->params['version'];
-    $format = Yii::app()->params['tags_csv_format'];
-    $date = date("r");
-    $system = "some.university.edu/mg/  (TODO: Source the correct value here)";
-    
-    $header = <<<EOT
-# This file contains an export of tag data from an installation of
-# Metadata Games, a metadata tagging system from Tiltfactor Laboratory.
-# For more information, see http://tiltfactor.org/mg/
-#
-# This Export:
-# ------------
-# Version: metadatagames_$version
-# Plugin: TagsExportPlugin.php
-# Format: $format
-# Date: $date
-# System: $system
-#
+    /**
+     * Adds a checkbox that allows to activate/disactivate the use of the plugin on the
+     * export form.
+     *
+     * @param object $form the GxActiveForm rendering the export form
+     * @param object $model the ExportForm instance holding the forms values
+     */
+    function form(&$form, &$model)
+    {
+        $this->activeByDefault = true;
 
-EOT;
+        $legend = CHtml::tag("legend", array(),
+            Yii::t('app', 'Plugin: Tags JSON Export'));
 
-    // Column labels.
-    $labels = array("Image Name", "Tags");
-    $labels = join("\t", $labels);
-    
-    file_put_contents ($tmp_folder . $model->filename . '_tags.json',
-                       $header . $labels . "\n");
+        $value = $this->is_active() ? 1 : 0;
+        $label = CHtml::label(Yii::t('app', 'Active'),
+            'ExportForm_TagsJsonExportPlugin_active');
 
-  }
-  
-  /**
-   * Retrieves the tags for an image and exports them as a line of the CSV file 
-   * 
-   * @param object $model the ExportForm instance
-   * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
-   * @param string $tmp_folder the full path to the temporary folder
-   * @param int $image_id the id of the image that should be exported
-   */
-  function process(&$model, &$command, $tmp_folder, $image_id) {
-    if(!$this->is_active()) {
-      return 0;
+        $buttons = CHtml::radioButtonList(
+            "ExportForm[TagsJsonExportPlugin][active]",
+            $value,
+            MGHelper::itemAlias("yes-no"),
+            array("template" => '<div class="checkbox">{input} {label}</div>',
+                "separator" => ""));
+
+        return CHtml::tag("fieldset", array(),
+            $legend .
+            '<div class="row">' . $label . $buttons .
+            '<div class="description">' .
+            Yii::t('app',
+                "Export image tags in a tab-separated JSON file.") .
+            '</div></div>');
     }
-    
-    $sql = "
+
+    /**
+     * Creates the CSV export file in the temporary folder and add the header row
+     * and the statistics for each game in the file.
+     *
+     * @param object $model the ExportForm instance
+     * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
+     * @param string $tmp_folder the full path to the temporary folder
+     */
+    function preProcess(&$model, &$command, $tmp_folder)
+    {
+        if (!$this->is_active()) {
+            return 0;
+        }
+
+        $version = Yii::app()->params['version'];
+        $format = Yii::app()->params['tags_csv_format'];
+        $date = date("r");
+        $system = "some.university.edu/mg/  (TODO: Source the correct value here)";
+        $jsonData = [
+            'comments' => ["This file contains an export of tag data from an installation of ",
+                "Metadata Games, a metadata tagging system from Tiltfactor Laboratory.",
+                "shortcutFor more information, see http://tiltfactor.org/mg/"],
+            'version' => $version,
+            'format' => $format,
+            'data' => $date,
+            'system' => $system
+        ];
+
+        file_put_contents($tmp_folder . $model->filename . '_tags.json',
+            json_encode($jsonData, JSON_PRETTY_PRINT));
+
+    }
+
+    /**
+     * Retrieves the tags for an image and exports them as a line of the CSV file
+     *
+     * @param object $model the ExportForm instance
+     * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
+     * @param string $tmp_folder the full path to the temporary folder
+     * @param int $image_id the id of the image that should be exported
+     */
+    function process(&$model, &$command, $tmp_folder, $image_id)
+    {
+        if (!$this->is_active()) {
+            return 0;
+        }
+
+        $sql = "
 tu.image_id,
 COUNT(tu.id) tu_count,
 MIN(tu.weight) w_min,
@@ -133,28 +127,28 @@ t.tag,
 i.name,
 inst.url
 ";
-    
-    $command->selectDistinct($sql);
 
-    $command->where(array('and', $command->where, 'tu.image_id = :mediaID'),
-                    array(":mediaID" => $image_id, ':weight' => (int)$model->tag_weight_min, ':weightSum' => (int)$model->tag_weight_sum));
-    $command->order('tu.image_id, t.tag');
-    
-    $info = $command->queryAll();
-    $c = count($info);
-    $tags = array();
+        $command->selectDistinct($sql);
 
-    for($i=0;$i<$c;$i++) {
-      $tags[] = $info[$i]['tag'];
+        $command->where(array('and', $command->where, 'tu.image_id = :mediaID'),
+            array(":mediaID" => $image_id, ':weight' => (int)$model->tag_weight_min, ':weightSum' => (int)$model->tag_weight_sum));
+        $command->order('tu.image_id, t.tag');
+
+        $info = $command->queryAll();
+        $c = count($info);
+        $tags = array();
+
+        for ($i = 0; $i < $c; $i++) {
+            $tags[] = $info[$i]['tag'];
+        }
+
+        if (!empty($tags)) {
+            file_put_contents($tmp_folder . $model->filename . '_tags.json',
+                $info[0]['name'] . "\t" . join(", ", $tags) . "\n",
+                FILE_APPEND);
+        }
+
     }
-    
-    if(!empty($tags)) {
-      file_put_contents ($tmp_folder . $model->filename . '_tags.json' ,
-                         $info[0]['name'] . "\t" . join(", ", $tags) . "\n",
-                         FILE_APPEND ); 
-    }
-
-  }  
 }
 
 ?>
