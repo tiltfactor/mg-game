@@ -120,6 +120,13 @@ h4 {
   max-height: 300px;
 }
 
+#holder img.magnify {
+  cursor: pointer;
+  position: absolute;
+  margin-top: -40px;
+  margin-left: 385px;
+}
+
 .smallholder {
   width: 208px;
   height: 171px;
@@ -177,6 +184,7 @@ h4 {
   font-size: 20px;
   padding: 10px 20px;
   margin: 20px auto 0;
+  width: 120px;
 }
 
 #scores {

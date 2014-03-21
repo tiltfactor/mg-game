@@ -11,6 +11,7 @@
     </div>
     <div id="holder">
       <div id="image_container" class="clearfix"></div>
+      <img class="magnify" src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/magnify.png" alt="" />
     </div>
     <!-- user text field -->
     <div id="fieldholder" class="clearfix">   
@@ -22,6 +23,12 @@
     </div>
     <div class="clear"> </div>
   </div> 
+</div>
+<div id="dark-footer">
+  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_tiltfactor.png" alt="Tiltfactor" />
+  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_dartmouth.png" alt="Dartmouth" />
+  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_acls.png" alt="ACLS" />
+  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_neh.png" alt="National Endowment for the Humanities" />
 </div>
 <script id="template-scores" type="text/x-jquery-tmpl">
   <div class="total_turns">Turn: <span>${current_turn}</span>/<span>${turns}</span></div>

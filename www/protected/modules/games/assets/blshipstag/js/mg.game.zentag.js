@@ -74,6 +74,9 @@ MG_GAME_ZENTAG = function ($) {
 
             $("a[rel='zoom']").fancybox({overlayColor: '#000'});
             $(".how-to-play").fancybox({overlayColor: '#000', content: $('#template-game-description').tmpl({})});
+            $("img.magnify").on("click", function() {
+              $("a[rel='zoom']").click();
+            });
 
             $("#stage, #logo").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
@@ -89,6 +92,7 @@ MG_GAME_ZENTAG = function ($) {
 
             $('#game_description').hide();
             $('#passing').hide();
+            $("img.magnify").hide();
 
             //$("#scores").html("");
 
@@ -124,7 +128,8 @@ MG_GAME_ZENTAG = function ($) {
             $("a[rel='zoom']").fancybox({overlayColor: '#000'});
 
             MG_GAME_API.releaseOnBeforeUnload();
-            MG_GAME_ZENTAG.submitButton.addClass("again").unbind("click").attr("href", window.location.href);
+            MG_GAME_ZENTAG.submitButton.addClass("again").unbind("click");
+            MG_GAME_ZENTAG.submitButton.find("a").text("Play Again?").attr("href", window.location.href.replace(/#$/, ''));
             MG_GAME_ZENTAG.passButton.hide();
 
             $("#stage, #logo").fadeIn(1000, function () {
