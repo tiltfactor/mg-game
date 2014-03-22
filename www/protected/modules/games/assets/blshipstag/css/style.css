@@ -56,8 +56,20 @@ h4 {
   clear: both;
 }
 
-/* game related styles */
+#footer {
+  display: none;
+}
 
+#dark-footer {
+  text-align: center;
+  padding: 50px 0 20px 0;
+}
+
+#dark-footer img {
+  padding: 0 10px;
+}
+
+/* game related styles */
 #gamearea {
 	font-size: 14px;
 	margin: 0;
