@@ -122,7 +122,11 @@ class CSVExportPlugin extends MGExportPlugin
             $sql = $sql . "MIN(tu.weight) w_min,";
             $sql = $sql . "MAX(tu.weight) w_max,";
             $sql = $sql . "AVG(tu.weight) w_avg,";
-            $sql = $sql . "SUM(tu.weight) as w_sum";
+            $sql = $sql . "SUM(tu.weight) as w_sum,";
+            $sql = $sql . "t.tag,";
+            $sql = $sql . "i.name,";
+            $sql = $sql . "inst.url,";
+            $sql = $sql . "inst.name";
             $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,i.mime_type,inst.url');
 //            $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count');
         }
