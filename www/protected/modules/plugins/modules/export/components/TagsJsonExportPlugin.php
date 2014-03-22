@@ -97,7 +97,8 @@ class TagsJsonExportPlugin extends MGExportPlugin
                 'format' => $format,
                 'data' => $date,
                 'system' => $system,
-                'media' => array()
+                'media' => [
+                ]
             ]];
 
         file_put_contents($tmp_folder . $model->filename . '_tags.json',
@@ -120,9 +121,9 @@ class TagsJsonExportPlugin extends MGExportPlugin
         }
 
 
-//        $str_data = file_get_contents($tmp_folder . $model->filename . '_tags.json');
-//        $jsonData = json_decode($str_data, true);
-//
+        $str_data = file_get_contents($tmp_folder . $model->filename . '_tags.json');
+        $jsonData = json_decode($str_data, true);
+
         $sql = "tu.media_id,";
         $sql = $sql . "COUNT(tu.id) tu_count,";
         $sql = $sql . "MIN(tu.weight) w_min,";
@@ -147,7 +148,12 @@ class TagsJsonExportPlugin extends MGExportPlugin
             $tags[] = $info[$i]['tag'];
         }
 
-        $jsonData['extension']['media'][$info[0]['name']]['tag'] = $tags;
+
+        $jsonData['extension']['media'][$info[0]['media_name']] = [
+            'tags' => $tags,
+            'institution' => $info[0]['inst_name'],
+            'collection' => ''
+        ];
 
         if (!empty($tags)) {
             file_put_contents($tmp_folder . $model->filename . '_tags.json',
