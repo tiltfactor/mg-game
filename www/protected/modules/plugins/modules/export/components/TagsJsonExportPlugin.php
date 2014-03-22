@@ -122,7 +122,7 @@ class TagsJsonExportPlugin extends MGExportPlugin
 
         $baseInfo = $this->baseQuery($command, $media_id);
         $collectionInfo = $this->collectionQuery($media_id);
-        $this->writeJson2File($baseInfo, $collectionInfo,
+        $this->writeJson2File($model, $baseInfo, $collectionInfo,
             $tmp_folder . $model->filename . '_tags.json');
     }
 
@@ -159,18 +159,22 @@ class TagsJsonExportPlugin extends MGExportPlugin
         return $collectionInfo;
     }
 
-    function writeJson2File($baseInfo, $collectionInfo, $file)
+    function writeJson2File($model, $baseInfo, $collectionInfo, $file)
     {
         // process tags and collections
         $c = count($baseInfo);
         $tags = array();
         for ($i = 0; $i < $c; $i++) {
-            $tags[] = $baseInfo[$i]['tag'];
+            if ($baseInfo[$i]['w_min'] >= (int)$model->tag_weight_min
+                && $baseInfo[$i]['w_sum'] >= (int)$model->tag_weight_sum
+            ) {
+                $tags[] = $baseInfo[$i]['tag'];
+            }
         }
         $c = count($collectionInfo);
         $collections = array();
         for ($i = 0; $i < $c; $i++) {
-            if($collectionInfo[$i]['name'] != 'All')
+            if ($collectionInfo[$i]['name'] != 'All')
                 $collections[] = $collectionInfo[$i]['name'];
         }
 

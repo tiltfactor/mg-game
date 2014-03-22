@@ -148,7 +148,11 @@ EOT;
         $tags = array();
 
         for ($i = 0; $i < $c; $i++) {
-            $tags[] = $info[$i]['tag'];
+            if ($info[$i]['w_min'] >= (int)$model->tag_weight_min
+                && $info[$i]['w_sum'] >= (int)$model->tag_weight_sum
+            ) {
+                $tags[] = $info[$i]['tag'];
+            }
         }
 
         if (!empty($tags)) {
