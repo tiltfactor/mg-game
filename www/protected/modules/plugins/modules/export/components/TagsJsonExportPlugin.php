@@ -120,10 +120,14 @@ class TagsJsonExportPlugin extends MGExportPlugin
             return 0;
         }
 
+        $baseInfo = $this->baseQuery($command, $media_id);
+        $collectionInfo = $this->collectionQuery($media_id);
+        $this->writeJson2File($baseInfo, $collectionInfo,
+            $tmp_folder . $model->filename . '_tags.json');
+    }
 
-        $str_data = file_get_contents($tmp_folder . $model->filename . '_tags.json');
-        $jsonData = json_decode($str_data, true);
-
+    function baseQuery(&$command, $media_id)
+    {
         $sql = "tu.media_id,";
         $sql = $sql . "COUNT(tu.id) tu_count,";
         $sql = $sql . "MIN(tu.weight) w_min,";
@@ -141,25 +145,46 @@ class TagsJsonExportPlugin extends MGExportPlugin
         $command->order('tu.media_id, t.tag');
 
         $info = $command->queryAll();
-        $c = count($info);
-        $tags = array();
+        return $info;
+    }
 
+    function collectionQuery($media_id)
+    {
+        $collectionInfo = Yii::app()->db->createCommand()
+            ->select('name')
+            ->from('collection c')
+            ->join('collection_to_media c2m', 'c.id=c2m.collection_id')
+            ->where('c2m.media_id=:id', array(':id' => $media_id))
+            ->queryAll();
+        return $collectionInfo;
+    }
+
+    function writeJson2File($baseInfo, $collectionInfo, $file)
+    {
+        // process tags and collections
+        $c = count($baseInfo);
+        $tags = array();
         for ($i = 0; $i < $c; $i++) {
-            $tags[] = $info[$i]['tag'];
+            $tags[] = $baseInfo[$i]['tag'];
+        }
+        $c = count($collectionInfo);
+        $collections = array();
+        for ($i = 0; $i < $c; $i++) {
+            if($collectionInfo[$i]['name'] != 'All')
+                $collections[] = $collectionInfo[$i]['name'];
         }
 
-
-        $jsonData['extension']['media'][$info[0]['media_name']] = [
-            'tags' => $tags,
-            'institution' => $info[0]['inst_name'],
-            'collection' => ''
+        $str_data = file_get_contents($file);
+        $jsonData = json_decode($str_data, true);
+        $jsonData['extension']['media'][$baseInfo[0]['media_name']] = [
+            'institution' => $baseInfo[0]['inst_name'],
+            'collection' => $collections,
+            'tags' => $tags
         ];
 
         if (!empty($tags)) {
-            file_put_contents($tmp_folder . $model->filename . '_tags.json',
-                json_encode($jsonData, JSON_PRETTY_PRINT));
+            file_put_contents($file, json_encode($jsonData, JSON_PRETTY_PRINT));
         }
-
     }
 }
 
