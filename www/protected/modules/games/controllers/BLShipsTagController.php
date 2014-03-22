@@ -1,6 +1,6 @@
 <?php
 
-class BLShipsTagController extends GxController
+class BlShipsTagController extends GxController
 {
   
 	public function filters() {
@@ -38,7 +38,7 @@ class BLShipsTagController extends GxController
   public function actionIndex() {
     MGHelper::setFrontendTheme();
     
-    $game = GamesModule::loadGame("BLShipsTag");
+    $game = GamesModule::loadGame("BlShipsTag");
     if ($game) {
       $cs = Yii::app()->clientScript;
       $cs->registerCoreScript('jquery');
@@ -55,7 +55,7 @@ class BLShipsTagController extends GxController
       
       $js = <<<EOD
     MG_GAME_ZENTAG.init({
-        gid : 'BLShipsTag',
+        gid : 'BlShipsTag',
         app_id : 'MG_API',
         asset_url : '$asset_url',
         api_url : '{$game->api_base_url}',
@@ -85,7 +85,7 @@ EOD;
    * show the game's settings
    */
   public function actionView() {
-    $model = $this->loadModel(array("unique_id" => "BLShipsTag"), 'BLShipsTag');  
+    $model = $this->loadModel(array("unique_id" => "BlShipsTag"), 'BlShipsTag');  
     $model->fbvLoad();
     
     $this->render('view', array(
@@ -98,16 +98,16 @@ EOD;
    * edit the game's settings
    */
   public function actionUpdate() {
-    $model = $this->loadModel(array("unique_id" => "BLShipsTag"), 'BLShipsTag');
+    $model = $this->loadModel(array("unique_id" => "BlShipsTag"), 'BlShipsTag');
     $model->fbvLoad();
 
     $this->performAjaxValidation($model, 'zentag-form');
-    if (isset($_POST['BLShipsTag'])) {
-      $model->setAttributes($_POST['BLShipsTag']);
+    if (isset($_POST['BlShipsTag'])) {
+      $model->setAttributes($_POST['BlShipsTag']);
       
       $relatedData = array(
-        'collections' => $_POST['BLShipsTag']['collections'] === '' ? null : $_POST['BLShipsTag']['collections'],
-        'plugins' => $_POST['BLShipsTag']['plugins'] === '' ? null : $_POST['BLShipsTag']['plugins'],
+        'collections' => $_POST['BlShipsTag']['collections'] === '' ? null : $_POST['BlShipsTag']['collections'],
+        'plugins' => $_POST['BlShipsTag']['plugins'] === '' ? null : $_POST['BlShipsTag']['plugins'],
         );
 
       // save the games data in the database

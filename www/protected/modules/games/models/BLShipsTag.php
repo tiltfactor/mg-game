@@ -2,7 +2,7 @@
 
 /**
  */
-class BLShipsTag extends MGGameModel
+class BlShipsTag extends MGGameModel
 {
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
   public $name = "British Library Ships Tag";
