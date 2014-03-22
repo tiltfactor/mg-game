@@ -97,7 +97,7 @@ class TagsJsonExportPlugin extends MGExportPlugin
                 'format' => $format,
                 'data' => $date,
                 'system' => $system,
-                'tags' => array()
+                'media' => array()
             ]];
 
         file_put_contents($tmp_folder . $model->filename . '_tags.json',
@@ -111,34 +111,33 @@ class TagsJsonExportPlugin extends MGExportPlugin
      * @param object $model the ExportForm instance
      * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
      * @param string $tmp_folder the full path to the temporary folder
-     * @param int $image_id the id of the image that should be exported
+     * @param int $media_id the id of the image that should be exported
      */
-    function process(&$model, &$command, $tmp_folder, $image_id)
+    function process(&$model, &$command, $tmp_folder, $media_id)
     {
         if (!$this->is_active()) {
             return 0;
         }
 
-        $str_data = file_get_contents($tmp_folder . $model->filename . '_tags.json');
-        $jsonData = json_decode($str_data,true);
 
-        $sql = "
-tu.image_id,
-COUNT(tu.id) tu_count,
-MIN(tu.weight) w_min,
-MAX(tu.weight) w_max,
-AVG(tu.weight) w_avg,
-SUM(tu.weight) as w_sum,
-t.tag,
-i.name,
-inst.url
-";
+//        $str_data = file_get_contents($tmp_folder . $model->filename . '_tags.json');
+//        $jsonData = json_decode($str_data, true);
+//
+        $sql = "tu.media_id,";
+        $sql = $sql . "COUNT(tu.id) tu_count,";
+        $sql = $sql . "MIN(tu.weight) w_min,";
+        $sql = $sql . "MAX(tu.weight) w_max,";
+        $sql = $sql . "AVG(tu.weight) w_avg,";
+        $sql = $sql . "SUM(tu.weight) as w_sum,";
+        $sql = $sql . "t.tag,";
+        $sql = $sql . "i.name media_name,";
+        $sql = $sql . "inst.url,";
+        $sql = $sql . "inst.name inst_name";
 
         $command->selectDistinct($sql);
-
-        $command->where(array('and', $command->where, 'tu.image_id = :mediaID'),
-            array(":mediaID" => $image_id, ':weight' => (int)$model->tag_weight_min, ':weightSum' => (int)$model->tag_weight_sum));
-        $command->order('tu.image_id, t.tag');
+        $command->where(array('and', $command->where, 'tu.media_id = :mediaID'),
+            array(":mediaID" => $media_id, ':weight' => (int)$model->tag_weight_min, ':weightSum' => (int)$model->tag_weight_sum));
+        $command->order('tu.media_id, t.tag');
 
         $info = $command->queryAll();
         $c = count($info);
@@ -148,7 +147,7 @@ inst.url
             $tags[] = $info[$i]['tag'];
         }
 
-        $jsonData['extension']['tags'][$info[0]['name']] = $tags;
+        $jsonData['extension']['media'][$info[0]['name']]['tag'] = $tags;
 
         if (!empty($tags)) {
             file_put_contents($tmp_folder . $model->filename . '_tags.json',
