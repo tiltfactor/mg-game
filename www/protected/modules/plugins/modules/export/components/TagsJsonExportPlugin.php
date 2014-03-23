@@ -26,7 +26,7 @@
 
 Yii::import('ext.CSVExport.CSVExport');
 
-class TagsExportPlugin extends MGExportPlugin
+class TagsJsonExportPlugin extends MGExportPlugin
 {
     public $enableOnInstall = true;
 
@@ -47,14 +47,14 @@ class TagsExportPlugin extends MGExportPlugin
         $this->activeByDefault = true;
 
         $legend = CHtml::tag("legend", array(),
-            Yii::t('app', 'Plugin: Tags Export'));
+            Yii::t('app', 'Plugin: Tags MODS-JSON Export'));
 
         $value = $this->is_active() ? 1 : 0;
         $label = CHtml::label(Yii::t('app', 'Active'),
-            'ExportForm_TagsExportPlugin_active');
+            'ExportForm_TagsJsonExportPlugin_active');
 
         $buttons = CHtml::radioButtonList(
-            "ExportForm[TagsExportPlugin][active]",
+            "ExportForm[TagsJsonExportPlugin][active]",
             $value,
             MGHelper::itemAlias("yes-no"),
             array("template" => '<div class="checkbox">{input} {label}</div>',
@@ -65,12 +65,12 @@ class TagsExportPlugin extends MGExportPlugin
             '<div class="row">' . $label . $buttons .
             '<div class="description">' .
             Yii::t('app',
-                "Export image tags in a tab-separated CSV file.") .
+                "Export image tags to a JSON file with MODS schema.") .
             '</div></div>');
     }
 
     /**
-     * Creates the CSV export file in the temporary folder and add the header row
+     * Creates JSON export file in the temporary folder and add the header row
      * and the statistics for each game in the file.
      *
      * @param object $model the ExportForm instance
@@ -87,34 +87,27 @@ class TagsExportPlugin extends MGExportPlugin
         $format = Yii::app()->params['tags_csv_format'];
         $date = date("r");
         $system = "Metadata Games";
+        // This is the place to add other MODS elements, currently I only have extension
+        $jsonData = [
+            'extension' => [
+                'comments' => ["This file contains an export of tag data from an installation of ",
+                    "Metadata Games, a metadata tagging system from Tiltfactor Laboratory.",
+                    "shortcutFor more information, see http://metadatagames.org"],
+                'version' => $version,
+                'format' => $format,
+                'data' => $date,
+                'system' => $system,
+                'media' => [
+                ]
+            ]];
 
-        $header = <<<EOT
-# This file contains an export of tag data from an installation of
-# Metadata Games, a metadata tagging system from Tiltfactor Laboratory.
-# For more information, see http://metadatagames.org
-#
-# This Export:
-# ------------
-# Version: metadatagames_$version
-# Plugin: TagsExportPlugin
-# Format: $format
-# Date: $date
-# System: $system
-#
-
-EOT;
-
-        // Column labels.
-        $labels = array("Image Name", "Tags");
-        $labels = join("\t", $labels);
-
-        file_put_contents($tmp_folder . $model->filename . '_tags.csv',
-            $header . $labels . "\n");
+        file_put_contents($tmp_folder . $model->filename . '_tags.json',
+            json_encode($jsonData, JSON_PRETTY_PRINT));
 
     }
 
     /**
-     * Retrieves the tags for an image and exports them as a line of the CSV file
+     * Retrieves the tags for an image and exports them as a tags: array in JSON
      *
      * @param object $model the ExportForm instance
      * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
@@ -127,6 +120,14 @@ EOT;
             return 0;
         }
 
+        $baseInfo = $this->baseQuery($command, $media_id);
+        $collectionInfo = $this->collectionQuery($media_id);
+        $this->writeJson2File($model, $baseInfo, $collectionInfo,
+            $tmp_folder . $model->filename . '_tags.json');
+    }
+
+    function baseQuery(&$command, $media_id)
+    {
         $sql = "tu.media_id,";
         $sql = $sql . "COUNT(tu.id) tu_count,";
         $sql = $sql . "MIN(tu.weight) w_min,";
@@ -134,33 +135,64 @@ EOT;
         $sql = $sql . "AVG(tu.weight) w_avg,";
         $sql = $sql . "SUM(tu.weight) as w_sum,";
         $sql = $sql . "t.tag,";
-        $sql = $sql . "i.name,";
-        $sql = $sql . "inst.url";
+        $sql = $sql . "i.name media_name,";
+        $sql = $sql . "inst.url,";
+        $sql = $sql . "inst.name inst_name";
 
         $command->selectDistinct($sql);
-
         $command->where(array('and', $command->where, 'tu.media_id = :mediaID'),
             array(":mediaID" => $media_id, ':weight' => (int)$model->tag_weight_min, ':weightSum' => (int)$model->tag_weight_sum));
         $command->order('tu.media_id, t.tag');
 
         $info = $command->queryAll();
-        $c = count($info);
-        $tags = array();
+        return $info;
+    }
 
+    function collectionQuery($media_id)
+    {
+        $collectionInfo = Yii::app()->db->createCommand()
+            ->select('name')
+            ->from('collection c')
+            ->join('collection_to_media c2m', 'c.id=c2m.collection_id')
+            ->where('c2m.media_id=:id', array(':id' => $media_id))
+            ->queryAll();
+        return $collectionInfo;
+    }
+
+    function writeJson2File($model, $baseInfo, $collectionInfo, $file)
+    {
+        // process tags and collections
+        $c = count($baseInfo);
+        $tags = array();
         for ($i = 0; $i < $c; $i++) {
-            if ($info[$i]['w_max'] >= (int)$model->tag_weight_min
-                && $info[$i]['w_sum'] >= (int)$model->tag_weight_sum
+							//
+							// To select tags whose tag weight >= user-defined tag_weight_min,
+							// we need to select the HIGHEST weight for a tag
+							//
+							if ($baseInfo[$i]['w_max'] >= (int)$model->tag_weight_min
+									&& $baseInfo[$i]['w_sum'] >= (int)$model->tag_weight_sum
             ) {
-                $tags[] = $info[$i]['tag'];
+                $tags[] = $baseInfo[$i]['tag'];
             }
         }
-
-        if (!empty($tags)) {
-            file_put_contents($tmp_folder . $model->filename . '_tags.csv',
-                $info[0]['name'] . "\t" . join(", ", $tags) . "\n",
-                FILE_APPEND);
+        $c = count($collectionInfo);
+        $collections = array();
+        for ($i = 0; $i < $c; $i++) {
+            if ($collectionInfo[$i]['name'] != 'All')
+                $collections[] = $collectionInfo[$i]['name'];
         }
 
+        $str_data = file_get_contents($file);
+        $jsonData = json_decode($str_data, true);
+        $jsonData['extension']['media'][$baseInfo[0]['media_name']] = [
+            'institution' => $baseInfo[0]['inst_name'],
+            'collection' => $collections,
+            'tags' => $tags
+        ];
+
+        if (!empty($tags)) {
+            file_put_contents($file, json_encode($jsonData, JSON_PRETTY_PRINT));
+        }
     }
 }
 
