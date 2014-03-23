@@ -70,7 +70,7 @@ class TagsJsonExportPlugin extends MGExportPlugin
     }
 
     /**
-     * Creates the CSV export file in the temporary folder and add the header row
+     * Creates JSON export file in the temporary folder and add the header row
      * and the statistics for each game in the file.
      *
      * @param object $model the ExportForm instance
@@ -86,13 +86,13 @@ class TagsJsonExportPlugin extends MGExportPlugin
         $version = Yii::app()->params['version'];
         $format = Yii::app()->params['tags_csv_format'];
         $date = date("r");
-        $system = "some.university.edu/mg/  (TODO: Source the correct value here)";
-        // to sukie: this is the place to add other MODS elements, currently I only have extension
+        $system = "Metadata Games";
+        // This is the place to add other MODS elements, currently I only have extension
         $jsonData = [
             'extension' => [
                 'comments' => ["This file contains an export of tag data from an installation of ",
                     "Metadata Games, a metadata tagging system from Tiltfactor Laboratory.",
-                    "shortcutFor more information, see http://tiltfactor.org/mg/"],
+                    "shortcutFor more information, see http://metadatagames.org"],
                 'version' => $version,
                 'format' => $format,
                 'data' => $date,
@@ -107,7 +107,7 @@ class TagsJsonExportPlugin extends MGExportPlugin
     }
 
     /**
-     * Retrieves the tags for an image and exports them as a line of the CSV file
+     * Retrieves the tags for an image and exports them as a tags: array in JSON
      *
      * @param object $model the ExportForm instance
      * @param object $command the CDbCommand instance holding all information needed to retrieve the images' data
@@ -165,8 +165,12 @@ class TagsJsonExportPlugin extends MGExportPlugin
         $c = count($baseInfo);
         $tags = array();
         for ($i = 0; $i < $c; $i++) {
-            if ($baseInfo[$i]['w_min'] >= (int)$model->tag_weight_min
-                && $baseInfo[$i]['w_sum'] >= (int)$model->tag_weight_sum
+							//
+							// To select tags whose tag weight >= user-defined tag_weight_min,
+							// we need to select the HIGHEST weight for a tag
+							//
+							if ($baseInfo[$i]['w_max'] >= (int)$model->tag_weight_min
+									&& $baseInfo[$i]['w_sum'] >= (int)$model->tag_weight_sum
             ) {
                 $tags[] = $baseInfo[$i]['tag'];
             }

@@ -86,12 +86,12 @@ class TagsExportPlugin extends MGExportPlugin
         $version = Yii::app()->params['version'];
         $format = Yii::app()->params['tags_csv_format'];
         $date = date("r");
-        $system = "some.university.edu/mg/  (TODO: Source the correct value here)";
+        $system = "Metadata Games";
 
         $header = <<<EOT
 # This file contains an export of tag data from an installation of
 # Metadata Games, a metadata tagging system from Tiltfactor Laboratory.
-# For more information, see http://tiltfactor.org/mg/
+# For more information, see http://metadatagames.org
 #
 # This Export:
 # ------------
@@ -148,7 +148,7 @@ EOT;
         $tags = array();
 
         for ($i = 0; $i < $c; $i++) {
-            if ($info[$i]['w_min'] >= (int)$model->tag_weight_min
+            if ($info[$i]['w_max'] >= (int)$model->tag_weight_min
                 && $info[$i]['w_sum'] >= (int)$model->tag_weight_sum
             ) {
                 $tags[] = $info[$i]['tag'];
