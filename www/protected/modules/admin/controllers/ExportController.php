@@ -143,10 +143,13 @@ class ExportController extends GxController {
                             try {
                                 foreach ($plugins as $plugin) {
                                     if (method_exists($plugin->component, "process")) {
+                                        $command = $this->_createCommand($model);
                                         $plugin->component->process($model, $command, $tmp_folder, (int)$model->active_media);
                                     }
                                 }
-                            } catch (Exception $e) {}
+                            } catch (Exception $e) {
+                                $err_str = "plugin query error";
+                            }
                         }
             
                         $data['status'] = 'retry';

@@ -21,130 +21,149 @@
  * <http://www.gnu.org/licenses/>.
  *
  * @END_LICENSE
- * 
+ *
  */
 
 /**
- * Implentation of the an export plugin. It allows to export the tags, 
+ * Implentation of the an export plugin. It allows to export the tags,
  * tag uses for medias in a CSV file (tab separated)
  */
 Yii::import('ext.CSVExport.CSVExport');
 
-class CSVExportPlugin extends MGExportPlugin {
-  public $enableOnInstall = true;
-     
-  function init() {
-    parent::init();
-  }
-  
-  /**
-   * Adds a checkbox that allows to activate/disactivate the use of the plugin on the 
-   * export form.
-   * 
-   * @param object $form the GxActiveForm rendering the export form
-   * @param object $model the ExportForm instance holding the forms values
-   */
-  function form(&$form, &$model) {
-    $this->activeByDefault = true;
-    $legend = CHtml::tag("legend", array(),
-                         Yii::t('app', 'Plugin: CSV Export'));
-    
-    $value = $this->is_active() ? 1 : 0;
-    $label = CHtml::label(Yii::t('app', 'Active'),
-                          'ExportForm_CSVExportPlugin_active');
-    
-    $buttons= CHtml::radioButtonList( 
-        "ExportForm[CSVExportPlugin][active]", 
-        $value, 
-        MGHelper::itemAlias("yes-no"), 
-        array("template" => '<div class="checkbox">{input} {label}</div>', "separator" => ""));
-    
-    return CHtml::tag("fieldset", array(), $legend . '<div class="row">' . $label . $buttons . '<div class="description">' . Yii::t('app', "Export tag uses, tag weights, tags, (and usernames) as tab separated CSV file") . '</div></div>');
-  }
-  
-  /**
-   * Create the CSV export file in the temporary folder and add the header row in this 
-   * file
-   * 
-   * @param object $model the ExportForm instance
-   * @param object $command the CDbCommand instance holding all information needed to retrieve the medias' data
-   * @param string $tmp_folder the full path to the temporary folder
-   */
-  function preProcess(&$model, &$command, $tmp_folder) {
-    if(!$this->is_active()) {
-      return 0;
+class CSVExportPlugin extends MGExportPlugin
+{
+    public $enableOnInstall = true;
+
+    function init()
+    {
+        parent::init();
     }
 
-    if ($model->option_list_user == 1) {
-      file_put_contents ($tmp_folder . $model->filename . '.csv', "ImageId\tTagUseCnt\tWeightMin\tWeightMax\tWeightAVG\tWeightSum\tTag\tmageName\tUserName\n");
-    } else {
-      file_put_contents ($tmp_folder . $model->filename . '.csv', "ImageId\tTagUseCnt\tWeightMin\tWeightMax\tWeightAVG\tWeightSum\tTag\tImageName\n");
-    }
-  }
-  
-  /**
-   * Retrieves the compound use statistics for a media (according to the settings)
-   * on the export form and adds it to the export file
-   * 
-   * @param object $model the ExportForm instance
-   * @param object $command the CDbCommand instance holding all information needed to retrieve the medias' data
-   * @param string $tmp_folder the full path to the temporary folder
-   * @param int $media_id the id of the media that should be exported
-   */
-  function process(&$model, &$command, $tmp_folder, $media_id) {
-    if(!$this->is_active()) {
-      return 0;
+    /**
+     * Adds a checkbox that allows to activate/disactivate the use of the plugin on the
+     * export form.
+     *
+     * @param object $form the GxActiveForm rendering the export form
+     * @param object $model the ExportForm instance holding the forms values
+     */
+    function form(&$form, &$model)
+    {
+        $this->activeByDefault = true;
+        $legend = CHtml::tag("legend", array(),
+            Yii::t('app', 'Plugin: CSV Export'));
+
+        $value = $this->is_active() ? 1 : 0;
+        $label = CHtml::label(Yii::t('app', 'Active'),
+            'ExportForm_CSVExportPlugin_active');
+
+        $buttons = CHtml::radioButtonList(
+            "ExportForm[CSVExportPlugin][active]",
+            $value,
+            MGHelper::itemAlias("yes-no"),
+            array("template" => '<div class="checkbox">{input} {label}</div>', "separator" => ""));
+
+        return CHtml::tag("fieldset", array(), $legend . '<div class="row">' . $label . $buttons . '<div class="description">' . Yii::t('app', "Export tag uses, tag weights, tags, (and usernames) as tab separated CSV file") . '</div></div>');
     }
 
-    if ($model->option_list_user == 1) {
-      $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,i.mime_type, u.username,inst.url');
-      
-      if (trim($command->group) != "") {
-        $groups = array();
-        foreach (explode(',', $command->group) as $group) {
-          $groups[ str_replace('`', '', $group)] = 1;
+    /**
+     * Create the CSV export file in the temporary folder and add the header row in this
+     * file
+     *
+     * @param object $model the ExportForm instance
+     * @param object $command the CDbCommand instance holding all information needed to retrieve the medias' data
+     * @param string $tmp_folder the full path to the temporary folder
+     */
+    function preProcess(&$model, &$command, $tmp_folder)
+    {
+        if (!$this->is_active()) {
+            return 0;
         }
-        $groups['tu.media_id'] = 1;
-        $groups['tu.tag_id'] = 1;
-        $command->group = implode(',', array_keys($groups));
-      } else {
-        $command->group = 'tu.media_id, tu.tag_id';
-      }
-      
-    } else {
-      $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,i.mime_type,inst.url');
-    }
-    $command->where(array('and', $command->where, 'tu.media_id = :mediaID'), array(":mediaID" => $media_id));
-    $command->order('tu.media_id, t.tag');
-    
-    $info = $command->queryAll();
-    $c = count($info);
-    $rows = "";
-    for($i=0;$i<$c;$i++) {
-      $row = "";
-      $row .= $info[$i]['media_id'] . "\t";
-      $row .= $info[$i]['tu_count'] . "\t";
-      $row .= $info[$i]['w_min'] . "\t";
-      $row .= $info[$i]['w_max'] . "\t";
-      $row .= number_format($info[$i]['w_avg'], 2) . "\t";
-      $row .= $info[$i]['w_sum'] . "\t";
-      $row .= $info[$i]['tag'] . "\t";
-      $row .= $info[$i]['name'] . "\t";
-      if ($model->option_list_user == 1) {
-        if (is_null( $info[$i]['username'] )) {
-          $row .= Yii::t('app', 'Guest(s)') . "\t";
+
+        if ($model->option_list_user == 1) {
+            file_put_contents($tmp_folder . $model->filename . '.csv', "ImageId\tTagUseCnt\tWeightMin\tWeightMax\tWeightAVG\tWeightSum\tTag\tmageName\tUserName\n");
         } else {
-          $row .= $info[$i]['username'] . "\t";
-        } 
-      }
-      $rows .= $row . "\n";
+            file_put_contents($tmp_folder . $model->filename . '.csv', "ImageId\tTagUseCnt\tWeightMin\tWeightMax\tWeightAVG\tWeightSum\tTag\tImageName\n");
+        }
     }
-    
-    if ($rows != "") {
-      file_put_contents ($tmp_folder . $model->filename . '.csv' , $rows, FILE_APPEND ); 
+
+    /**
+     * Retrieves the compound use statistics for a media (according to the settings)
+     * on the export form and adds it to the export file
+     *
+     * @param object $model the ExportForm instance
+     * @param object $command the CDbCommand instance holding all information needed to retrieve the medias' data
+     * @param string $tmp_folder the full path to the temporary folder
+     * @param int $media_id the id of the media that should be exported
+     */
+    function process(&$model, &$command, $tmp_folder, $media_id)
+    {
+        if (!$this->is_active()) {
+            return 0;
+        }
+
+        if ($model->option_list_user == 1) {
+            $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,i.mime_type, u.username,inst.url');
+
+            if (trim($command->group) != "") {
+                $groups = array();
+                foreach (explode(',', $command->group) as $group) {
+                    $groups[str_replace('`', '', $group)] = 1;
+                }
+                $groups['tu.media_id'] = 1;
+                $groups['tu.tag_id'] = 1;
+                $command->group = implode(',', array_keys($groups));
+            } else {
+                $command->group = 'tu.media_id, tu.tag_id';
+            }
+
+        } else {
+            $sql = "tu.media_id,";
+            $sql = $sql . "COUNT(tu.id) tu_count,";
+            $sql = $sql . "MIN(tu.weight) w_min,";
+            $sql = $sql . "MAX(tu.weight) w_max,";
+            $sql = $sql . "AVG(tu.weight) w_avg,";
+            $sql = $sql . "SUM(tu.weight) as w_sum,";
+            $sql = $sql . "t.tag,";
+            $sql = $sql . "i.name,";
+            $sql = $sql . "inst.url,";
+            $sql = $sql . "inst.name";
+            $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,i.mime_type,inst.url');
+//            $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count');
+        }
+        $command->where(array('and', $command->where, 'tu.media_id = :mediaID'), array(":mediaID" => $media_id));
+        $command->order('tu.media_id, t.tag');
+        $command->selectDistinct('tu.media_id, COUNT(tu.id) tu_count, MIN(tu.weight) w_min, MAX(tu.weight) w_max, AVG(tu.weight) w_avg, SUM(tu.weight) as w_sum, t.tag, i.name,i.mime_type,inst.url');
+        $info = $command->queryAll();
+//        $command->selectDistinct($sql);
+//        $info = $command->queryAll();
+
+        $c = count($info);
+        $rows = "";
+        for ($i = 0; $i < $c; $i++) {
+            $row = "";
+            $row .= $info[$i]['media_id'] . "\t";
+            $row .= $info[$i]['tu_count'] . "\t";
+            $row .= $info[$i]['w_min'] . "\t";
+            $row .= $info[$i]['w_max'] . "\t";
+            $row .= number_format($info[$i]['w_avg'], 2) . "\t";
+            $row .= $info[$i]['w_sum'] . "\t";
+            $row .= $info[$i]['tag'] . "\t";
+            $row .= $info[$i]['name'] . "\t";
+            if ($model->option_list_user == 1) {
+                if (is_null($info[$i]['username'])) {
+                    $row .= Yii::t('app', 'Guest(s)') . "\t";
+                } else {
+                    $row .= $info[$i]['username'] . "\t";
+                }
+            }
+            $rows .= $row . "\n";
+        }
+
+        if ($rows != "") {
+            file_put_contents($tmp_folder . $model->filename . '.csv', $rows, FILE_APPEND);
+        }
+
     }
-    
-  }  
 }
 
 ?>
