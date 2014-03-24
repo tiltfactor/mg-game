@@ -1,6 +1,6 @@
 <?php
 
-class BLShipsTagController extends GxController
+class BlBookTagController extends GxController
 {
   
 	public function filters() {
@@ -38,24 +38,24 @@ class BLShipsTagController extends GxController
   public function actionIndex() {
     MGHelper::setFrontendTheme();
     
-    $game = GamesModule::loadGame("BLShipsTag");
+    $game = GamesModule::loadGame("BlBookTag");
     if ($game) {
       $cs = Yii::app()->clientScript;
       $cs->registerCoreScript('jquery');
       $cs->registerCssFile(Yii::app()->baseUrl . '/css/jquery.fancybox-1.3.4.css');
-      $cs->registerCssFile(GamesModule::getAssetsUrl() . '/blshipstag/css/style.css');
+      $cs->registerCssFile(GamesModule::getAssetsUrl() . '/blbooktag/css/style.css');
       $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.fancybox-1.3.4.pack.js', CClientScript::POS_END);
       $cs->registerScriptFile(Yii::app()->baseUrl . '/js/jquery.tmpl.min.js', CClientScript::POS_END);
       $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.api.js', CClientScript::POS_END);
       $cs->registerScriptFile(Yii::app()->baseUrl . '/js/mg.game.api.js', CClientScript::POS_END);
-      $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/blshipstag/js/mg.game.zentag.js', CClientScript::POS_END);
+      $cs->registerScriptFile(GamesModule::getAssetsUrl() . '/blbooktag/js/mg.game.zentag.js', CClientScript::POS_END);
       $throttleInterval = (int)Yii::app()->fbvStorage->get("settings.throttle_interval", 1500);
       $asset_url = Yii::app()->baseUrl;
       $arcade_url = Yii::app()->getRequest()->getHostInfo() . Yii::app()->createUrl('/');
       
       $js = <<<EOD
     MG_GAME_ZENTAG.init({
-        gid : 'BLShipsTag',
+        gid : 'BlBookTag',
         app_id : 'MG_API',
         asset_url : '$asset_url',
         api_url : '{$game->api_base_url}',
@@ -85,7 +85,7 @@ EOD;
    * show the game's settings
    */
   public function actionView() {
-    $model = $this->loadModel(array("unique_id" => "BLShipsTag"), 'BLShipsTag');  
+    $model = $this->loadModel(array("unique_id" => "BlBookTag"), 'BlBookTag');  
     $model->fbvLoad();
     
     $this->render('view', array(
@@ -98,16 +98,16 @@ EOD;
    * edit the game's settings
    */
   public function actionUpdate() {
-    $model = $this->loadModel(array("unique_id" => "BLShipsTag"), 'BLShipsTag');
+    $model = $this->loadModel(array("unique_id" => "BlBookTag"), 'BlBookTag');
     $model->fbvLoad();
 
     $this->performAjaxValidation($model, 'zentag-form');
-    if (isset($_POST['BLShipsTag'])) {
-      $model->setAttributes($_POST['BLShipsTag']);
+    if (isset($_POST['BlBookTag'])) {
+      $model->setAttributes($_POST['BlBookTag']);
       
       $relatedData = array(
-        'collections' => $_POST['BLShipsTag']['collections'] === '' ? null : $_POST['BLShipsTag']['collections'],
-        'plugins' => $_POST['BLShipsTag']['plugins'] === '' ? null : $_POST['BLShipsTag']['plugins'],
+        'collections' => $_POST['BlBookTag']['collections'] === '' ? null : $_POST['BlBookTag']['collections'],
+        'plugins' => $_POST['BlBookTag']['plugins'] === '' ? null : $_POST['BlBookTag']['plugins'],
         );
 
       // save the games data in the database

@@ -2,15 +2,15 @@
 
 /**
  */
-class BLShipsTag extends MGGameModel
+class BlBookTag extends MGGameModel
 {
   public $active = 0; //active will never be saved in the games FBVStorage settings it is just a handler for the Game database entry
-  public $name = "British Library Ships Tag";
-  public $arcade_image = "blshipstag_arcade.png";
+  public $name = "British Library Book Tag";
+  public $arcade_image = "blbooktag_arcade.png";
   public $description = "A zen-like one player tagging activity — be as specific and accurate as you can in order to win high scores. Ohm.";
   public $more_info_url = "";
   public $play_once_and_move_on = 0;
-  public $play_once_and_move_on_url = "http://metadatagames.org/#blshipstag";
+  public $play_once_and_move_on_url = "http://metadatagames.org/#blbooktag";
   public $turns = 4;
   public $image_width = 450;
   public $image_height = 450;

@@ -110,7 +110,7 @@ h4 {
 }
 
 .how-to-play {
-  background: #009AFF;
+  background: #ff8500;
   color: white;
   width: 100px;
   font-size: 16px;
@@ -123,7 +123,7 @@ h4 {
 #holder {
   padding: 17px 0;
   margin: -8px 25px 0;
-  background-color: #012938;
+  background-color: #833e00;
   border-radius: 8px;
 }
 
@@ -184,7 +184,7 @@ h4 {
   float:left;
   width: 100px;
   color: white;
-  background: #009AFF;
+  background: #ff8500;
   font-size: 16px;
   border-radius: 4px;
   padding: 10px;
