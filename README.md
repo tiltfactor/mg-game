@@ -10,7 +10,13 @@ Moved to github to note splitting metadatagames repo into Content and Game build
 developed by [Tiltfactor Laboratory](http://www.tiltfactor.org/) at [Dartmouth College](http://www.dartmouth.edu/),
 with funding from the [National Endowment for the Humanities (NEH)](http://www.neh.gov/) and the [ACLS](http://www.acls.org/).
 
->__If installing the entire Metadata Games gaming platform, install mg-game first, then mg-content.__
+>__If installing the entire Metadata Games gaming platform,__
+>
+>__*install mg-game__
+>
+>__*install and configure mg-content__
+>
+>__*configure mg-game__
 >
 >__Otherwise, go [download and install mg-content](https://www.github.com/tiltfactor/mg-content)__
 

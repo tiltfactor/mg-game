@@ -1,6 +1,7 @@
 # Installation #
 
 - [Requirements](#requirements)
+- [Grab Game Build source code](#grab-game-build-source-code)
 - [Install NodeJS](#install-nodejs) (Skip if not using One Up game)
 - [Install flask and mod_wgsi](#install-flask-and-mod_wgsi) (for NLP framework)
 - [Install Game Build](#install-game-build)
@@ -46,6 +47,10 @@ Before installation, have a system administrator configure your server's php.ini
   * Make sure you also change this in php.ini in /etc/php5/cli/
   * Reload apache
 
+
+## Grab Game Build Source Code ##
+
+[Download the Game Build source code](../README.md#grabbing-the-game-build-code)
 
 ## Install NodeJS ##
 
@@ -103,6 +108,7 @@ Most content installs here:
 
 
 #### Install required packages in package.json ###
+* In mg-game/nodejs/ folder
 * Install packages from nodejs/package.json
 ```
 npm install
@@ -112,7 +118,7 @@ npm install
 
 #### Modify settings.js ####
 * __modify mgapi URL__
-mgapi : 'https://GAME_BUILD_LOCATION/www/index.php/api/
+mgapi : 'http://GAME_BUILD_LOCATION/www/index.php/api/
 
 * Test URL by entering into web browser window.
   * __WORKS__ - you see text that starts with "MG API"
@@ -259,8 +265,6 @@ curl http://localhost:8139/possible_wordcheck?input=cromulent
 
 
 ## Install Game Build ##
-
-[Grab source code](../README.md#grabbing-the-game-build-code)
 
 In www/protected/data folder, copy fbvsettings_default.php and save it as fbvsettings.php.
 
