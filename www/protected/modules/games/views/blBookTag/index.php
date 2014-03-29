@@ -2,6 +2,14 @@
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
   <div id="logo"></div>
+  <div id="wikipedia">
+    <div class="tab-container">
+      <div class="blue-tab">WIKI</div>
+      <div class="search-tab">
+        <form action="#"><textarea name="search" cols="50" id="search"></textarea></form> 
+      </div>
+    </div>
+  </div>
   <div id="stage">
     <div id="zentag"> 
       <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blbooktag/images/book_tag_logo_shadow.png" alt="Book Tag" />

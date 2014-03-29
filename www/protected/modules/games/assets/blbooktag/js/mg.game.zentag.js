@@ -77,6 +77,10 @@ MG_GAME_ZENTAG = function ($) {
             $("img.magnify").on("click", function() {
               $("a[rel='zoom']").click();
             });
+            $("#wikipedia .blue-tab").on("click", function() {
+              console.log("wamp wamp");
+              $(this).closest(".tab-container").toggleClass("open");
+            });
 
             $("#stage, #logo").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
@@ -407,6 +411,10 @@ MG_GAME_ZENTAG = function ($) {
                     });
             }
             return false;
+        },
+
+        searchWikipedia: function() {
+          //http://en.wikipedia.org/w/api.php?action=query&list=search&srwhat=text&format=json&srsearch=rap
         },
 
         /*
