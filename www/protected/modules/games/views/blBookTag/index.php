@@ -4,9 +4,10 @@
   <div id="logo"></div>
   <div id="wikipedia">
     <div class="tab-container">
-      <div class="blue-tab">WIKI</div>
-      <div class="search-tab">
-        <form action="#"><textarea name="search" cols="50" id="search"></textarea></form> 
+      <div class="tab blue-tab"><span>Wikipedia</span></div>
+      <div class="tab search-tab">
+        <textarea name="search" cols="50" id="search" placeholder="Search Wikipedia"></textarea>
+        <div class="blue-button" id="button-search"><a href="#" target="_blank">Search</a></div>
       </div>
     </div>
   </div>
@@ -23,7 +24,7 @@
     </div>
     <!-- user text field -->
     <div id="fieldholder" class="clearfix">   
-      <form action="#"><textarea name="words" cols="50" id="words"></textarea></form> 
+      <form action="#"><textarea name="words" cols="50" id="words" placeholder="type, tags, here"></textarea></form> 
     </div>  
     <div id="box1"> 
       <div class="blue-button" id="button-play"><a href="#">Submit</a></div>

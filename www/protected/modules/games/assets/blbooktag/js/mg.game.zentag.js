@@ -50,6 +50,17 @@ MG_GAME_ZENTAG = function ($) {
                 }
             });
 
+            $("#wikipedia .blue-tab").on("click", function() {
+              $(this).closest(".tab-container").toggleClass("open");
+            });
+            $("#wikipedia .blue-button").on("click", MG_GAME_ZENTAG.searchWikipedia);
+            $("#search").on("keydown", function (event) {
+              if (event.keyCode == 13) {
+                MG_GAME_ZENTAG.searchWikipedia();
+                return false;
+              }
+            });
+
             MG_GAME_ZENTAG.submitButton = $("#button-play").click(MG_GAME_ZENTAG.onsubmit);
             // TRY to get pass button to submit correct value.
             MG_GAME_ZENTAG.passButton = $("#button-pass").click(MG_GAME_ZENTAG.onpass);
@@ -77,11 +88,6 @@ MG_GAME_ZENTAG = function ($) {
             $("img.magnify").on("click", function() {
               $("a[rel='zoom']").click();
             });
-            $("#wikipedia .blue-tab").on("click", function() {
-              console.log("wamp wamp");
-              $(this).closest(".tab-container").toggleClass("open");
-            });
-
             $("#stage, #logo").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
                 MG_GAME_ZENTAG.wordField.focus();
@@ -414,7 +420,9 @@ MG_GAME_ZENTAG = function ($) {
         },
 
         searchWikipedia: function() {
-          //http://en.wikipedia.org/w/api.php?action=query&list=search&srwhat=text&format=json&srsearch=rap
+          //$('#button-search a').attr('href', 'http://en.wikipedia.org/w/index.php?search='+$('textarea#search').val());
+          window.open('http://en.wikipedia.org/w/index.php?search='+$('textarea#search').val(), "_blank")
+          return false;
         },
 
         /*
