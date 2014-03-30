@@ -50,6 +50,18 @@ MG_GAME_ZENTAG = function ($) {
                 }
             });
 
+            // wikipedia tab
+            $("#wikipedia .blue-tab").on("click", function() {
+              $(this).closest(".tab-container").toggleClass("open");
+            });
+            $("#wikipedia .blue-button").on("click", MG_GAME_ZENTAG.searchWikipedia);
+            $("#search").on("keydown", function (event) {
+              if (event.keyCode == 13) {
+                MG_GAME_ZENTAG.searchWikipedia();
+                return false;
+              }
+            });
+
             MG_GAME_ZENTAG.submitButton = $("#button-play").click(MG_GAME_ZENTAG.onsubmit);
             // TRY to get pass button to submit correct value.
             MG_GAME_ZENTAG.passButton = $("#button-pass").click(MG_GAME_ZENTAG.onpass);
@@ -61,7 +73,7 @@ MG_GAME_ZENTAG = function ($) {
          * display games turn
          */
         renderTurn: function (response, score_info, turn_info, licence_info, more_info, words_to_avoid) {
-            $("#stage, #logo").hide();
+            $("#stage, #logo, #wikipedia").hide();
 
             $("#scores").html("");
             $("#template-scores").tmpl(score_info).appendTo($("#scores"));
@@ -78,7 +90,7 @@ MG_GAME_ZENTAG = function ($) {
               $("a[rel='zoom']").click();
             });
 
-            $("#stage, #logo").fadeIn(1000, function () {
+            $("#stage, #logo, #wikipedia").fadeIn(1000, function () {
                 MG_GAME_ZENTAG.busy = false;
                 MG_GAME_ZENTAG.wordField.focus();
             });
@@ -88,7 +100,7 @@ MG_GAME_ZENTAG = function ($) {
          * display the final turn
          */
         renderFinal: function (response, score_info, turn_info, licence_info, more_info) {
-            $("#stage, #logo").hide();
+            $("#stage, #logo, #wikipedia").hide();
 
             $('#game_description').hide();
             $('#passing').hide();
@@ -407,6 +419,11 @@ MG_GAME_ZENTAG = function ($) {
                     });
             }
             return false;
+        },
+
+        searchWikipedia: function() {
+          window.open('http://en.wikipedia.org/w/index.php?search='+$('textarea#search').val(), "_blank")
+          return false;
         },
 
         /*
