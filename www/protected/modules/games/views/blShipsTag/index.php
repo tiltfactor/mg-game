@@ -2,6 +2,15 @@
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
   <div id="logo"></div>
+  <div id="wikipedia">
+    <div class="tab-container">
+      <div class="tab blue-tab"><span>Wikipedia</span></div>
+      <div class="tab search-tab">
+        <textarea name="search" cols="50" id="search" placeholder="Search Wikipedia"></textarea>
+        <div class="blue-button" id="button-search"><a href="#" target="_blank">Search</a></div>
+      </div>
+    </div>
+  </div>
   <div id="stage">
     <div id="zentag"> 
       <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/ships_tag_logo_shadow.png" alt="Ships Tag" />
