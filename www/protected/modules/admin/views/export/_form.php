@@ -14,7 +14,7 @@
   </div>
   <?php endif; ?>
   
-  <div class="row">
+  <div class="row expanded">
     <?php echo $form->label($model, 'filename'); ?>
     <?php echo $form->textField($model, 'filename', array('maxlength' => 128)); ?>
     <?php echo $form->error($model,'filename'); ?>

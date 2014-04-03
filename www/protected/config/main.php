@@ -1,7 +1,7 @@
 <?php
 /*
  * This is the config file that will be configured by the installer (by replacing 
- * tokens such as tiltfactor) and then used to replace main.php 
+ * tokens such as root) and then used to replace main.php 
  */
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
@@ -63,10 +63,10 @@ return array(
     ),
     
     'db'=>array(
-      'connectionString' => 'mysql:host=localhost;dbname=anupmgamenov',
+      'connectionString' => 'mysql:host=localhost;dbname=metadata',
       'emulatePrepare' => true,
-      'username' => 'tiltfactor',
-      'password' => 'anup',
+      'username' => 'root',
+      'password' => 'root',
       'tablePrefix'=>'',
       'charset' => 'utf8',
     ),
@@ -99,7 +99,7 @@ return array(
     
     'image'=>array(
       'class'=>'ext.image.CImageComponent',
-      'driver'=>'ImageMagick',
+      'driver'=>'GD',
     ),
     
     'mail' => array(
@@ -126,4 +126,3 @@ return array(
     'embedded_metadata_format' => "1.0",
   ),
 );
-
