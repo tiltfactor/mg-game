@@ -157,14 +157,79 @@ h4 {
   font-size: 16px;
 }
 
+#fieldholder form {
+  width: 450px;
+  padding-left: 25px;
+}
+
+#wikipedia {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  margin: 300px 0 0 705px;
+}
+
+#wikipedia .tab {
+  height: 125px;
+  box-shadow: inset 10px 0px 10px -10px #000000;
+}
+
+#wikipedia .blue-tab {
+  cursor: pointer;
+  background: #009AFF;
+  color: white;
+  width: 40px;
+}
+
+#wikipedia .blue-tab span {
+  display: block;
+  -webkit-transform: rotate(90deg) translate(39px, 0px);
+  -moz-transform: rotate(90deg) translate(39px, 0px);
+  transform: rotate(90deg) translate(39px, 0px);
+  line-height: 20px;
+  font-size: 16px;
+}
+
+#wikipedia .search-tab {
+  background: white;
+  display: none;
+  width: 240px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#wikipedia .tab-container {
+  width: 280px;
+}
+
+#wikipedia .tab-container.open .blue-tab {
+  float: right;
+  box-shadow: none;
+}
+
+#wikipedia .tab-container.open .search-tab {
+  display: block;
+}
+
+#wikipedia .blue-button {
+  float: none;
+  margin: 0 auto;
+}
+
 /* Style the Text Area inside the fieldholder DIV */
-#fieldholder textarea {
-  width: 428px;
-  height: 25px;
+textarea {
+  font-family: Helvetica, Verdana, Arial, Sans-Serif;
+  width: 100%;
+  height: 35px;
   font-size: 20px;
   background-color: #EEEEEE;
   border: thin solid #000000;
   border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   padding: 5px 10px
 }
 
@@ -189,6 +254,7 @@ h4 {
   border-radius: 4px;
   padding: 10px;
   margin: 0px 30px;
+  text-align: center;
 }
 
 #button-play.again {
