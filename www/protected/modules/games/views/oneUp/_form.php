@@ -29,13 +29,13 @@
         <?php echo $form->error($model, 'description'); ?>
     </div>
 
-    <div class="row">
+    <div class="row expanded">
         <?php echo $form->labelEx($model, 'more_info_url'); ?>
         <?php echo $form->textField($model, 'more_info_url'); ?>
         <?php echo $form->error($model, 'more_info_url'); ?>
     </div>
 
-    <div class="row">
+    <div class="row expanded">
         <?php echo $form->labelEx($model, 'arcade_image'); ?>
         <?php echo $form->textField($model, 'arcade_image'); ?>
         <?php echo $form->error($model, 'arcade_image'); ?>

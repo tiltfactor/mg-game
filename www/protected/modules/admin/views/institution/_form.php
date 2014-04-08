@@ -19,17 +19,17 @@
     <?php echo $form->textField($model, 'name', array('maxlength' => 128)); ?>
     <?php echo $form->error($model,'name'); ?>
     </div><!-- row -->
-    <div class="row">
+    <div class="row expanded">
     <?php echo $form->labelEx($model,'url'); ?>
     <?php echo $form->textField($model, 'url', array('maxlength' => 128)); ?>
     <?php echo $form->error($model,'url'); ?>
     </div><!-- row -->
-    <div class="row">
+    <div class="row expanded">
         <?php echo $form->labelEx($model,'website'); ?>
         <?php echo $form->textField($model, 'website', array('maxlength' => 255)); ?>
         <?php echo $form->error($model,'website'); ?>
     </div><!-- row -->
-    <div class="row">
+    <div class="row expanded">
     <?php echo $form->labelEx($model,'token'); ?>
     <?php echo $form->textField($model, 'token', array('maxlength' => 128)); ?>
     <?php echo $form->error($model,'token'); ?>
