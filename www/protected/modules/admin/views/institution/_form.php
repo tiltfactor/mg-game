@@ -14,7 +14,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-    <div class="row">
+    <div class="row expanded">
     <?php echo $form->labelEx($model,'name'); ?>
     <?php echo $form->textField($model, 'name', array('maxlength' => 128)); ?>
     <?php echo $form->error($model,'name'); ?>
