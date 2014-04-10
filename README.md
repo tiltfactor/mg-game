@@ -37,6 +37,8 @@ git checkout development
 
 ## [Installation](documentation/install_gamebuild.md) ##
 
+## [Installation on OSX] (documentation/install_on_osx.md) ##
+
 ## [Configuration](documentation/configure_gamebuild.md) ##
 
 Rest of the docs can be found in the documentation/ folder.
