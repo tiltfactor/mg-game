@@ -48,16 +48,16 @@ Before installation, have a system administrator configure your server's php.ini
   * Reload apache
 
 
-## Grab Game app Source Code ##
+## Grab Game App Source Code ##
 
-[Download the Game app source code](../README.md#grabbing-the-game-app-code)
+[Download the Game App source code](../README.md#grabbing-the-game-app-code)
 
 ## Install NodeJS ##
 
 We use NodeJS for push notifications in One Up game.
 Safest way to install is to app from source.
 
-### App From Source ###
+### Build From Source ###
 We are currently using v0.10.22
 
 Become root and make a software directory
@@ -88,7 +88,7 @@ We'll need gcc installed first. On Ubuntu, this is easy:
 apt-get install app-essential
 ```
 
-Then app and install:
+Then build and install:
 
 ```
 ./configure
@@ -301,7 +301,7 @@ protected/config/main.php
 protected/data/fbvsettings.php
 ```
 
-Go to web browser and open URL that you have pointed towards your game app.
+Go to web browser and open URL that you have pointed towards your Game App.
 ```
 http://GAME_App_LOCATION/www/
 ```
