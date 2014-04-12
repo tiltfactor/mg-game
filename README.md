@@ -35,7 +35,7 @@ git checkout development
 * download
 (latest updates) https://github.com/tiltfactor/mg-game/zipball/development
 
-## [Installation](documentation/install_gamebuild.md) ##
+## [Installation](documentation/install_gameapp.md) ##
 
 ## [Installation on OSX] (documentation/install_on_osx.md) ##
 
