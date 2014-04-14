@@ -39,4 +39,7 @@ git checkout development
 
 ## [Configuration](documentation/configure_gameapp.md) ##
 
+## [Installation on OSX] (documentation/install_on_osx.md) ##
+* Instructions for developing on your OS X system.
+
 Rest of the docs can be found in the documentation/ folder.
