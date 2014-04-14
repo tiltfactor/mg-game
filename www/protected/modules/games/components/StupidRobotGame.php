@@ -39,7 +39,7 @@ class StupidRobotGame extends NexTagGame
                 $currentTag = $tag;
 
                 // 20141025 - SP
-                // Use for testing on local build, otherwise will prevent
+                // Use for testing on local app, otherwise will prevent
                 // entering tags because server does not have permissions
                 // to open stream.
                 //
