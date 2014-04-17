@@ -459,7 +459,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             }
             $("#inputArea").animate({width: 6.7 + "em"}); // 14 * 0.67
             $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
-            $("#gameMessage").html("WHAT'S IN THE IMAGE?");
+            $("#gameMessage").html("WHAT DOES THIS IMAGE DEPICT?");
 
             if (MG_GAME_STUPIDROBOT.inputlength - 1 >= 0)
                 $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
@@ -482,7 +482,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
 //            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
 //            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
-            //$("#gameMessage").html("WHAT'S IN THE IMAGE?");
+            //$("#gameMessage").html("WHAT DOES THIS IMAGE DEPICT?");
             $("#inputFields span").removeClass("hilight");
             $("#inputFields span").removeClass("blockHilight");
             highlightIndex = MG_GAME_STUPIDROBOT.inputlength - 1;
