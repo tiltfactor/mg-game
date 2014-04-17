@@ -59,9 +59,9 @@ MG_GAME_STUPIDROBOT = function ($) {
         idx_introText: ["Meet Stupid Robot.",
             "Stupid Robot looks at everything but understands nothing.",
             "Can you help?",
-            "Tell Stupid Robot what is in the image.",
-            "Stupid Robot has enough memory for 1 word of each different length.",
-            "Can you teach Stupid Robot 10 words about the image?",
+            "Tell Stupid Robot what is in the image with words of at least 4 letters.",
+            "Each word should be a different length from past words.",
+            "Once you've taught him a word of one length, try a longer or shorter word.",
             "Sometimes Stupid Robot doesn't understand a word at all.",
             "When this happens, Stupid Robot learns that word for next time.",
             "Try a different word of that length until Stupid Robot understands.",
@@ -459,7 +459,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             }
             $("#inputArea").animate({width: 6.7 + "em"}); // 14 * 0.67
             $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
-            $("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
+            $("#gameMessage").html("HUMAN: WHAT IS IN THIS IMAGE?");
 
             if (MG_GAME_STUPIDROBOT.inputlength - 1 >= 0)
                 $("#inputFields span").eq(MG_GAME_STUPIDROBOT.inputlength - 1).addClass("hilight");
@@ -482,7 +482,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.level = MG_GAME_STUPIDROBOT.inputlength;
 //            $("#inputArea").animate({width: MG_GAME_STUPIDROBOT.level * 0.67 + "em"}, 50);
 //            $("#inputArea").attr("maxlength", MG_GAME_STUPIDROBOT.maxLevel);
-            //$("#gameMessage").html("PLEASE INPUT WORD, HUMAN");
+            //$("#gameMessage").html("HUMAN: WHAT IS IN THIS IMAGE?");
             $("#inputFields span").removeClass("hilight");
             $("#inputFields span").removeClass("blockHilight");
             highlightIndex = MG_GAME_STUPIDROBOT.inputlength - 1;
@@ -937,7 +937,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     messageString = "I FEEL AN ITTY BITTY BIT SMARTER.";
             }
 
-            message.innerHTML = "YOU TAUGHT ME " + MG_GAME_STUPIDROBOT.scorelevel + " WORDS!<br>" + messageString;
+            message.innerHTML = "I NOW COMPREHEND " + MG_GAME_STUPIDROBOT.scorelevel + " MORE WORDS!<br>" + messageString;
 
             var canvas = document.getElementById("canvas");
             var exportRoot = new lib.animation_score(MG_GAME_STUPIDROBOT.scorelevel);
