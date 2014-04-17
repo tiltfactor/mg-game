@@ -35,7 +35,7 @@ class GamesModule extends CWebModule
         return self::$_assetsUrl;
     }
 
-    public static function listactive_games()
+    public static function listActiveGames()
     {
         $criteria = new CDbCriteria;
         $criteria->select = 'id, unique_id'; // only select the 'title' column
