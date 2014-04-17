@@ -901,7 +901,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     messageString = "I NEED MORE HELP. TRY AGAIN?";
                     break;
                 case 1:
-                    messageString = "I FEEL AN ITTY BITTY BIT SMARTER?";
+                    messageString = "I FEEL AN ITTY BITTY BIT SMARTER!";
                     MG_GAME_STUPIDROBOT.playSound('score_1');
                     break;
                 case 2:
