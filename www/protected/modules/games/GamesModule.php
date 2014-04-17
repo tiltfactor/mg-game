@@ -35,7 +35,7 @@ class GamesModule extends CWebModule
         return self::$_assetsUrl;
     }
 
-    public static function listActiveGames()
+    public static function listactive_games()
     {
         $criteria = new CDbCriteria;
         $criteria->select = 'id, unique_id'; // only select the 'title' column
@@ -264,6 +264,92 @@ class GamesModule extends CWebModule
         }
     }
 
+    public static function getActiveGames($return_as_object = true)
+    {
+        static $players;
+        if ($players || $players == -1) {
+            return ($players == -1) ? null : $players;
+        } else {
+            $active_games=Yii::app()->db->createCommand()
+                ->select('g.id, g.unique_id')
+                ->from('{{game}} g')
+                ->where('g.active=1')
+                ->order('g.id DESC')
+                ->queryAll();
+            if ($active_games) {
+                //remap results to objects
+                foreach ($active_games as $key => $row) {
+                    $active_games[$key] = (object)$row;
+                }
+                return $active_games;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Returns the highest scoring user on the platform
+     *
+     * @param int $limit The number of players to return in the list
+     * @param boolean $return_as_object If true all rows will be converted to objects
+     * @return mixed Null if no player found or array of arrays or objects
+     */
+    public static function getRecentTopPlayers($limit = 5, $return_as_object = true)
+    {
+        static $players;
+        $games_top_score = array();
+        if ($players || $players == -1) {
+            return ($players == -1) ? null : $players;
+        } else {
+            $active_games=Yii::app()->db->createCommand()
+                ->select('g.id, g.unique_id')
+                ->from('{{game}} g')
+                ->where('g.active=1')
+                ->order('g.id DESC')
+                ->queryAll();
+            if ($active_games) {
+                //remap results to objects
+                foreach ($active_games as $key => $row) {
+                    $active_games[$key] = (object)$row;
+                }
+            } else {
+                return null;
+            }
+            $x=1;
+            foreach($active_games as $game){
+                $players = Yii::app()->db->createCommand()
+                    ->select('u.id, u.username, ug.score, ug.number_played')
+//                ->select('u.id, u.username, SUM(ug.score) as score, SUM(ug.number_played) as number_played')
+                    ->from('{{user_to_game}} ug')
+                    ->join('{{user}} u', 'u.id=ug.user_id')
+                    ->join('{{game}} g', 'g.id=ug.game_id')
+                    ->where('g.id=:gameID AND u.status=1',array(':gameID' => $game->id) )
+                    ->group('username')
+                    ->order('score DESC, number_played DESC')
+                    ->limit((int)$limit)
+                    ->queryAll();
+
+                if ($players) {
+                    if ($return_as_object) {
+                        //remap results to objects
+                        foreach ($players as $key => $row) {
+                            $players[$key] = (object)$row;
+//                            $players[$key]->name = $game->unique_id;
+                        }
+                        $games_top_score[$x] = $players;
+                    }
+
+                } else {
+                    $games_top_score[$x]=0;
+
+                }
+                $x++;
+            }
+            return $games_top_score;
+
+        }
+    }
     /**
      * Returns the scores for all games for a particular player
      *
@@ -287,7 +373,7 @@ class GamesModule extends CWebModule
                 ->from('{{game}} g')
                 ->leftJoin('{{user_to_game}} ug', 'ug.game_id=g.id AND ug.user_id=:userID', array(':userID' => $user_id))
                 ->where(($active) ? 'g.active=1' : null)
-                ->order('score DESC, number_played DESC')
+                ->order('g.id DESC, score DESC, number_played DESC')
                 ->queryAll();
 
             if ($games) {
