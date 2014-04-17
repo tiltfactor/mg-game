@@ -901,7 +901,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     messageString = "I NEED MORE HELP. TRY AGAIN?";
                     break;
                 case 1:
-                    messageString = "I FEEL AN ITTY BITTY BIT SMARTER!";
+                    messageString = "I FEEL AN ITTY BITTY BIT SMARTER?";
                     MG_GAME_STUPIDROBOT.playSound('score_1');
                     break;
                 case 2:
@@ -937,7 +937,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     messageString = "I FEEL AN ITTY BITTY BIT SMARTER.";
             }
 
-            message.innerHTML = "YOU TAUGHT ME " + MG_GAME_STUPIDROBOT.scorelevel + " WORDS!<br>" + messageString;
+            message.innerHTML = "I NOW COMPREHEND " + MG_GAME_STUPIDROBOT.scorelevel + " MORE WORDS!<br>" + messageString;
 
             var canvas = document.getElementById("canvas");
             var exportRoot = new lib.animation_score(MG_GAME_STUPIDROBOT.scorelevel);
