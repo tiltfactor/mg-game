@@ -109,7 +109,7 @@
             </div>
             <a class="button" id="pass">pass</a>
             <canvas class="clearfix" id="canvas" width="342" height="212"></canvas>
-            <a class="button" id="gamedone" type="button" value="1">done</a>
+            <a class="button" id="gamedone" type="button" value="1">QUIT</a>
         </div>
         <div class="rightBox" id="imageContainer">
             <a class="gameImageLink" href="" rel="zoom" title=""><img id="gameImage" src="" alt="game image"/></a>
@@ -123,7 +123,7 @@
 
     <div id="container">
         <div class="leftBox clearfix">
-            <span id="gameMessage">YOU TAUGHT STUPID ROBOT 6 WORDS<br>STUPID ROBOT IS SOMEWHAT SMARTER!</span>
+            <span id="gameMessage">I NOW COMPREHEND 6 NEW WORDS<br>I AM SOMEWHAT SMARTER!</span>
             <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
