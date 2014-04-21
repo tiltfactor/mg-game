@@ -24,7 +24,7 @@
     </div>
     <!-- user text field -->
     <div id="fieldholder" class="clearfix">   
-      <form action="#"><textarea name="words" cols="50" id="words"></textarea></form> 
+      <form action="#"><textarea name="words" cols="50" id="words" placeholder="type, tags, here"></textarea></form> 
     </div>  
     <div id="box1"> 
       <div class="blue-button" id="button-play"><a href="#">Submit</a></div>
