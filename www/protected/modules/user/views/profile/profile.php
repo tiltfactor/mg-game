@@ -43,3 +43,13 @@ $this->menu = array(
 
 <h2>Interests</h2>
 <?php $this->widget('PlayerSubjectMatter', array('user_id' => $model->id)); ?>
+
+<h2>Games Info</h2>
+<?php $this->widget('TopScoresWeek'); ?>
+<?php if (Yii::app()->user->isGuest) :?>
+    <?php $this->widget('AwardedBadges'); ?>
+<?php else : ?>
+    <?php $this->widget('PlayerStatus'); ?>
+    <?php $this->widget('PlayerBadges'); ?>
+<?php endif;?>
+

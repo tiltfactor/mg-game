@@ -1,20 +1,21 @@
-# Installation #
+# Installation on OSX #
 
 - [Requirements](#requirements)
+- [Grab Game App source code](#grab-game-app-source-code)
 - [Install NodeJS](#install-nodejs) (Skip if not using One Up game)
 - [Install flask and mod_wgsi](#install-flask-and-mod_wgsi) (for NLP framework)
-- [Install Game Build](#install-game-build)
-- [Running Game Build over https](#running-game-build-over-https)
+- [Install Game App](#install-game-app)
+- [Running Game App over https](#running-game-app-over-https)
 
 
 ## Requirements ##
 
-###LAMP Stack (linux, apache, mysql, php) ###
+###MAMP Stack (mac, apache, mysql, php) ###
 
 We are currently using the following:
-* Ubuntu 13.10
+* OSX 10.9.2
 * Apache 2.4.6
-* PHP 5.5.3
+* PHP 5.5.10
 * MySQL 5.5.34
 
 
@@ -30,22 +31,25 @@ We are currently using the following:
 * SSL cert (if you decide to use https://)
 
 * Make sure that sendmail is on; this is used for sending registration activation emails to players.
-
-
+  
 ### Check PHP Memory Limit ###
 Before installation, have a system administrator configure your server's php.ini file to make sure its PHP memory limit is at least 128 MB. We currently recommend 300 MB or more if you are looking to import and use more than 10,000 images or are importing audio and/or video media.
 
 * Modify php.ini file
-  * On Ubuntu, you can find this in /etc/php5/apache2/
+  * On OSX, you can find this in /private/etc/php.ini.default
   * memory_limit - change from 128M to 300M or higher to large image sets, and audio/video media
   * post_max_size - change from 8M to 220M to accommodate larger media
   * upload_max_filesize - change from 2M to 256M to handle audio and video file uploads
 
 * If running PHP 5.5+
+  * Open /Applications/MAMP/conf/php5.5.10/php.ini (or whichever php5 version you are running)
   * Must define date.timezone (e.g., date.timezone # "America/New_York")
-  * Make sure you also change this in php.ini in /etc/php5/cli/
   * Reload apache
 
+
+## Grab Game App Source Code ##
+
+[Download the Game App source code](../README.md#grabbing-the-game-app-code)
 
 ## Install NodeJS ##
 
@@ -65,22 +69,27 @@ cd into that directory.
 cd ~/software/nodejs
 ```
 
-Grabbing tarball
-```
-wget http://nodejs.org/dist/v0.10.22/node-v0.10.22.tar.gz
-```
+Grabbing tarball:
 
-Unpack it:
-```
-tar -zxvf XXXXX.tar.gz
-```
+Go to http://nodejs.org/dist/v0.10.22/node-v0.10.22.tar.gz in your web browser 
+
+
+Unzip it with Archive Utility.
 
 cd into the directory, and read the README.md. That file indicates a
 standard config/make/make install process.
 
-We'll need gcc installed first. On Ubuntu, this is easy:
+We'll need gcc installed first. 
 ```
-apt-get install build-essential
+  Run gcc -v in your command line.
+  
+  Your should receive this message if it is already installed:
+  	"Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/usr/include/c++/4.2.1
+	Apple LLVM version 5.1 (clang-503.0.38) (based on LLVM 3.4svn)
+	Target: x86_64-apple-darwin13.1.0
+	Thread model: posix"
+	
+  If not installed, download XCode Apple Developers Command Line Tools.
 ```
 
 Then build and install:
@@ -88,7 +97,7 @@ Then build and install:
 ```
 ./configure
 make
-make install
+sudo make install
 ```
 
 Most content installs here:
@@ -103,6 +112,7 @@ Most content installs here:
 
 
 #### Install required packages in package.json ###
+* In mg-game/nodejs/ folder
 * Install packages from nodejs/package.json
 ```
 npm install
@@ -110,13 +120,13 @@ npm install
 * You should now see the folder node_modules/ in nodejs/ folder
 
 
-#### Modify settings.js ####
+#### Modify mg-game/node-js/settings.js ####
 * __modify mgapi URL__
-mgapi : 'https://GAME_BUILD_LOCATION/www/index.php/api/
+mgapi : 'http://GAME_APP_LOCATION/www/index.php/api/
 
 * Test URL by entering into web browser window.
   * __WORKS__ - you see text that starts with "MG API"
-[ Link to image metadatagames_gameBuild_mg-api_correct.png ]
+[ Link to image metadatagames_gameApp_mg-api_correct.png ]
 
 
 ### start nodejs ###
@@ -135,11 +145,11 @@ nohup node server.js > nodejs_output.log &
 * Flask and mod_wgsi are used to set up NLP prototype framework
 * See README in nlp/ folder for more info
 * Make sure port 8139 is open (or whatever port you use for flask)
-* Below is a step-by-step way to install on Ubuntu server
+* Below is a step-by-step way to install on Osx server
 
 __Install pip__
 ```
-sudo apt-get install python-pip
+sudo python get-pip.py
 ```
 
 
@@ -147,7 +157,7 @@ __Install virtualenv__
 This is used to create virtual python environments
 to handle possible dependencies conflicts in the future
 ```
-sudo apt-get install python-virtualenv
+sudo pip install virtualvenv
 ```
 
 Create virtual python environment
@@ -162,7 +172,7 @@ virtualenv venv
 
 * Now activate python virtual environment
 ```
-. venv/bin/activate
+source venv/bin/activate
 ```
 
 
@@ -174,7 +184,11 @@ pip install flask
 
 You'll need pyenchant for parts of the NLP programs to work
 ```
-pip install pyenchant
+brew install enchant
+```
+Then
+```
+sudo pip install pyenchant
 ```
 
 Start flask server
@@ -202,65 +216,12 @@ cromulent could be a word.
 127.0.0.1 - - [24/Dec/2013 13:56:35] "GET /possible_wordcheck?input#cromulent HTTP/1.1" 200 -
 ```
 
-### If using flask with mod_wsgi ###
-
-Stop flask server
-```
-ps ux
-kill -9 PID_NUMBER
-```
-
-Deactivate flask if going to install with mod_wsgi
-```
-deactivate
-```
-(deactivates venv)
-
-#### Install mod_wsgi ####
-When using mod_wsgi with flask, it is not necessary to start a flask server.
-```
-sudo apt-get install libapache2-mod-wsgi
-```
-
-Copy nlpserver file in nlp/examples/ to /etc/apache2/sites-available folder.
-* If on Ubuntu 13.10 which runs Apache 2.4.6+, add .conf extension to filename.
-
-
 Also make sure apache is listening to port 8139 and that it is open in firewall.
 
 Modify nlpserver file to reflect current settings (user, location of files).
 
-Also modify apache2.conf to include path to python virtual environment.
-For example,
-```
-WSGIPythonHome GAME_BUILD_LOCATION/nlp/venv
-```
 
-Enable nlpserver.conf and restart apache.
-```
-a2ensite nlpserver.conf
-service apache2 reload
-```
-
-TEST: go to http://GAME_BUILD_URL:8139
-* you should see the text, "NLP API: Swagatam"
-
-TEST2: from commandline, test nlp is working.
-```
-curl http://localhost:8139/possible_wordcheck?input=cromulent
-```
-
-* If working, you should see something like the following output:
-```
-{
-  "response": true
-}
-```
-
-
-## Install Game Build ##
-
-[Grab source code](../README.md#grabbing-the-game-build-code)
+## Install Game App ##
 
 In www/protected/data folder, copy fbvsettings_default.php and save it as fbvsettings.php.
 
@@ -299,7 +260,7 @@ protected/data/fbvsettings.php
 
 Go to web browser and open URL that you have pointed towards your game build.
 ```
-http://GAME_BUILD_LOCATION/www/
+http://GAME_APP_LOCATION/www/
 ```
 
 Click "Proceed with system requirement test" to run a test of server capabilities. This will ensure that your server can support the required Yii framework.
@@ -338,12 +299,12 @@ At the "Admin Account Setup" page, fill out the following fields:
 
 <img src ="images/mg-game_adminAcct.png" title="Metadata Games - Admin Account Setup" width=615 style="border: 1px solid #000;" />
 
-Then click "Save". Congratulations! You have successfully installed the Game Build for Metadata Games! Now to __[install the Content Build](https://github.com/tiltfactor/mg-content/tree/development/documentation/install_contentbuild.md)__ and then __[configure the games](configure_gamebuild.md)!__
+Then click "Save". Congratulations! You have successfully installed the Game App for Metadata Games! Now to __[install the Content Build](https://github.com/tiltfactor/mg-content/tree/development/documentation/install_contentbuild.md)__ and then __[configure the games](configure_gamebuild.md)!__
 
 <img src ="images/mg-game_install_furtherSteps.png" title="Metadata Games - Installation Complete! Now to Configuration..." width=615 style="border: 1px solid #000;" />
 
 
-## Running Game Build over https ##
+## Running Game App over https ##
 If running over https, the following files need to be modified
 * nodejs/server.js
 * nodejs/settings.js

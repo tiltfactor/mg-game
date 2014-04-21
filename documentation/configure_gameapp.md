@@ -1,31 +1,31 @@
-# Game Build Configuration #
+# Game App Configuration #
 
-Once the MG Game Build and a Content Build are installed, it's time to configure your system:
+Once the MG Game App and a Content App are installed, it's time to configure your system:
 
 1. Login to gain access to the admin tool.
 2. Visit the plugin tool.
 3. Visit the games tool and activate the ones you want to use.
-4. Activate Institutions' Content Builds
+4. Activate Institutions' Content Apps
 5. Go to the Arcade and play!
 
 <img src ="images/mg-game_install_furtherSteps.png" title="Metadata Games - Installation Complete! Now to Configuration..." width=615 style="border: 1px solid #000;" />
 
 ## 1. Login ##
 
-Gain access to the Game Build by signing in with your newly-created account at the login screen.
+Gain access to the Game App by signing in with your newly-created account at the login screen.
 
 ```
-http://GAME_BUILD_URL/www/index.php/user/login
+http://GAME_APP_URL/www/index.php/user/login
 ```
 
-<img src ="images/mg_login.png" title="Metadata Games Game Build - Login Screen" style="border: 1px solid #000;" />
+<img src ="images/mg_login.png" title="Metadata Games Game App - Login Screen" style="border: 1px solid #000;" />
 
 
 You can access the "Admin Overview" page by clicking on "Admin" in the Metadata Games navigation bar at the top of the page. This page contains links to all of the available tools. These links also appear in the Admin navigation bar, underneath the Metadata Games navigation bar.
 
 <img src ="images/mg-game_admin_overview.png" title="Metadata Games - Admin Overview" style="border: 1px solid #000;" width=615 />
 
-> __NOTE:__ For detailed information about all admin tools, see the [Site Administration](adminGuide_gamebuild.md) guide in the Metadata Games documentation/ folder.
+> __NOTE:__ For detailed information about all admin tools, see the [Site Administration](adminGuide_gameapp.md) guide in the Metadata Games documentation/ folder.
 
 
 ## 2. Visit the Plugin Tool ##
@@ -60,7 +60,7 @@ Use the "Games" tool to activate and customize the games you want to use.
 For information about specific games and settings, view the [Game Default Settings](mg_guide_gamedefaultsettings.html "Game Default Settings") help guide in the Metadata Games docuementation/ folder.
 
 
-## 4. Activate Institutions' Content Builds ##
+## 4. Activate Institutions' Content Apps ##
 
 From the Admin Overview, click __Institutions__, click the Update icon for an institution, change the status to __Active__ and save; Institutional media is now available to use in the games.
 
