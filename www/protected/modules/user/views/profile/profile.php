@@ -45,7 +45,37 @@ $this->menu = array(
 <?php $this->widget('PlayerSubjectMatter', array('user_id' => $model->id)); ?>
 
 <h2>Games Info</h2>
-<?php $this->widget('TopScoresWeek'); ?>
+<h3>Top Scores Since Sunday</h3>
+<?php
+    $topscore = GamesModule::getRecentTopPlayers();
+    $games = GamesModule::getActiveGames();
+?>
+<?php if ($games) : ?>
+<!--good example of the dynamic tab: http://www.yiiframework.com/wiki/393/cjuitabs-content/-->
+    <?php
+    $x=1;
+    foreach($games as $game){
+        $tabarray["<span id='tab-$game->id' style='$css'>$game->unique_id</span>"]=array('id'=>$game->id,'content'=>$this->renderPartial(
+                'topscore',
+                array('game'=>$game,'scores'=>$topscore[$x]),TRUE
+            ));
+        $x++;
+    }
+    ?>
+    <?php
+    $this->widget('zii.widgets.jui.CJuiTabs',array(
+        'tabs'=>$tabarray,
+        // additional javascript options for the accordion plugin
+        'options' => array(
+            'collapsible' => true,
+            'show'  => true,
+        ),
+        'id'=>'topscores-tab'
+    ));
+    ?>
+    <?php else : ?>
+    <p>No high scores available</p>
+<?php endif; ?>
 <?php if (Yii::app()->user->isGuest) :?>
     <?php $this->widget('AwardedBadges'); ?>
 <?php else : ?>

@@ -1,14 +1,14 @@
 <?php
 /*
  * This is the config file that will be configured by the installer (by replacing 
- * tokens such as tiltfactor) and then used to replace main.php 
+ * tokens such as root) and then used to replace main.php 
  */
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-return array(
+return [
   'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
   'name'=>'Metadata Games', // no need to change as this is just the default the app is using a value retrieved from fbvStorage
 
@@ -63,10 +63,10 @@ return array(
     ),
     
     'db'=>array(
-      'connectionString' => 'mysql:host=localhost;dbname=anupmgamenov',
+      'connectionString' => 'mysql:host=localhost;dbname=game_db',
       'emulatePrepare' => true,
-      'username' => 'tiltfactor',
-      'password' => 'anup',
+      'username' => 'root',
+      'password' => '1990',
       'tablePrefix'=>'',
       'charset' => 'utf8',
     ),
@@ -82,6 +82,9 @@ return array(
           'class'=>'CFileLogRoute',
           'levels'=>'error',
         ),
+        /*array (
+          'class' => 'CWebLogRoute'
+        )*/
       ),
     ),
     
@@ -99,7 +102,7 @@ return array(
     
     'image'=>array(
       'class'=>'ext.image.CImageComponent',
-      'driver'=>'ImageMagick',
+      'driver'=>'GD',
     ),
     
     'mail' => array(
@@ -125,5 +128,4 @@ return array(
     'tags_by_game_csv_format' => "1.0",
     'embedded_metadata_format' => "1.0",
   ),
-);
-
+];
