@@ -16,15 +16,15 @@
  * @since 1.0
  */
 Yii::import('zii.widgets.CPortlet');
- 
+
 class TopScoresWeek extends CPortlet
 {
   public function init() {
-      $this->title=Yii::t('app', "Top Scores Since Sunday");
+      $this->title=Yii::t('app', "Top Scores");
 
       parent::init();  // it is important to call this method after you've assigned any new values
   }
- 
+
   protected function renderContent() {
     $topscore = GamesModule::getRecentTopPlayers();
     $games = GamesModule::getActiveGames();

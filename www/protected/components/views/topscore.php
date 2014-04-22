@@ -12,7 +12,7 @@
     <thead>
     <tr>
         <th>   </th>
-        <th>Scrore</th>
+        <th>Score</th>
         <th>Player</th>
     </tr>
     </thead>
