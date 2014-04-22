@@ -34,10 +34,10 @@
   </div> 
 </div>
 <div id="dark-footer">
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_tiltfactor.png" alt="Tiltfactor" />
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_dartmouth.png" alt="Dartmouth" />
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_acls.png" alt="ACLS" />
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blshipstag/images/logo_neh.png" alt="National Endowment for the Humanities" />
+  <a href="http://www.tiltfactor.org" title="visit tiltfactor.org"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_tiltfactor.png" alt="Tiltfactor" />
+  <a href="http://www.Dartmouth.edu" title="visit Dartmouth.edu"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_dartmouth.png" alt="Dartmouth" />
+  <a href="http://www.acls.org" title="visit acls.org"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_acls.png" alt="ACLS" />
+  <a href="http://www.neh.gov/" title="visit neh.gov"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_neh.png" alt="National Endowment for the Humanities" />
 </div>
 <script id="template-scores" type="text/x-jquery-tmpl">
   <div class="total_turns">Turn: <span>${current_turn}</span>/<span>${turns}</span></div>
