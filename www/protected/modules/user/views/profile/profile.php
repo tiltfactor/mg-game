@@ -51,7 +51,7 @@ $this->menu = array(
     $games = GamesModule::getActiveGames();
 ?>
 <?php if ($games) : ?>
-<!--good example of the dynamic tab: http://www.yiiframework.com/wiki/393/cjuitabs-content/-->
+<!-- good example of the dynamic tab: http://www.yiiframework.com/wiki/393/cjuitabs-content/-->
     <?php
     $x=1;
     foreach($games as $game){
