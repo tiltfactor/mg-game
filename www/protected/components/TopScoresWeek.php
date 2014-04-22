@@ -29,6 +29,9 @@ class TopScoresWeek extends CPortlet
     $topscore = GamesModule::getRecentTopPlayers();
     $games = GamesModule::getActiveGames();
 
+//      $this->render('_renderpage', array(
+//          'topscore' => $topscore,'games'=>$games
+//      ));
 
       $this->render('topscoresweek', array(
         'topscore' => $topscore,'games'=>$games

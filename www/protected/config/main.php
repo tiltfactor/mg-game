@@ -1,7 +1,7 @@
 <?php
 /*
  * This is the config file that will be configured by the installer (by replacing 
- * tokens such as tiltfactor) and then used to replace main.php 
+ * tokens such as tiltfactor) and then used to replace main.php
  */
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
@@ -61,7 +61,7 @@ return array(
         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
       ),
     ),
-    
+
     'db'=>array(
       'connectionString' => 'mysql:host=localhost;dbname=anupmgamenov',
       'emulatePrepare' => true,
@@ -70,11 +70,11 @@ return array(
       'tablePrefix'=>'',
       'charset' => 'utf8',
     ),
-    
+
     'errorHandler'=>array(
       'errorAction'=>'site/error',
     ),
-    
+
     'log'=>array(
       'class'=>'CLogRouter',
       'routes'=>array(
@@ -84,24 +84,24 @@ return array(
         ),
       ),
     ),
-    
+
     'fbvStorage'=>array(
       'class'=>'application.components.FBVStorage'
     ),
-    
+
     'xUploadWidget' => array(
       'class' => 'ext.xupload.XUploadWidget',
     ),
-    
+
     'clientScript' => array(
       'class' => 'ext.components.NLSClientScript',
     ),
-    
+
     'image'=>array(
       'class'=>'ext.image.CImageComponent',
       'driver'=>'ImageMagick',
     ),
-    
+
     'mail' => array(
       'class' => 'ext.yii-mail.YiiMail',
       'transportType' => 'php',
@@ -110,13 +110,13 @@ return array(
       'dryRun' => false
     ),
     'zip'=>array(
-      'class'=>'application.extensions.zip.EZip', 
+      'class'=>'application.extensions.zip.EZip',
     ),
     'counter' => array(
       'class' => 'ext.usercounter.UserCounter',
     ),
   ),
-  
+
   // application-level parameters that can be accessed
   // using Yii::app()->params['paramName']
   'params'=>array(

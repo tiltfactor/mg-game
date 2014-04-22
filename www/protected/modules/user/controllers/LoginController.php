@@ -35,7 +35,7 @@ class LoginController extends Controller
 				$model->attributes=$_POST['UserLogin'];
 				// validate user input and redirect to previous page if valid
 				if($model->validate()) {
-                    $model->setLastVisit();
+//                    $model->setLastVisit();
                     //find the url that have /games in it, only return if come from a game page
 					if (strpos(Yii::app()->user->returnUrl,'/index.php/games')!==false)
 						$this->redirect(Yii::app()->user->returnUrl);
