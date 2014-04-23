@@ -99,10 +99,21 @@ h4 {
 }
 
 #logo {
+  display:block;
   background: url(../images/bl_logo.png);
   width: 82px;
   height: 150px;
   margin-left: 130px;
+  overflow:hidden;
+  text-indent:100%;
+  white-space:nowrap;
+}
+
+#britLibLink{
+  width: 82px;
+  height: 150px;
+  margin-left: 130px;
+  visibility: hidden;
 }
 
 .top-interface {
