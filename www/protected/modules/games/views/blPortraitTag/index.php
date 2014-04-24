@@ -1,7 +1,8 @@
+<!-- portraitTag -->
 <div id="gamearea">
   <div id="no_js">Unfortunately we can't show the game as it relies on JavaScript which appears to be disabled on your browser.</div>
   <!-- Images from the database appear here --> 
-  <div id="logo"></div>
+  <a href="http://www.bl.uk/" title="visit British Library site" target="_blank" id="logo">British Library</a>
   <div id="wikipedia">
     <div class="tab-container">
       <div class="tab blue-tab"><span>Wikipedia</span></div>
@@ -24,7 +25,7 @@
     </div>
     <!-- user text field -->
     <div id="fieldholder" class="clearfix">   
-      <form action="#"><textarea name="words" cols="50" id="words"></textarea></form> 
+      <form action="#"><textarea name="words" cols="50" id="words" placeholder="type, tags, here"></textarea></form> 
     </div>  
     <div id="box1"> 
       <div class="blue-button" id="button-play"><a href="#">Submit</a></div>
@@ -34,10 +35,10 @@
   </div> 
 </div>
 <div id="dark-footer">
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_tiltfactor.png" alt="Tiltfactor" />
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_dartmouth.png" alt="Dartmouth" />
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_acls.png" alt="ACLS" />
-  <img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_neh.png" alt="National Endowment for the Humanities" />
+  <a href="http://www.tiltfactor.org" title="visit tiltfactor.org" target="_blank"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_tiltfactor.png" alt="Tiltfactor" />
+  <a href="http://www.Dartmouth.edu" title="visit Dartmouth.edu" target="_blank"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_dartmouth.png" alt="Dartmouth" />
+  <a href="http://www.acls.org" title="visit acls.org" target="_blank"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_acls.png" alt="ACLS" />
+  <a href="http://www.neh.gov/" title="visit neh.gov" target="_blank"</a><img src="<?php echo GamesModule::getAssetsUrl(); ?>/blportraittag/images/logo_neh.png" alt="National Endowment for the Humanities" />
 </div>
 <script id="template-scores" type="text/x-jquery-tmpl">
   <div class="total_turns">Turn: <span>${current_turn}</span>/<span>${turns}</span></div>
