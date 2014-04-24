@@ -15,10 +15,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
-/* 
+/*
  * 2010-09-29 - ZARA's css styles
  * Modified by sukie
  * Modified by Vincent Van Uffelen
@@ -107,13 +107,6 @@ h4 {
   overflow:hidden;
   text-indent:100%;
   white-space:nowrap;
-}
-
-#britLibLink{
-  width: 82px;
-  height: 150px;
-  margin-left: 130px;
-  visibility: hidden;
 }
 
 .top-interface {
