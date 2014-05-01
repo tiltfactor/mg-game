@@ -1,19 +1,17 @@
 <?php
 /**
- * Top10Players class file
+ * TopScoresWeek class file
  *
- * @author Vincent Van Uffelen <novazembla@gmail.com>
- * @link http://www.metadatagames.com/
+ * @author Xinqi Li
  * @copyright Copyright &copy; 2008-2012 Tiltfactor
  * @license http://www.metadatagames.com/license/
  * @package MG
  */
 
 /**
- * Top10Players provides a small widget that lists the top 10 players in the system
+ * TopScoresWeek provides a small widget that lists the top 5 players for each game in the system
  *
- * @author Vincent Van Uffelen <novazembla@gmail.com>
- * @since 1.0
+ * @author Xinqi
  */
 Yii::import('zii.widgets.CPortlet');
 
@@ -28,11 +26,6 @@ class TopScoresWeek extends CPortlet
   protected function renderContent() {
     $topscore = GamesModule::getRecentTopPlayers();
     $games = GamesModule::getActiveGames();
-
-//      $this->render('_renderpage', array(
-//          'topscore' => $topscore,'games'=>$games
-//      ));
-
       $this->render('topscoresweek', array(
         'topscore' => $topscore,'games'=>$games
       ));

@@ -133,6 +133,7 @@ class StupidRobotGame extends NexTagGame
                     $rand = mt_rand() / mt_getrandmax();
                     if ($rand < $chance) {
                         $level->isAccepted = true;
+                        $level->wordlength = strlen($currentTag);
                     }
                 }
             }
