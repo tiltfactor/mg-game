@@ -62,6 +62,7 @@ $this->menu = array(
         $x++;
     }
     ?>
+<!--    tab widgets showing top 5 scores for each game in each tab-->
     <?php
     $this->widget('zii.widgets.jui.CJuiTabs',array(
         'tabs'=>$tabarray,
