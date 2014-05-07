@@ -59,6 +59,7 @@ class StupidRobotGame extends NexTagGame
         //counting the levelturn for each level seperately
         $level_count = $this->getLevels();
         $level = $this->getLevel();
+
         if (is_null($level)) {
             $level = new StupidRobotDTO();
 //            $level->level = 1;
@@ -68,22 +69,25 @@ class StupidRobotGame extends NexTagGame
             } else {
                 $level->isAccepted = false;
             }
-        } else if ($level->isAccepted) {
-            //Move to next level
-//            $level->level++;
-            $level->levelTurn = 0;
-            $level_count[$level->level]=0;
-            $level->isAccepted = false;
-            $level->countTags = 0;
-            $level->tag = "";
-        } else if ($pass) {
-            //Move to next level
-//            $level->level++;
-            $level->levelTurn = 0;
-            $level_count[$level->level]=0;
-            $level->isAccepted = false;
-            $level->countTags = 0;
-            $level->tag = "";
+        } else{
+            $level->level=strlen($currentTag)-StupidRobotGame::$LETTERS_STEP;
+            if ($level->isAccepted) {
+                //Move to next level
+    //            $level->level++;
+                $level->levelTurn = 0;
+                $level_count[$level->level]=0;
+                $level->isAccepted = false;
+                $level->countTags = 0;
+                $level->tag = "";
+            } else if ($pass) {
+                //Move to next level
+    //            $level->level++;
+                $level->levelTurn = 0;
+                $level_count[$level->level]=0;
+                $level->isAccepted = false;
+                $level->countTags = 0;
+                $level->tag = "";
+            }
         }
         if ($mediaId > 0) {
             $level->nlpTest = $this->isValidWord($currentTag);
