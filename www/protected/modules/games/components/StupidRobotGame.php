@@ -57,8 +57,9 @@ class StupidRobotGame extends NexTagGame
         }
         //editing by Xinqi 05/04/14
         //counting the levelturn for each level seperately
-        $level_count = $this->getLevel();
-        if ($currentTag!="") {
+        $level_count = $this->getLevels();
+        $level = $this->getLevel();
+        if (is_null($level)) {
             $level = new StupidRobotDTO();
 //            $level->level = 1;
             $level->level=strlen($currentTag)-StupidRobotGame::$LETTERS_STEP;
@@ -67,11 +68,10 @@ class StupidRobotGame extends NexTagGame
             } else {
                 $level->isAccepted = false;
             }
-//        } else
-        if ($level->isAccepted) {
+        } else if ($level->isAccepted) {
             //Move to next level
 //            $level->level++;
-//            $level->levelTurn = 0;
+            $level->levelTurn = 0;
             $level_count[$level->level]=0;
             $level->isAccepted = false;
             $level->countTags = 0;
@@ -79,13 +79,12 @@ class StupidRobotGame extends NexTagGame
         } else if ($pass) {
             //Move to next level
 //            $level->level++;
-//            $level->levelTurn = 0;
+            $level->levelTurn = 0;
             $level_count[$level->level]=0;
             $level->isAccepted = false;
             $level->countTags = 0;
             $level->tag = "";
         }
-
         if ($mediaId > 0) {
             $level->nlpTest = $this->isValidWord($currentTag);
             if ($level->nlpTest != 0) {
@@ -117,7 +116,7 @@ class StupidRobotGame extends NexTagGame
                 }
 
                 //the answer is incorrect. Player can submit another word
-//                $level->levelTurn++;
+                $level->levelTurn++;
                 $level_count[$level->level]++;
                 $level->isAccepted = false;
                 $level->tag = $currentTag;
@@ -132,10 +131,9 @@ class StupidRobotGame extends NexTagGame
                     //the answer is marked as correct and the player moves on to the next length tag
                     $level->isAccepted = true;
                     $level->wordlength = strlen($currentTag);
-                } else {
-//                    if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
+                } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
                     //run the “freebie” algorithm to determine whether or not we lie to the players
-                    $chance = pow( $level_count[$level->level], 2) / (10 * ($level->countTags + 1));
+                    $chance = pow($level_count[$level->level], 2) / (10 * ($level->countTags + 1));
                     if ($chance > 0.5) $chance = 0.5;
                     $rand = mt_rand() / mt_getrandmax();
                     if ($rand < $chance) {
@@ -147,7 +145,7 @@ class StupidRobotGame extends NexTagGame
             }
             $this->saveLevel($level);
         }
-        }
+
         return $data;
     }
 
@@ -354,13 +352,12 @@ class StupidRobotGame extends NexTagGame
         unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_START_TIME']);
         unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE_TAGS']);
     }
-
     /**
      * Get last played level of stupidRobot game
      *
      * @return StupidRobotDTO|null
      */
-    private function getLevel()
+    private function getLevels()
     {
         $level = null;
         $levels_count= array(0,0,0,0,0,0,0);
@@ -375,6 +372,21 @@ class StupidRobotGame extends NexTagGame
             }
         }
         return $levels_count;
+    }
+    /**
+     * Get last played level of stupidRobot game
+     *
+     * @return StupidRobotDTO|null
+     */
+    private function getLevel()
+    {
+        $level = null;
+        $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
+        if (isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'])) {
+            $levels = Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'];
+            $level = unserialize(end($levels));
+        }
+        return $level;
     }
 
     /**
