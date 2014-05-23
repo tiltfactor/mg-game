@@ -17,18 +17,19 @@ class StupidRobotGame extends NexTagGame
         $currentTag = "";
         $pass = false;
         // loop through all submissions for this turn and set ONLY THE FIRST TAG
+        //I am not sure whether there will be more than on submission
         foreach ($game->request->submissions as $submission) {
             $pass_value = $submission["pass"];
-            $reboot_value = $submission["reboot"];
+            $reboot_value = $submission["reboot"];///click the reboot button to start
             if ($pass_value == "true" || $reboot_value) {
                 $mediaId = $submission["media_id"];
-                $pass = true;
+                $pass =true;
                 break;
             }
 
             $mediaId = $submission["media_id"];
             $mediaTags = array();
-// Attempt to extract these
+            // Attempt to extract these
             foreach (MGTags::parseTags($submission["tags"]) as $tag) {
                 $mediaTags[strtolower($tag)] = array(
                     'tag' => $tag,
@@ -51,35 +52,47 @@ class StupidRobotGame extends NexTagGame
                                 } */
                 // break;
             }
-// add the extracted tags to the media info
+            // add the extracted tags to the media info
             $data[$mediaId] = $mediaTags;
             break;
         }
+        //editing by Xinqi 05/21/14
+        //fix the bug of not showing picture after reboot
+        //if start the game from reboot, $pass set true,return directly and load again.
+        if($pass) return $data;
+        //editing by Xinqi 05/04/14
+        //counting the levelturn for each level seperately,count from the level info saved by saveLevel()
+        $level_count = $this->getLevels();
+        $level = $this->getLevel();//is the level always null??
 
-
-        $level = $this->getLevel();
         if (is_null($level)) {
             $level = new StupidRobotDTO();
-            $level->level = 1;
-            if ($pass) {
-                $level->isAccepted = true;
-            } else {
+//            $level->level = 1;
+            $level->level=strlen($currentTag)-StupidRobotGame::$LETTERS_STEP;
+//            if ($pass) {
+//                $level->isAccepted = true;//isAccepted is no use in this game
+//            } else {
+//                $level->isAccepted = false;
+//            }
+        } else{
+            $level->level=strlen($currentTag)-StupidRobotGame::$LETTERS_STEP;
+            if ($level->isAccepted) {
+                //Move to next level
+    //            $level->level++;
+                $level->levelTurn = 0;
+                $level_count[$level->level]=0;
                 $level->isAccepted = false;
+                $level->countTags = 1;//default set to 1 since it will be use in freebie
+                $level->tag = "";
+            } else if ($pass) {
+                //Move to next level
+    //            $level->level++;
+                $level->levelTurn = 0;
+                $level_count[$level->level]=0;
+                $level->isAccepted = false;
+                $level->countTags = 1;
+                $level->tag = "";
             }
-        } else if ($level->isAccepted) {
-            //Move to next level
-            $level->level++;
-            $level->levelTurn = 0;
-            $level->isAccepted = false;
-            $level->countTags = 0;
-            $level->tag = "";
-        } else if ($pass) {
-            //Move to next level
-            $level->level++;
-            $level->levelTurn = 0;
-            $level->isAccepted = false;
-            $level->countTags = 0;
-            $level->tag = "";
         }
         if ($mediaId > 0) {
             $level->nlpTest = $this->isValidWord($currentTag);
@@ -94,25 +107,30 @@ class StupidRobotGame extends NexTagGame
                             fwrite($file, $mediaId."\n");
                             fclose($file); */
                 $mediaTags = $this->getMediaTags($level, $mediaId, $reboot_value);
-
-                foreach ($mediaTags as $val) {
-                    /*             	$file = fopen("media_id.txt","a");
-                                    fwrite($file, $currentTag ." vs(".$mediaId.") ". strtolower($val['tag']."\n"));
-                                    fclose($file); */
-                    if ($currentTag == strtolower($val['tag'])) {
-                        $data[$mediaId][$currentTag]['type'] = 'match';
-                        $data[$mediaId][$currentTag]['tag_id'] = $val['tag_id'];
-                        $found = true;
-                        break;
-                    }
+                //to check for match,mediaTag stores separately according to its length
+                foreach ($mediaTags as $len) {
+                    if($found) break;
+                    if(strlen($currentTag)==strlen($len[0]['tag']))
+                        foreach($len as $val){
+                        /*             	$file = fopen("media_id.txt","a");
+                                        fwrite($file, $currentTag ." vs(".$mediaId.") ". strtolower($val['tag']."\n"));
+                                        fclose($file); */
+                            if ($currentTag == strtolower($val['tag'])) {
+                                $data[$mediaId][$currentTag]['type'] = 'match';
+                                $data[$mediaId][$currentTag]['tag_id'] = $val['tag_id'];
+                                $found = true;
+                                break;
+                            }
+                        }
                 }
 
                 if ($level->countTags == 0) {
-                    $level->countTags = count($mediaTags);
+                    $level->countTags = count($mediaTags[$level->level+StupidRobotGame::$LETTERS_STEP]);
                 }
 
                 //the answer is incorrect. Player can submit another word
                 $level->levelTurn++;
+                $level_count[$level->level]++;
                 $level->isAccepted = false;
                 $level->tag = $currentTag;
 
@@ -128,12 +146,13 @@ class StupidRobotGame extends NexTagGame
                     $level->wordlength = strlen($currentTag);
                 } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
                     //run the “freebie” algorithm to determine whether or not we lie to the players
-                    $chance = pow($level->levelTurn, 2) / (10 * ($level->countTags + 1));
-                    if ($chance > 0.5) $chance = 0.5;
+                    $chance = pow($level_count[$level->level]+1, 2) / (10 * ($level->countTags));
+                    if ($chance > 0.8) $chance = 0.8;
                     $rand = mt_rand() / mt_getrandmax();
                     if ($rand < $chance) {
                         $level->isAccepted = true;
                         $level->wordlength = strlen($currentTag);
+                        $level_count[$level->level]=0;
                     }
                 }
             }
@@ -346,7 +365,27 @@ class StupidRobotGame extends NexTagGame
         unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_START_TIME']);
         unset(Yii::app()->session[$api_id . '_STUPIDRORBOT_IMAGE_TAGS']);
     }
+    /**
+     * Get last played level of stupidRobot game
+     *
+     * @return StupidRobotDTO|null
+     */
+    private function getLevels()
+    {
+        $level = null;
+        $levels_count= array(0,0,0,0,0,0,0);
+        $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
+        if (isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'])) {
+            $levels = Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'];
 
+//            $level = unserialize(end($levels));
+            for($i=0; $i<count($levels);$i++){
+                $tag=unserialize($levels[$i]);
+                $levels_count[$tag->level]++;
+            }
+        }
+        return $levels_count;
+    }
     /**
      * Get last played level of stupidRobot game
      *
@@ -394,7 +433,7 @@ class StupidRobotGame extends NexTagGame
             return $mediaTags;
         } else {
 
-            $mediaTags = MGTags::getTagsMediaId($mediaId);
+            $mediaTags = MGTags::getTagsMediaId($mediaId);//query for database
             if (empty($mediaTags)) {
                 $tag = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $level->level + StupidRobotGame::$LETTERS_STEP);
                 $mediaTags[0]["tag"] = $tag;
@@ -408,6 +447,14 @@ class StupidRobotGame extends NexTagGame
                         $file = fopen("getMediaTags.txt","a");
                         fwrite($file, "\n");
                         fclose($file); */
+            //edit by xinqi 05/21/14
+            //reorganize the mediaTags, store it separately according to levels
+            $countTags = array();
+            foreach ($mediaTags as $mtag){
+                $idx=count($countTags[strlen($mtag["tag"])]);//how many tags are already in this level
+                $countTags[strlen($mtag["tag"])][$idx]=$mtag;
+            }
+            $mediaTags=$countTags;
             Yii::app()->session[$api_id . '_STUPIDROBOT_IMAGE_TAGS'] = $mediaTags;
             Yii::app()->session[$api_id . '_STUPIDROBOT_MEDIAID'] = $mediaId;
             return $mediaTags;
