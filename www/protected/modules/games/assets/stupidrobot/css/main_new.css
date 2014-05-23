@@ -194,7 +194,7 @@ textarea {
 
 /* for hiding the last 3 unused score boxes */
 .hideBox {
-	background-color: #fff !important; 
+	background-color: #fff !important;
 }
 
 /*Intro */
@@ -241,7 +241,6 @@ textarea {
 
 .gameContent{
 	background-image:url('../images/background.gif');
-	white-space:nowrap;
 	font-family:"telegrama-raw";
 	font-size:1.2em;
 }
@@ -259,7 +258,8 @@ textarea {
 }
 
 #gameMessage {
-	font-size: 90%;
+	font-size: 84%;
+	padding-bottom: 6px;
 }
 
 #imageContainer{

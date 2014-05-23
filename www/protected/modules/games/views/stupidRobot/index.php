@@ -101,12 +101,13 @@
     <div id="container">
         <div class="leftBox clearfix2">
             <span id="timer"></span>
-            <span id="gameMessage">STAND BY</span>
+
             <input type=text id="inputArea" class="underlinedText clearfix2">
             <!-- span id = "underline">jack</span-->
-            <div id="inputFields" class="clearfix2">
-                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+            <div id="inputFields" class="clearfix2">                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
             </div>
+            <span id="gameMessage">STAND BY</span>
+            <span>\&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <a class="button" id="pass">pass</a>
             <canvas class="clearfix" id="canvas" width="342" height="212"></canvas>
             <a class="button" id="gamedone" type="button" value="1">QUIT</a>
