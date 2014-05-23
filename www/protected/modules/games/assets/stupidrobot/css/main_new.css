@@ -192,6 +192,11 @@ textarea {
 	padding-left:2px;
 }
 
+/* for hiding the last 3 unused score boxes */
+.hideBox {
+	background-color: #fff !important; 
+}
+
 /*Intro */
 
 .splashContent{
