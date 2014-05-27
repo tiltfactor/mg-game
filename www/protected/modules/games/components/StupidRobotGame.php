@@ -373,7 +373,7 @@ class StupidRobotGame extends NexTagGame
     private function getLevels()
     {
         $level = null;
-        $levels_count= array(0,0,0,0,0,0,0);
+        $levels_count= array(0,0,0,0,0,0,0,0);
         $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
         if (isset(Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'])) {
             $levels = Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'];
