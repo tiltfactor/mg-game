@@ -55,12 +55,6 @@
     <br>
 
     <p class="scrollText">&nbsp;</p>
-    <br>
-
-    <p class="scrollText">&nbsp;</p>
-
-    <p class="scrollText">&nbsp;</p>
-    <br>
 
     <p class="scrollText">&nbsp;</p>
 
@@ -70,7 +64,17 @@
     <br>
 
     <p class="scrollText">&nbsp;</p>
+
+    <p class="scrollText">&nbsp;</p>
+
+    <p class="scrollText">&nbsp;</p>
     <br>
+
+    <p class="scrollText">&nbsp;</p>
+    <br>
+
+
+
     <span id='idx_skipanimate'>skip animation >></span>
     <div>
     <button id="bootButton" class="clearfix button">PLAY</button>
