@@ -564,6 +564,15 @@ MG_GAME_STUPIDROBOT = function ($) {
 
                 MG_GAME_STUPIDROBOT.flashMessage("Too short!", "red");
             }
+            else if (tags.length > 10) {
+                console.log("too long");
+                // ANIMATION ADDITION ~ play "confused" animation for passing
+                animation.robot.gotoAndPlay("error");
+
+                MG_GAME_STUPIDROBOT.playSound('fail_sound');
+
+                MG_GAME_STUPIDROBOT.flashMessage("Too long!", "red");
+            }
             else if (/[`~!@#$%^&*()_=+{}|<>./?;:\[\]\\",']/g.test(tags)) {
                 MG_GAME_STUPIDROBOT.flashMessage("Symbols not allowed!", "red");
                 animation.robot.gotoAndPlay("error");
