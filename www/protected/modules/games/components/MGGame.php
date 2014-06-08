@@ -194,7 +194,9 @@ class MGGame extends CComponent
             return $this->getMedias($collections, $game, $game_model, $num_medias, true, $accept_types);
         }
     }
-    /*Set threshold to query media for StupidRobot, and in the future for PyramidTags*/
+    /* June 8
+     * by Xinqi Li
+     * Set threshold to query media for StupidRobot, and in the future for PyramidTags*/
     protected function getMediasWithThreshold($threshold, $collections, $game, &$game_model, $num_medias = 1, $second_attempt = false, $accept_types = array("image"))
     {
 
@@ -202,8 +204,7 @@ class MGGame extends CComponent
 
         $limit = $num_medias * 5;
         $limit = ($limit < 50) ? 50 : $limit;
-
-
+        //get media that have more tags than threshold from all active collection
         $selectedmedias = Yii::app()->db->createCommand()
             ->select('tu.media_id')
             ->from('{{tag_use}} tu')
@@ -212,9 +213,9 @@ class MGGame extends CComponent
             ->having('count(distinct tu.tag_id)>:threshold', array(':threshold'=>$threshold))
             ->group('tu.media_id')
             ->order('tu.media_id ASC')
+            //return as an array
             ->queryColumn();
-
-
+        //same as the original getmedia() except adding constrain in $where
         if (Yii::app()->user->isGuest) {
             $where = array('and', 'i.locked=1','(inst.status=1 or i.institution_id is null)', array('in', 'i.id', $selectedmedias),array('in', 'is2i.collection_id', $collections), array('not in', 'i.id', $used_medias));
             if (is_array($accept_types) && count($accept_types) > 0) {
