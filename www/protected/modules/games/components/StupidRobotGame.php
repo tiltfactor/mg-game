@@ -225,12 +225,12 @@ class StupidRobotGame extends NexTagGame
                         fwrite($file, "< StupidRobotGame::\$TIME_TO_PLAY\n");
                         fclose($file); */
 
-            $media = $this->getMedia();
+//            $media = $this->getMedia();
 
             if (empty($media) || $reboot_value) {
                 $collections = $this->getCollections($game, $game_model);
                 $data["medias"] = array();
-                $medias = $this->getMedias($collections, $game, $game_model);
+                $medias = $this->getMediasWithThreshold(5,$collections, $game, $game_model);
                 if ($medias && count($medias) > 0) {
                     $i = array_rand($medias, 1); // select one random item out of the medias
                     $media = $medias[$i];
