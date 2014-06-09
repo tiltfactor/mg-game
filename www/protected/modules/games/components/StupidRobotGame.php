@@ -29,7 +29,7 @@ class StupidRobotGame extends NexTagGame
 
             $mediaId = $submission["media_id"];
             $mediaTags = array();
-            //I am not sure whether there are more than on e submission in this game, I just keep the for loop, it just extract the first submission
+            //I am not sure whether there are more than on e submission in this game, I just keep the for loops, it just extract the first submission tag
             foreach (MGTags::parseTags($submission["tags"]) as $tag) {
                 $mediaTags[strtolower($tag)] = array(
                     'tag' => $tag,
