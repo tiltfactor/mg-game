@@ -201,7 +201,7 @@ class MGGame extends CComponent
     {
 
         $used_medias = $this->getUsedMedias($game, $game_model);
-
+        $num_media_threshold = 300;
         $limit = $num_medias * 5;
         $limit = ($limit < 50) ? 50 : $limit;
         //get media that have more tags than threshold from all active collection
@@ -278,7 +278,7 @@ class MGGame extends CComponent
                 ->queryAll();
         }
 
-        if ($medias && count($medias) >= $num_medias) {
+        if ($medias && count($medias) >= $num_media_threshold) {
             $arr_media = array();
             $blocked_by_last_access = array();
 
@@ -307,7 +307,7 @@ class MGGame extends CComponent
                 }
             }
 
-            if (count($arr_media) >= $num_medias) {
+            if (count($arr_media) >= $num_media_threshold) {
                 foreach ($arr_media as $key => $media) { // we want to hide the default licence if the media has got another licence
                     if (count($arr_media[$key]["licences"]) > 1) {
                         $arr_media[$key]["licences"] = array_diff($arr_media[$key]["licences"], array(1));
