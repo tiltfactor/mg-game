@@ -121,7 +121,8 @@ class PyramidGame extends NexTagGame
             if (empty($media)) {
                 $collections = $this->getCollections($game, $game_model);
                 $data["medias"] = array();
-                $medias = $this->getMedias($collections, $game, $game_model);
+//                $medias = $this->getMedias($collections, $game, $game_model);
+                $medias = $this->getMediasWithThreshold(5,$collections, $game, $game_model);
                 if ($medias && count($medias) > 0) {
                     $i = array_rand($medias, 1); // select one random item out of the medias
                     $media = $medias[$i];
