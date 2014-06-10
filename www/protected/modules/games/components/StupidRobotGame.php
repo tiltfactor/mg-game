@@ -29,7 +29,7 @@ class StupidRobotGame extends NexTagGame
 
             $mediaId = $submission["media_id"];
             $mediaTags = array();
-            // Attempt to extract these
+            //I am not sure whether there are more than on e submission in this game, I just keep the for loops, it just extract the first submission tag
             foreach (MGTags::parseTags($submission["tags"]) as $tag) {
                 $mediaTags[strtolower($tag)] = array(
                     'tag' => $tag,
@@ -63,12 +63,13 @@ class StupidRobotGame extends NexTagGame
         //editing by Xinqi 05/04/14
         //counting the levelturn for each level seperately,count from the level info saved by saveLevel()
         $level_count = $this->getLevels();
-        $level = $this->getLevel();//is the level always null??
+        $level = $this->getLevel();//is the level always null?? since the session is not set when we first load the game and we only load picture once for each play
 
         if (is_null($level)) {
             $level = new StupidRobotDTO();
 //            $level->level = 1;
             $level->level=strlen($currentTag)-StupidRobotGame::$LETTERS_STEP;
+
 //            if ($pass) {
 //                $level->isAccepted = true;//isAccepted is no use in this game
 //            } else {
@@ -146,6 +147,8 @@ class StupidRobotGame extends NexTagGame
                     $level->wordlength = strlen($currentTag);
                 } else if (($level->level + StupidRobotGame::$LETTERS_STEP) == strlen($currentTag)) {
                     //run the “freebie” algorithm to determine whether or not we lie to the players
+                    if($level->countTags==0)
+                        $level->countTags=1;
                     $chance = pow($level_count[$level->level]+1, 2) / (10 * ($level->countTags));
                     if ($chance > 0.8) $chance = 0.8;
                     $rand = mt_rand() / mt_getrandmax();
@@ -225,12 +228,12 @@ class StupidRobotGame extends NexTagGame
                         fwrite($file, "< StupidRobotGame::\$TIME_TO_PLAY\n");
                         fclose($file); */
 
-            $media = $this->getMedia();
+//            $media = $this->getMedia();
 
             if (empty($media) || $reboot_value) {
                 $collections = $this->getCollections($game, $game_model);
                 $data["medias"] = array();
-                $medias = $this->getMedias($collections, $game, $game_model);
+                $medias = $this->getMediasWithThreshold(5,$collections, $game, $game_model);
                 if ($medias && count($medias) > 0) {
                     $i = array_rand($medias, 1); // select one random item out of the medias
                     $media = $medias[$i];
