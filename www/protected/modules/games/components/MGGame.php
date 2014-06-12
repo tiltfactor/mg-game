@@ -194,6 +194,141 @@ class MGGame extends CComponent
             return $this->getMedias($collections, $game, $game_model, $num_medias, true, $accept_types);
         }
     }
+    /* June 10
+     * by Xinqi Li
+     * Set threshold to query media for Zentag*/
+    protected function getMediasforZentag($collections, $game, &$game_model, $num_medias = 1, $second_attempt = false, $accept_types = array("image"))
+    {
+
+        $used_medias = $this->getUsedMedias($game, $game_model);
+        $num_media_threshold = 300;
+        //get media that have more tags than threshold from all active collection
+        $selectedmedias = Yii::app()->db->createCommand()
+//            ->select('i.id,count(case when tu.tag_id is not null then 1 end) as counted')
+            ->select('i.id')
+            ->from('{{media}} i')
+            ->leftJoin('{{tag_use}} tu', 'i.id=tu.media_id')
+            ->group('i.id')
+            ->order('count(case when tu.tag_id is not null then 1 end) ASC')
+            ->limit($num_media_threshold)
+            //return as an array
+            ->queryColumn();
+        //same as the original getmedia() except adding constrain in $where
+        //then choose the least recent one from the $num_media_threshold of media
+        if (Yii::app()->user->isGuest) {
+
+            $where = array('and', 'i.locked=1','(inst.status=1 or i.institution_id is null)', array('in', 'i.id', $selectedmedias),array('in', 'is2i.collection_id', $collections), array('not in', 'i.id', $used_medias));
+            if (is_array($accept_types) && count($accept_types) > 0) {
+                $where_add = '(';
+                $num_types = count($accept_types);
+                $i = 0;
+                foreach ($accept_types as $mime_type) {
+                    if ($i < $num_types && $i > 0) {
+                        $where_add .= " or ";
+                    }
+                    $where_add .= "LEFT( i.mime_type, 5) = '$mime_type'";
+                    $i++;
+                }
+                $where_add .= ')';
+                $where[] = $where_add;
+            }
+            $medias = Yii::app()->db->createCommand()
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
+                ->from('{{collection_to_media}} is2i')
+                ->join('{{media}} i', 'i.id=is2i.media_id')
+                ->join('{{institution}} inst', 'i.institution_id=inst.id')
+                ->join('{{collection}} is', 'is.id=is2i.collection_id')
+                ->where($where)
+                ->order('i.last_access ASC')
+                ->limit(1)
+                ->queryAll();
+        } else {
+            // if a player is logged in the medias should be weight by interest
+            $where = array('and', '(usm.user_id IS NULL OR usm.user_id=:userID)', 'i.locked=1','(inst.status=1 or i.institution_id is null)', array('in', 'i.id', $selectedmedias), array('in', 'is2i.collection_id', $collections), array('not in', 'i.id', $used_medias));
+
+            if (is_array($accept_types) && count($accept_types) > 0) {
+                $where_add = '(';
+                $num_types = count($accept_types);
+                $i = 0;
+                foreach ($accept_types as $mime_type) {
+                    if ($i < $num_types && $i > 0) {
+                        $where_add .= " or ";
+                    }
+                    $where_add .= "LEFT( i.mime_type, 5) = '$mime_type'";
+                    $i++;
+                }
+                $where_add .= ')';
+                $where[] = $where_add;
+            }
+
+
+            $medias = Yii::app()->db->createCommand()
+                ->selectDistinct('i.id, i.name, i.mime_type, is.licence_id, MAX(usm.interest) as max_interest, (i.last_access IS NULL OR i.last_access <= now()-is.last_access_interval) as last_access_ok,inst.url,inst.token')
+                ->from('{{collection_to_media}} is2i')
+                ->join('{{media}} i', 'i.id=is2i.media_id')
+                ->join('{{institution}} inst', 'i.institution_id=inst.id')
+                ->join('{{collection}} is', 'is.id=is2i.collection_id')
+                ->leftJoin('{{collection_to_subject_matter}} is2sm', 'is2sm.collection_id=is2i.collection_id')
+                ->leftJoin('{{user_to_subject_matter}} usm', 'usm.subject_matter_id=is2sm.subject_matter_id')
+                ->where($where, array(':userID' => Yii::app()->user->id))
+//                ->having('i.id in :sms', array(':sms'=>$selectedmedias))
+                ->group('i.id, i.name, is.licence_id')
+                ->order('max_interest DESC, i.last_access ASC')
+                ->limit(1)
+                ->queryAll();
+        }
+
+        if ($medias && count($medias) >= $num_medias) {
+            $arr_media = array();
+            $blocked_by_last_access = array();
+
+            foreach ($medias as $media) {
+                if (!array_key_exists($media["id"], $blocked_by_last_access)) {
+                    if (!array_key_exists($media["id"], $arr_media)) {
+                        $arr_media[$media["id"]] = array(
+                            "id" => $media["id"],
+                            "name" => $media["name"],
+                            "mime_type" => $media["mime_type"],
+                            "licences" => array((int)$media["licence_id"]),
+                            "institutionUrl" => $media["url"],
+                            "institutionToken" => $media["token"],
+                        );
+                    } else {
+                        $arr_media[$media["id"]]["licences"][] = (int)$media["licence_id"];
+                    }
+
+                    if (!$media["last_access_ok"]) {
+                        unset($arr_media[$media["id"]]);
+                        $blocked_by_last_access[$media["id"]] = true;
+                    }else if(!MGHelper::canUseMediaFromIP($media["id"])){
+                        unset($arr_media[$media["id"]]);
+                        $blocked_by_last_access[$media["id"]] = true;
+                    }
+                }
+            }
+
+            if (count($arr_media) >= $num_medias) {
+                foreach ($arr_media as $key => $media) { // we want to hide the default licence if the media has got another licence
+                    if (count($arr_media[$key]["licences"]) > 1) {
+                        $arr_media[$key]["licences"] = array_diff($arr_media[$key]["licences"], array(1));
+                    }
+                }
+                return array_values($arr_media);
+            } else if ($second_attempt) {
+                return null;
+            } else {
+                $this->resetUsedMedias($game, $game_model);
+                return $this->getMedias($collections, $game, $game_model, $num_medias, true, $accept_types);
+            }
+        } else if ($second_attempt) {
+            return null;
+        } else {
+            // no medias available could it be that the user has already seen all in this session?
+            // reset session medias and try again
+            $this->resetUsedMedias($game, $game_model);
+            return $this->getMedias($collections, $game, $game_model, $num_medias, true, $accept_types);
+        }
+    }
     /* June 8
      * by Xinqi Li
      * Set threshold to query media for StupidRobot, and in the future for PyramidTags*/
@@ -201,7 +336,7 @@ class MGGame extends CComponent
     {
 
         $used_medias = $this->getUsedMedias($game, $game_model);
-        $num_media_threshold = 300;
+        $num_media_threshold = 20;
         $limit = $num_medias * 5;
         $limit = ($limit < 50) ? 50 : $limit;
         //get media that have more tags than threshold from all active collection
