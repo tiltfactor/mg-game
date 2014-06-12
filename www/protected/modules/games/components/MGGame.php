@@ -341,13 +341,13 @@ class MGGame extends CComponent
         $limit = ($limit < 50) ? 50 : $limit;
         //get media that have more tags than threshold from all active collection
         $selectedmedias = Yii::app()->db->createCommand()
-            ->select('tu.media_id')
-            ->from('{{tag_use}} tu')
-            ->leftJoin('{{media}} m', 'm.id=tu.media_id')
-            ->leftJoin('{{tag}} t', 'tu.tag_id=t.id')
-            ->having('count(distinct tu.tag_id)>:threshold', array(':threshold'=>$threshold))
-            ->group('tu.media_id')
-            ->order('tu.media_id ASC')
+//            ->select('i.id,count(case when tu.tag_id is not null then 1 end) as counted')
+            ->select('i.id')
+            ->from('{{media}} i')
+            ->leftJoin('{{tag_use}} tu', 'i.id=tu.media_id')
+            ->having('count(case when tu.tag_id is not null then 1 end)>=:threshold', array(':threshold'=>$threshold))
+            ->group('i.id')
+            ->order('count(case when tu.tag_id is not null then 1 end) ASC')
             //return as an array
             ->queryColumn();
         //same as the original getmedia() except adding constrain in $where
