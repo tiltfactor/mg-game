@@ -102,7 +102,7 @@ class NexTagGame extends MGGame implements MGGameInterface
             $used_medias = array();
 
             // get a one medias that is active for the game
-            $medias = $this->getMedias($collections, $game, $game_model, 1, false, array("image", "video", "audio"));
+            $medias = $this->getMediasforZentag($collections, $game, $game_model, 1, false, array("image", "video", "audio"));
 
             if ($medias && count($medias) > 0) {
                 $i = array_rand($medias, 1); // select one random item out of the medias
