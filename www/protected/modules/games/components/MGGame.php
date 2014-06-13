@@ -201,13 +201,15 @@ class MGGame extends CComponent
     {
 
         $used_medias = $this->getUsedMedias($game, $game_model);
-        $num_media_threshold = 300;
+        $num_media_threshold = 20;
         //get media that have more tags than threshold from all active collection
         $selectedmedias = Yii::app()->db->createCommand()
 //            ->select('i.id,count(case when tu.tag_id is not null then 1 end) as counted')
             ->select('i.id')
             ->from('{{media}} i')
             ->leftJoin('{{tag_use}} tu', 'i.id=tu.media_id')
+            ->leftJoin('{{collection_to_media}} is2i','i.id=is2i.media_id')
+            ->where(array('in', 'is2i.collection_id',$collections))
             ->group('i.id')
             ->order('count(case when tu.tag_id is not null then 1 end) ASC')
             ->limit($num_media_threshold)
@@ -331,12 +333,14 @@ class MGGame extends CComponent
     }
     /* June 8
      * by Xinqi Li
-     * Set threshold to query media for StupidRobot, and in the future for PyramidTags*/
+     * Set threshold to query media for StupidRobot, and in the future for PyramidTags
+     * $threshold: we want images of no less than $threshold tags
+     * $num_media_threshold: will continue the query only if there are enough image that satisfy the threshold above*/
     protected function getMediasWithThreshold($threshold, $collections, $game, &$game_model, $num_medias = 1, $second_attempt = false, $accept_types = array("image"))
     {
 
         $used_medias = $this->getUsedMedias($game, $game_model);
-        $num_media_threshold = 20;
+        $num_media_threshold = 15;
         $limit = $num_medias * 5;
         $limit = ($limit < 50) ? 50 : $limit;
         //get media that have more tags than threshold from all active collection
@@ -345,9 +349,11 @@ class MGGame extends CComponent
             ->select('i.id')
             ->from('{{media}} i')
             ->leftJoin('{{tag_use}} tu', 'i.id=tu.media_id')
+            ->leftJoin('{{collection_to_media}} is2i','i.id=is2i.media_id')
+            ->where(array('in', 'is2i.collection_id',$collections))
             ->having('count(case when tu.tag_id is not null then 1 end)>=:threshold', array(':threshold'=>$threshold))
             ->group('i.id')
-            ->order('count(case when tu.tag_id is not null then 1 end) ASC')
+//            ->order('count(case when tu.tag_id is not null then 1 end) ASC')
             //return as an array
             ->queryColumn();
         //same as the original getmedia() except adding constrain in $where
@@ -375,7 +381,7 @@ class MGGame extends CComponent
                 ->join('{{collection}} is', 'is.id=is2i.collection_id')
                 ->where($where)
                 ->order('i.last_access ASC')
-                ->limit($limit)
+                ->limit(1)
                 ->queryAll();
         } else {
             // if a player is logged in the medias should be weight by interest
@@ -409,11 +415,12 @@ class MGGame extends CComponent
 //                ->having('i.id in :sms', array(':sms'=>$selectedmedias))
                 ->group('i.id, i.name, is.licence_id')
                 ->order('max_interest DESC, i.last_access ASC')
-                ->limit($limit)
+                ->limit(1)
+
                 ->queryAll();
         }
 
-        if ($medias && count($medias) >= $num_media_threshold) {
+        if ($medias && count($selectedmedias) >= $num_media_threshold) {
             $arr_media = array();
             $blocked_by_last_access = array();
 
@@ -442,7 +449,7 @@ class MGGame extends CComponent
                 }
             }
 
-            if (count($arr_media) >= $num_media_threshold) {
+            if (count($selectedmedias) >= $num_media_threshold) {
                 foreach ($arr_media as $key => $media) { // we want to hide the default licence if the media has got another licence
                     if (count($arr_media[$key]["licences"]) > 1) {
                         $arr_media[$key]["licences"] = array_diff($arr_media[$key]["licences"], array(1));
