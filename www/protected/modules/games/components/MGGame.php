@@ -201,7 +201,7 @@ class MGGame extends CComponent
     {
 
         $used_medias = $this->getUsedMedias($game, $game_model);
-        $num_media_threshold = 20;
+        $num_media_threshold = 300;
         //get media that have more tags than threshold from all active collection
         $selectedmedias = Yii::app()->db->createCommand()
 //            ->select('i.id,count(case when tu.tag_id is not null then 1 end) as counted')
