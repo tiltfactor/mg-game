@@ -102,7 +102,7 @@ class BlPortraitTagGame extends MGGame implements MGGameInterface
             $used_medias = array();
 
             // get a one medias that is active for the game
-            $medias = $this->getMedias($collections, $game, $game_model);
+            $medias = $this->getMediasforZentag($collections, $game, $game_model);
 
 
             if ($medias && count($medias) > 0) {
