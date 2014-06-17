@@ -325,6 +325,13 @@ class GamesController extends ApiController {
    * @return string JSON response with status message and data
    */
   public function actionPlay($gid) {
+
+    //Event logs are sent to the same URL as other POST requests, so this conditional dispatches the data
+    // to a helper function instead.
+    if (isset($_POST['eventlog'])) {
+      $this->_saveEventLog($_POST['eventlog']);
+      return;
+    }
     $game = GamesModule::loadGame($gid);
     $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
     
@@ -471,6 +478,25 @@ class GamesController extends ApiController {
     }
   }
   
+  /**
+   * Helper function which stores the event logs sent from the game
+   *  - currently stored as a file on the server, may send directly
+   *     to the database in the future
+   */
+  private function _saveEventLog($log) {
+    $file = fopen("analytics.txt", "a");
+    fwrite($file, json_encode($log));
+    fclose($file);
+    // Commented out code for adding event logs to database
+    /*
+    $event_log = new EventLog;
+    $event_log->log = json_encode($log);
+    if ($event_log->validate()) {
+        $event_log->save();
+    }
+    */
+  }
+
   /**
    * Attempts to pair the waiting player with a second one. 
    * 

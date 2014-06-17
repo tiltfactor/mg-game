@@ -72,6 +72,8 @@ MG_GAME_STUPIDROBOT = function ($) {
         idx_i: 0,
         idx_activeLine: 0,
         introTextSpeedUp: 1,
+        eventSent: false,
+        events: [],
 
 
         idx_scrollIn: function () {
@@ -155,6 +157,16 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.init_options = options;
                 MG_GAME_STUPIDROBOT.init(options);
                 //MG_GAME_STUPIDROBOT.init(options);
+            });
+
+            $("#bootButton").bind("click", function() {
+                MG_GAME_STUPIDROBOT.logEvent("click", "play button");
+            });
+            $("#button-loop-1").bind("click", function() {
+                MG_GAME_STUPIDROBOT.logEvent("click", "audio toggle (menu)");
+            });
+            $("#idx_skipanimate").bind("click", function() {
+                MG_GAME_STUPIDROBOT.logEvent("click", "skip animation");
             });
         },
 
@@ -316,6 +328,25 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.secs = 0;
             });
 
+            MG_GAME_API.observeOnBeforeUnload(function() {
+                MG_GAME_STUPIDROBOT.sendLog();
+            });
+            $("#button-loop-1").bind("click", function() {
+                MG_GAME_STUPIDROBOT.logEvent("click", "toggle audio (in-game)");
+            });
+            $("#gamedone").bind("click", function () {
+                MG_GAME_STUPIDROBOT.logEvent("click", "quit button");
+            });
+            $("a[rel='zoom']").bind("click", function () {
+                MG_GAME_STUPIDROBOT.logEvent("click", "zoom image");
+            });
+            $("#inputArea").bind("keydown", function (e) {
+                MG_GAME_STUPIDROBOT.logEvent("keypress", e.keyCode);
+            });
+            $("#reboot").bind("click", function () {
+                MG_GAME_STUPIDROBOT.logEvent("click", "reboot button");
+            });
+
             // set arbitrary level
             $("#pass").hide();
 
@@ -450,6 +481,43 @@ MG_GAME_STUPIDROBOT = function ($) {
             }, 1400);
 
 
+        },
+        /**
+         * Adds an event to the event log.
+         * @param {string} type The type of event (either 'click' or 'keypress')
+         * @param {string} details Details about the event (button clicked, key pressed)
+         */
+        logEvent: function(type, details) {
+            MG_GAME_STUPIDROBOT.events.push({
+                timestamp : new Date().getTime(),
+                type: type,
+                details : details
+            });
+        },
+
+        /**
+         * Sends the event log, adding a close window event at the end.
+         */
+        sendLog: function() {
+            if (MG_GAME_STUPIDROBOT.eventSent) {
+                return false;
+            }
+            MG_GAME_STUPIDROBOT.events.push({
+                timestamp : new Date().getTime(),
+                type: "end",
+                details : "close window"
+            });
+            MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, null, {
+                type: 'post',
+                data: {
+                    eventlog : {
+                        gameid: MG_GAME_API.settings.gid,
+                        events: MG_GAME_STUPIDROBOT.events,
+                    }
+                }
+            });
+
+            MG_GAME_STUPIDROBOT.eventSent = true;
         },
 
         setLevel: function () {
