@@ -2,6 +2,10 @@ MG_GAME_API = function ($) {
   return $.extend(MG_API, {
     turns : [],
     turn : 0,
+
+    // Properties to be used by event-logging (see logEvent and sendLog)
+    eventSent: false,
+    events: [],
     
     // make sure the default game object always exists
     // this will be extended by each game
@@ -101,6 +105,149 @@ MG_GAME_API = function ($) {
       }
     },
     
+    /**
+     * Adds an event to the event log.
+     * @param {string} type The type of event (either 'click' or 'keypress')
+     * @param {string} details Details about the event (button clicked, key pressed)
+     */
+    logEvent: function(actor, action, details) {
+        MG_GAME_API.events.push({
+            timestamp : new Date().getTime(),
+            actor: actor,
+            action: action,
+            details : details
+        });
+    },
+
+    /**
+     * Sends the event log, adding a close window event at the end.
+     */
+    sendLog: function() {
+        if (MG_GAME_API.eventSent) {
+            return false;
+        }
+        MG_GAME_API.events.push({
+            timestamp : new Date().getTime(),
+            actor: "player",
+            action: "end",
+            details: "close window"
+        });
+        MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, null, {
+            type: 'post',
+            data: {
+                eventlog : {
+                    gameid: MG_GAME_API.settings.gid,
+                    browser: navigator.userAgent,
+                    events: MG_GAME_API.events,
+                }
+            }
+        });
+
+        MG_GAME_API.eventSent = true;
+    },
+
+    /**
+     * Gets the printable character corresponding to the key being pressed
+     * @param {KeyboardEvent} event an event sent by either keydown or keyup
+     * @return {string} character (or one of Backspace, Enter) or null, if the event
+     *     does not correspond to a printable character
+     */
+    getPrintableKey: function(event) {
+      if (event.ctrlKey || event.metaKey) {
+        return;
+      }
+      var keyCode = (event.keyCode || event.which);
+
+      /* Case for A-Z and a-z */
+      if (keyCode >= 65 && keyCode <= 90) {
+        var key = String.fromCharCode(keyCode);
+        if (!event.shiftKey) {
+          key = key.toLowerCase();
+        }
+        return key;
+      /* Case for 0-9 (non numpad) */
+      } else if (!event.shiftKey && keyCode >= 48 && keyCode <= 57) {
+        return String.fromCharCode(keyCode);
+      /* Case for 0-9 (numpad) */
+      } else if (keyCode >= 96 && keyCode <= 105) {
+        return String.fromCharCode(keyCode - 48);
+      } else {
+        switch (keyCode) {
+        case 8:
+          return "Backspace";
+        case 13:
+          return "Enter";
+        /* Cases for numpad punctuation */
+        case 42:
+        case 106:
+          return "*";
+        case 43:
+        //case 107:   //case removed due to overlap
+          return "+";
+        case 45:
+        //case 109:   //case removed due to overlap
+          return "-";
+        //case 46:    //case removed due to overlap
+        case 110:
+          return ".";
+        case 47:
+        case 111:
+          return "/";
+        /* Cases for punctuation above number keys */
+        case 48:
+          return ")";
+        case 49:
+          return "!";
+        case 50:
+          return "@";
+        case 51:
+          return "#";
+        case 52:
+          return "$";
+        case 53:
+          return "%";
+        case 54:
+          return "^";
+        case 55:
+          return "&";
+        case 56:
+          return "*";
+        case 57:
+          return "(";
+        /* Cases for other punctuation */
+        case 59:
+        case 186:
+          return event.shiftKey ? ":" : ";";
+        case 61:
+        case 107:
+        case 187:
+          return event.shiftKey ? "+" : "=";
+        case 109:
+        case 173:
+        case 189:
+          return event.shiftKey ? "_" : "-";
+        case 188:
+          return event.shiftKey ? "<" : ",";
+        case 190:
+          return event.shiftKey ? ">" : ".";
+        case 191:
+          return event.shiftKey ? "?" : "/";
+        case 192:
+          return event.shiftKey ? "~" : "`";
+        case 219:
+          return event.shiftKey ? "{" : "[";
+        case 220:
+          return event.shiftKey ? "|" : "\\";
+        case 221:
+          return event.shiftKey ? "}" : "]";
+        case 222:
+          return event.shiftKey ? "\"" : "'";
+        default:
+          return;
+        }
+      }
+    },
+
     /*
      * Standardized interface to call the GameAPI action. Allowing games to
      * implement additional API call back functions
