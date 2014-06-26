@@ -484,7 +484,15 @@ class GamesController extends ApiController {
    *     to the database in the future
    */
   private function _saveEventLog($log) {
-    $file = fopen("analytics.txt", "a");
+    if (!is_dir("analytics")) {
+      mkdir("analytics", 0755, true);
+    }
+    //Create unique filename
+    do {
+        $filename = "analytics/" . uniqid() . ".json";
+    } while (file_exists($filename));
+
+    $file = fopen($filename, "a");
     fwrite($file, json_encode($log));
     fclose($file);
     // Commented out code for adding event logs to database
