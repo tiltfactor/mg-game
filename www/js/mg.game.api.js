@@ -132,7 +132,10 @@ MG_GAME_API = function ($) {
             action: "end",
             details: "close window"
         });
-        MG_API.ajaxCall('/games/play/gid/' + MG_GAME_API.settings.gid, null, {
+        MG_API.ajaxCall('/games/savelog/gid/' + MG_GAME_API.settings.gid,
+          function(response) {
+            console.log(response);
+          }, {
             type: 'post',
             data: {
                 eventlog : {

@@ -4,7 +4,7 @@ class GamesController extends ApiController {
   
   public function filters() {
     return array( // add blocked IP filter here
-        'throttle - messages, abort, abortpartnersearch, postmessage, play, gameApi',
+        'throttle - messages, abort, abortpartnersearch, postmessage, play, saveLog, gameApi',
         'IPBlock',
         'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
         'accessControl - messages, abort, abortpartnersearch, gameApi, postmessage',
@@ -18,7 +18,7 @@ class GamesController extends ApiController {
   public function accessRules() {
     return array(
       array('allow',
-        'actions'=>array('index', 'scores', 'play', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
+        'actions'=>array('index', 'scores', 'play', 'saveLog', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
         'users'=>array('*'),
         ),
       array('deny', 
@@ -326,12 +326,6 @@ class GamesController extends ApiController {
    */
   public function actionPlay($gid) {
 
-    //Event logs are sent to the same URL as other POST requests, so this conditional dispatches the data
-    // to a helper function instead.
-    if (isset($_POST['eventlog'])) {
-      $this->_saveEventLog($_POST['eventlog']);
-      return;
-    }
     $game = GamesModule::loadGame($gid);
     $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
     
@@ -479,22 +473,29 @@ class GamesController extends ApiController {
   }
   
   /**
-   * Helper function which stores the event logs sent from the game
+   * Stores the event logs sent from the game
    *  - currently stored as a file on the server, may send directly
    *     to the database in the future
    */
-  private function _saveEventLog($log) {
-    if (!is_dir("analytics")) {
-      mkdir("analytics", 0755, true);
+  public function actionSaveLog($gid) {
+    if (!isset($_POST['eventlog'])) {
+      return;
+    }
+    $log = $_POST['eventlog'];
+
+    $dir = "analytics/".$gid."/";
+    if (!is_dir($dir)) {
+      mkdir($dir, 0755, true);
     }
     //Create unique filename
     do {
-        $filename = "analytics/" . uniqid() . ".json";
+        $filename = $dir . uniqid() . ".json";
     } while (file_exists($filename));
 
     $file = fopen($filename, "a");
     fwrite($file, json_encode($log));
     fclose($file);
+    echo "Log saved successfully";
     // Commented out code for adding event logs to database
     /*
     $event_log = new EventLog;
