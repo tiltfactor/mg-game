@@ -483,7 +483,7 @@ class GamesController extends ApiController {
     }
     $log = $_POST['eventlog'];
 
-    $dir = "analytics/".$gid."/";
+    $dir = "protected/analytics/".$gid."/";
     if (!is_dir($dir)) {
       mkdir($dir, 0755, true);
     }
