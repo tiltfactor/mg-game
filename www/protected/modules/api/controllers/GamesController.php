@@ -482,14 +482,14 @@ class GamesController extends ApiController {
       return;
     }
     $log = $_POST['eventlog'];
-
     $dir = "protected/analytics/".$gid."/";
-    if (!is_dir($dir)) {
-      mkdir($dir, 0755, true);
-    }
+
     //Create unique filename
+    $timestamp = gmdate("Y-m-d.His", $log["events"][0]["timestamp"]/1000);
+    $i = 1;
     do {
-        $filename = $dir . uniqid() . ".json";
+      $filename = $dir . $timestamp . "." . str_pad($i, 3, "0", STR_PAD_LEFT) . ".json";
+      $i++;
     } while (file_exists($filename));
 
     $file = fopen($filename, "a");
