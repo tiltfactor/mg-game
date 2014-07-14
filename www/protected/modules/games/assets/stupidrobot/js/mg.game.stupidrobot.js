@@ -915,6 +915,17 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
 
         renderFinal: function () {
+            MG_API.ajaxCall('/games/reset/gid/' + MG_GAME_API.settings.gid
+                          + '/pid/' + MG_GAME_STUPIDROBOT.game.played_game_id,
+                function (response) {
+                    if (MG_API.checkResponse(response)) {
+                        MG_GAME_STUPIDROBOT.game.played_game_id = response.played_game_id;
+                        console.log(response.status);
+                    }
+                    return false;
+                }, {type: 'get'}
+            );
+
             if (MG_GAME_STUPIDROBOT.isRenderFinaled == true)
                 return;
             else
