@@ -4,7 +4,7 @@ class GamesController extends ApiController {
   
   public function filters() {
     return array( // add blocked IP filter here
-        'throttle - messages, abort, abortpartnersearch, postmessage, play, gameApi',
+        'throttle - messages, abort, abortpartnersearch, postmessage, play, saveLog, gameApi',
         'IPBlock',
         'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
         'accessControl - messages, abort, abortpartnersearch, gameApi, postmessage',
@@ -18,7 +18,7 @@ class GamesController extends ApiController {
   public function accessRules() {
     return array(
       array('allow',
-        'actions'=>array('index', 'scores', 'play', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
+        'actions'=>array('index', 'scores', 'play', 'saveLog', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
         'users'=>array('*'),
         ),
       array('deny', 
@@ -325,6 +325,7 @@ class GamesController extends ApiController {
    * @return string JSON response with status message and data
    */
   public function actionPlay($gid) {
+
     $game = GamesModule::loadGame($gid);
     $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
     
@@ -471,6 +472,40 @@ class GamesController extends ApiController {
     }
   }
   
+  /**
+   * Stores the event logs sent from the game
+   *  - currently stored as a file on the server, may send directly
+   *     to the database in the future
+   */
+  public function actionSaveLog($gid) {
+    if (!isset($_POST['eventlog'])) {
+      return;
+    }
+    $log = $_POST['eventlog'];
+    $dir = "protected/analytics/".$gid."/";
+
+    //Create unique filename
+    $timestamp = gmdate("Y-m-d.His", $log["events"][0]["timestamp"]/1000);
+    $i = 1;
+    do {
+      $filename = $dir . $timestamp . "." . str_pad($i, 3, "0", STR_PAD_LEFT) . ".json";
+      $i++;
+    } while (file_exists($filename));
+
+    $file = fopen($filename, "a");
+    fwrite($file, json_encode($log));
+    fclose($file);
+    echo "Log saved successfully";
+    // Commented out code for adding event logs to database
+    /*
+    $event_log = new EventLog;
+    $event_log->log = json_encode($log);
+    if ($event_log->validate()) {
+        $event_log->save();
+    }
+    */
+  }
+
   /**
    * Attempts to pair the waiting player with a second one. 
    * 
