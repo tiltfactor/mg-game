@@ -78,6 +78,10 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.idx_p = MG_GAME_STUPIDROBOT.idx_paragraphArray[MG_GAME_STUPIDROBOT.idx_activeLine];
             MG_GAME_STUPIDROBOT.idx_i++;
             if (MG_GAME_STUPIDROBOT.idx_i > MG_GAME_STUPIDROBOT.idx_introText[MG_GAME_STUPIDROBOT.idx_activeLine].length) {
+                //Conditional only true before play button is pressed
+                if(MG_GAME_STUPIDROBOT.init_options === null) {
+                    MG_GAME_API.logEvent("game", "intro", "line " + MG_GAME_STUPIDROBOT.idx_activeLine + " printed");
+                }
 
                 MG_GAME_STUPIDROBOT.idx_paragraphArray[MG_GAME_STUPIDROBOT.idx_activeLine].innerHTML = MG_GAME_STUPIDROBOT.idx_a;
                 MG_GAME_STUPIDROBOT.idx_activeLine++;
@@ -155,6 +159,21 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.init_options = options;
                 MG_GAME_STUPIDROBOT.init(options);
                 //MG_GAME_STUPIDROBOT.init(options);
+            });
+
+            //Add logging for introduction events
+            MG_GAME_API.observeOnBeforeUnload(function() {
+                MG_GAME_STUPIDROBOT.sendLog();
+            });
+
+            $("#bootButton").bind("click", function() {
+                MG_GAME_API.logEvent("player", "click", "play button");
+            });
+            $("#button-loop-1").bind("click", function() {
+                MG_GAME_API.logEvent("player", "click", "audio toggle (menu)");
+            });
+            $("#idx_skipanimate").bind("click", function() {
+                MG_GAME_API.logEvent("player", "click", "skip animation");
             });
         },
 
@@ -314,6 +333,23 @@ MG_GAME_STUPIDROBOT = function ($) {
             // done button for finishing the game immediately
             $("#gamedone").click(function () {
                 MG_GAME_STUPIDROBOT.secs = 0;
+            });
+
+            //Add logging for in-game events
+            $("#button-loop-1").bind("click", function() {
+                MG_GAME_API.logEvent("player", "click", "toggle audio (in-game)");
+            });
+            $("#gamedone").bind("click", function () {
+                MG_GAME_API.logEvent("player", "click", "quit button");
+            });
+            $("a[rel='zoom']").bind("click", function () {
+                MG_GAME_API.logEvent("player", "click", "zoom image");
+            });
+            $("#inputArea").bind("keydown", function (e) {
+                var key = MG_GAME_API.getPrintableKey(e);
+                if (key) {
+                    MG_GAME_API.logEvent("player", "keypress", key);
+                }
             });
 
             // set arbitrary level
@@ -496,6 +532,7 @@ MG_GAME_STUPIDROBOT = function ($) {
         },
 
         flashMessage: function (message, color) {
+            MG_GAME_API.logEvent("game", "reaction", message);
             // console.log("flashMessage");
             var savedMessage = $("#gameMessage").html();
             $("#gameMessage").html(message);
@@ -770,6 +807,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                         MG_GAME_STUPIDROBOT.licence_info.push(turn.licences[licence]);
                 }
             }
+            MG_GAME_API.logEvent("game", "image", MG_GAME_STUPIDROBOT.media.full_size);
             MG_GAME_STUPIDROBOT.renderTurn(response);
         },
 
@@ -897,6 +935,11 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.re_init();
             });
 
+            //Add logging for post-game events
+            $("#reboot").bind("click", function () {
+                MG_GAME_API.logEvent("player", "click", "reboot button");
+            });
+
             // determine level by length of word array, minus passes
             for (var i = 0; i < MG_GAME_STUPIDROBOT.wordArray.length; i++) {
                 if (MG_GAME_STUPIDROBOT.wordArray[i] != "!") {
@@ -948,6 +991,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             }
 
             message.innerHTML = "I NOW COMPREHEND " + MG_GAME_STUPIDROBOT.scorelevel + " MORE WORDS!<br>" + messageString;
+            MG_GAME_API.logEvent("game", "reaction", message.innerHTML);
 
             var canvas = document.getElementById("canvas");
             var exportRoot = new lib.animation_score(MG_GAME_STUPIDROBOT.scorelevel);
