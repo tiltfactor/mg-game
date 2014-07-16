@@ -493,7 +493,7 @@ class GamesController extends ApiController {
     } while (file_exists($filename));
 
     $file = fopen($filename, "a");
-    fwrite($file, json_encode($log));
+    fwrite($file, JSONFormat::encode($log, "  "));
     fclose($file);
     echo "Log saved successfully";
     // Commented out code for adding event logs to database
