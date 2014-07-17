@@ -768,7 +768,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                         //MG_GAME_STUPIDROBOT.level++;
                         MG_GAME_STUPIDROBOT.setLevel();
                         MG_GAME_STUPIDROBOT.wordsAccepted++;
-                        if (MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel) {
+                        if (MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel - 4) {
                             MG_GAME_STUPIDROBOT.renderFinal();
                             return;
                         }
@@ -1027,7 +1027,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // the following variable is newly added in stupidrobot for gaming =
             MG_GAME_STUPIDROBOT.startingLevel = 4;
             MG_GAME_STUPIDROBOT.level = null;
-            MG_GAME_STUPIDROBOT.maxLevel = 13;
+            MG_GAME_STUPIDROBOT.maxLevel = 10;
             MG_GAME_STUPIDROBOT.letterWidthInEms = 0.67;
             MG_GAME_STUPIDROBOT.speed = 200;
             MG_GAME_STUPIDROBOT.secs = 120;
