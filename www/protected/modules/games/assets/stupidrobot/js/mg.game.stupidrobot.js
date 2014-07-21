@@ -475,6 +475,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             createjs.Ticker.setFPS(24);
             createjs.Ticker.addListener(stage);
 
+            $("#zoom").show();
             var loadScreen = document.getElementById("loading");
             loadScreen.parentNode.removeChild(loadScreen);
 
@@ -484,7 +485,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.playSound('scan_sound');
                 animation.robot.gotoAndPlay("scan");
             }, 1400);
-
+            
 
         },
 
@@ -826,7 +827,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     licence_info: MG_GAME_API.parseLicenceInfo(response.turn.licences)
                 };
 
-                $("#imageContainer").find("img").attr("src", turn_info.url);
+                $("#imageContainer").find("#gameImage").attr("src", turn_info.url);
                 $("#imageContainer").find("a").attr("href", turn_info.url);
                 $("#imageContainer").find("a").attr("title", turn_info.licence_info);
                 $("a[rel='zoom']").fancybox({overlayColor: '#000'});
@@ -845,18 +846,22 @@ MG_GAME_STUPIDROBOT = function ($) {
                         $("#gameImage").height($("#gameImage").height() * $("#gameImage").width() / imageW);
 //                        tmpImg.width = $("#imageContainer").width() * 1.1;
 //                        tmpImg.height = tmpImg.height * tmpImg.width / imageW;
-                        $("#gameImage").css("margin-top", function () {
-                            return ($("#container").height() - $("#gameImage").height()) / 2;
-                        });
                     } else {
 //                        tmpImg.height= $("#container").height() * 0.9;
 //                        tmpImg.width  = tmpImg.width * tmpImg.height / imageH;
                         $("#gameImage").height($("#imageContainer").height() * 0.9);
                         $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
-                        $("#gameImage").css("margin-left", function () {
-                            return ($("#imageContainer").width() - $("#gameImage").width()) / 2;
-                        });
                     }
+                    var topMargin = ($("#container").height() - $("#gameImage").height()) / 2;
+                    var leftMargin = ($("#imageContainer").width() - $("#gameImage").width()) / 2;
+                    $("#gameImage").css("margin-top", function () {
+                        return topMargin;
+                    });
+                    $("#gameImage").css("margin-left", function () {
+                        return leftMargin;
+                    });
+                    $("#zoom").css("margin-top", topMargin + 5);
+                    $("#zoom").css("margin-left", leftMargin + 5);
                 });
 
 

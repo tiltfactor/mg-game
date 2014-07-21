@@ -266,7 +266,7 @@ textarea {
 	background-color:#ccc;
 }
 
-#imageContainer img{
+#gameImage{
 	display:inline-block;
 	width:98%;
 	margin:auto;
@@ -274,6 +274,19 @@ textarea {
 	border:thin solid gray;
 }
 
+#zoom {
+  position: absolute;
+  display: none;
+  height: 22px;
+  width: 22px;
+  margin: 5px 0 0 5px;
+  outline: medium none;
+  border:1px solid #000;
+  background-color: #fff;
+}
+#zoom:hover {
+  background-color: #ff0;
+}
 
 #inputFields{
 	margin:10px 30px;

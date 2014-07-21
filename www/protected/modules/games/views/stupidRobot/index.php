@@ -117,7 +117,10 @@
             <a class="button" id="gamedone" type="button" value="1">QUIT</a>
         </div>
         <div class="rightBox" id="imageContainer">
-            <a class="gameImageLink" href="" rel="zoom" title=""><img id="gameImage" src="" alt="game image"/></a>
+            <a class="gameImageLink" href="" rel="zoom" title="">
+                <img id="zoom" src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/zoom.png"/>
+                <img id="gameImage" src="" alt="game image"/>
+            </a>
             <!--center><img src=""/></center-->
         </div>
     </div>
