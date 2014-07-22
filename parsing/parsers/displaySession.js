@@ -3,10 +3,17 @@ function getOutput() {
     var data = JSON.parse(sessionStorage.getItem("data"));
     //for (var i = 0, dataLength = data.length; i < dataLength; i++) {
     var events = data[0].events;
+    var lastImage;
     for (var i = 0, eventsLength = events.length; i < eventsLength; i++) {
         var evt = events[i];
+        if (lastImage == evt.details) {
+            continue;
+        }
         text += (getTime(evt.timestamp) + "  ");
         switch (evt.action) {
+        case "start":
+            text += ("PLAYER started the session");
+            break;
         case "keypress":
             var keys = getKey(evt.details);
             var lastTime = evt.timestamp;
@@ -17,22 +24,26 @@ function getOutput() {
                 nextEvent = events[i + 1];
                 lastTime = nextEvent.timestamp;
             }
-            text += ("player entered '" + keys + "'");
+            text += ("PLAYER entered '" + keys + "'");
             break;
         case "click":
-            text += ("player clicked " + evt.details);
+            text += ("PLAYER clicked " + evt.details);
             break;
         case "intro":
-            text += ("game intro " + evt.details);
+            text += ("GAME intro " + evt.details);
             break;
         case "reaction":
-            text += ("game responded '" + evt.details + "'");
+            text += ("GAME responded '" + evt.details + "'");
             break;
         case "image":
-            text += ("game displayed:<br/><img src='" + evt.details + "' height='100px' />");
+            text += ("GAME displayed:<br/><img src='" + evt.details + "' height='100px' />");
+            lastImage = evt.details;
+            break;
+        case "end round":
+            text += ("GAME ended with " + evt.details + " words");
             break;
         case "end":
-            text += ("player ended the session");
+            text += ("PLAYER ended the session");
             break;
         default:
             console.log("Unrecognized event action: " + evt.action);
