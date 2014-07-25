@@ -117,7 +117,10 @@
             <a class="button" id="gamedone" type="button" value="1">QUIT</a>
         </div>
         <div class="rightBox" id="imageContainer">
-            <a class="gameImageLink" href="" rel="zoom" title=""><img id="gameImage" src="" alt="game image"/></a>
+            <a class="gameImageLink" href="" rel="zoom" title="">
+                <img id="zoom" src="<?php echo GamesModule::getAssetsUrl(); ?>/stupidrobot/images/zoom.png"/>
+                <img id="gameImage" src="" alt="game image"/>
+            </a>
             <!--center><img src=""/></center-->
         </div>
     </div>
@@ -128,19 +131,24 @@
 
     <div id="container">
         <div class="leftBox clearfix">
-            <span id="gameMessage">I NOW COMPREHEND 6 NEW WORDS<br>I AM SOMEWHAT SMARTER!</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span
-                class="underlinedText hideBox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span
-                class="underlinedText hideBox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <br><span class="underlinedText hideBox">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span id="endgameMessage">I NOW COMPREHEND 6 NEW WORDS<br>I AM SOMEWHAT SMARTER!</span>
+            <table>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+4</td></tr>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+5</td></tr>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+6</td></tr>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+7</td></tr>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+8</td></tr>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+9</td></tr>
+                <tr><td class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td class="scorePlus">+10</td></tr>
+                <tr id="finalScoreRow"><td>FINAL SCORE:</td><td id="finalScore">0</td></tr>
+            </table>
             <br><a class="button" id="reboot">REBOOT</a>
         </div>
         <div class="rightBox" id="imageContainer">

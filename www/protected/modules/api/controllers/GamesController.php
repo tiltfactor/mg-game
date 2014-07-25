@@ -4,7 +4,7 @@ class GamesController extends ApiController {
   
   public function filters() {
     return array( // add blocked IP filter here
-        'throttle - messages, abort, abortpartnersearch, postmessage, play, saveLog, gameApi',
+        'throttle - messages, abort, abortpartnersearch, postmessage, play, saveLog, reset, gameApi',
         'IPBlock',
         'APIAjaxOnly', // custom filter defined in this class accepts only requests with the header HTTP_X_REQUESTED_WITH === 'XMLHttpRequest'
         'accessControl - messages, abort, abortpartnersearch, gameApi, postmessage',
@@ -18,7 +18,7 @@ class GamesController extends ApiController {
   public function accessRules() {
     return array(
       array('allow',
-        'actions'=>array('index', 'scores', 'play', 'saveLog', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
+        'actions'=>array('index', 'scores', 'play', 'saveLog', 'reset', 'partner', 'messages', 'abort', 'abortpartnersearch', 'gameApi', 'postmessage'),
         'users'=>array('*'),
         ),
       array('deny', 
@@ -493,7 +493,7 @@ class GamesController extends ApiController {
     } while (file_exists($filename));
 
     $file = fopen($filename, "a");
-    fwrite($file, json_encode($log));
+    fwrite($file, JSONFormat::encode($log, "  "));
     fclose($file);
     echo "Log saved successfully";
     // Commented out code for adding event logs to database
@@ -504,6 +504,26 @@ class GamesController extends ApiController {
         $event_log->save();
     }
     */
+  }
+
+  /**
+   * Resets the game_engine and creates a new PlayedGame object to store the next session.
+   * In addition, this action saves the user's score to the database.
+   *  - this only needs to be called for games which do not reload between game sessions
+   */
+  public function actionReset($gid, $pid=null) {
+    $game = GamesModule::loadGame($gid);
+    $played_game = PlayedGame::model()->findByPk($pid);
+    $score = $played_game->score_1;
+    $this->_saveUserToGame($game, $score);
+
+    $game_engine = GamesModule::getGameEngine($gid);
+    $this->_createPlayedGame($game, $game->game_model, $game_engine);
+    $game_engine->reset();
+
+    $data['played_game_id'] = $game->played_game_id;
+    $data['status'] = "Score saved successfully";
+    $this->sendResponse($data);
   }
 
   /**

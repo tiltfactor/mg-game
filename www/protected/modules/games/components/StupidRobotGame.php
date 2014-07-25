@@ -463,6 +463,20 @@ class StupidRobotGame extends NexTagGame
             return $mediaTags;
         }
     }
+
+    public function getScore(&$game, &$game_model, &$tags)
+    {
+        $score = 0;
+        $api_id = Yii::app()->fbvStorage->get("api_id", "MG_API");
+        $levels = Yii::app()->session[$api_id . '_STUPIDRORBOT_LEVELS'];
+        if ($levels) {
+            $level = unserialize(end($levels));
+            if ($level->isAccepted) {
+                $score += strlen($level->tag);
+            }
+        }
+        return $score;
+    }
 }
 
 class StupidRobotDTO
