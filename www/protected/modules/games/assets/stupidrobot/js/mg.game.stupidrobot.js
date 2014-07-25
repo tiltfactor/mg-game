@@ -54,6 +54,10 @@ MG_GAME_STUPIDROBOT = function ($) {
         scorestage: null,
         scorelevel: 0,
 
+        finalScore: 0,
+        scoreIncrease: 0,
+        scoreIndex: 0,
+
         // new added for splash page
         idx_paragraphArray: null,
         idx_introText: ["Meet Stupid Robot.",
@@ -475,6 +479,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             createjs.Ticker.setFPS(24);
             createjs.Ticker.addListener(stage);
 
+            $("#zoom").show();
             var loadScreen = document.getElementById("loading");
             loadScreen.parentNode.removeChild(loadScreen);
 
@@ -484,7 +489,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 MG_GAME_STUPIDROBOT.playSound('scan_sound');
                 animation.robot.gotoAndPlay("scan");
             }, 1400);
-
+            
 
         },
 
@@ -768,7 +773,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                         //MG_GAME_STUPIDROBOT.level++;
                         MG_GAME_STUPIDROBOT.setLevel();
                         MG_GAME_STUPIDROBOT.wordsAccepted++;
-                        if (MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel) {
+                        if (MG_GAME_STUPIDROBOT.wordsAccepted > MG_GAME_STUPIDROBOT.maxLevel - 4) {
                             MG_GAME_STUPIDROBOT.renderFinal();
                             return;
                         }
@@ -826,7 +831,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     licence_info: MG_GAME_API.parseLicenceInfo(response.turn.licences)
                 };
 
-                $("#imageContainer").find("img").attr("src", turn_info.url);
+                $("#imageContainer").find("#gameImage").attr("src", turn_info.url);
                 $("#imageContainer").find("a").attr("href", turn_info.url);
                 $("#imageContainer").find("a").attr("title", turn_info.licence_info);
                 $("a[rel='zoom']").fancybox({overlayColor: '#000'});
@@ -845,18 +850,22 @@ MG_GAME_STUPIDROBOT = function ($) {
                         $("#gameImage").height($("#gameImage").height() * $("#gameImage").width() / imageW);
 //                        tmpImg.width = $("#imageContainer").width() * 1.1;
 //                        tmpImg.height = tmpImg.height * tmpImg.width / imageW;
-                        $("#gameImage").css("margin-top", function () {
-                            return ($("#container").height() - $("#gameImage").height()) / 2;
-                        });
                     } else {
 //                        tmpImg.height= $("#container").height() * 0.9;
 //                        tmpImg.width  = tmpImg.width * tmpImg.height / imageH;
                         $("#gameImage").height($("#imageContainer").height() * 0.9);
                         $("#gameImage").width($("#gameImage").width() * $("#gameImage").height() / imageH);
-                        $("#gameImage").css("margin-left", function () {
-                            return ($("#imageContainer").width() - $("#gameImage").width()) / 2;
-                        });
                     }
+                    var topMargin = ($("#container").height() - $("#gameImage").height()) / 2;
+                    var leftMargin = ($("#imageContainer").width() - $("#gameImage").width()) / 2;
+                    $("#gameImage").css("margin-top", function () {
+                        return topMargin;
+                    });
+                    $("#gameImage").css("margin-left", function () {
+                        return leftMargin;
+                    });
+                    $("#zoom").css("margin-top", topMargin + 5);
+                    $("#zoom").css("margin-left", leftMargin + 5);
                 });
 
 
@@ -881,9 +890,10 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.p = MG_GAME_STUPIDROBOT.wordSpaces[MG_GAME_STUPIDROBOT.activeLine];
             MG_GAME_STUPIDROBOT.i++;
             // console.log("activeLine: " + MG_GAME_STUPIDROBOT.activeLine);
-            if (MG_GAME_STUPIDROBOT.activeLine >= 10) {
+            if (MG_GAME_STUPIDROBOT.activeLine >= 7) {
                 // scroll is finished
 
+                MG_GAME_STUPIDROBOT.displayScore();
                 createjs.Ticker.setFPS(24);
                 createjs.Ticker.addListener(MG_GAME_STUPIDROBOT.scorestage);
                 return;
@@ -914,7 +924,38 @@ MG_GAME_STUPIDROBOT = function ($) {
             setTimeout("MG_GAME_STUPIDROBOT.scrollIn()", 25);
         },
 
+        displayScore: function() {
+            if (MG_GAME_STUPIDROBOT.scoreIncrease > 0) {
+                MG_GAME_STUPIDROBOT.scoreIncrease--;
+                MG_GAME_STUPIDROBOT.finalScore++;
+                document.getElementById("finalScore").innerHTML = MG_GAME_STUPIDROBOT.finalScore;
+            } else {
+                if (MG_GAME_STUPIDROBOT.scoreIndex >= 7) {
+                    return;
+                } else if (MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.scoreIndex] != "!") {
+                    var length = MG_GAME_STUPIDROBOT.scoreIndex + 4;
+                    $(".scorePlus").eq(MG_GAME_STUPIDROBOT.scoreIndex)
+                        .css("visibility", "visible")
+                        .animate({"font-size": "1.5em"}, 100);
+                    MG_GAME_STUPIDROBOT.scoreIncrease = length;
+                }
+                MG_GAME_STUPIDROBOT.scoreIndex++;
+            }
+            setTimeout(MG_GAME_STUPIDROBOT.displayScore, 100);
+        },
+
         renderFinal: function () {
+            MG_API.ajaxCall('/games/reset/gid/' + MG_GAME_API.settings.gid
+                          + '/pid/' + MG_GAME_STUPIDROBOT.game.played_game_id,
+                function (response) {
+                    if (MG_API.checkResponse(response)) {
+                        MG_GAME_STUPIDROBOT.game.played_game_id = response.played_game_id;
+                        console.log(response.status);
+                    }
+                    return false;
+                }, {type: 'get'}
+            );
+
             if (MG_GAME_STUPIDROBOT.isRenderFinaled == true)
                 return;
             else
@@ -947,7 +988,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 }
             }
             // set up text message
-            var message = document.getElementById("gameMessage");
+            var message = document.getElementById("endgameMessage");
             var messageString;
             switch (MG_GAME_STUPIDROBOT.scorelevel) {
                 case 0:
@@ -1027,7 +1068,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             // the following variable is newly added in stupidrobot for gaming =
             MG_GAME_STUPIDROBOT.startingLevel = 4;
             MG_GAME_STUPIDROBOT.level = null;
-            MG_GAME_STUPIDROBOT.maxLevel = 13;
+            MG_GAME_STUPIDROBOT.maxLevel = 10;
             MG_GAME_STUPIDROBOT.letterWidthInEms = 0.67;
             MG_GAME_STUPIDROBOT.speed = 200;
             MG_GAME_STUPIDROBOT.secs = 120;
@@ -1054,6 +1095,10 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.activeLine = 0;
             MG_GAME_STUPIDROBOT.scorestage = null;
             MG_GAME_STUPIDROBOT.scorelevel = 0;
+
+            MG_GAME_STUPIDROBOT.finalScore = 0;
+            MG_GAME_STUPIDROBOT.scoreIncrease = 0;
+            MG_GAME_STUPIDROBOT.scoreIndex = 0;
 
             $("#loadgame").remove();
             $("#score").remove();

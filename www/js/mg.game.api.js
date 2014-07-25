@@ -126,12 +126,7 @@ MG_GAME_API = function ($) {
         if (MG_GAME_API.eventSent) {
             return false;
         }
-        MG_GAME_API.events.push({
-            timestamp : new Date().getTime(),
-            actor: "player",
-            action: "end",
-            details: "close window"
-        });
+        MG_GAME_API.logEvent("player", "end", "close window");
         MG_API.ajaxCall('/games/savelog/gid/' + MG_GAME_API.settings.gid,
           function(response) {
             console.log(response);
