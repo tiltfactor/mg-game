@@ -184,6 +184,7 @@ textarea {
 }
 
 .underlinedText{
+  display: inline;
 	font-size:1.71em;
 	text-transform:uppercase;
 	font-family:"telegrama-render";
@@ -378,20 +379,34 @@ textarea {
 	margin-bottom:15px;
 
 }
-#score br{
-	clear:both;
+
+#score table {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#score span{
+#finalScoreRow{
+  border-top: thin solid gray;
+  font-size: 1.5em;
+  text-align: right;
+  color: green;
+  font-family:"telegrama-render";
+}
+#finalScoreRow td { vertical-align: baseline; }
 
-	display:inline-block;
-	width:auto;
-	line-height:1.1em;
-	margin:1px;
+#finalScore{
+  font-size: 1.1em;
+  padding-top: 10px;
 }
 
-#score .leftBox{
-	text-align:center;
+.scorePlus {
+  width: 60px;
+  visibility: hidden;
+  color: blue;
+  font-family:"telegrama-render";
+  font-size: 0em;
+  padding-left: 10px;
+  text-align: right;
 }
 
 #score .button{
