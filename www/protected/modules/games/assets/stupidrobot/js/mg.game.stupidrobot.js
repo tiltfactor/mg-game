@@ -952,7 +952,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                 }
             }
             // set up text message
-            var message = document.getElementById("gameMessage");
+            var message = document.getElementById("endgameMessage");
             var messageString;
             switch (MG_GAME_STUPIDROBOT.scorelevel) {
                 case 0:

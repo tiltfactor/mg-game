@@ -257,7 +257,7 @@ textarea {
   margin: 2px 0 0 2px;
 }
 
-#gameMessage {
+#gameMessage, #endgameMessage {
 	font-size: 84%;
 	padding-bottom: 6px;
 }
@@ -370,7 +370,7 @@ textarea {
 
 /*score*/
 
-#score #gameMessage{
+#score #endgameMessage{
 	color:red;
 	font-size:.6em;
 	background-image:none;

@@ -131,7 +131,7 @@
 
     <div id="container">
         <div class="leftBox clearfix">
-            <span id="gameMessage">I NOW COMPREHEND 6 NEW WORDS<br>I AM SOMEWHAT SMARTER!</span>
+            <span id="endgameMessage">I NOW COMPREHEND 6 NEW WORDS<br>I AM SOMEWHAT SMARTER!</span>
             <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <br><span class="underlinedText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
