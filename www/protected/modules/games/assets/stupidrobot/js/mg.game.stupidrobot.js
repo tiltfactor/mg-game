@@ -54,6 +54,10 @@ MG_GAME_STUPIDROBOT = function ($) {
         scorestage: null,
         scorelevel: 0,
 
+        finalScore: 0,
+        scoreIncrease: 0,
+        scoreIndex: 0,
+
         // new added for splash page
         idx_paragraphArray: null,
         idx_introText: ["Meet Stupid Robot.",
@@ -881,9 +885,10 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.p = MG_GAME_STUPIDROBOT.wordSpaces[MG_GAME_STUPIDROBOT.activeLine];
             MG_GAME_STUPIDROBOT.i++;
             // console.log("activeLine: " + MG_GAME_STUPIDROBOT.activeLine);
-            if (MG_GAME_STUPIDROBOT.activeLine >= 10) {
+            if (MG_GAME_STUPIDROBOT.activeLine >= 7) {
                 // scroll is finished
 
+                MG_GAME_STUPIDROBOT.displayScore();
                 createjs.Ticker.setFPS(24);
                 createjs.Ticker.addListener(MG_GAME_STUPIDROBOT.scorestage);
                 return;
@@ -912,6 +917,26 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.p.innerHTML = MG_GAME_STUPIDROBOT.a + "_";
 
             setTimeout("MG_GAME_STUPIDROBOT.scrollIn()", 25);
+        },
+
+        displayScore: function() {
+            if (MG_GAME_STUPIDROBOT.scoreIncrease > 0) {
+                MG_GAME_STUPIDROBOT.scoreIncrease--;
+                MG_GAME_STUPIDROBOT.finalScore++;
+                document.getElementById("finalScore").innerHTML = MG_GAME_STUPIDROBOT.finalScore;
+            } else {
+                if (MG_GAME_STUPIDROBOT.scoreIndex >= 7) {
+                    return;
+                } else if (MG_GAME_STUPIDROBOT.wordArray[MG_GAME_STUPIDROBOT.scoreIndex] != "!") {
+                    var length = MG_GAME_STUPIDROBOT.scoreIndex + 4;
+                    $(".scorePlus").eq(MG_GAME_STUPIDROBOT.scoreIndex)
+                        .css("visibility", "visible")
+                        .animate({"font-size": "1.5em"}, 100);
+                    MG_GAME_STUPIDROBOT.scoreIncrease = length;
+                }
+                MG_GAME_STUPIDROBOT.scoreIndex++;
+            }
+            setTimeout(MG_GAME_STUPIDROBOT.displayScore, 100);
         },
 
         renderFinal: function () {
@@ -1065,6 +1090,10 @@ MG_GAME_STUPIDROBOT = function ($) {
             MG_GAME_STUPIDROBOT.activeLine = 0;
             MG_GAME_STUPIDROBOT.scorestage = null;
             MG_GAME_STUPIDROBOT.scorelevel = 0;
+
+            MG_GAME_STUPIDROBOT.finalScore = 0;
+            MG_GAME_STUPIDROBOT.scoreIncrease = 0;
+            MG_GAME_STUPIDROBOT.scoreIndex = 0;
 
             $("#loadgame").remove();
             $("#score").remove();
