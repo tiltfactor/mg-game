@@ -133,11 +133,11 @@ MG_GAME_API = function ($) {
           }, {
             type: 'post',
             data: {
-                eventlog : {
+                eventlog : JSON.stringify({
                     gameid: MG_GAME_API.settings.gid,
                     browser: navigator.userAgent,
                     events: MG_GAME_API.events,
-                }
+                }),
             }
         });
 

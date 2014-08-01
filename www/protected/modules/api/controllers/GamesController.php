@@ -481,7 +481,7 @@ class GamesController extends ApiController {
     if (!isset($_POST['eventlog'])) {
       return;
     }
-    $log = $_POST['eventlog'];
+    $log = CJSON::decode($_POST['eventlog']);
     $dir = "protected/analytics/".$gid."/";
 
     //Create unique filename
