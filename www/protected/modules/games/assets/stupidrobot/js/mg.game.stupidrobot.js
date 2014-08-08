@@ -179,6 +179,7 @@ MG_GAME_STUPIDROBOT = function ($) {
             $("#idx_skipanimate").bind("click", function() {
                 MG_GAME_API.logEvent("player", "click", "skip animation");
             });
+            MG_GAME_API.logEvent("player", "start", "open window");
         },
 
 
@@ -987,6 +988,7 @@ MG_GAME_STUPIDROBOT = function ($) {
                     MG_GAME_STUPIDROBOT.scorelevel++;
                 }
             }
+            MG_GAME_API.logEvent("game", "end round", MG_GAME_STUPIDROBOT.scorelevel);
             // set up text message
             var message = document.getElementById("endgameMessage");
             var messageString;
