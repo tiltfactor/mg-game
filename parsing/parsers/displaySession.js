@@ -1,8 +1,9 @@
-function getOutput() {
+var logs = JSON.parse(sessionStorage.getItem("data"));
+
+function getOutput(index) {
     var text = "";
-    var data = JSON.parse(sessionStorage.getItem("data"));
     //for (var i = 0, dataLength = data.length; i < dataLength; i++) {
-    var events = data[0].events;
+    var events = logs[index].events;
     var lastImage;
     for (var i = 0, eventsLength = events.length; i < eventsLength; i++) {
         var evt = events[i];
@@ -50,7 +51,7 @@ function getOutput() {
         }
         text += "<br/>";
     }
-    document.querySelector("h2").textContent += (" - " + getDate(events[0].timestamp));
+    document.querySelector("h2").textContent = ("Gameplay log - " + getDate(events[0].timestamp));
     output.innerHTML = text;
 }
 
@@ -73,4 +74,16 @@ function getTime(timestamp) {
     var date = new Date(parseInt(timestamp));
     return date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds() + "." + date.getUTCMilliseconds();
 }
-getOutput();
+
+function addOptions(length) {
+    var gameSelect = document.getElementById("gameselect");
+    for (var i = 0; i < length; i++) {
+        var gameOption = document.createElement("option");
+        gameOption.textContent = i;
+        gameOption.value = i;
+        gameSelect.appendChild(gameOption);
+    }
+}
+addOptions(logs.length);
+
+getOutput(0);
