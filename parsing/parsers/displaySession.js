@@ -1,16 +1,17 @@
 var logs = JSON.parse(sessionStorage.getItem("data"));
 
 function getOutput(index) {
-    var text = "";
-    //for (var i = 0, dataLength = data.length; i < dataLength; i++) {
+    var text = "<i>" + logs[index].browser + "</i><br/><br/>";
     var events = logs[index].events;
+    var startTime = events[0].timestamp;
     var lastImage;
     for (var i = 0, eventsLength = events.length; i < eventsLength; i++) {
         var evt = events[i];
         if (lastImage == evt.details) {
             continue;
         }
-        text += (getTime(evt.timestamp) + "  ");
+        var timeDiff = Math.round((evt.timestamp - startTime) / 1000);
+        text += (Math.floor(timeDiff/60) + ":" + pad(timeDiff%60, "0", 2) + " ");
         switch (evt.action) {
         case "start":
             text += ("PLAYER started the session");
@@ -37,7 +38,7 @@ function getOutput(index) {
             text += ("GAME responded '" + evt.details + "'");
             break;
         case "image":
-            text += ("GAME displayed:<br/><img src='" + evt.details + "' height='100px' />");
+            text += ("GAME displayed:<br/><a href='" + evt.details + "' target='_blank'><img src='" + evt.details + "' height='100px' /></a>");
             lastImage = evt.details;
             break;
         case "end round":
@@ -51,7 +52,7 @@ function getOutput(index) {
         }
         text += "<br/>";
     }
-    document.querySelector("h2").textContent = ("Gameplay log - " + getDate(events[0].timestamp));
+    document.querySelector("h2").textContent = ("Gameplay log - " + getDate(startTime) + ", " + getTime(startTime));
     output.innerHTML = text;
 }
 
@@ -72,7 +73,15 @@ function getDate(timestamp) {
 }
 function getTime(timestamp) {
     var date = new Date(parseInt(timestamp));
-    return date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds() + "." + date.getUTCMilliseconds();
+    return pad(date.getUTCHours(), "0", 2) + ":" + pad(date.getUTCMinutes(), "0", 2);
+}
+function pad(string, padding, length) {
+    string += "";
+    padding += "";
+    while (string.length < length) {
+        string = (padding + string);
+    }
+    return string;
 }
 
 function addOptions(length) {
