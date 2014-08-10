@@ -1,0 +1,73 @@
+<!doctype HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>MG analytics parser</title>
+		<style>
+			#parserselection, #results {
+				display: none;
+			}
+			html {
+				height: 100%;
+			}
+			body {
+				height: 100%;
+				margin: 0;
+				padding: 10px;
+				box-sizing: border-box;
+			}
+			iframe {
+				height: 90%;
+				width: 100%;
+			}
+			h1 {
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>MG analytics parser</h1>
+		<div id="fileselection">
+			<p>
+				This is the page for parsing MG analytics data stored as JSON files.
+			</p>
+			<form onsubmit="return false;">
+				<input type="file" id="filebrowser" name="files[]" multiple />
+				<input type="submit" value="Next" onClick="submitFileSelection(this.form);" />
+			</form>
+		</div>
+		<div id="parserselection">
+			<p>
+				Choose your parser.
+			</p>
+			<form onsubmit="return false;">
+				<table>
+					<tr>
+						<td><input type="radio" name="parser" value="displaySession" /></td>
+						<td>Display session log</td>
+					</tr>
+					<tr>
+						<td><input type="radio" name="parser" value="exportCSV" /></td>
+						<td>Export CSV files</td>
+					</tr>
+				</table>
+				<input type="button" value="Back" onClick="backToFileSelection();" />
+				<input type="submit" value="Next" onClick="submitParserSelection(this.form);" />
+			</form>
+		</div>
+		<div id="results">
+			<iframe id="resultframe" frameborder="0">
+  				<p>Your browser does not support iframes.</p>
+			</iframe> <br/>
+			<input type="button" value="Back" onClick="backToParserSelection();" />
+		</div>
+	</body>
+	<script src="readFile.js"></script>
+	<script src="chooseParser.js"></script>
+	<script>
+		window.onunload = function() {
+			sessionStorage.clear();
+			rFrame.src = "about:blank";
+		};
+	</script>
+</html>

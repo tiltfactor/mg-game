@@ -59,6 +59,7 @@ www/protected/config/main.php"
 
 DIRECTORIES="www/assets
 www/uploads
+www/protected/analytics
 www/protected/runtime"
 
 for f in $FILES
