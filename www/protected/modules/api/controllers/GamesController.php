@@ -877,15 +877,17 @@ class GamesController extends ApiController {
     if ($game->submission_id) {
       
       $tags = $game_engine->parseTags($game, $game_model);
+      $split_tags = MGTags::addSplitTags($tags); // $split_tags includes both the original and split tags
       
       $tags = $game_engine->setWeights($game, $game_model, $tags); // in there you can use weighting functions
+      $split_tags = $game_engine->setWeights($game, $game_model, $split_tags);
 
       $data['turn']['score'] = 0; 
       $turn_score = $game_engine->getScore($game, $game_model, $tags);
 
       $data['turn'] = $game_engine->getTurn($game, $game_model, $tags);
 
-      MGTags::saveTags($tags, $game->submission_id);
+      MGTags::saveTags($split_tags, $game->submission_id);
 
       // update played_game
       $played_game = PlayedGame::model()->findByPk($game->played_game_id);

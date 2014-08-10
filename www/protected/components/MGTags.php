@@ -288,7 +288,7 @@ class MGTags
     }
 
     /**
-     * Get tags array from comma separated tags string.
+     * Get tags array from comma/quote separated tags string.
      *
      * @access private
      * @param string|array $tags
@@ -296,44 +296,15 @@ class MGTags
      */
     public static function parseTags($tags)
     {
+        //Split strings along double quote (") and comma (,)
         if (!is_array($tags)) {
-            $tags = trim($tags);
-            if(strstr($tags, '" ') != false)
-            {
-                $tags = strtr($tags, array ('" ' => '", '));
-            }
-            elseif (strstr($tags, ' "') != false)
-            {
-                $tags = strtr($tags, array (' "' => ' ,"'));
-            }
-            else
-            {
-              if(strstr($tags, '"') == false)  $tags = strtr($tags, array (' ' => ', ')); // no multiWords
-            }
-            $tags = explode('"', trim(strip_tags($tags), ' ,'));
-
-            $tmp = array(); // elements in ""
-            foreach($tags as $myKey => $myValue)
-            {
-                if($myValue != "") $tmp[] = $myValue;
-            }
-            $tmp2 = array();
-            $tmpMulti = array();
-            foreach($tmp as $myKey => $myValue)
-            {
-                if(strstr($myValue, ",") != false) $tmp2[] =$myValue ;
-                else $tmpMulti[] =$myValue ;
-
-            }
-            $tmp3 = array(); // elements with , separation only
-            foreach($tmp2 as $myKey => $myValue)
-            {
-                $tmp3 = explode(' ', trim(strip_tags($myValue), ' ,'));
-            }
-            $tags = $output = array_merge($tmpMulti, $tmp3);
+            $tags = trim(strip_tags($tags));
+            $tags = explode(',', str_replace('"', ',', $tags));
         }
+        //Trim unwanted characters
         array_walk($tags, array("MGTags", "trim"));
 
+        //Remove now-empty tags
         foreach ($tags as $key => $value) {
             if ($value == "")
                 unset($tags[$key]);
@@ -357,6 +328,39 @@ class MGTags
         }
         $item = preg_replace("/[^\pL\pN\p{Zs}'-]/u", "", $item);
         $item = substr(trim($item), 0, 64); //we enforce the tags to have a maximum length of 64 characters after we've trimmed white spaces
+    }
+
+    /**
+     * Split multiword tags into single-word tags, and add them to the array.
+     *  - split tags are given the type 'split'
+     *
+     * @access private
+     * @param array $tags
+     * @return array
+     */
+    public static function addSplitTags($tags) {
+        Yii::log("Splitting tags...", "info", "MGTags.addSplitTags()");
+        //Iterate over image IDs
+        foreach ($tags as $img_id => $img_tags) {
+            $splits = array();
+            //Iterate over individual tag data for an image
+            foreach ($img_tags as $tag_data) {
+                $tag = trim($tag_data["tag"]);
+                if (strpos($tag, " ") > -1) {
+                    //Split multiwords and add each word as a split tag
+                    foreach (explode(" ", $tag) as $split_tag) {
+                        $splits[$split_tag] = array(
+                            'tag' => $split_tag,
+                            'weight' => 1,
+                            'type' => 'split',
+                            'tag_id' => 0
+                        );
+                    }
+                }
+            }
+            $tags[$img_id] += $splits;
+        }
+        return $tags;
     }
 
     /**
