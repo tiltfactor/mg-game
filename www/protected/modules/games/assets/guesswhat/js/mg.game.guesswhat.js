@@ -40,6 +40,25 @@ MG_GAME_GUESSWHAT = function ($) {
 
             MG_GAME_GUESSWHAT.wordField = $("#tag");
 
+            //From ZenTag (mg.game.zentag.js:23)
+            // TODO: Refactor this part
+            // allowed keys, in game
+            $("#tag").bind("keydown", function(event) {
+                if (event.shiftKey) { // When pressing shift, only allow these
+                    return (
+                        (event.which >= 97 && event.which <= 122) || // a-z
+                        (event.which >= 65 && event.which <= 90) // A-Z
+                    );
+                }
+                else {
+                    return (
+                        (event.which >= 97 && event.which <= 122) ||// a-z
+                        (event.which >= 65 && event.which <= 90) || // A-Z
+                        event.which === 8 || event.which == 13
+                    );
+                }
+            });
+
             // submit on enter
             MG_GAME_GUESSWHAT.wordField.focus().keydown(function (event) {
                 if (event.keyCode == 13) {
