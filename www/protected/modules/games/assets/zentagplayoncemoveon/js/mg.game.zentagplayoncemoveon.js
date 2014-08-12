@@ -27,6 +27,9 @@ MG_GAME_ZENTAG_PLAYONCE = function ($) {
           return false;
         }
       });
+
+      //Prevent paste/cut/copy
+      MG_GAME_API.preventEvents(MG_GAME_ZENTAG_PLAYONCE.wordField, ["paste", "cut", "copy"]);
       
       MG_GAME_ZENTAG_PLAYONCE.submitButton = $("#button-play").click(MG_GAME_ZENTAG_PLAYONCE.onsubmit);
     // TRY to get pass button to submit correct value.

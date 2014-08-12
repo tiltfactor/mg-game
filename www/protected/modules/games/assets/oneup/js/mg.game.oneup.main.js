@@ -86,6 +86,9 @@ MG_GAME_ONEUP = function ($) {
 
             MG_GAME_ONEUP.wordField = $("#word");
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_ONEUP.wordField, ["paste", "cut", "copy"]);
+
             $('nav#menu-left').mmenu();
             $('nav#menu-right').mmenu({
                 position:'right',
