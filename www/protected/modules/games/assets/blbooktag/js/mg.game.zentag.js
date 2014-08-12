@@ -50,6 +50,9 @@ MG_GAME_ZENTAG = function ($) {
                 }
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_ZENTAG.wordField, ["paste", "cut", "copy"]);
+
             // wikipedia tab
             $("#wikipedia .blue-tab").on("click", function() {
               $(this).closest(".tab-container").toggleClass("open");
