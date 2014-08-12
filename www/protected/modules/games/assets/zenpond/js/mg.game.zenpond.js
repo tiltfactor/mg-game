@@ -40,6 +40,9 @@ MG_GAME_ZENPOND = function ($) {
                 }
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_ZENPOND.wordField, ["paste", "cut", "copy"]);
+
             MG_GAME_ZENPOND.submitButton = $("#button-play").click(MG_GAME_ZENPOND.onsubmit);
 
             // call the game API's init settings

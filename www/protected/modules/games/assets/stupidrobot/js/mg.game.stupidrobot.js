@@ -464,6 +464,9 @@ MG_GAME_STUPIDROBOT = function ($) {
                 return event.which != 32;
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_STUPIDROBOT.wordField, ["paste", "cut", "copy"]);
+
             // set original level
             if (typeof(noTicker) == 'undefined')
                 MG_GAME_STUPIDROBOT.timerTick();

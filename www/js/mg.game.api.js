@@ -246,6 +246,12 @@ MG_GAME_API = function ($) {
       }
     },
 
+    preventEvents : function (element, events) {
+      for (var i = 0; i < events.length; i++) {
+        element.bind(events[i], function (e) { e.preventDefault(); });
+      }
+    },
+
     /*
      * Standardized interface to call the GameAPI action. Allowing games to
      * implement additional API call back functions

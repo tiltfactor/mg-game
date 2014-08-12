@@ -50,6 +50,9 @@ MG_GAME_ZENTAG = function ($) {
                 }
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_ZENTAG.wordField, ["paste", "cut", "copy"]);
+
             MG_GAME_ZENTAG.submitButton = $("#button-play").click(MG_GAME_ZENTAG.onsubmit);
             // TRY to get pass button to submit correct value.
             MG_GAME_ZENTAG.passButton = $("#button-pass").click(MG_GAME_ZENTAG.onpass);

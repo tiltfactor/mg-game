@@ -59,6 +59,9 @@ MG_GAME_GUESSWHAT = function ($) {
                 }
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_GUESSWHAT.wordField, ["paste", "cut", "copy"]);
+
             // submit on enter
             MG_GAME_GUESSWHAT.wordField.focus().keydown(function (event) {
                 if (event.keyCode == 13) {
