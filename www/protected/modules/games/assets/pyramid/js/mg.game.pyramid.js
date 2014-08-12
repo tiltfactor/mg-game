@@ -140,6 +140,9 @@ MG_GAME_PYRAMID = function ($) {
                 }
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_PYRAMID.wordField, ["paste", "cut", "copy"]);
+
             MG_GAME_PYRAMID.submitButton = $("#button-play").click(MG_GAME_PYRAMID.onsubmit);
             // Delete the default footer content.
             $("#footer").html("");

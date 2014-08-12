@@ -52,6 +52,9 @@ MG_GAME_NEXTAG = function ($) {
                 }
             });
 
+            //Prevent paste/cut/copy
+            MG_GAME_API.preventEvents(MG_GAME_NEXTAG.wordField, ["paste", "cut", "copy"]);
+
             MG_GAME_NEXTAG.submitButton = $("#button-play").click(MG_GAME_NEXTAG.onsubmit);
             // TRY to get pass button to submit correct value.
             MG_GAME_NEXTAG.passButton = $("#button-pass").click(MG_GAME_NEXTAG.onpass);
