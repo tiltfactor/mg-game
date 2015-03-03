@@ -26,6 +26,10 @@ class ExportController extends GxController {
         return array(
             array('allow',
                 'actions' => array('admin', 'exported', 'queueprocess'),
+                'roles' => array(EDITOR),
+            ),
+            array('allow',
+                'actions' => array('admin', 'exported', 'queueprocess'),
                 'roles' => array(INSTITUTION),
             ),
             array('allow',
