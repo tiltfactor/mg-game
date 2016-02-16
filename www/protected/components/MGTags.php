@@ -216,7 +216,6 @@ class MGTags
 
             $all_tags_with_id = true;
             foreach ($media_tags as $tag => $tag_info) {
-
                 if (!is_array($tags[$media_id][$tag]))
                     throw new CHttpException(500, Yii::t('app', "The array passed must have arrays as it's leafs."));
 
@@ -246,7 +245,7 @@ class MGTags
                 foreach ($tags[$media_id] as $tag => $tag_info) {
                     if (!array_key_exists("tag_id", $tags[$media_id][$tag]) || (int)$tags[$media_id][$tag]["tag_id"] == 0) { // tag does not exist we have to create it
                         $tag_model = new Tag;
-                        $tag_model->tag = $tags[$media_id][$tag]["tag"];
+                        $tag_model->tag = substr(trim($tags[$media_id][$tag]["tag"]), 0, 64);
                         $tag_model->created = date('Y-m-d H:i:s');
                         $tag_model->modified = date('Y-m-d H:i:s');
 
@@ -327,7 +326,6 @@ class MGTags
             $item = str_replace("  ", " ", $item);
         }
         $item = preg_replace("/[^\pL\pN\p{Zs}'-]/u", "", $item);
-        $item = substr(trim($item), 0, 64); //we enforce the tags to have a maximum length of 64 characters after we've trimmed white spaces
     }
 
     /**

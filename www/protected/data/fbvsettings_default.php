@@ -90,8 +90,9 @@ return array (
       'url' => '/admin/export',
       'roles' =>
       array (
-        0 => 'institution',
-      ),
+        0 => 'researcher',
+        1 => 'institution',
+      ) ,
       'group' => 'Media & Tags',
     ),
     'tool-user' =>
@@ -101,7 +102,7 @@ return array (
       'url' => '/admin/user',
       'roles' =>
       array (
-        0 => 'researcher',
+        0 => 'gameadmin',
       ),
       'group' => 'Players',
     ),
@@ -134,7 +135,7 @@ return array (
       'url' => '/games',
       'roles' =>
       array (
-        0 => 'researcher',
+        0 => 'gameadmin',
       ),
       'group' => 'Games & Plugins',
     ),
